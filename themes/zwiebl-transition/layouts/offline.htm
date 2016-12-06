@@ -1,0 +1,35 @@
+description = "Home Page"
+==
+<html>
+<head>
+    {% partial "html_base/meta_head" %}
+</head>
+<body>
+
+<div class="container" id="wrapper">
+    <header id="header">
+        <h1>{{ this.theme.website_name }}</h1>
+    </header>
+    <div class="row">
+        <div class="12u">
+            <div id="main">
+                <div class="previous"></div>
+                <div class="next"></div>
+                <div class="viewer">
+                    <div class="reel">
+                        <div class="slide">
+                            Diese Seite wird gerade gewartet.
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% partial "all_pages/footer" %}
+</div>
+
+{% partial "html_base/scripts" %}
+
+</body>
+</html>

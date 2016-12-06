@@ -1,0 +1,8 @@
+==
+{% if (__SELF__.message) %}
+
+    <div class="message alert-{{ __SELF__.message.type }}">
+        {{ __SELF__.message.text|raw }}
+    </div>
+
+{% endif %}

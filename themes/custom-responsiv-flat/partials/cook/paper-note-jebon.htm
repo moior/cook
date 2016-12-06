@@ -1,0 +1,102 @@
+<style>
+    .tile-example {font-size:0.7em;}
+    .tile-explain {height:130px;overflow-y:scroll;margin-bottom:5px;border-top:1px dotted gray;text-align:left;}
+    .tile-explain p {font-size:0.6em;color:gray;margin-bottom:15px;}
+    h3 small {color:gray;}
+</style>
+
+
+<h3 class="headline"><span>제본<small> 종이의 결합방식</small></span></h3>
+<div class="row pricing-tiles">
+
+    <div class="col-sm-4">
+        <div class="tile tile-hot">
+            <img src="{{ 'assets/images/cook/paper/샘플-무선제본.jpg'|theme }}" alt="무선제본" class="tile-image">
+            <h3 class="tile-title">무선제본</h3>
+            <div class="tile-example">단행본, 월간지, 문제집</div>
+            <div class="tile-explain">
+                <p>페이지 접지를 정합하여 책등 부분을 대각선 또는 엇각으로 갈아서 풀을 묻혀 표지를 씌우는 제본방법</p>
+                <p>약 24페이지정도 이상의 책자물을 만들때 사용. 거의 모든 책자?</p>
+            </div>
+            <a class="btn btn-primary btn-large btn-block" href="#fakelink"
+               data-request='onClickStep1' data-request-update="'cook/paper-note-current': '#cookdesk-center'">선택</a>
+        </div>
+    </div>
+
+
+
+
+    <div class="col-sm-4">
+        <div class="tile tile-hot">
+            <img src="{{ 'assets/images/cook/paper/샘플-중철제본.jpg'|theme }}" alt="중철제본" class="tile-image">
+            <h3 class="tile-title">중철제본</h3>
+            <div class="tile-example">광고지, 사보</div>
+
+            <div class="tile-explain">
+
+                <p>가운데에 스템플러와 같은 철심을 박아서 만드는 제본방식</p>
+                <p>페이지 수가 적을수록 깔끔하게 나오고, 빠른 제본이 필요할때 사용</p>
+            </div>
+            <a class="btn btn-primary btn-large btn-block" href="#fakelink">선택</a>
+        </div>
+    </div>
+
+
+    <div class="col-sm-4">
+        <div class="tile tile-hot">
+            <img src="{{ 'assets/images/cook/paper/샘플-스프링제본.jpg'|theme }}" alt="링제본" class="tile-image">
+            <h3 class="tile-title">스프링제본</h3>
+            <div class="tile-example">실용서, 휴대노트</div>
+            <div class="tile-explain">
+
+                <p>낱장으로 재단된 페이지를 순서대로 추려서 한쪽에 구멍을 내어 펀칭한 후 스프링들으로 제본
+                </p>
+                <p>360도 회전이 가능하므로 휴대성과 사용성이 좋다.</p>
+                <p>라벨스틱을 달면 책장에 꽂아 놓아도 제목을 볼수 있습니다.</p>
+            </div>
+            <a class="btn btn-primary btn-large btn-block" href="#fakelink">선택</a>
+        </div>
+    </div>
+
+    <div class="col-sm-4">
+        <div class="tile">
+            <img src="{{ 'assets/images/cook/paper/샘플-떡제본.jpg'|theme }}" alt="떡제본" class="tile-image big-illustration">
+            <h3 class="tile-title">떡제본</h3>
+            <div class="tile-example">일반서적, 논문</div>
+            <div class="tile-explain">
+                <p>페이지를 추려서 책등에 무선풀을 뭍히거나 본드를 뭍혀서 제본</p>
+                <p>가장 깔끔하지만 시간이 지나면 낱장이 떨어지는 단점이.. </p>
+                <p>내지를 마스타(복사기)로 인쇄한 경우
+                    접지기를 사용할 수 없기 때문. </p>
+            </div>
+            <a class="btn btn-primary btn-large btn-block" href="#fakelink">선택</a>
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div class="tile">
+            <img src="{{ 'assets/images/cook/paper/샘플-양장제본.jpg'|theme }}" alt="양장제본" class="tile-image">
+            <h3 class="tile-title">양장제본</h3>
+            <div class="tile-example">고급서적, 백과사전</div>
+            <div class="tile-explain">
+                <p>페이지를 순서대로 추린다음 각각의 접지를 실로 꿰메어 연결</p>
+                <p>튼튼하고 보관성이 좋긴 하지만 책을 펼때 유연성이 좋지 않다는 단점</p>
+            </div>
+            <a class="btn btn-primary btn-large btn-block" href="#fakelink">선택</a>
+        </div>
+    </div>
+
+    <div class="col-sm-4">
+        <div class="tile">
+            <img src="{{ 'assets/images/cook/paper/샘플-반양장제본.jpg'|theme }}" alt="반양장제본" class="tile-image">
+            <h3 class="tile-title">반양장제본</h3>
+            <div class="tile-example">다이어리</div>
+            <div class="tile-explain">
+                <p>내지를 묶는 방식은 양장 방식과 같지만, 표지를 붙이는 방법은 무선제본과 같은 방식</p>
+                <p>하드커버를 쓰는 양장제본과 다르게 일반 표지를 사용하는 방법(소프트커버)</p>
+                <p>표지의 내구성은 양장제본보다는 약하지만 양장에 비해 제작 단가가 저렴하고
+                    제작시간이 짧으며, 책의 펼쳐짐도 유연</p>
+            </div>
+            <a class="btn btn-primary btn-large btn-block" href="#fakelink">선택</a>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,41 @@
+description = "Home Page"
+==
+<html>
+<head>
+    {% partial "html_base/meta_head" %}
+</head>
+<body>
+
+<div class="container" id="wrapper">
+    <header id="header">
+        <h1>{{ this.theme.website_name }}</h1>
+        <nav>
+            <a href="#{{ this.theme.zw_first_section_slug }}" class="jumplink primary">{{ this.theme.zw_first_section_name }}</a>
+            <a href="#{{ this.theme.zw_second_section_slug }}" class="jumplink pad-after primary">{{ this.theme.zw_second_section_name }}</a>
+            <a href="#{{ this.theme.zw_third_section_slug }}" class="jumplink pad-before primary">{{ this.theme.zw_third_section_name }}</a>
+            <a href="#{{ this.theme.zw_fourth_section_slug }}" class="jumplink primary">{{ this.theme.zw_fourth_section_name }}</a>
+        </nav>
+    </header>
+    <div class="row">
+        <div class="12u">
+            <div id="main">
+                <div class="previous"></div>
+                <div class="next"></div>
+                <div class="viewer">
+                    <div class="reel">
+                        {% partial "home_page/section_one" %}
+                        {% partial "home_page/section_two" %}
+                        {% partial "home_page/section_three" %}
+                        {% partial "home_page/section_four" %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% partial "home_page/footer" %}
+</div>
+
+{% partial "html_base/scripts" %}
+
+</body>
+</html>

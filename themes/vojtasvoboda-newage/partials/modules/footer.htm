@@ -1,0 +1,10 @@
+<footer>
+    <div class="container">
+        <p>{{ this.theme.footer }}</p>
+        {% if this.theme.footer_menu %}
+        <ul class="list-inline">
+            {% partial 'modules/nav-items.htm' %}
+        </ul>
+        {% endif %}
+    </div>
+</footer>

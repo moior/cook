@@ -29,7 +29,7 @@ return [
     |
     */
 
-    'url' => 'http://localhost',
+    'url' => 'http://custom-made.me',
 
     /*
     |--------------------------------------------------------------------------
@@ -81,7 +81,7 @@ return [
     |
     */
 
-    'key' => 'CHANGE_ME!!!!!!!!!!!!!!!!!!!!!!!',
+    'key' => 'NoNVEUL3QehhI37yYiOFbgtdebjKjYEj',
 
     'cipher' => 'AES-256-CBC',
 

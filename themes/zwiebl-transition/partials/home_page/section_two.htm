@@ -1,0 +1,35 @@
+==
+<!-- **************************************************************************** -->
+<!-- * Section Two                                                              * -->
+<!-- **************************************************************************** -->
+
+<div class="slide" id="{{ this.theme.zw_second_section_slug }}">
+	<article class="page about">
+		<div class="inner">
+
+			{% content 'section_two.htm' %}
+
+			<!--
+
+                This gallery is powered by Poptrox, which supports images, YouTube videos, Vimeo videos,
+                Soundcloud tracks, IFRAMEs, and AJAX content. Learn more here:
+
+                https://github.com/n33/jquery.poptrox
+
+            -->
+			<div class="gallery">
+				<div class="row no-collapse">
+					<div class="4u 12u(mobile)"><a href="{{ 'assets/images/gallery/fulls/pic01.jpg'|theme }}" class="image full"><img src="{{ 'assets/images/gallery/thumbnails/pic01.jpg'|theme }}" alt="" title="Lorem ipsum dolor sit amet nullam consequat." /></a></div>
+					<div class="4u 12u(mobile)"><a href="{{ 'assets/images/gallery/fulls/pic02.jpg'|theme }}" class="image full"><img src="{{ 'assets/images/gallery/thumbnails/pic02.jpg'|theme }}" alt="" title="Lorem ipsum dolor sit amet nullam consequat." /></a></div>
+					<div class="4u 12u(mobile)"><a href="http://youtu.be/TivqZTq5u6Y" data-poptrox="youtube,800x480" class="image full play"><img src="{{ 'assets/images/gallery/thumbnails/pic03.jpg'|theme }}" alt=""  title="Lorem ipsum dolor sit amet nullam consequat." /></a></div>
+				</div>
+				<div class="row no-collapse">
+					<div class="4u 12u(mobile)"><a href="{{ 'assets/images/gallery/fulls/pic04.jpg'|theme }}" class="image full"><img src="{{ 'assets/images/gallery/thumbnails/pic04.jpg'|theme }}" alt="" title="Lorem ipsum dolor sit amet nullam consequat." /></a></div>
+					<div class="4u 12u(mobile)"><a href="{{ 'assets/images/gallery/fulls/pic05.jpg'|theme }}" class="image full"><img src="{{ 'assets/images/gallery/thumbnails/pic05.jpg'|theme }}" alt="" title="Lorem ipsum dolor sit amet nullam consequat." /></a></div>
+					<div class="4u 12u(mobile)"><a href="http://youtu.be/TivqZTq5u6Y" data-poptrox="youtube,800x480" class="image full play"><img src="{{ 'assets/images/gallery/thumbnails/pic06.jpg'|theme }}" alt=""  title="Lorem ipsum dolor sit amet nullam consequat." /></a></div>
+				</div>
+			</div>
+
+		</div>
+	</article>
+</div>

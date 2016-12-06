@@ -1,0 +1,13 @@
+==
+{% if this.theme.load_jQuery %}
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/{{ this.theme.jQuery_version }}/jquery.min.js'></script>
+{% endif %}
+
+{% if this.theme.load_octobercms_framework %}
+    {% framework %}
+    {% framework extras %}
+{% endif %}
+
+<script src="{{ ['assets/js/jquery.slidertron.min.js', 'assets/js/jquery.poptrox.min.js','assets/js/jquery.nicescroll-modified.min.js', 'assets/js/skel.min.js', 'assets/js/skel-viewport.min.js', 'assets/js/util.js', 'assets/js/main.js']|theme }}"></script>
+
+{% scripts %}

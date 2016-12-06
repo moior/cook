@@ -1,0 +1,6 @@
+name: Transition
+description: 'One Page Template with four Sections'
+author: 'Patrick Mitterer'
+homepage: 'https://zwiebl.xyz'
+code: transition
+form: fields.yaml

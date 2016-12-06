@@ -1,0 +1,178 @@
+tabs:
+  fields:
+
+    ####################################################
+    # Tab: Info
+    ####################################################
+
+    website_name:
+      tab: Info
+      label: Website Name
+      type: text
+      default: Transition
+
+    website_title:
+      tab: Info
+      label: Website Title (html tag)
+      type: text
+      default: Transition OctoberCMS Theme
+
+    website_author:
+      tab: Info
+      label: Author
+      type: text
+      default: zwiebl.xyz
+
+    website_url:
+      tab: Info
+      label: URL
+      type: text
+      default: "https://demo-transition.zwiebl.xyz/"
+
+    description:
+      tab: Info
+      label: Description
+      type: textarea
+       default: "One Page Template with four sections"
+
+    keywords:
+      tab: Info
+      label: Keywords
+      type: taglist
+      separator: comma
+      default: one page template, octobercms, four sections
+
+    ####################################################
+    # Tab: Assets
+    ####################################################
+
+    load_google_fonts:
+      tab: Assets
+      label: Google Fonts
+      type: switch
+      default: true
+
+    google_font_family:
+      tab: Assets
+      label: Google Font Family
+      type: text
+      comment: Separate each font with vertical slash |
+      default: "Roboto+Slab:300,400,700|Raleway:300,300i,400,400i,700,700i"
+      trigger:
+        action: show
+        field: load_google_fonts
+        condition: checked
+
+    load_fontawesome:
+      tab: Assets
+      label: FontAwesome Icons Font
+      type: switch
+      default: true
+
+    load_jQuery:
+      tab: Assets
+      label: jQuery
+      type: switch
+      default: true
+
+    jQuery_version:
+      tab: Assets
+      label: jQuery Version
+      type: dropdown
+      default: 2.2.4
+      options:
+        3.1.0: 3.1.0
+        2.2.4: 2.2.4
+        1.12.4: 1.12.4
+      trigger:
+        action: show
+        field: load_jQuery
+        condition: checked
+
+    load_octobercms_framework:
+      tab: Assets
+      label: OctoberCMS Front-end Javascript Framework
+      type: switch
+      default: true
+
+    ####################################################
+    # Tab: Home Sections
+    ####################################################
+    zw_first_section_name:
+      tab: Sections
+      label: First Section Name
+      type: text
+      default: 'Home'
+      span: left
+
+    zw_first_section_slug:
+      tab: Sections
+      label: First Section Slug
+      type: text
+      default: 'home'
+      span: auto
+
+    zw_second_section_name:
+      tab: Sections
+      label: Second Section Name
+      type: text
+      default: 'Work'
+      span: left
+
+    zw_second_section_slug:
+      tab: Sections
+      label: Second Section Slug
+      type: text
+      default: 'work'
+      span: auto
+
+    zw_third_section_name:
+      tab: Sections
+      label: Third Section Name
+      type: text
+      default: 'About'
+      span: left
+
+    zw_third_section_slug:
+      tab: Sections
+      label: Third Section Slug
+      type: text
+      default: 'about'
+      span: auto
+
+    zw_fourth_section_name:
+      tab: Sections
+      label: Fourth Section Name
+      type: text
+      default: 'Contact'
+      span: left
+
+    zw_fourth_section_slug:
+      tab: Sections
+      label: Fourth Section Slug
+      type: text
+      default: 'contact'
+      span: auto
+
+    ####################################################
+    # Tab: Colors
+    ####################################################
+
+    zw_theme_color:
+      tab: Colors
+      label: Theme Color
+      type: dropdown
+      default: blue
+      options:
+        red: Red
+        blue: Blue
+        green: Green
+      span: left
+
+    zw-bg-color-body:
+      tab: Colors
+      label: Body Background Color
+      type: colorpicker
+      availableColors: ["#3b414d"]
+      default: "#3b414d"
+      assetVar: "zw-bg-color-body"

@@ -1,0 +1,17 @@
+title = "Error 404"
+url = "/404"
+layout = "offline"
+description = "Page not found"
+is_hidden = 0
+==
+<?php
+public function onStart()
+{
+    //return Redirect::to('home');
+}
+?>
+==
+<header class="major">
+    <h2>Sorry, nicht gefunden</h2>
+    <p><a class="button" href="{{'home'|page}}">Zurück zur Startseite</a></p>
+</header>

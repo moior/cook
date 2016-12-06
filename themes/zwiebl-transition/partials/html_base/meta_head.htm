@@ -1,0 +1,32 @@
+==
+<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="{{ this.page.meta_description|default(this.theme.description) }}">
+    <meta name="keywords" content="{{ this.theme.keywords }}">
+    <meta name="author" content="{{ this.theme.website_author }}">
+    <title>{{ this.theme.website_title }}</title>
+    <link rel="canonical" href="{{ this.theme.website_url }}" />
+    <link rel="icon" type="image/png" href="{{ 'assets/img/icon.png'|theme }}" />
+
+    {% if this.theme.load_google_fonts %}
+    <link href="https://fonts.googleapis.com/css?family={{ this.theme.google_font_family }}" rel="stylesheet">
+    {% endif %}
+    {% if this.theme.load_fontawesome %}
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+    {% endif %}
+
+    <!--[if lte IE 8]><script src="{{ 'assets/js/ie/html5shiv.js'|theme }}"></script><![endif]-->
+    <!--[if lte IE 8]><link rel="stylesheet" href="{{ ['assets/css/ie8.css']|theme }}" /><![endif]-->
+
+    {% if this.theme.zw_theme_color == "red" %}
+        <link href="{{ ['assets/css/red.css']|theme }}" rel="stylesheet">
+    {% endif %}
+    {% if this.theme.zw_theme_color == "blue" %}
+        <link href="{{ ['assets/css/blue.css']|theme }}" rel="stylesheet">
+    {% endif %}
+    {% if this.theme.zw_theme_color == "green" %}
+        <link href="{{ ['assets/css/green.css']|theme }}" rel="stylesheet">
+    {% endif %}
+
+    {% styles %}

@@ -1,0 +1,45 @@
+==
+{% if __SELF__.form %}
+
+    <div class="{{ __SELF__.id }}"></div>
+
+    {% flash %}
+
+        {% if __SELF__.form.code in message %}
+
+            <div class="alert alert-success">
+                {{ message|replace({ (__SELF__.form.code) : ''})|raw }}
+            </div>
+
+        {% endif %}
+
+    {% endflash %}
+
+    {{ form_open({
+            'id': __SELF__.form.code,
+            'class': __SELF__.form.css_class,
+            'data-request': __SELF__ ~ '::onSubmit',
+            'data-request-data': {form: __SELF__.form.code},
+            'data-request-update': "'" ~ __SELF__ ~ "::confirm' : '." ~ __SELF__.id ~ "'"
+        })
+    }}
+
+        {% for section in __SELF__.form.sections if not section.fields is empty %}
+
+            {{ section.html|raw }}
+
+        {% endfor %}
+
+        {% for field in __SELF__.form.fields if not field.section %}
+
+            {% if (field.field_type.code == 'file_uploader') %}
+                {% partial __SELF__ ~ '::file_uploader' %}
+            {% else %}
+                {{ field.html|raw }}
+            {% endif %}
+
+        {% endfor %}
+
+    {{ form_close() }}
+
+{% endif %}
