@@ -1,0 +1,166 @@
+==
+
+==
+
+<style>
+    .tile-example {font-size:0.7em;}
+    .tile-explain {height:130px;overflow-y:scroll;margin-bottom:5px;border-top:1px dotted gray;text-align:left;}
+    .tile-explain p {font-size:0.6em;color:gray;margin-bottom:15px;}
+    h3 small {color:gray;}
+    .tile-selected {border:2px solid tomato;}
+
+    .tile-평량 { text-align:center;padding:10px;padding-top:20px;background-color: #a3d6ee;border-radius:5px;}
+    .tile-평량-explain {height:230px;overflow-y:auto;margin-bottom:5px;border-top:1px dotted gray;text-align:left;}
+    .tile-평량-explain p {font-size:0.6em;color:gray;margin:5px 0 0 15px;padding:;}
+</style>
+
+<script>
+/* 로드시 정보 세팅. paper.note.htm 에 있는 input 정보이용 */
+function setPageSetting(){
+
+    $("#select-내지-매수"     ).find("option[value='" + $("#input-내지-매수").val() + "']").prop("selected", true);
+    $("#select-내지-인쇄"     ).find("option[value='" + $("#input-내지-인쇄").val() + "']").prop("selected", true);
+    $("#select-내지-중량"     ).find("option[value='" + $("#input-내지-용지").val().split(" ")[1] + "']").prop("selected", true);
+
+    if( $("#input-내지-용지").val().split(" ")[0] == "백색모조" ){
+        $("#tile-내지-재질-백색모조").addClass("tile-selected");
+    }else if( $("#input-내지-용지").val().split(" ")[0] == "미색모조" ){
+        $("#tile-내지-재질-미색모조").addClass("tile-selected");
+    }
+}
+
+$(document).ready(function(){
+
+    $("#select-내지-매수").change(function() {
+        var note_inner_pagenum = $("#select-내지-매수 option:selected").val();
+        $("#input-내지-매수").val( note_inner_pagenum ); //#input-제본 에 '무선'등 입력
+        $("#text-내지-매수").text( note_inner_pagenum ); //#input-제본 에 '무선'등 입력
+        showDetailPayment(); /*가격 계산 paper.note.htm */
+
+    });
+    $("#select-내지-인쇄").change(function() {
+        var note_inner_pagenum = $("#select-내지-인쇄 option:selected").val();
+        $("#input-내지-인쇄").val( note_inner_pagenum ); //#input-제본 에 '무선'등 입력
+        $("#text-내지-인쇄").text( note_inner_pagenum ); //#input-제본 에 '무선'등 입력
+        showDetailPayment(); /*가격 계산 paper.note.htm */
+
+    });
+    $(".tile, #select-내지-중량 option").click(function(){
+        /*페이지 영역에 정보 저장*/
+        if($(this).hasClass("tile")){
+            $(".tile").removeClass("tile-selected");
+            $(this).toggleClass("tile-selected");
+        }
+        var note_inner_type = $(".tile.tile-selected").data("value") + " " + $("#select-내지-중량 option:selected").val();
+        $("#input-내지-용지").val( note_inner_type );
+        $("#text-내지-용지").text( note_inner_type );
+        showDetailPayment(); /*가격 계산 paper.note.htm */
+    });
+    $("#select-내지-인쇄").change(function() {
+        var note_part = $(this).find("option:selected").val();
+        $("#input-내지-인쇄").val( note_part );
+        $("#text-내지-인쇄").text( note_part );
+        showDetailPayment(); /*가격 계산 paper.note.htm */
+    });
+    setPageSetting();
+})
+
+</script>
+
+
+<h3 class="headline"><span>내지<small> 속지 수량과 종류</small></span></h3>
+
+<div class="" style="margin-bottom:20px;">
+    <span style="width:40px;height:40px;display:inline-block;background-image:url('{{ "assets/images/cook/1-2-3-Steps.png"|theme }}');background-size:cover;"></span>
+    내지 매수
+    <select id="select-내지-매수" class="form-control" >
+
+        {% for i in 1..60 %}
+        {% if i == 20  %}
+        <option value="{{ i * 4 }}" selected>{{ i * 4 }}장 ({{ i * 8 }}페이지)</option>
+        {% else %}
+        <option value="{{ i * 4 }}">{{ i * 4 }}장 ({{ i * 8 }}페이지)</option>
+        {% endif %}
+        {% endfor %}
+    </select>
+</div>
+
+<div class="row" style="margin-bottom:10px;" id="box_inner_color">
+    <div class="col-sm-6">
+        <select id="select-내지-인쇄" class="form-control" size="4"><!-- > input-표지-인쇄 input에 -->
+            <option value="단면 1도">한쪽면만 검정인쇄 (단면 먹1도)</option>
+            <option value="양면 1도">앞뒤 검정인쇄 (양면 먹1도)</option>
+            <option value="단면 4도">한쪽면만 컬러인쇄 (단면 4도)</option>
+            <option value="양면 4도">앞뒤 컬러인쇄 (양면 4도)</option>
+
+        </select>
+    </div>
+    <div class="col-sm-6">
+        표지의 안쪽까지 인쇄하려면 앞뒤 인쇄를 선택해주세요.
+    </div>
+</div>
+
+
+<span style="background-position:-40px;width:40px;height:40px;display:inline-block;background-image:url('{{ "assets/images/cook/1-2-3-Steps.png"|theme }}');background-size:cover;"></span>
+
+<!-- <checkbox 만연필 필기 >> 모든것이 세팅되도록. 고급용지!! 돈많은 사람들.-->
+
+<div class="row pricing-tiles">
+
+    <div class="col-sm-4">
+        <div class="tile" data-cate="내지" data-value="백색모조" id="tile-내지-재질-백색모조">
+            <img src="{{ 'assets/images/cook/paper/paper/백색모조.jpg'|theme }}" alt="백색모조" class="tile-image">
+            <h3 class="tile-title">백색모조</h3>
+            <div class="tile-example">복사용지, 속지, 서식류</div>
+            <div class="tile-explain">
+                <p>A4용지보다 좀 두껍고 광택이 없는 종이. 면에 질감이 있으며 가격이 저렴한 편</p>
+                <p>평량 : 60g, 70g, 80g, 100g, 120g, 150g, 180g, 220g, 260g</p>
+                <p>백상지라고도 함</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div class="tile tile-hot" data-cate="내지" data-value="미색모조" id="tile-내지-재질-미색모조">
+            <img src="{{ 'assets/images/cook/paper/paper/미색백색모조.jpg'|theme }}" alt="미색모조" class="tile-image">
+            <h3 class="tile-title">미색모조</h3>
+            <div class="tile-example">책의 내지</div>
+            <div class="tile-explain">
+                <p>백상지와 같으나 눈부심이 적도록 색상처리하여 내지에 주로 쓰임</p>
+                <p>A4용지보다 좀 두껍고 광택이 없는 종이. 면에 질감이 있으며 가격이 저렴한 편</p>
+                <p>평량 : 70g, 80g, 100g, 120g</p>
+                <p>미색지라고도 함</p>
+            </div>
+        </div>
+    </div>
+
+    <span style="background-position:-77px;width:40px;height:40px;display:inline-block;background-image:url('{{ "assets/images/cook/1-2-3-Steps.png"|theme }}');background-size:cover;"></span>
+
+    <div class="col-sm-4">
+        <div class="tile-평량">
+            <h3 class="tile-title">종이 두께</h3>
+            <div class="tile-example">용지의 무게</div>
+            <div class="tile-평량-explain">
+                <select id="select-내지-중량" class="form-control" size="5">
+                    <option value="70g">70g-얇고저렴</option>
+                    <option value="80g" selected>80g-보통</option>
+                    <option value="100g">100g-두꺼움</option>
+                    <option value="120g">120g-만연필 필기 가능 !</option>
+                </select>
+                <!--<p>
+                    <a data-cate="내지-평량" data-value="70g" class="btn btn-default btn-sm">70g</a> 얇고 저렴
+                </p>
+                <p>
+                    <a data-cate="내지-평량" data-value="80g" class="btn btn-default btn-sm">80g</a> 보통
+                </p>
+                <p>
+                    <a data-cate="내지-평량" data-value="100g" class="btn btn-default btn-sm">100g</a>
+                </p>
+                <p>
+                    <a data-cate="내지-평량" data-value="120g" class="btn btn-default btn-sm">120g</a> 고급
+                </p>-->
+                <p>1 제곱미터당 용지의 무게를 말합니다. 클수록 두껍습니다.</p>
+
+            </div>
+        </div>
+    </div>
+</div>
