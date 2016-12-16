@@ -17,27 +17,30 @@ function onCalcFee(){
 
 ?>
 ==
-<script src="{{ 'assets/javascript/jquery.min.js'|theme }}"></script>
 
 <!--{% framework extras %}--> <!--AJAX framework-->
-<!--엥. 이게 들어가니까... ajax 버튼 요청이 2번 되네???-->
+<!--엥. 이게 들어가니까... ajax 버튼 요청이 2번 되네??? ==> layouts/cooking.html 에 들어있었음!-->
 
 <script>
     function setDefaultInfo(){
         var f = $("#form-currentnote");
         f.find("input[name=제본]").val("라벨링");
         f.find("input[name=크기]").val("B5");
+        f.find("input[name=크기-내지]").val("내지 -3mm");
         f.find("input[name=표지-스타일]").val("인쇄"); /*인쇄, 박*/
         f.find("input[name=표지-방식]").val("소프트커버");
         f.find("input[name=표지-용지]").val("스노우 250g");
         f.find("input[name=표지-인쇄]").val("단면 4도");
         f.find("input[name=표지-박]").val("");
+        f.find("input[name=표지-박개수]").val("");
         f.find("input[name=표지-코팅]").val("");
         f.find("input[name=표지-날개]").val("");
         f.find("input[name=내지-용지]").val("미색모조 80g");
         f.find("input[name=내지-인쇄]").val("양면 1도");
         f.find("input[name=내지-매수]").val("100");
-        f.find("input[name=데코]").val("라운딩 라벨스틱");
+        f.find("input[name=데코-라운딩]").val("4모서리 라운딩");
+        f.find("input[name=데코-OPP]").val("");
+        f.find("input[name=데코-라벨스틱]").val("라벨스틱");
         f.find("input[name=수량]").val("1000");
         $("#text-제본").text("라벨링");
         $("#text-크기").text("B5");
@@ -45,10 +48,13 @@ function onCalcFee(){
         $("#text-표지-용지").text("스노우 250g");
         $("#text-표지-코팅").text("");
         $("#text-표지-박").text("");
+        $("#text-표지-박개수").text("");
         $("#text-표지-날개").text("");
         $("#text-내지-용지").text("미색모조 80g");
         $("#text-내지-매수").text("100");
-        $("#cate-데코").find(".part_selected").text("라운딩 라벨스틱");
+        $("#text-데코-라운딩").text("4모서리 라운딩");
+        $("#text-데코-OPP").text("");
+        $("#text-데코-라벨스틱").text("라벨스틱");
     }
     function showDetailPayment(){
         /*가격 계산*/
@@ -89,8 +95,8 @@ $(document).ready(function(){
 </script>
 <style>
     #col-leftdesk {padding:0px;border-left:1px solid gray;}
-    #cookdesk-center {border-left:1px solid gray;border-right:1px solid gray;}
-    #col-rightdesk {padding:0px;border-right:1px solid gray;}
+    #cookdesk-center {border-left:1px solid gray;border-right:1px solid gray;min-height:600px;s}
+    #col-rightdesk {padding:0px;border-right:1px solid gray;border-bottom:1px solid gray;}
     .cook-step {text-align:left;clear:both;display:block;padding:5px;border-bottom:1px dotted gray; ;}
     .cook-step:hover {background-color:#eee;cursor:pointer;}
     .part_title {font-size:1em;}
@@ -106,7 +112,7 @@ $(document).ready(function(){
     <form id="form-currentnote">
         <input type="hidden" name="제본" id="input-제본"  value=""  />
         <input type="hidden" name="크기" id="input-크기" value=""  />
-        <input type="hidden" name="크기-내외동일" id="input-크기-내외동일" value=""  />
+        <input type="hidden" name="크기-내지" id="input-크기-내지" value=""  />
 
         <input type="hidden" name="표지-스타일" id="input-표지-스타일" value=""  /><!--일반/금은박-->
         <input type="hidden" name="표지-방식" id="input-표지-방식" value=""  /><!--소프트커버/하드커버 2합..-->
@@ -115,6 +121,7 @@ $(document).ready(function(){
         <input type="hidden" name="표지-평량" id="input-표지-평량" value=""  /><!--합지 포함 평량-->
         <input type="hidden" name="표지-코팅" id="input-표지-코팅" value=""  />
         <input type="hidden" name="표지-박" id="input-표지-박" value=""  /><!--1천회 기준 5만원-->
+        <input type="hidden" name="표지-박개수" id="input-표지-박개수" value=""  /><!--1천회 기준 5만원-->
         <input type="hidden" name="표지-날개" id="input-표지-날개" value=""  />
 
         <input type="hidden" name="삽지-용지" id="input-삽지-용지" value=""  />
@@ -127,6 +134,7 @@ $(document).ready(function(){
         <input type="hidden" name="내지-평량" id="input-내지-평량" value=""  />
         <input type="hidden" name="내지-매수" id="input-내지-매수" value=""  />
 
+        <input type="hidden" name="데코-라벨스틱" id="input-데코-라벨스틱" value=""  />
         <input type="hidden" name="데코-라운딩" id="input-데코-라운딩" value=""  />
         <input type="hidden" name="데코-OPP" id="input-데코-OPP" value=""  />
         <input type="hidden" name="수량" id="input-수량" value=""  />
@@ -185,36 +193,39 @@ $(document).ready(function(){
             data-request-success="commentSuccessfullyAdded('my message 2')"
             data-request-="@@@@@@@@@@@@@####@@@@@@@@@@@@@####" >
             <span class="part_title">표지</span>
-                <span class="part_selected" id="text-표지-인쇄">단면 4도</span>
-                <span class="part_selected" id="text-표지-방식">소프트커버</span>
+            <span class="part_selected" id="text-표지-인쇄">단면 4도</span>
+            <span class="part_selected" id="text-표지-방식">소프트커버</span>
 
             <span class="part_selected" id="text-표지-용지">스노우지 180g</span>
 
             <span class="part_selected" id="text-표지-코팅"></span>
 
             <span class="part_selected" id="text-표지-박">금박</span>
+            <span class="part_selected" id="text-표지-박개수"></span>
         </a>
 
 
-        <!--<a class="cook-step"  id="cate-삽지"
-           data-request='onClickStep1' data-request-update="'cook/paper-note-sabji': '#cookdesk-center'">
+        <a class="cook-step"  id="cate-삽지"
+           data-request='onClickStep1' data-request-update="'cook/paper-note-intro': '#cookdesk-center'">
             <span class="part_title">삽지</span>
-            <span class="part_selected" id="text-삽지-용지"></span>
-
             <span class="part_selected" id="text-삽지-매수">0</span><span class="part_selected">장</span>
-        </a>-->
+            <span class="part_selected" id="text-삽지-인쇄"></span>
+            <span class="part_selected" id="text-삽지-용지"></span>
+        </a>
         <a class="cook-step"  id="cate-내지"
            data-request='onClickStep1' data-request-update="'cook/paper-note-inner': '#cookdesk-center'">
             <span class="part_title">내지</span>
-            <span class="part_selected" id="text-내지-용지">미색모조 80g</span>
-            /
             <span class="part_selected" id="text-내지-매수">80</span><span class="part_selected">장</span>
+            <span class="part_selected" id="text-내지-인쇄">양면 1도</span>
+            <span class="part_selected" id="text-내지-용지">미색모조 80g</span>
         </a>
 
         <a class="cook-step"  id="cate-데코"
            data-request='onClickStep1' data-request-update="'cook/paper-note-deco': '#cookdesk-center'">
             <span class="part_title">데코</span>
-            <span class="part_selected" id="text-데코">스프링</span>
+            <span class="part_selected" id="text-데코-라운딩">라운딩</span>
+            <span class="part_selected" id="text-데코-OPP"></span>
+            <span class="part_selected" id="text-데코-라벨스틱">라벨스틱</span>
 
         </a>
 
@@ -292,8 +303,7 @@ $(document).ready(function(){
 
 
         <div id="">
-
-            <a href="order/save" class="btn btn-primary btn-lg" style="display:block">저장</a>
+            <a href="order/save" class="btn btn-primary btn-lg" style="display:block;margin:4px;ss">저장</a>
         </div>
     </div>
 
