@@ -5,9 +5,7 @@
     </IfModule>
 
     RewriteEngine On
-RewriteCond %{THE_REQUEST} !/phpmyadmin [NC]
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteRule ^ index.php [L]
+
     ##
     ## You may need to uncomment the following line for some hosting environments,
     ## if you have installed to a subdirectory, enter the name here also.
@@ -17,6 +15,7 @@ RewriteRule ^ index.php [L]
     ##
     ## Black listed folders
     ##
+    RewriteCond %{REQUEST_URI} !^(/phpmyadmin)($|/)
     RewriteRule ^bootstrap/.* index.php [L,NC]
     RewriteRule ^config/.* index.php [L,NC]
     RewriteRule ^vendor/.* index.php [L,NC]
@@ -29,6 +28,7 @@ RewriteRule ^ index.php [L]
     ##
     ## White listed folders
     ##
+    RewriteCond %{REQUEST_URI} !^(/phpmyadmin)($|/)
     RewriteCond %{REQUEST_FILENAME} -f
     RewriteCond %{REQUEST_FILENAME} !/.well-known/*
     RewriteCond %{REQUEST_FILENAME} !/storage/app/uploads/.*
@@ -42,6 +42,7 @@ RewriteRule ^ index.php [L]
     ##
     ## Block all PHP files, except index
     ##
+    RewriteCond %{REQUEST_URI} !^(/phpmyadmin)($|/)
     RewriteCond %{REQUEST_FILENAME} -f
     RewriteCond %{REQUEST_FILENAME} \.php$
     RewriteRule !^index.php index.php [L,NC]
@@ -49,7 +50,10 @@ RewriteRule ^ index.php [L]
     ##
     ## Standard routes
     ##
+    RewriteCond %{REQUEST_URI} !^(/phpmyadmin)($|/)
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^ index.php [L]
 
+    RewriteCond %{REQUEST_URI} ^/phpmyadmin
+    RewriteRule ^ - [NC,L]
 </IfModule>
