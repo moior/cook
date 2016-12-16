@@ -40,14 +40,21 @@ class FeeCalculator
             '일반' => 210,
             '무선' => 200,
             '중철' => 100,
-            '스프링' => 300, /*1000권 이하는 무조건 30만원, 3천권하면 A6 250원 A5 280원*/
-            '라벨링' => 400,
+            '스프링' => 400, /*1000권 이하는 무조건 30만원, 3천권하면 A6 250원 A5 280원*/
+            '라벨링' => 400, /*스프링작업비만 (제품가격 및 조립비는 데코에서)*/
             '떡' => 250,
             '양장' => 700,
             '반양장' => 600,
         );
+        $this->danka_easy['스프링'] = array(
+            '스프링' => 400, /*1000권 이하는 무조건 30만원, 3천권하면 A6 250원 A5 280원*/
+            '기본비용' => "400000", /*수량상관없이 기본  */
+            '기본수량' => "1000",
+            '1000' => "350", /*1000권 초과부터는 개당 원 */
+        );
         $this->danka['용지'] = array( /*국전(A1) 500장(1연)*/
-            '미색모조 70g' => 22222, 
+            '' => 0,
+            '미색모조 70g' => 22222,
             '미색모조 80g' => 26384,
             '미색모조 100g' => 32694, 
             '미색모조 120g' => 44444,
@@ -55,6 +62,12 @@ class FeeCalculator
             '백색모조 80g' => 25616,
             '백색모조 100g' => 32694,
             '백색모조 120g' => 36000,
+
+            '아트 70g' => 22222,
+            '아트 80g' => 26384,
+            '아트 100g' => 32694,
+            '아트 120g' => 44444,
+
             '스노우 일반' => 49999,
             '스노우 100g' => 22000, /*노트의달인*/
             '스노우 120g' => 29000, /*노트의달인*/
@@ -67,20 +80,29 @@ class FeeCalculator
             '특수지' => 55555,
 
         );
-        $this->danka['데코'] = array(
-            '라운딩' => 300, /**/
-            'OPP포장' => 50, /**/
-            '타공' => 150, /**/
-            '타공링' => 150, /**/
-            '오시' => 150, /**/
-            '미싱' => 200, /*절취선*/
-            '패턴코팅' => 150, /**/
-            '도무송' => 200, /**/
-            '박' => 200, /*금박 은박 먹박 청박 적박 녹박 홀로그램박 */
+
+        $this->danka['박'] = array( /*기본 5만원 */
+            '종이에박' => 50, /*금박 은박 먹박 청박 적박 녹박 홀로그램박 */
+            '노트에박' => 250, /**/
             '형압' => 200, /**/
-            '먹박' => 200, /**/
+            'explain' => "* 노트달인 : 기본15만, 1천권추가에 3만원(개당30원)
+                          * 쿡어노트 : 500권까지 250원/장 / 1000권까지 150원/장",
+        );
+        $this->danka_easy['박'] = array( /*기본 5만원 */
+            '기본비용' => "100000", /*수량상관없이 기본  */
+            '기본수량' => "1000",
+            '1000' => "30", /*1000권 초과부터는 개당 원 */
+        );
+        $this->danka['박개수'] = array( // 박가격에 크기따라 배수를 곱함
+            '' => 1, /*금박 은박 먹박 청박 적박 녹박 홀로그램박 */
+            '1개' => 1,
+            '2개' => 2, /**/
+            '3개' => 3, /**/
+            '4개' => 4, /**/
+            '전체' => 5,
         );
         $this->danka['표지인쇄'] = array( /*1R 비용. 보통 1도 1R(1장 16매=8권x500장=>4000권)에 10000원(내지) ~ 15000원(표지)*/
+            '' => 0,
             '단면 1도' => 10000,
             '양면 1도' => 20000, /*2배*/
             '단면 4도' => 40000, /*4배*/
@@ -92,10 +114,62 @@ class FeeCalculator
             '단면 4도' => 32000, /*4배*/
             '양면 4도' => 64000, /*8배*/
         );
-        $this->danka['판비'] = array(
-            '국-2절' => 10000,
-            '46-2절' => 10000,
+        $this->danka['판비'] = array( /* 1도당 판1개*/
+            '' => 0,
+            '단면 1도' => 20000,
+            '양면 1도' => 20000,
+            '단면 4도' => 40000, /**/
+            '양면 4도' => 40000, /**/
             '실비' => 8000, /*실제 이정도*/
+        );
+        $this->danka_easy['유광코팅'] = array(
+            '기본비용' => "35000", /*수량상관없이 기본  */
+            '기본수량' => "1000",
+            '1000' => "15", /*1000권 초과부터는 개당 원 */
+        );
+        $this->danka_easy['무광코팅'] = array(
+            '기본비용' => "40000", /*수량상관없이 기본  */
+            '기본수량' => "1000",
+            '1000' => "15", /*1000권 초과부터는 개당 원 */
+        );
+        $this->danka_easy['엠보코팅'] = array(
+            '기본비용' => "150000", /*수량상관없이 기본  */
+            '기본수량' => "1000",
+            '1000' => "30", /*1000권 초과부터는 개당 원 */
+        );
+
+        $this->danka_easy['일반날개'] = array(
+            '기본비용' => "50000", /*수량상관없이 기본  */
+            '기본수량' => "1000",
+            '1000' => "20", /*1000권 초과부터는 개당 원 */
+        );
+        $this->danka_easy['포켓날개'] = array(
+            '기본비용' => "100000", /*수량상관없이 기본  */
+            '기본수량' => "1000",
+            '1000' => "40", /*1000권 초과부터는 개당 원 */
+        );
+
+        $this->danka['데코'] = array(
+            '타공' => 150, /**/
+            '타공링' => 150, /**/
+            '오시' => 150, /**/
+            '미싱' => 200, /*절취선*/
+            '패턴코팅' => 150, /**/
+            '도무송' => 200, /**/
+        );
+        $this->danka['라벨스틱'] = array(
+            '' => 0,
+            '일반' => 200, /**/
+            '라벨스틱' => 200, /**/
+        );
+        $this->danka['OPP'] = array(
+            '' => 0,
+            '개별OPP포장' => 50, /**/
+        );
+        $this->danka['라운딩'] = array(
+            '' => 0,
+            '일반' => 300, /**/
+            '4모서리 라운딩' => 300, /**/
         );
         /*   접지   에폭시
         */
@@ -119,14 +193,160 @@ class FeeCalculator
         return $인쇄비;
     }
     /*표지-판비 // 국-2절 or 46-2절 */
+    /* 판 1개에 A5짜리 16개를 올림. 따라서 16장 내지를 완전 다르게 해도, */
     function feeCoverPan($real = "real", $size = "국-2절"){
         if($real == "real"){
-            $판비 = $this->danka["판비"]["국-2절"];
+            $판비 = $this->danka["판비"][$this->userSetting["표지-인쇄"]];
         }else{
-            $판비 = $this->danka["판비"]["국-2절"];
         }
         return $판비;
     }
+    /*표지-박비 //  */
+    function feeCoverBak($real = "real", $size = "국-2절"){
+        if( $this->userSetting["표지-박"] ){
+            $기본비 = $this->danka_easy["박"]["기본비용"]
+                    * $this->danka["박개수"][$this->userSetting["표지-박개수"]];
+            $기본수량 = $this->danka_easy["박"]["기본수량"];
+            if($real == "real"){
+                if( $this->quantity <= $기본수량){
+                    $박비 = $기본비;
+                }else{ // 기본 1천권 넘으면 / 초과 권당
+                    $박비 = $기본비
+                        + ($this->quantity - $기본수량 ) * $this->danka_easy["박"]["1000"];
+                    // 이부분 완벽하지 않음. 1만개 이상할 때 등 할인 들어가야.
+                }
+            }else{
+            }
+            return $박비;
+        }
+    }
+    /*표지-박비  */
+    function feeCoverCoating($real = "real"){ /* 유광, 무광, 엠보 */
+        if( $this->userSetting["표지-코팅"] ){
+            $기본비 = $this->danka_easy[$this->userSetting["표지-코팅"]]["기본비용"];
+            $기본수량 = $this->danka_easy[$this->userSetting["표지-코팅"]]["기본수량"];
+            if($real == "real"){
+                if( $this->quantity <= $기본수량 ){
+                    $박비 = $기본비;
+                }else{ // 기본 1천권 넘으면 / 초과 권당
+                    $박비 = $기본비
+                        + ($this->quantity - $기본수량 ) * $this->danka_easy[$this->userSetting["표지-코팅"]]["1000"];
+                }
+            }else{
+            }
+            return $박비;
+        }
+    }
+    /*표지-날개  */
+    function feeCoverWing($real = "real", $type = "일반"){ /* 일반, 포켓 */
+        if( $this->userSetting["표지-날개"] ){
+            $기본비 = $this->danka_easy[$type."날개"]["기본비용"];
+            $기본수량 = $this->danka_easy[$type."날개"]["기본수량"];
+            if($real == "real"){
+                if( $this->quantity <= $기본수량 ){
+                    $날개비 = $기본비;
+                }else{ // 기본 1천권 넘으면 / 초과 권당
+                    $날개비 = $기본비
+                        + ($this->quantity - $기본수량 ) * $this->danka_easy[$type."날개"]["1000"];
+                }
+            }else{
+            }
+            return $날개비;
+        }
+    }
+
+    /* 삽지 ==========================================*/
+    /*비용 = 용지비 + 인쇄비 + 판비
+    판비    도당 1판이 필요. 먹1도면 1개 필요. 양면이면 판이 2개이므로 2개
+            4도가 풀컬러. 앞뒤가 다르고 풀컬러이면 8만원*/
+    function feeIntroPaper($real = "real", $paper_name = null, $size = null) // 내부확인용
+    {   /* 표지는 1권에 2장 */
+        if($real == "real") {
+            //$용지비 = $this->quantity * 2 * $this->feePaper1page($this->userSetting["표지-용지"]); // R수(연수) 상관없이 실제 들어가는 종이비.
+            $용지비 = ceil($this->numNeededR("삽지")) * $this->danka["용지"][$this->userSetting["삽지-용지"]];
+        }
+        return $용지비 ;
+    }
+    /*표지-인쇄 / 표지는 1권에 2장*/
+    function feeIntroPrint($real = "real", $paper_name = null, $size = null) {   /*  */
+        if($real == "real") {
+            $인쇄비 = ceil($this->numNeededR("삽지")) * $this->danka["표지인쇄"][$this->userSetting["삽지-인쇄"]];
+        }
+        return $인쇄비;
+    }
+    /*표지-판비 // 국-2절 or 46-2절 */
+    function feeIntroPan($real = "real", $size = "국-2절"){
+        if($real == "real"){
+            $판비 = $this->danka["판비"][$this->userSetting["삽지-인쇄"]];
+        }else{
+        }
+        return $판비;
+    }
+
+
+    /* 내지 ==========================================*/
+    /*표지 비용 = 용지비 + 인쇄비 + 판비
+    판비    도당 1판이 필요. 먹1도면 1개 필요. 양면이면 판이 2개이므로 2개
+            4도가 풀컬러. 앞뒤가 다르고 풀컬러이면 8만원*/
+    function feeInnerPaper($real = "real", $paper_name = null, $size = null) // 내부확인용
+    {   /* 표지는 1권에 2장 */
+        if($real == "real") {
+            //$용지비 = $this->quantity * 2 * $this->feePaper1page($this->userSetting["표지-용지"]); // R수(연수) 상관없이 실제 들어가는 종이비.
+            $용지비 = ceil($this->numNeededR("내지")) * $this->danka["용지"][$this->userSetting["내지-용지"]];
+        }
+        return $용지비 ;
+    }
+    /*표지-인쇄 / 표지는 1권에 2장*/
+    function feeInnerPrint($real = "real", $paper_name = null, $size = null) {   /*  */
+        if($real == "real") {
+            $인쇄비 = ceil($this->numNeededR("내지")) * $this->danka["내지인쇄"][$this->userSetting["내지-인쇄"]];
+        }
+        return $인쇄비;
+    }
+    /*표지-판비 // 국-2절 or 46-2절 */
+    function feeInnerPan($real = "real", $size = "국-2절"){
+        if($real == "real"){
+            $판비 = $this->danka["판비"][$this->userSetting["내지-인쇄"]];
+        }else{
+        }
+        return $판비;
+    }
+
+    /*총 제본비*/
+    function feeJebon($real = "real", $paper_name = null, $size = null)
+    {
+        $제본단가 = $this->danka['제본'][$this->userSetting['제본']];
+        $제본비 = $제본단가 * $this->quantity;
+        return $제본비;
+        $제본단가 = $this->danka_easy['스프링'][$this->userSetting['제본']];
+
+    }
+
+    /*라벨스틱비*/
+    function feeLarvelStick($real = "real", $size = '8mm')
+    {
+        $라벨스틱단가 = $this->danka['라벨스틱'][$this->userSetting['데코-라벨스틱']];
+        $라벨스틱비 = $라벨스틱단가 * $this->quantity;
+        return $라벨스틱비;
+    }
+    /*라운딩비*/
+    function feeRounding($real = "real", $size = '8mm')
+    {
+        $라운딩단가 = $this->danka['라운딩'][$this->userSetting['데코-라운딩']];
+        $라운딩비 = $라운딩단가 * $this->quantity;
+        return $라운딩비;
+    }
+    /*OPP포장비*/
+    function feeOPP($real = "real", $size = '8mm')
+    {
+        $OPP작업단가 = $this->danka['OPP'][$this->userSetting['데코-OPP']];
+        $OPP작업비 = $OPP작업단가 * $this->quantity;
+        return $OPP작업비;
+    }
+
+
+
+
 
 
     /*필요한 R(연)수*/
@@ -142,11 +362,11 @@ class FeeCalculator
     }
     /*제본비 1권*/
     function feeJebon1book($paper_name = null, $size = null)
-{
-    $jebon = $this->danka['제본'][$this->userSetting['제본']];
-    $fee1book = $jebon;
-    return $fee1book;
-}
+    {
+        $jebon = $this->danka['제본'][$this->userSetting['제본']];
+        $fee1book = $jebon;
+        return $fee1book;
+    }
     /*내지 한장의 가격 / 스노우 180g, B5*/
     function feePaper1page($paper_name = null, $size = null){
         if( $size == null ) $size = $this->userSetting['크기'];
