@@ -5,7 +5,9 @@
     </IfModule>
 
     RewriteEngine On
-
+RewriteCond %{THE_REQUEST} !/phpmyadmin [NC]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^ index.php [L]
     ##
     ## You may need to uncomment the following line for some hosting environments,
     ## if you have installed to a subdirectory, enter the name here also.
