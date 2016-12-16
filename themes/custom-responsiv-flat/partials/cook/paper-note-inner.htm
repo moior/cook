@@ -12,6 +12,10 @@
     .tile-평량 { text-align:center;padding:10px;padding-top:20px;background-color: #a3d6ee;border-radius:5px;}
     .tile-평량-explain {height:230px;overflow-y:auto;margin-bottom:5px;border-top:1px dotted gray;text-align:left;}
     .tile-평량-explain p {font-size:0.6em;color:gray;margin:5px 0 0 15px;padding:;}
+
+    #img-내지-인쇄 {height:100px;width:100%;background-repeat: no-repeat;
+        background-color: #efefef;background-size: contain;background-position: center;
+    }
 </style>
 
 <script>
@@ -27,8 +31,29 @@ function setPageSetting(){
     }else if( $("#input-내지-용지").val().split(" ")[0] == "미색모조" ){
         $("#tile-내지-재질-미색모조").addClass("tile-selected");
     }
+    update_내지_인쇄();
 }
-
+function update_내지_인쇄(){
+    var note_inner_pagenum = $("#select-내지-인쇄 option:selected").val();
+    $("#input-내지-인쇄").val( note_inner_pagenum ); //#input-제본 에 '무선'등 입력
+    $("#text-내지-인쇄").text( note_inner_pagenum ); //#input-제본 에 '무선'등 입력
+    showDetailPayment(); /*가격 계산 paper.note.htm */
+    // 클릭시 내지-인쇄-단면-1도.jpg 파일 자동 부르기
+    var this_dir = '{{ "assets/images/cook/paper/note/inner"|theme }}' ;
+    note_inner_pagenum = note_inner_pagenum.replace(/\s/g , "-");
+    var this_img = this_dir + "/내지-인쇄-" + note_inner_pagenum + ".jpg";
+    $("#img-내지-인쇄").css("background-image", "url("+this_img+")");
+}
+function update_내지_용지($this) {
+    /*페이지 영역에 정보 저장*/
+    if($this.hasClass("tile")){
+        $(".tile").removeClass("tile-selected");
+        $this.toggleClass("tile-selected");
+    }
+    var note_inner_type = $(".tile.tile-selected").data("value") + " " + $("#select-내지-중량 option:selected").val();
+    $("#input-내지-용지").val( note_inner_type );
+    $("#text-내지-용지").text( note_inner_type );
+}
 $(document).ready(function(){
 
     $("#select-내지-매수").change(function() {
@@ -39,29 +64,15 @@ $(document).ready(function(){
 
     });
     $("#select-내지-인쇄").change(function() {
-        var note_inner_pagenum = $("#select-내지-인쇄 option:selected").val();
-        $("#input-내지-인쇄").val( note_inner_pagenum ); //#input-제본 에 '무선'등 입력
-        $("#text-내지-인쇄").text( note_inner_pagenum ); //#input-제본 에 '무선'등 입력
+        update_내지_인쇄();
+        showDetailPayment(); /*가격 계산 paper.note.htm */
+    });
+    $(".tile, #select-내지-중량 option").click(function(){
+        update_내지_용지($(this));
         showDetailPayment(); /*가격 계산 paper.note.htm */
 
     });
-    $(".tile, #select-내지-중량 option").click(function(){
-        /*페이지 영역에 정보 저장*/
-        if($(this).hasClass("tile")){
-            $(".tile").removeClass("tile-selected");
-            $(this).toggleClass("tile-selected");
-        }
-        var note_inner_type = $(".tile.tile-selected").data("value") + " " + $("#select-내지-중량 option:selected").val();
-        $("#input-내지-용지").val( note_inner_type );
-        $("#text-내지-용지").text( note_inner_type );
-        showDetailPayment(); /*가격 계산 paper.note.htm */
-    });
-    $("#select-내지-인쇄").change(function() {
-        var note_part = $(this).find("option:selected").val();
-        $("#input-내지-인쇄").val( note_part );
-        $("#text-내지-인쇄").text( note_part );
-        showDetailPayment(); /*가격 계산 paper.note.htm */
-    });
+
     setPageSetting();
 })
 
@@ -88,15 +99,15 @@ $(document).ready(function(){
 <div class="row" style="margin-bottom:10px;" id="box_inner_color">
     <div class="col-sm-6">
         <select id="select-내지-인쇄" class="form-control" size="4"><!-- > input-표지-인쇄 input에 -->
-            <option value="단면 1도">한쪽면만 검정인쇄 (단면 먹1도)</option>
-            <option value="양면 1도">앞뒤 검정인쇄 (양면 먹1도)</option>
+            <option value="단면 1도">한쪽면만 흑백인쇄 (단면 먹1도)</option>
+            <option value="양면 1도">앞뒤 흑백인쇄 (양면 먹1도) ★</option>
             <option value="단면 4도">한쪽면만 컬러인쇄 (단면 4도)</option>
-            <option value="양면 4도">앞뒤 컬러인쇄 (양면 4도)</option>
+            <option value="양면 4도">앞뒤 컬러인쇄 (양면 4도) ★</option>
 
         </select>
     </div>
     <div class="col-sm-6">
-        표지의 안쪽까지 인쇄하려면 앞뒤 인쇄를 선택해주세요.
+        <div id="img-내지-인쇄"></div>
     </div>
 </div>
 

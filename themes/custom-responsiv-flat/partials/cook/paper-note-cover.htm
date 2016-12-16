@@ -1,0 +1,260 @@
+==
+
+==
+
+
+<style>
+    .tile-example {font-size:0.7em;}
+    .tile-explain {height:130px;overflow-y:scroll;margin-bottom:5px;border-top:1px dotted gray;text-align:left;}
+    .tile-explain p {font-size:0.6em;color:gray;margin-bottom:15px;}
+    h3 small {color:gray;}
+    h5 small {color:gray;}
+    .tile-selected {border:2px solid tomato;}
+    .tile-title {color:black;}
+    .tile-sample {overflow-x:scroll;white-space:nowrap;height:150px;}
+    .tile-sample span {margin:5px;width:100px;height:100px;display:inline-block;background-size:cover;background-clip:border-box;}
+    .number_title {width:20px;height:45px;display:inline-block;
+        background-image:url({{ "assets/images/cook/numbers-red.jpg"|theme }});
+        background-size:580%;background-repeat:no-repeat;}
+</style>
+
+<script>
+/* 로드시 정보 세팅. paper.note.htm 에 있는 input 정보이용 */
+function setPageSetting(){
+    $(".tile[data-value='" + $("#input-표지-스타일").val() + "']").trigger("click");
+    $("#select_cover_type"      ).find("option[value='" + $("#input-표지-방식").val() + "']").prop("selected", true);
+    $("#select_cover_color"     ).find("option[value='" + $("#input-표지-인쇄").val() + "']").prop("selected", true);
+    $("#select_cover_paper"     ).find("option[value='" + $("#input-표지-용지").val() + "']").prop("selected", true);
+    //$("#").find("option[value='" + $("#input-표지-평량").val() + "']").prop("selected", true);
+    $("#select_cover_coating"   ).find("option[value='" + $("#input-표지-코팅").val() + "']").prop("selected", true);
+    $("#select_cover_bak"       ).find("option[value='" + $("#input-표지-박").val()   + "']").prop("selected", true);
+    $("#select_cover_bak_size"       ).find("option[value='" + $("#input-표지-박개수").val()   + "']").prop("selected", true);
+    
+    if( $("#input-표지-날개").val() == "날개" ) $("#check_책날개").prop("checked", true);
+}
+
+$(document).ready(function(){
+
+    //지금까지 선택한 자료 바탕으로, 가능/불가능 옵션 보여주기
+    if( $("#input-제본").val() == "스프링" || $("#input-제본").val() == "라벨링" ){
+        $(".only-spring").prop("disabled", false);
+    }else  {
+        $(".only-spring").prop("disabled", true);
+    }
+    if( $("#input-제본").val() == "양장" || $("#input-제본").val() == "반양장" ){
+        $("#select_cover_type option").prop("disabled", true);
+        $(".if-양장").prop("disabled", false);
+    }else $("#select_cover_type option").prop("disabled", false);
+
+    $("#box_cover_color").hide();
+    /*표지 스타일 선택시, 아래 재질 등 제한*/
+    $(document).on( "click", ".tile", function(){ //trigger할경우. on으로해야
+        $(".tile").removeClass("tile-selected");
+        $(this).toggleClass("tile-selected");
+        console.log($(this).data("value") + "=====");
+        if ($(this).data("value") == "인쇄"){
+            $("#box_cover_color").show();
+            console.log('인쇄 클릭1'); //
+            //$("#select_cover_paper option").prop("disabled", false);
+        }else if( $(this).data("value") == "박"){
+            $("#box_cover_color").hide();
+            console.log('인쇄 클릭2'); //
+            //$("#select_cover_paper option").prop("disabled", false);
+        }
+        $("#input-표지-스타일").val( $(this).data("value") );
+    });
+    $("#select_cover_color").change(function() {
+        var note_part = $(this).find("option:selected").val();
+        $("#input-표지-인쇄").val( note_part );
+        $("#text-표지-인쇄").text( note_part );
+        showDetailPayment(); /*가격 계산 paper.note.htm */
+    });
+
+    $("#select_cover_type").change(function() {
+        /*표지 두께 선택시, 아래 재질에 선택 제한*/
+        var note_part = $(this).find("option:selected").val();
+        $("#select_cover_paper option").css("display", "");
+        if( note_part == "소프트커버" ){ //소프트커버면 평량 선택되도록. 하드커버는 재질만 선택
+            $("#select_cover_paper").find("option[value='스노우 일반']").css("display", "none");
+        }else{ //하드커버
+            $("#select_cover_paper").find("option[value='스노우 180g']").css("display", "none");
+            $("#select_cover_paper").find("option[value='스노우 250g']").css("display", "none");
+        }
+        $("#input-표지-방식").val( note_part );
+        $("#text-표지-방식").text( note_part );
+        showDetailPayment(); /*가격 계산 paper.note.htm */
+    });
+    $("#select_cover_paper").change(function() {
+        var note_part = $(this).find("option:selected").val();
+        $("#input-표지-용지").val( note_part );
+        $("#text-표지-용지").text( note_part );
+        showDetailPayment(); /*가격 계산 paper.note.htm */
+    });
+    $("#select_cover_coating").change(function() {
+        var note_part = $(this).find("option:selected").val();
+        $("#input-표지-코팅").val( note_part );
+        $("#text-표지-코팅").text( note_part );
+        showDetailPayment(); /*가격 계산 paper.note.htm */
+    });
+    $("#select_cover_bak").change(function() {
+        var note_part = $(this).find("option:selected").val();
+        $("#input-표지-박").val( note_part );
+        $("#text-표지-박").text( note_part );
+        showDetailPayment(); /*가격 계산 paper.note.htm */
+    });
+    $("#select_cover_bak_size").change(function() {
+        var note_part = $(this).find("option:selected").val();
+        $("#input-표지-박개수").val( note_part );
+        $("#text-표지-박개수").text( note_part );
+        showDetailPayment(); /*가격 계산 paper.note.htm */
+    });
+    $("#check_책날개").click(function() {
+        var note_part;
+        if( $(this).prop("checked") == true ) note_part = "날개";
+        else note_part = "";
+        $("#input-표지-날개").val( note_part );
+        $("#text-표지-날개").text( note_part );
+        showDetailPayment(); /*가격 계산 paper.note.htm */
+    });
+    setPageSetting();
+
+})
+</script>
+<h3 class="headline"><span>표지<small> 노트의 표지</small></span></h3>
+
+
+<h5>
+    <span style="background-position:-27px 5px;" class="number_title"></span>
+    표지 스타일 <small>가장 많이 쓰는 2가지 방식 중 골라주세요</small>
+</h5>
+<div class="row" class="select_cover_style">
+    <div class="col-sm-4">
+        <div class="tile tile-hot" data-cate="표지-스타일" data-value="인쇄"
+            style="background-image: url({{ 'assets/images/cook/paper/note/cover/디자인예-인쇄-06.jpg'|theme }});background-size: cover;">
+            <!--<img src="{{ 'assets/images/cook/paper/note/cover/인쇄예제-01.jpg'|theme }}" alt="백색모조" class="tile-image">-->
+            <div style="height:60px;"></div>
+            <h3 class="tile-title">일반 인쇄</h3>
+            <div class="tile-example">스노우/아트지에 전면 인쇄합니다.</div>
+        </div>
+    </div>
+    <div class="col-sm-8 tile-sample" style="">
+        <span style="background-color: #555;color:white;width:35px;padding:5px;font-size:12px;">예제</span>
+
+        {% for i in 2..6 %}
+        {% if 1  %} <!--파일이 존재하는지 체크후-->
+        <span style="background-image:url({{ ('assets/images/cook/paper/note/cover/디자인예-인쇄-0'~i~'.jpg')|theme }})" class="tile-image"></span>
+        {% endif %}
+        {% endfor %}
+    </div>
+</div>
+<div class="row" style="margin-bottom:10px;" id="box_cover_color">
+    <div class="col-sm-6">
+        <select id="select_cover_color" class="form-control" size="4"><!-- > input-표지-인쇄 input에 -->
+            <option value="단면 1도">바깥면만 흑백인쇄 (단면1도)</option>
+            <option value="양면 1도">앞뒤 흑백인쇄 (양면1도)</option>
+            <option value="단면 4도">바깥면만 컬러인쇄 (단면4도)</option>
+            <option value="양면 4도">앞뒤 컬러인쇄 (양면4도)</option>
+
+        </select>
+    </div>
+    <div class="col-sm-6">
+        표지의 안쪽까지 인쇄하려면 앞뒤 인쇄를 선택해주세요.
+    </div>
+</div>
+<div class="row" class="select_cover_style">
+    <div class="col-sm-4">
+        <div class="tile tile-hot" data-cate="표지-스타일" data-value="박"
+             style="background-image: url({{ 'assets/images/cook/paper/note/cover/디자인예-박-01.jpg'|theme }});background-size: cover;">
+            <!--<img src="{{ 'assets/images/cook/paper/note/cover/인쇄예제-01.jpg'|theme }}" alt="백색모조" class="tile-image">-->
+            <div style="height:60px;"></div>
+            <h3 class="tile-title">금은박 디자인</h3>
+            <div class="tile-example">깔끔한 바탕에 금은박으로 디자인</div>
+        </div>
+    </div>
+    <div class="col-sm-8 tile-sample" >
+        <span style="background-color: #555;color:white;width:35px;padding:5px;font-size:12px;">예제</span>
+        {% for i in 1..5 %}
+        {% if 1  %} <!--파일이 존재하는지 체크후-->
+        <span  style="background-image:url({{ ('assets/images/cook/paper/note/cover/디자인예-박-0'~i~'.jpg')|theme }})" class="tile-image"></span>
+        {% endif %}
+        {% endfor %}
+    </div>
+</div>
+
+<h5>
+    <span style="background-position:-48px 5px;" class="number_title"></span>
+    표지의 두께 <small>표지 제작방식. 단단함에 차이가 있음</small>
+</h5>
+<select id="select_cover_type" class="form-control" size="4">
+    <option value="소프트커버">소프트커버</option>
+    <option value="하드커버 2합" class="only-spring">하드커버 (2합, 단단함)</option>
+    <option value="하드커버 3합" class="only-spring">하드커버 (3합, 단단함, 깔끔한 안쪽면)</option>
+    <option value="싸바리" class="if-양장">하드커버 (양장, 단단함, 싸바리)</option>
+</select>
+<div class="well well-sm" style="margin-top:5px;font-size:10pt;color:gray;">제본방식에 따라 선택할 수 있는 표지 방식이 제한됩니다. (예, 하드커버는 스프링제본에서만 가능)  </div>
+
+<h5>
+    <span style="background-position:-68px 5px;" class="number_title"></span>
+    재질 <small></small>
+</h5>
+<select id="select_cover_paper" class="form-control" size="4">
+    <!--<option value="아트">아트</option>
+    <option value="모조">모조</option>-->
+    <option value="스노우 일반">일반 스노우지</option>
+    <option value="스노우 180g">저가 연습장용 (스노우지 180g)</option>
+    <option value="스노우 250g">일반 노트용 (스노우지 250g+)</option>
+    <option value="크라프트">크라프트 (올드한 나무 질감, 글씨, 로고만 인쇄하는게 좋음)</option>
+    <option value="특수지">특수지 (다양한 질감 가능, 주로 금은박 할 때)</option>
+</select>
+
+
+<h5>
+    <span style="background-position:-90px 5px;" class="number_title"></span>
+    금은먹박 <small>회사 로고 등</small>
+</h5>
+<select id="select_cover_bak" class="form-control" size="5">
+    <option value="">로고 없음</option>
+    <option value="금박">금박</option>
+    <option value="은박">은박</option>
+    <option value="먹박">먹박 (검정색 박)</option>
+    <option value="형압">형압 (글자만 돌출)</option>
+    <option value="청박">청박</option>
+    <option value="적박">적박</option>
+    <option value="녹박">녹박</option>
+    <option value="홀로그램박">홀로그램박</option>
+</select>
+<div style="margin-top:5px;">
+    <select id="select_cover_bak_size" class="form-control" size="1">
+        <option value="">기본</option>
+        <option value="2개">박 2군데 (예1)앞표지 위아래 (예2)앞뒤에 각1개</option>
+        <option value="3개">박 3군데 (예)앞표지 위/아래, 뒤표지 중간</option>
+        <option value="4개">박 4군데</option>
+        <option value="전체">전체 사이즈 박작업</option>
+    </select>
+    <span style="font-size:10px;">※ 박 가격은 명함사이즈가 기준입니다. 그 이상 크기를 쓰거나 2군데 이상 위치에 박을 넣을 경우 아래 선택</span>
+
+</div>
+
+<h5>
+    <span style="background-position:-8px -45px;" class="number_title"></span>
+    코팅
+</h5>
+<select id="select_cover_coating" class="form-control" size="4">
+    <option value="">코팅없음</option>
+    <option value="유광코팅">유광코팅 (약1.5만/1천권)</option>
+    <option value="무광코팅">무광코팅 (약1.5만/1천권)</option>
+    <option value="엠보코팅">엠보코팅 (약3만/1천권)</option>
+</select>
+
+<h5>
+    <span style="background-position:-27px -45px;;" class="number_title"></span>
+    꾸미기
+</h5>
+    <input type="checkbox" name="표지-책날개" id="check_책날개" value="날개"/>
+    <label for="check_책날개"><b>책날개</b>
+    <small>책의 겉표지를 안으로 접어 좀 더 고급스럽게 만듭니다. (오리꼬미라고도 합니다)</small>
+    </label>
+<!--(오시)
+대문접지
+표지를 접어 안쪽에
+-->

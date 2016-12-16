@@ -1,30 +1,159 @@
 
 <h3 class="headline"><span>크기<small> 노트의 크기</small></span></h3>
 
-<style>
-    .img-size-explain {max-width:200px;}
+<!--속도가 엄청 느려지네??-->
+<!--<link rel="stylesheet/less" href="/modules/system/assets/ui/storm.less" type="text/css" />
+<script src="/modules/system/assets/ui/storm.js"></script>-->
+
+<style type="text/less">
+    @paper_color : #eee;
+    @a6_height: 150;
+    @a5_height: @a6_height + 40;;
+    @a4_height: @a6_height + 80;
+    @b6_height: @a6_height + 20;
+    @b5_height: @a6_height + 60;
+    @b4_height: @a6_height + 100;
+    @a6_width: @a6_height * 0.8;
+    @a5_width: @a5_height * 0.8;
+    @a4_width: @a4_height * 0.8;
+    @b6_width: @b6_height * 0.8;
+    @b5_width: @b5_height * 0.8;
+    @b4_width: @b4_height * 0.8;
+
+    .img-size-explain {max-width:200px;clear:both;position:relative;}
+    .box-크기-wrap {position:relative;height:@b4_height*1px;}
+    #box-크기-sample {position:relative;}
+    .box-크기 {position:absolute;bottom:0px;left:0px;height:200px;padding:3px;border:1px solid gray;
+        &:hover  {background-color:yellow;};
+    }
+    .size-a4 {width:@a4_width*1px;height:@a4_height*1px;background-color:@paper_color;}
+    .size-a5 {width:@a5_width*1px;height:@a5_height*1px;background-color:darken(@paper_color,10%);}
+    .size-a6 {width:@a6_width*1px;height:@a6_height*1px;background-color:darken(@paper_color,20%);}
+    .size-b4 {width:@b4_width*1px;height:@b4_height*1px;background-color:@paper_color;}
+    .size-b5 {width:@b5_width*1px;height:@b5_height*1px;background-color:darken(@paper_color,10%);}
+    .size-b6 {width:@b6_width*1px;height:@b6_height*1px;background-color:darken(@paper_color,20%);}
+    .box-크기-selected {background-color:gold;border:1px solid tomato;}
+
+
 </style>
+<script src="//cdnjs.cloudflare.com/ajax/libs/less.js/2.7.1/less.min.js"></script>
+<script>
+/* 로드시 정보 세팅. paper.note.htm 에 있는 input 정보이용 */
 
-<img src="{{ 'assets/images/cook/paper/size-explain-1.jpg'|theme }}" alt="사이즈 설명" class="img-size-explain">
-<img src="{{ 'assets/images/cook/paper/size-explain-2.jpg'|theme }}" alt="사이즈 설명" class="img-size-explain">
+function setPageSetting() {
+    update_크기( $(".box-크기[data-value="+ $("#input-크기").val() +"]") );
+    if( $("#input-크기-내지").val() == $("#chk-inner3mm").val() ){
+        $("#chk-inner3mm").prop("checked", true);
+        console.log('11s');
+    }else {
+        $("#chk-inner3mm").prop("checked", false);
+    }
 
 
-<p>※ 선택하신 사이즈는 표지 사이즈입니다.</p>
-<p>
-    ※ 내지 사이즈는 표지보다 3mm 작게 만들어집니다. 내지를 표지와 같은 사이즈로 하실거면 체크해주세요.
+}
 
-    <!-- Switcher -->
-    <div class="form-group switch-field span-right">
-        <div class="field-switch">
-            <label>Would you like fries with that?</label>
-            <p class="help-block">
-            Use this checkbox to enable the Googie Berry power-up specifically for this page. You can configure the Googie Berry power-up on the System Settings and Dashboard page.
-            </p>
-        </div>
-        <label class="custom-switch">
-            <input type="checkbox"  name="chk_samesize" />
-            <span><span>표지=내지</span><span>표지>내지</span></span>
-            <a class="slide-button"></a>
-        </label>
+function update_크기($this){
+    /*페이지 영역에 정보 저장*/
+    $("#input-" + $this.data("cate")).val( $this.data("value") ); //#input-크기 에 'A4'등 입력
+    $("#cate-" + $this.data("cate")).find(".part_selected").text( $this.data("value") ); //#input-제본 에 '무선'등 입력
+
+    $(".box-크기").removeClass("box-크기-selected");
+    $this.toggleClass("box-크기-selected");
+}
+function update_크기_내지(){
+    if( $("#chk-inner3mm").prop("checked") == true){
+        $("#input-크기-내지").val( $("#chk-inner3mm").val() ); //#input-크기 에 'A4'등 입력
+    }else{
+        $("#input-크기-내지").val( "표지내지 동일" ); //#input-크기 에 'A4'등 입력
+    }
+}
+$(document).ready(function(){
+
+    $(".box-크기").click(function() {
+        update_크기($(this));
+        showDetailPayment(); /*가격 계산 paper.note.htm */
+    });
+    $("#chk-inner3mm").click(function() {
+        update_크기_내지();
+    });
+
+    setPageSetting();
+})
+
+</script>
+
+<div style=" " class="well">
+    <div class="box-크기-wrap col-xs-6">
+        <div class="box-크기 size-a4" data-cate="크기" data-value="A4">A4</div>
+        <div class="box-크기 size-a5" data-cate="크기" data-value="A5">A5</div>
+        <div class="box-크기 size-a6" data-cate="크기" data-value="A6">A6</div>
     </div>
+    <div class="box-크기-wrap col-xs-6">
+        <!--<div class="box-크기 size-b4" data-cate="크기" data-value="B4">B4</div>-->
+        <div class="box-크기 size-b5" data-cate="크기" data-value="B5">B5</div>
+        <div class="box-크기 size-b6" data-cate="크기" data-value="B6">B6</div>
+    </div>
+    <div style="clear:both;"></div>
+
+</div>
+<div style="clear:both;"></div>
+
+
+<label for="chk-inner3mm" class="well well-sm">
+    <input type="checkbox" id="chk-inner3mm"  name="chk_inner3mm" value="내지 -3mm"  />
+    <b>내지는 표지보다 3mm 작게 (기본)</b>
+    <div><small>
+        위 크기에 표지를 맞춘 후, 내지는 표지보다 3mm 작게 만들어집니다.
+        내지도 동일크기로 만드실거면 체크 해제.
+    </small></div>
+</label>
+<!--<p>
+    <form class="form-elements" role="form">
+
+        <div class="form-group switch-field">
+            <div class="field-switch">
+                <label>표지 외지 같은크기</label>
+                <p class="help-block">
+                    선택하신 사이즈는 표지 사이즈입니다.
+                    내지 사이즈는 표지보다 3mm 작게 만들어집니다. 내지를 표지와 같은 사이즈로 하실거면 체크해주세요.
+                </p>
+            </div>
+            <label class="custom-switch">
+                <input type="checkbox"  name="chk_samesize" checked />
+                <span><span></span><span>동일</span></span>
+                <a class="slide-button"></a>
+            </label>
+        </div>
+
+    </form>
+
 </p>
+<div class="scoreboard">
+    <div data-control="toolbar">
+        <div class="scoreboard-item title-value">
+            <h4>Weight</h4>
+            <p>100</p>
+            <p class="description">unit: kg</p>
+        </div>
+
+        <div class="scoreboard-item title-value">
+            <h4>Comments</h4>
+            <p class="positive">44</p>
+            <p class="description">previous month: 32</p>
+        </div>
+
+        <div class="scoreboard-item title-value">
+            <h4>Latest commenter</h4>
+            <p class="oc-icon-star">John Smith</p>
+            <p class="description">registered: yes</p>
+        </div>
+    </div>
+</div>-->
+
+
+<div id="box-크기-sample" class="">
+    <p>사이즈 비교</p>
+    <img src="{{ 'assets/images/cook/paper/size-explain-1.jpg'|theme }}" alt="사이즈 설명" class="">
+    <p>실물 예제</p>
+    <img src="{{ 'assets/images/cook/paper/size-explain-2.jpg'|theme }}" alt="사이즈 설명" style="width:100%;">
+</div>

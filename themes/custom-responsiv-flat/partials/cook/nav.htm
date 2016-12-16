@@ -3,51 +3,54 @@
 {% set
 links = {
 'home': ['home', '홈'],
-'pages': {
-name: '제작',
-sublinks: {
-'about':         ['samples/about', 'About Us'],
-'contact':       ['samples/contact', 'Contact Us'],
-'pricing-table': ['samples/pricing-table', 'Pricing Table'],
-'services':      ['samples/services', 'Services'],
-'signin':        ['samples/signin', 'Sign In'],
-'register':      ['samples/register', 'Register'],
-'error':         ['error', 'Error Page'],
-'404':           ['404', '404 Page'],
-},
-},
-'portfolio': {
-name: '진행',
-sublinks: {
-'portfolio': ['portfolio/portfolio', 'Portfolio'],
-'project': ['portfolio/project', 'Project'],
-},
-},
+
 'blog': {
-name: 'Blog',
-sublinks: {
-'blog': ['blog/blog', 'Blog'],
-'post': ['blog/post', 'Blog Post'],
-},
-},
-'shop': {
-name: '완제품',
-sublinks: {
-'shop': ['shop/shop', 'Shop'],
-'product': ['shop/product', 'Product'],
-'cart': ['shop/cart', 'Cart'],
-},
+    name: '블로그',
+    sublinks: {
+    'blog': ['blog/blog', 'Blog'],
+    'post': ['blog/post', 'Blog Post'],
+    },
 },
 'admin': {
-name: 'Adm',
-sublinks: {
-'ui-elements': ['ui-elements', 'UI Elements'],
-},
+    name: 'Adm',
+    sublinks: {
+        'ui-elements': ['ui-elements', 'UI Elements'],
+    },
+
 },
 
 }
 %}
-
+<!--
+'pages': {
+    name: '제작',
+    sublinks: {
+        'about':         ['samples/about', 'About Us'],
+        'contact':       ['samples/contact', 'Contact Us'],
+        'pricing-table': ['samples/pricing-table', 'Pricing Table'],
+        'services':      ['samples/services', 'Services'],
+        'signin':        ['samples/signin', 'Sign In'],
+        'register':      ['samples/register', 'Register'],
+        'error':         ['error', 'Error Page'],
+        '404':           ['404', '404 Page'],
+    },
+},
+'portfolio': {
+    name: '진행',
+    sublinks: {
+        'portfolio': ['portfolio/portfolio', 'Portfolio'],
+        'project': ['portfolio/project', 'Project'],
+    },
+},
+'shop': {
+    name: '완제품',
+    sublinks: {
+        'shop': ['shop/shop', 'Shop'],
+        'product': ['shop/product', 'Product'],
+        'cart': ['shop/cart', 'Cart'],
+    },
+},
+-->
 {% macro render_menu(links) %}
 {% for code, link in links %}
 <li class="{{ code == currentPage ? 'active' }} {{ link.sublinks ? 'dropdown' }}">
@@ -78,7 +81,9 @@ sublinks: {
                 <span class="sr-only">Toggle navigation</span>
                 <span class="fa fa-bars"></span>
             </button>
-            <a class="navbar-brand" href="{{ 'home'|page }}">Cook a Note</a>
+            <a class="navbar-brand" href="{{ 'home'|page }}" style=" letter-spacing:-4px; ">
+                <span style="color:gold;">노트</span>요리사
+            </a>
         </div>
         <div class="collapse navbar-collapse navbar-main-collapse">
             <ul class="nav navbar-nav navbar-right">

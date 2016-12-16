@@ -1,0 +1,111 @@
+
+<h3 class="headline"><span>데코<small> 맞춤 금은박/절취선 등 후가공</small></span></h3>
+
+<style>
+    .tile-example {font-size:0.7em;}
+    .tile-explain {height:130px;overflow-y:scroll;margin-bottom:5px;border-top:1px dotted gray;text-align:left;}
+    .tile-explain p {font-size:0.6em;color:gray;margin-bottom:15px;}
+    h3 small {color:gray;}
+    .tile-selected {border:2px solid tomato;}
+</style>
+
+<script>
+/* 로드시 정보 세팅. paper.note.htm 에 있는 input 정보이용 */
+function setPageSetting(){
+    if( $("#input-데코-라운딩").val() )
+        $("#tile-데코-라운딩").addClass("tile-selected");
+    if( $("#input-데코-OPP").val() )
+        $("#tile-데코-OPP").addClass("tile-selected");
+    if( $("#input-데코-라벨스틱").val() )
+        $("#tile-데코-라벨스틱").addClass("tile-selected");
+}
+$(document).ready(function(){
+    /*$(".tile").click(function(){
+        var note_part = '';
+        $(".tile").each(function(){
+            if($(this).hasClass("tile-selected"))
+                note_part += $(this).data("value") + ", ";
+        });
+        note_part = note_part.slice(0, -2);
+
+    });*/
+    $("#tile-데코-라운딩").click(function(){
+        var note_part = "";
+        $(this).toggleClass("tile-selected");
+        if($(this).hasClass("tile-selected")){
+            note_part = $(this).data("value") ;
+        }
+        $("#input-데코-라운딩").val( note_part );
+        $("#text-데코-라운딩").text( note_part );
+        showDetailPayment(); /*가격 계산 paper.note.htm */
+    });
+    $("#tile-데코-OPP").click(function(){
+        var note_part = "";
+        $(this).toggleClass("tile-selected");
+        if($(this).hasClass("tile-selected")){
+            note_part = $(this).data("value") ;
+        }
+        $("#input-데코-OPP").val( note_part );
+        $("#text-데코-OPP").text( note_part );
+        showDetailPayment(); /*가격 계산 paper.note.htm */
+    });
+    $("#tile-데코-라벨스틱").click(function(){
+        var note_part = "";
+        $(this).toggleClass("tile-selected");
+        if($(this).hasClass("tile-selected")){
+            note_part = $(this).data("value") ;
+        }
+        $("#input-데코-라벨스틱").val( note_part );
+        $("#text-데코-라벨스틱").text( note_part );
+        showDetailPayment(); /*가격 계산 paper.note.htm */
+    });
+    setPageSetting();
+})
+
+</script>
+
+<p></p>
+
+<div class="row pricing-tiles">
+    <div class="col-sm-4">
+        <div class="tile tile-hot" data-cate="데코" data-value="4모서리 라운딩" id="tile-데코-라운딩">
+            <img src="{{ 'assets/images/cook/paper/note/deco/corner-cutting-3.jpg'|theme }}" alt="귀돌이/라운딩" class="tile-image">
+            <h3 class="tile-title">귀돌이/라운딩</h3>
+            <div class="tile-example">부드러운 모서리</div>
+
+            <div class="tile-explain">
+
+            <p>모서리를 라운드로 커팅합니다.</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div class="tile" data-cate="OPP" data-value="개별OPP포장" id="tile-데코-OPP">
+            <img src="{{ 'assets/images/cook/paper/note/deco/opp-wrap-2.jpg'|theme }}" alt="OPP포장" class="tile-image">
+            <h3 class="tile-title">OPP포장</h3>
+            <div class="tile-example">장기보관/판매/선물용</div>
+
+            <div class="tile-explain">
+                <p>수작업으로 opp봉투 포장작업을 합니다.</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div class="tile tile-hot" data-cate="라벨스틱" data-value="라벨스틱" id="tile-데코-라벨스틱">
+            <img src="{{ 'assets/images/cook/paper/note/deco/larvelstick-01.jpg'|theme }}" alt="라벨스틱" class="tile-image">
+            <h3 class="tile-title">라벨스틱</h3>
+            <div class="tile-example">제목표시</div>
+
+            <div class="tile-explain">
+                <p>스프링노트에 제목을 표시합니다. 스틱은 스프링 안쪽으로 삽입되어 360도 회전에 전혀 문제가 없습니다. </p>
+            </div>
+        </div>
+    </div>
+
+
+
+<!--오시   접지   에폭시
+타공
+도무송
+스프링제본비(페이지물)추가 ??
+미싱-->
