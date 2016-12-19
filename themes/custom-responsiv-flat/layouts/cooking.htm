@@ -23,26 +23,7 @@ description = "실제작페이지"
 				'assets/javascript/respond.min.js',
 			]|theme }}"></script>
 		<![endif]-->
-    </head>
-    <body class="page-{{ this.page.id }} layout-{{ this.layout.id }}">
 
-        <!-- Header -->
-        <header id="layout-header" class="header-navbar">
-            <!-- Nav -->
-            {% partial "cook/nav" %}
-        </header>
-
-        <!-- Content -->
-        <div id="layout-content">
-            {% page %}
-        </div>
-
-
-
-        <!-- Footer -->
-        <footer id="layout-footer">
-            {% partial "cook/footer" %}
-        </footer>
 
         <!-- Scripts -->
         <script src="{{ [
@@ -81,10 +62,31 @@ description = "실제작페이지"
             'assets/javascript/app.js'
         ]|theme }}"></script>
         <script>
-        	videojs.options.flash.swf = "{{ 'assets/vendor/flat-ui/js/video-js.swf'|theme }}";
+            videojs.options.flash.swf = "{{ 'assets/vendor/flat-ui/js/video-js.swf'|theme }}";
         </script>
         {% framework extras %}
         {% scripts %}
+
+    </head>
+    <body class="page-{{ this.page.id }} layout-{{ this.layout.id }}">
+
+        <!-- Header -->
+        <header id="layout-header" class="header-navbar">
+            <!-- Nav -->
+            {% partial "cook/nav" %}
+        </header>
+
+        <!-- Content -->
+        <div id="layout-content">
+            {% page %}
+        </div>
+
+
+
+        <!-- Footer -->
+        <footer id="layout-footer">
+            {% partial "cook/footer" %}
+        </footer>
 
     </body>
 </html>

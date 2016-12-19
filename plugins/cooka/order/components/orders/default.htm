@@ -1,0 +1,58 @@
+
+<style>
+    .table td, .table th {font-size:10pt;}
+</style>
+<!--<form data-request="{{ __SELF__ }}::onOrderPaper">
+여기서는 __self__하면되네    
+</form>-->
+
+<div class="div-order">
+    <p></p>
+
+    <table id="talbe-order-list" class="table table-bordered">
+        <tr>
+            <th>날짜</th>
+            <th>내용</th>
+            <th>주문금액</th>
+            <th>견적서</th>
+            <th> </th>
+        </tr>
+        {{ orders.spec }}
+        {% for key, item in orders %}
+        <tr class="">
+            <td>
+                <small>{{ item.created_at|slice(0,10) }}</small>
+            </td>
+            <td>
+                <p>{{ item.title }}</p>
+                <p>주문자성함 : {{ item.name }}</p>
+                <p>배송주소 : {{ item.addr|slice(0,6) }}</p>
+            </td>
+            <td>
+                {{ item.fee_offer|number_format }}
+            </td>
+            
+            
+            <!--관리자만 보이도록-->
+            <!--<td>
+                {% for key, spec in specs[loop.index0] %}
+                    {{ key }} : {{ spec }}<br/>
+                {% endfor %}-->
+                <!--{{ loop.index0 }}?? 이게 뭐야. 이거 없애니 에러나네-->
+
+            </td>
+            <td class="td주문">
+                <a href="javascript:void(0);" onclick="$(this).next('.div상세견적서보기').toggle();">
+                    견적서
+                </a>
+                <div id="" class=" div상세견적서보기" style="display:none;">
+                <small>{{ item.bill|raw  }}</small>
+                </div>
+            </td>
+            <td>
+
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>

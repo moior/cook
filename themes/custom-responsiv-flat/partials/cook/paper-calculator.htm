@@ -154,9 +154,9 @@ function onStart()
         <div class="step-final-content col-xs-10">
             <div class="step-final-content2">
 
-                <div>종이값 : {{ 삽지_종이값 }} 원</div>
-                <div>인쇄비 : {{ 삽지_인쇄비 }} 원</div>
-                <div>판비 : {{ 삽지_판비 }} 원</div>
+                <div>종이값 : {{ 삽지_종이값|number_format() }} 원</div>
+                <div>인쇄비 : {{ 삽지_인쇄비|number_format() }} 원</div>
+                <div>판비 : {{ 삽지_판비|number_format() }} 원</div>
             </div>
         </div>
     </div>

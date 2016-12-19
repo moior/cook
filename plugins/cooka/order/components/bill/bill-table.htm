@@ -1,0 +1,94 @@
+<script>
+
+</script>
+
+<!--{% for post in posts %}
+    {{ posts.제본 }}
+{% endfor%}-->
+<style>
+    #div견적서html {padding:10px 0px;font-size:9pt;text-align:center;}
+    #number_payment {color:tomato;font-size:1.5em;font-weight:bold;}
+    .step-final-title {font-weight:bold;font-size:1.1em;}
+    .step-final-content {text-align:left;overflow-x:hidden;}
+    .step-final-content2 {border-bottom:1px dotted gray;}
+    .bill-row {padding-left:5px;}
+</style>
+
+<!--최종 db에 넣을 용도-->
+<input type="hidden" name="cook_data" id="" value="{{ total_data|json_encode }}" />
+<input type="hidden" name="fee_offer" value="{{ 합계금액 }}" />
+
+<div id="div견적서html" class="">
+
+    <div class="final-title" style="font-weight:bold;font-size:1.2em;">견 적 서</div>
+    <div class="row bill-row">
+
+        <div class="step-final-title col-xs-2">표지</div>
+        <div class="step-final-content col-xs-10">
+            <div class="step-final-content2">
+
+                <div>종이값 : {{ 표지_종이값|number_format() }} 원</div>
+                <div>인쇄비 : {{ 표지_인쇄비|number_format() }} 원</div>
+                <div>판비 : {{ 표지_판비|number_format() }} 원</div>
+                {% if 표지_코팅비 %}
+                    <div>코팅 : {{ 표지_코팅비|number_format() }} 원</div>
+                {% endif %}
+                {% if 표지_박비 %}
+                    <div>박 : {{ 표지_박비|number_format() }} 원</div>
+                {% endif %}
+                {% if 표지_날개비 %}
+                    <div>책날개 : {{ 표지_날개비|number_format() }} 원</div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div class="row bill-row">
+        <div class="step-final-title col-xs-2">삽지</div>
+        <div class="step-final-content col-xs-10">
+            <div class="step-final-content2">
+
+                <div>종이값 : {{ 삽지_종이값|number_format() }} 원</div>
+                <div>인쇄비 : {{ 삽지_인쇄비|number_format() }} 원</div>
+                <div>판비 : {{ 삽지_판비|number_format() }} 원</div>
+            </div>
+        </div>
+    </div>
+    <div class="row bill-row">
+        <div class="step-final-title col-xs-2">내지</div>
+        <div class="step-final-content col-xs-10">
+            <div class="step-final-content2">
+                <div>종이값 : {{ 내지_종이값|number_format() }} 원</div>
+                <div>인쇄비 : {{ 내지_인쇄비|number_format() }} 원</div>
+                <div>판비 : {{ 내지_판비|number_format() }} 원</div>
+            </div>
+        </div>
+    </div>
+    <div class="row bill-row">
+        <div class="step-final-title col-xs-2">작업</div>
+        <div class="step-final-content col-xs-10">
+            <div class="step-final-content2">
+                <div>제본비 : {{ 제본비|number_format() }} 원</div>
+                {% if 라벨작업비 %}
+                    <div>라벨스틱 : {{ 라벨작업비|number_format() }} 원</div>
+                {% endif %}
+                {% if 라운딩비 %}
+                    <div>라운딩 : {{ 라운딩비|number_format() }} 원</div>
+                {% endif %}
+                {% if 포장비 %}
+                    <div>포장비 : {{ 포장비|number_format() }} 원</div>
+                {% endif %}
+                <div>디자인 : {{ (디자인_표지 +  디자인_삽지 + 디자인_내지)|number_format() }} 원</div>
+            </div>
+        </div>
+     </div>
+
+
+    <p>
+        <span id="number_payment">{{ 합계금액|number_format() }}</span>원
+    </p>
+    <!--<p>
+        <span id="" class="btn btn-default">인쇄하기</span>
+    </p>-->
+
+</div>

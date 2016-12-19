@@ -45,6 +45,15 @@ function update_삽지_용지($this) {
     $("#text-삽지-용지").text(note_intro_type);
     showDetailPayment();  /*가격 계산 paper.note.htm */
 }
+/*삽지 없음상태이다가, 삽지매수를 선택시 나머지 모두 강제선택되도록*/
+function toggle삽지옵션(){
+    if( $("#select-삽지-매수").val() > 0 ){
+        $(".div매수1이상일때").show();
+    }else{
+        $(".div매수1이상일때").hide();
+    }
+    console.log("dddddddddd");
+}
 $(document).ready(function(){
 
     $("#select-삽지-매수").change(function() {
@@ -53,15 +62,18 @@ $(document).ready(function(){
         $("#text-삽지-매수").text( note_intro_pagenum ); //#input-제본 에 '무선'등 입력
         showDetailPayment(); /*가격 계산 paper.note.htm */
 
-        /*삽지 없음상태이다가, 삽지매수를 선택시 나머지 모두 강제선택되도록*/
-        if( !$("#select-삽지-인쇄 option:selected").val() )
+        toggle삽지옵션();
+
+
+        ////////////// 여기 작업해야.
+        /*if( !$("#select-삽지-인쇄 option:selected").val() )
             $("#select-삽지-인쇄 option").eq(0).prop("selected", true);
         if( !$("#select-삽지-중량 option:selected").val() )
             $("#select-삽지-중량 option").eq(0).prop("selected", true);
         if( !$(".tile.tile-selected").data("value") )
             $(".tile").eq(0).addClass("tile-selected");
         update_삽지_인쇄();
-        update_삽지_용지($(".tile").eq(0));
+        update_삽지_용지($(".tile").eq(0));*/
     });
     $("#select-삽지-인쇄").change(function() {
         update_삽지_인쇄();
@@ -71,6 +83,7 @@ $(document).ready(function(){
         update_삽지_용지($(this));
     });
 
+    toggle삽지옵션();
     setPageSetting();
 })
 
@@ -91,7 +104,10 @@ $(document).ready(function(){
     </select>
 </div>
 
-<div class="row" style="margin-bottom:10px;" id="box_intro_color">
+<div class="div매수1이상일때">
+
+
+<div class="row " style="margin-bottom:10px;" id="box_intro_color">
     <div class="col-sm-6">
         <select id="select-삽지-인쇄" class="form-control" size="4"><!-- > input-표지-인쇄 input에 -->
             <option value="단면 1도">바깥면만 검정인쇄 (단면1도)</option>
@@ -165,4 +181,7 @@ $(document).ready(function(){
             </div>
         </div>
     </div>
+</div>
+
+<!--div매수1이상일때-->
 </div>

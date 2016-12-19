@@ -2,6 +2,8 @@ title = "노트 주문제작"
 url = "/cook/paper/note"
 layout = "cooking"
 is_hidden = 0
+
+
 ==
 <?php
 function onClickStep1(){
@@ -17,11 +19,6 @@ function onCalcFee(){
 
 ?>
 ==
-<script src="{{ 'assets/javascript/jquery.min.js'|theme }}"></script>
-<!--엥. 이건또 필요하네... 분면 layout에 있는데. 빼면 에러남.???-->
-
-<!--{% framework extras %}--> <!--AJAX framework-->
-<!--엥. 이게 들어가니까... ajax 버튼 요청이 2번 되네??? >> layout에 있음-->
 
 <script>
     function setDefaultInfo(){
@@ -72,17 +69,25 @@ $(document).ready(function(){
     setDefaultInfo();
     showDetailPayment();
 
+
+    var isMobile = true;
+    if (window.matchMedia("(min-width: 760px)").matches) { //"only screen and (max-width: 760px)"
+        isMobile = false;
+    }
     /*따라다니는 메뉴*/
-    var floatPosition1 = parseInt($("#col-leftdesk").css('top'));// 250px 에서 숫자만
-    $(window).scroll(function() {
-        var scrollTop = $(window).scrollTop(); var newPosition = scrollTop + floatPosition1 + "px"; // 현재 스크롤 위치를 가져온다.
-        $("#col-leftdesk").css('top', newPosition);
-    });
-    var floatPosition2 = parseInt($("#col-rightdesk").css('top'));// 250px 에서 숫자만
-    $(window).scroll(function() {
-        var scrollTop = $(window).scrollTop(); var newPosition = scrollTop + floatPosition2 + "px"; // 현재 스크롤 위치를 가져온다.
-        $("#col-rightdesk").css('top', newPosition);
-    });
+    if(isMobile == false){
+        var floatPosition1 = parseInt($("#col-leftdesk").css('top'));// 250px 에서 숫자만
+        $(window).scroll(function() {
+            var scrollTop = $(window).scrollTop(); var newPosition = scrollTop + floatPosition1 + "px"; // 현재 스크롤 위치를 가져온다.
+            $("#col-leftdesk").css('top', newPosition);
+        });
+        var floatPosition2 = parseInt($("#col-rightdesk").css('top'));// 250px 에서 숫자만
+        $(window).scroll(function() {
+            var scrollTop = $(window).scrollTop(); var newPosition = scrollTop + floatPosition2 + "px"; // 현재 스크롤 위치를 가져온다.
+            $("#col-rightdesk").css('top', newPosition);
+        });
+    }
+
 
 
     /*수량 변경시 가격 계산*/
@@ -96,13 +101,14 @@ $(document).ready(function(){
 })
 </script>
 <style>
+
     #col-leftdesk {padding:0px;border-left:1px solid gray;}
     #cookdesk-center {border-left:1px solid gray;border-right:1px solid gray;min-height:600px;s}
     #col-rightdesk {padding:0px;border-right:1px solid gray;border-bottom:1px solid gray;}
     .cook-step {text-align:left;clear:both;display:block;padding:5px;border-bottom:1px dotted gray; ;}
     .cook-step:hover {background-color:#eee;cursor:pointer;}
-    .part_title {font-size:1em;}
-    .part_selected {font-size:0.8em;}
+    .part_title {font-size:1em;color:black;}
+    .part_selected {font-size:0.8em;letter-spacing: -1px;}
     #title-left-top { text-align:center;color:white;background-color:tomato;padding:10px; }
     #title-right-top { text-align:center;color:white;background-color:tomato;padding:10px; }
     #title-right-btm { text-align:center;color:white;background-color:tomato;padding:10px; }
@@ -111,7 +117,7 @@ $(document).ready(function(){
 
 <div class="container">
 
-    <form id="form-currentnote">
+    <form id="form-currentnote" action="/cook/paper/note/order" method="post">
         <input type="hidden" name="제본" id="input-제본"  value=""  />
         <input type="hidden" name="크기" id="input-크기" value=""  />
         <input type="hidden" name="크기-내지" id="input-크기-내지" value=""  />
@@ -305,8 +311,12 @@ $(document).ready(function(){
 
 
         <div id="">
-            <a href="order/save" class="btn btn-primary btn-lg" style="display:block;margin:4px;ss">저장</a>
+            <a href="javascript:$('#form-currentnote').submit();" class="btn btn-primary btn-lg" style="display:block;margin:4px;ss">저장</a>
+
         </div>
     </div>
 
 </div>
+
+
+

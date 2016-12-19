@@ -1,0 +1,60 @@
+<style>
+    p {font-size:10pt;color:#444444;}
+</style>
+<br>
+<form
+    data-request="{{ __SELF__ }}::onOrderPaper"
+    data-request-success="alert('접수 완료되었습니다. 확인 후 연락드리겠습니다. :-)')"
+    data-request-redirect="/admin">
+    <!--data-request-update="'{{ __SELF__ }}::list': '#result'"-->
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">노트 제작 주문</h3>
+        </div>
+        <div class="panel-body">
+            <div  style="border:1px solid gray;" class="col-sm-4">
+            {% partial 'Bill::bill-table' %} <!--or b'illrealtime'@-->
+            </div>
+            <div  style="border:0px solid gray;" class="col-sm-8">
+                <p>
+                    <input type="text" name="client_name" value="" placeholder="[필수] 회사명 + 성함 + 직급" class="form-control"/>
+                </p>
+                <p>
+                    <input type="text" name="client_tel" value="" placeholder="[필수] 연락처 (문자가능한 휴대폰)"  class="form-control"/>
+                </p>
+                <p>
+                    <input type="text" name="client_addr" value="" placeholder="받으실곳 주소"  class="form-control" />
+                </p>
+                <p>
+                    <input type="text" name="client_email" value="" placeholder="이메일"  class="form-control"/>
+                </p>
+
+
+                <p>
+                    ① <b>50% 입금시 작업이 시작</b>됩니다. <br>
+                    ② <b>세부사항, 디자인 확정</b>시 나머지 50% 입금 <br>
+                    ③ 실제작 및 배송 (약 7일 소요)
+                </p>
+                <p>
+                    <b>선입금 할인</b> : 비용 전액을 바로 입금해 주시는 경우 1% 할인
+                </p>
+                <p class="well well-sm text-center">
+                    입금계좌 : 우리은행 <span style="font-size:1.2em;">1005-502-237770</span> (주)모이어
+                </p>
+
+
+                <input type="text" id="input-item" class="form-control" value="" name="newItem"
+                       placeholder="기타 요청사항">
+
+
+            </div>
+
+        </div>
+        <div class="panel-footer text-right">
+            <button type="submit" class="btn btn btn-primary" data-attach-loading>신청</button>
+        </div>
+        <ul class="list-group" id="result">
+        </ul>
+
+    </div>
+</form>

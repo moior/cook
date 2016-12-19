@@ -1,0 +1,153 @@
+title = "노트 주문접수"
+url = "/cook/paper/note/order"
+layout = "cooking"
+is_hidden = 0
+
+[Bill]
+type = Final
+
+[account]
+redirect = "home"
+paramCode = "code"
+
+==
+<?php
+/*디버그할때 이거 부름. 잘 안됨.*/
+function onDebug()
+{
+    $user = $this->user;
+    return print_r($user);
+}
+/*function onHandleForm() 용도 파악.*/
+function onHandleForm()
+{
+}
+function onStart(){
+    $post = post();
+    $this['note_title'] = $post["제본"] . " " .$post["크기"] . " / "
+        .$post["표지-방식"] . " 내지 " .$post["내지-매수"] . "매 / "
+        .$post["수량"] . "권";
+}
+?>
+==
+
+<script>
+function settingPostData(){
+    alert('a'); /*이건 작동 안함.*/
+
+}
+/*폼 넘기기 전 실행*/
+function beforeFormSubmit() {
+    /*$("#input-최종제안가격").val("0");*/
+
+    alert($("#div-cook-data").val());
+    alert($("#div견적서html").html());
+    //$("#input-cook-data").val( $("#div-cook-data").val() );
+    $("#input-bill").val( $("#div견적서html").html() );
+}
+$(document).ready(function(){
+
+    var isMobile = true;
+    if (window.matchMedia("(min-width: 760px)").matches) { //"only screen and (max-width: 760px)"
+        isMobile = false;
+    }
+
+
+})
+</script>
+<style>
+    p {font-size:10pt;color:#444444;}
+</style>
+<div id="last"></div>
+<div class="container">
+    <br>
+    {{ form_ajax('Bill::onOrderPaper',
+        {
+            success:"alert('접수 완료되었습니다. 확인 후 연락드리겠습니다. :-)')",
+            redirect:"/my/cooking",
+        }
+    ) }}
+    <!--<form
+        data-request="Bill::onOrderPaper"
+        data-request-before-update="settingPostData"
+        data-request-success="alert('접수 완료되었습니다. 확인 후 연락드리겠습니다. :-)')"
+        data-request-redirect="/my/cooking"
+    >-->
+    <!--data-request-update="'{{ __SELF__ }}::list': '#last'"-->
+
+    <input type="hidden" name="cook_data" />
+
+        <input type="hidden" name="bill" id="input-bill"/>
+        <!--component 안으로 이동함.-->
+        <!--<input type="hidden" name="cook_data" id="input-cook-data"/>-->
+        <!--<input type="hidden" name="fee_offer" value="0" id="input-최종제안가격"/>-->
+        <div class="panel panel-default">
+        <div class="panel-heading">
+                <h3 class="panel-title">주문
+                    <small>정보입력 & 비용입금</small>
+                </h3>
+            </div>
+            <div class="panel-body">
+
+
+                <div  style="border:1px solid gray;margin-bottom:10px;" class="col-sm-4" id="div-bill">
+                    {% component "Bill" %}
+                </div>
+
+
+                <div  style="border:0px solid gray;" class="col-sm-8">
+                    <p>
+                        관리용 주문 제목. (예 : 2017년 홍보노트 500권)
+
+                        <input type="text" name="title" value="{{ note_title }}"
+                               placeholder="주문확인용 노트 제목" class="form-control"/>
+                    </p>
+
+                    <p>
+                        [필수] 회사명 + 성함 + 직급
+
+                        <input type="text" name="client_name" value="{{ user.name }}"
+                               placeholder="[필수] 회사명 + 성함 + 직급" class="form-control"/>
+                    </p>
+                    <p>
+                        <input type="text" name="client_tel" value="" placeholder="[필수] 연락처 (문자가능한 휴대폰)"  class="form-control"/>
+                    </p>
+                    <p>
+                        <input type="text" name="client_addr" value="" placeholder="받으실곳 주소"  class="form-control" />
+                    </p>
+                    <p>
+                        <input type="text" name="client_email" value="" placeholder="이메일"  class="form-control"/>
+                    </p>
+
+
+                    <p>
+                        ① <b>50% 입금시 작업이 시작</b>됩니다. <br>
+                        ② <b>세부사항, 디자인 확정</b>시 나머지 50% 입금 <br>
+                        ③ 실제작 및 배송 (약 7일 소요)
+                    </p>
+                    <p>
+                        <b>선입금 할인</b> : 비용 전액을 바로 입금해 주시는 경우 1% 할인
+                    </p>
+                    <p class="well well-sm text-center">
+                        입금계좌 : 우리은행 <span style="font-size:1.2em;">1005-502-237770</span> (주)모이어
+                    </p>
+
+
+                    <input type="text" id="input기타요청사항" class="form-control" value="" name="client_comment"
+                           placeholder="기타 요청사항">
+
+
+                </div>
+
+            </div>
+            <div class="panel-footer text-right">
+                <button type="submit" onclick="beforeFormSubmit();" class="btn btn btn-primary" data-attach-loading>신청</button>
+            </div>
+            <ul class="list-group" id="result">
+            </ul>
+
+        </div>
+    <!--</form>-->
+    {{ form_close() }}
+
+</div>
