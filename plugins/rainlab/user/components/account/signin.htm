@@ -1,7 +1,7 @@
 <form
     data-request="onSignin">
     <div class="form-group">
-        <label for="userSigninLogin">{{ loginAttributeLabel }}</label>
+        <label for="userSigninLogin" class="signin-field-icon fui-mail"> 이메일<!--{{ loginAttributeLabel }}--></label>
         <input
             name="login"
             type="text"
@@ -11,7 +11,7 @@
     </div>
 
     <div class="form-group">
-        <label for="userSigninPassword">Password</label>
+        <label for="userSigninPassword" class="signin-field-icon fui-lock"> 비밀번호</label>
         <input
             name="password"
             type="password"
@@ -20,5 +20,5 @@
             placeholder="Enter your password" />
     </div>
 
-    <button type="submit" class="btn btn-default">Sign in</button>
+    <button type="submit" class="btn btn-primary btn-block">로그인</button>
 </form>

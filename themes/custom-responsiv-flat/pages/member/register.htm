@@ -1,6 +1,9 @@
 title = "Register"
 url = "/register"
-layout = "default"
+layout = "cooking"
+
+[account]
+[session]
 ==
 <div class="signin-container">
     <div class="container">
@@ -15,6 +18,10 @@ layout = "default"
                         </div>
 
                         <div class="signin-form">
+                            <div style="color:#666">
+                                {% component "account" %}
+                            </div>
+
                             <div class="form-group">
                                 <input
                                     type="text"

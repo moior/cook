@@ -3,7 +3,7 @@ function onStart()
 {
 }
 ==
-<h3 class="headline"><span>현재 노트<small> 왼쪽버튼을 눌러 재료를 조합하세요</small></span></h3>
+<h3 class="headline"><span>노트 재료<small> 왼쪽 메뉴에서 재료를 변경하세요</small></span></h3>
 
 <style>
     h3 small {color:gray;}
@@ -14,7 +14,14 @@ function onStart()
         background-size:130px; }
 </style>
 
-<h4>클릭 몇번으로 노트를 제작해보세요!</h4>
+<h4 class="text-center" style="color:#c0ca33;">노트 6요소</h4>
+
+<p>
+    <img style="width:80%;margin:10%;"
+         src=" {{ ('assets/images/cook/paper/note/note-parts.jpg')|theme }}" />
+
+</p>
+
 
 <div id="currnet-page" class="row">
     <div class="col-sm-4">
@@ -23,24 +30,17 @@ function onStart()
     </div>
     <div class="col-sm-4">
         <span class="icon-number" style="background-position:-45px -7px;background-image:url('{{ "assets/images/cook/1-2-3-Steps.png"|theme }}');"></span>
-        <br>상세 디자인을 위해서 담당디자이너가 전화를 드립니다.
+        <br>조합완료후, 상세 디자인을 확정하기 위해서 담당 디자이너가 전화를 드립니다.
 
     </div>
     <div class="col-sm-4">
         <span class="icon-number" style="background-position:-90px -7px;background-image:url('{{ "assets/images/cook/1-2-3-Steps.png"|theme }}');"></span>
-        <br>시안 최종 컨펌 후 제작~발송
+        <br>시안 최종 컨펌 후 제작~발송 (대략 7일 ~ 14일 소요)
     </div>
     <!--<div>* 재료가 선택되지 않은 부분은 붉은색으로 표시되어 있습니다.</div>
     <div>* 모든 재료를 선택하면 "저장"버튼이 활성화됩니다.</div>-->
     <!--<div>* 비용 입금시 저희 요리사가 전화드려서1- 더 디테일한 내용을 확정합니다.</div>-->
 </div>
-
-<p>
-    <img style="width:8s0%;margin:10%;"
-        src=" {{ ('assets/images/cook/paper/note/preview/스프링-B4-단면4도-소프트커버-스노우250g-라운딩-라벨스틱.jpg')|theme }}" />
-
-</p>
-
 
 <!--<p>
     <input type="button" class="btn btn-lg btn-infos" id="btn_makerandom" value="랜덤 조합" />
@@ -48,4 +48,5 @@ function onStart()
 </p>-->
 
 
-<div>주문제작의 경우 대략 7일 ~ 14일 소요됩니다.</div>
+<div style="font-size:10pt;margin:10px;"class="well">제작이 어려운 경우, 전화주시면 친절히 안내드립니다.
+    <br>Tel) <a href="tel:02-2135-5251">02-2135-5251</a></div>

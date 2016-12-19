@@ -3,7 +3,7 @@ url = "/cook/paper/note"
 layout = "cooking"
 is_hidden = 0
 
-
+[session]
 ==
 <?php
 function onClickStep1(){
@@ -170,8 +170,8 @@ $(document).ready(function(){
         <div id="title-left-top" style="">
             1.재료 조합
         </div>
-        <a class="cook-step" data-request='onClickStep1' data-request-update="'cook/paper-note-current': '#cookdesk-center'">
-            현재상태
+        <a class="cook-step" style="font-size:0.9em;" data-request='onClickStep1' data-request-update="'cook/paper-note-current': '#cookdesk-center'">
+            시작하기
         </a>
 
         <a class="cook-step" id="cate-제본"
@@ -241,9 +241,10 @@ $(document).ready(function(){
             2.디자인
         </div>
         <div style="padding:5px;text-align:center;border:2px dashed green;background-color:#c6eec6;font-size:10pt;">
-            디자인/로고파일<br>
+            <!--디자인/로고파일<br>
             파일을 여기 놓아주세요<br>
-            또는 help@moior.com
+            또는 -->
+            이메일 : help@moior.com
 
             <!--<a class="btn btn-default">표지</a>
             <a class="btn btn-default">삽지</a>
@@ -285,11 +286,11 @@ $(document).ready(function(){
             <select id="select_amount" class="form-control" >
                 <option value="-">소량:기성품에 박작업</option>
 
-                {% for i in 1..20 %}
-                    {% if i == 1  %}
-                        <option value="{{ i * 1000 }}" selected>{{ i * 1000}}권</option>
+                {% for i in 2..30 %}
+                    {% if i == 2  %}
+                        <option value="{{ i * 500 }}" selected>{{ i * 500}}권</option>
                     {% else %}
-                        <option value="{{ i * 1000 }}">{{ i * 1000}}권</option>
+                        <option value="{{ i * 500 }}">{{ i * 500}}권</option>
 
                     {% endif %}
                 {% endfor %}

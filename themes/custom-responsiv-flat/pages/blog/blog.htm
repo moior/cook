@@ -1,6 +1,10 @@
 title = "Blog"
 url = "/blog"
-layout = "default"
+layout = "cooking"
+
+[blogPost]
+[blogPosts]
+[blogCategories]
 ==
 
 <section id="layout-title">
@@ -13,6 +17,7 @@ layout = "default"
     <div class="row">
         <div class="col-sm-9">
 
+            {% component "blogPosts" %}
             <!-- Blog Post #1 -->
             <div class="blog">
                 <img src="{{ 'assets/images/team/aleksey.png'|theme }}" alt="">
@@ -61,8 +66,9 @@ layout = "default"
             <div class="clearfix"></div>
         </div>
         <div class="col-sm-3">
+            {% component "blogCategories" %}
 
-            {% partial 'blog/sidebar' %}
+            {# partial 'blog/sidebar' #}
 
         </div>
     </div>

@@ -1,21 +1,27 @@
 title = "Sign in"
 url = "/signin"
-layout = "default"
+layout = "cooking"
+
+[account]
+[session]
 ==
 <div class="signin-container">
     <div class="container">
-
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                 <div class="signin">
                     <div class="signin-screen">
                         <div class="signin-icon">
                             <img src="{{ 'assets/images/logo.png'|theme }}" alt="Welcome to Flat App" />
-                            <h4>Welcome to <small>Flat App</small></h4>
+                            <h4>Welcome to <small>요리사월드</small></h4>
                         </div>
 
                         <div class="signin-form">
-                            <div class="form-group">
+                            <div style="color:#666">
+                            {% component "account" %}
+                            </div>
+
+                            <!--<div class="form-group">
                                 <input
                                     type="text"
                                     class="form-control signin-field"
@@ -35,10 +41,10 @@ layout = "default"
                                 <label class="signin-field-icon fui-lock" for="signin-pass"></label>
                             </div>
 
-                            <a class="btn btn-primary btn-lg btn-block" href="#">Log in</a>
-
-                            <a class="signin-link" href="#">Lost your password?</a>
-                            <a class="signin-link" href="{{ 'samples/register'|page }}">Create an account</a>
+                            <a class="btn btn-primary btn-lg btn-block" href="#">로그인</a>
+-->
+                            <a class="signin-link" href="#">비밀번호 찾기</a>
+                            <a class="signin-link" href="{{ 'samples/register'|page }}">회원가입</a>
                         </div>
                     </div>
                 </div>

@@ -1,8 +1,26 @@
+<!-- Search -->
+<form role="form">
+    <div class="well">
+        <div class="input-group">
+            <input type="text" class="form-control" placeholder="Search posts...">
+            <span class="input-group-btn">
+                <button class="btn btn-primary" type="button"><i class="fa fa-search"></i></button>
+            </span>
+        </div>
+    </div>
+</form>
+
 {% if __SELF__.categories %}
-    <ul class="category-list">
+<!-- Categories -->
+<div class="panel panel-default">
+    <div class="panel-heading">
+        카테고리
+    </div>
+    <ul class="list-group filter-list-group">
         {% partial __SELF__ ~ "::items"
             categories = __SELF__.categories
             currentCategorySlug = __SELF__.currentCategorySlug
         %}
     </ul>
+</div>
 {% endif %}

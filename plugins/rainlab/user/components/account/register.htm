@@ -1,17 +1,17 @@
 <form
     data-request="onRegister">
     <div class="form-group">
-        <label for="registerName">Full Name</label>
+        <label for="registerName" class="signin-field-icon fui-user"> 이름</label>
         <input
             name="name"
             type="text"
             class="form-control"
             id="registerName"
-            placeholder="Enter your full name" />
+            placeholder="이름을 적어주세요." />
     </div>
 
     <div class="form-group">
-        <label for="registerEmail">Email</label>
+        <label for="registerEmail" class="signin-field-icon fui-mail"> 이메일</label>
         <input
             name="email"
             type="email"
@@ -21,7 +21,7 @@
     </div>
 
     <div class="form-group">
-        <label for="registerPassword">Password</label>
+        <label for="registerPassword" class="signin-field-icon fui-lock"> 비밀번호</label>
         <input
             name="password"
             type="password"
@@ -30,5 +30,5 @@
             placeholder="Choose a password" />
     </div>
 
-    <button type="submit" class="btn btn-default">Register</button>
+    <button type="submit" class="btn btn-info btn-block"">회원가입</button>
 </form>

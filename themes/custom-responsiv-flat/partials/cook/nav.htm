@@ -1,27 +1,29 @@
+description = ".."
 
+==
+<?php
+?>
+==
 {# Note: Only one levels of sublinks are supported by Bootstrap 3 #}
 {% set
 links = {
-'home': ['home', '홈'],
+    'home': ['/', '홈'],
 
-'blog': {
-    name: '블로그',
-    sublinks: {
-    'blog': ['blog/blog', 'Blog'],
-    'post': ['blog/post', 'Blog Post'],
-    },
-},
-'admin': {
-    name: 'Adm',
-    sublinks: {
-        'ui-elements': ['ui-elements', 'UI Elements'],
-    },
+    'my': [
+        "/my/cooking", "주문"
+    ],
 
-},
+    'blog': {
+        name: '블로그',
+        sublinks: {
+            'blog': ['/blog', '블로그'],
+
+        },
+    },
 
 }
 %}
-<!--
+<!-- 블로그 개별 : 'post': ['/blog/post', 'Blog Post'],
 'pages': {
     name: '제작',
     sublinks: {
@@ -54,11 +56,12 @@ links = {
 {% macro render_menu(links) %}
 {% for code, link in links %}
 <li class="{{ code == currentPage ? 'active' }} {{ link.sublinks ? 'dropdown' }}">
+    <!--href="{{ link.sublinks ? '#' : (link.page ?: link[0])|page }}"-->
     <a
-            href="{{ link.sublinks ? '#' : (link.page ?: link[0])|page }}"
-            {% if link.sublinks %}data-toggle="dropdown"{% endif %}
-            class="{{ link.sublinks ? 'dropdown-toggle' }}"
-    >
+        href="{{ link.sublinks ? '#' : (link.page ?: link[0]) }}"
+        {% if link.sublinks %}data-toggle="dropdown"{% endif %}
+        class="{{ link.sublinks ? 'dropdown-toggle' }}"
+    >{{ link.page }}
         {{ link.name ?: link[1] }}
         {% if link.sublinks %}<span class="caret"></span>{% endif %}
     </a>
@@ -85,17 +88,49 @@ links = {
                 <span style="color:gold;">노트</span>요리사
             </a>
         </div>
-        <div class="collapse navbar-collapse navbar-main-collapse">
-            <ul class="nav navbar-nav navbar-right">
-                {{ nav.render_menu(links) }}
-                <li>
-                    <button
-                            onclick="window.location='{{ 'samples/signin'|page }}'"
-                            class="btn btn-sm navbar-btn btn-primary navbar-right hidden-sm hidden-xs">
-                        Sign in
-                    </button>
-                </li>
-            </ul>
-        </div>
+            <div class="collapse navbar-collapse navbar-main-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    {{ nav.render_menu(links) }}
+
+                   <!-- ADMIN 일 경우... 추가 'admin': {
+                    name: 'Adm',
+                    sublinks: {
+                    'ui-elements': ['ui-elements', 'UI Elements'],
+                    },
+                    },-->
+
+                    <li class=" dropdown">
+                        <a  href="#"
+                            data-toggle="dropdown"            class="dropdown-toggle">
+                            <span class="fa fa-user"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                        {% if not user %}
+                            <li class=" ">
+                                <a onclick="window.location='{{ 'member/signin'|page }}'">
+                                로그인 / 가입
+                                </a>
+                            </li>
+                        {% else %}
+
+                            <li class=" ">
+                                <a data-request="session::onLogout" data-request-data="redirect: '/good-bye'">
+                                로그아웃
+                                </a>
+                            </li>
+                            <li class=" ">
+                                <a onclick="window.location='{{ 'member/signin'|page }}'">
+                                    <span class="fa fa-user"></span>
+                                    정보수정
+                                </a>
+                            </li>
+                        {% endif %}
+                        </ul>
+                    </li>
+
+
+
+                </ul>
+            </div>
     </div>
 </nav>

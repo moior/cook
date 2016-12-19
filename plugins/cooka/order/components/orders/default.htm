@@ -9,13 +9,12 @@
 <div class="div-order">
     <p></p>
 
-    <table id="talbe-order-list" class="table table-bordered">
+    <table id="talbe-order-list" class="table">
         <tr>
             <th>날짜</th>
             <th>내용</th>
             <th>주문금액</th>
-            <th>견적서</th>
-            <th> </th>
+            <th>상태</th>
         </tr>
         {{ orders.spec }}
         {% for key, item in orders %}
@@ -23,10 +22,16 @@
             <td>
                 <small>{{ item.created_at|slice(0,10) }}</small>
             </td>
-            <td>
-                <p>{{ item.title }}</p>
-                <p>주문자성함 : {{ item.name }}</p>
-                <p>배송주소 : {{ item.addr|slice(0,6) }}</p>
+            <td >
+                    {{ item.title }}<br/>
+                    주문자성함 : {{ item.name }}<br/>
+                    배송주소 : {{ item.addr|slice(0,6) }}<br/>
+                    <a href="javascript:void(0);" onclick="$(this).next('.div상세견적서보기').toggle();">
+                        견적서
+                    </a>
+                    <div id="" class="div상세견적서보기" style="display:none;text-align:center;background-color:#efefef;">
+                        <small>{{ item.bill|raw  }}</small>
+                    </div>
             </td>
             <td>
                 {{ item.fee_offer|number_format }}
@@ -41,15 +46,9 @@
                 <!--{{ loop.index0 }}?? 이게 뭐야. 이거 없애니 에러나네-->
 
             </td>
-            <td class="td주문">
-                <a href="javascript:void(0);" onclick="$(this).next('.div상세견적서보기').toggle();">
-                    견적서
-                </a>
-                <div id="" class=" div상세견적서보기" style="display:none;">
-                <small>{{ item.bill|raw  }}</small>
-                </div>
-            </td>
+
             <td>
+                <small>{{ item.status_show?:"확인중"  }}</small>
 
             </td>
         </tr>
