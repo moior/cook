@@ -43,7 +43,7 @@ class Orders extends ComponentBase
         if(isset($user->id)){
             $orders = Order::where('user_id', $user->id)->orderBy("id", "desc")->get(); //find( $user->id );
         }else{
-            $orders = Order::pagination(20); //find( $user->id );
+            $orders = Order::paginate(20); //find( $user->id );
         }
         $this->page['orders'] = $orders;
         //return "<pre>".$this->page['orders'];
