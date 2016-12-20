@@ -19,6 +19,8 @@
 function setPageSetting(){
 
     $("#select-삽지-매수"     ).find("option[value='" + $("#input-삽지-매수").val() + "']").prop("selected", true);
+    if( $("#input-삽지-매수").val() > 0)         toggle삽지옵션();
+
     $("#select-삽지-인쇄"     ).find("option[value='" + $("#input-삽지-인쇄").val() + "']").prop("selected", true);
     $("#select-삽지-중량"     ).find("option[value='" + $("#input-삽지-용지").val().split(" ")[1] + "']").prop("selected", true);
 
@@ -26,13 +28,14 @@ function setPageSetting(){
         $("#tile-삽지-재질-아트").addClass("tile-selected");
     }else if( $("#input-삽지-용지").val().split(" ")[0] == "백색모조" ){
         $("#tile-삽지-재질-백색모조").addClass("tile-selected");
+    }else{
+        $("#tile-삽지-재질-아트").addClass("tile-selected");
     }
 }
 function update_삽지_인쇄(){
     var note_intro_pagenum = $("#select-삽지-인쇄 option:selected").val();
     $("#input-삽지-인쇄").val( note_intro_pagenum ); //#input-제본 에 '무선'등 입력
     $("#text-삽지-인쇄").text( note_intro_pagenum ); //#input-제본 에 '무선'등 입력
-    showDetailPayment(); /*가격 계산 paper.note.htm */
 }
 function update_삽지_용지($this) {
     /*페이지 영역에 정보 저장*/
@@ -43,7 +46,6 @@ function update_삽지_용지($this) {
     var note_intro_type = $(".tile.tile-selected").data("value") + " " + $("#select-삽지-중량 option:selected").val();
     $("#input-삽지-용지").val(note_intro_type);
     $("#text-삽지-용지").text(note_intro_type);
-    showDetailPayment();  /*가격 계산 paper.note.htm */
 }
 /*삽지 없음상태이다가, 삽지매수를 선택시 나머지 모두 강제선택되도록*/
 function toggle삽지옵션(){
@@ -52,7 +54,7 @@ function toggle삽지옵션(){
     }else{
         $(".div매수1이상일때").hide();
     }
-    console.log("dddddddddd");
+    console.log("--");
 }
 $(document).ready(function(){
 
@@ -77,10 +79,17 @@ $(document).ready(function(){
     });
     $("#select-삽지-인쇄").change(function() {
         update_삽지_인쇄();
+        showDetailPayment();  /*가격 계산 paper.note.htm */
+
     });
 
     $(".tile, #select-삽지-중량 option").click(function(){
         update_삽지_용지($(this));
+        showDetailPayment(); /*가격 계산 paper.note.htm */
+    });
+    $("#select-내지-중량").change(function(){
+        update_내지_용지($(this));
+        showDetailPayment(); /*가격 계산 paper.note.htm */
     });
 
     toggle삽지옵션();
