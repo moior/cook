@@ -16,11 +16,30 @@ function onStart()
 
 <h4 class="text-center" style="color:#c0ca33;">노트 6요소</h4>
 
-<p>
-    <img style="width:80%;margin:10%;"
-         src=" {{ ('assets/images/cook/paper/note/note-parts.jpg')|theme }}" />
+<div style="padding:20px;">
+    <script src="{{ ('assets/javascript/pages/pictarea.min.js')|theme }}" type="text/javascript"></script>
+    <img style="width:100%;margin:auto; " id="note-map-img"
+         src=" {{ ('assets/images/cook/paper/note/note-parts.jpg')|theme }}"  usemap="#note-map" />
+    <map name="note-map" id="note-map" >
+        <area alt="" title="" href="/cook/paper/note/제본" shape="poly" coords="46,388,151,370,215,393,278,353,258,283,200,253,151,265,114,290,35,303,18,343" />
+        <area alt="" title="" href="/cook/paper/note/표지" shape="poly" coords="273,188,313,264,468,218,420,149" />
+        <area alt="" title="" href="/cook/paper/note/크기" shape="poly" coords="93,93,128,176,494,90,476,49,445,19,233,54" />
+        <area alt="" title="" href="/cook/paper/note/삽지" shape="poly" coords="330,524,333,544,384,528,389,605,358,643,388,666,491,658,505,629,483,593,428,518,626,476,608,456,428,491,339,513" />
+        <area alt="" title="" href="/cook/paper/note/내지" shape="poly" coords="534,660,638,653,638,598,583,588,564,563,583,530,541,506,518,510,513,535,514,568,528,599,516,613,523,648" />
+        <area alt="" title="" href="/cook/paper/note/데코" shape="poly" coords="520,364,504,405,533,435,608,423,641,480,693,493,743,463,745,410,699,371,640,366,594,358" />
+    </map>
+    <script>
+        $(function() {
+            $('#note-map-img').pictarea({
+                rescaleOnResize: true
+            });
+            $("#note-map area").click(function(){
+                location.href=$(this).attr("href");
+            })
+        });
+    </script>
 
-</p>
+</div>
 
 
 <div id="currnet-page" class="row">

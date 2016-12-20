@@ -1,11 +1,16 @@
 title = "노트 주문제작"
-url = "/cook/paper/note"
+url = "/cook/paper/note/:part?"
 layout = "cooking"
 is_hidden = 0
 
 [session]
 ==
 <?php
+function onStart()
+{
+    $this["part"] = $this->param('part');
+    if(!$this["part"]) $this["part"] = "시작";
+}
 function onClickStep1(){
 
 }
@@ -65,6 +70,8 @@ function onCalcFee(){
         })
     }
 $(document).ready(function(){
+
+    $("#cate-{{ part }}").click();
 
     setDefaultInfo();
     showDetailPayment();
@@ -171,7 +178,7 @@ $(document).ready(function(){
             1.재료 조합
         </div>
         <div class="text-center">
-        <a class="cook-step" style="font-size:0.8em;" data-request='onClickStep1' data-request-update="'cook/paper-note-current': '#cookdesk-center'">
+        <a class="cook-step"  id="cate-시작" style="font-size:0.8em;" data-request='onClickStep1' data-request-update="'cook/paper-note-current': '#cookdesk-center'">
             시작하기
         </a>
         </div>
@@ -260,7 +267,8 @@ $(document).ready(function(){
 
     <div class="col-sm-8" id="cookdesk-center"><!--ajax result container-->
 
-        {% partial 'cook/paper-note-current' %}
+        {# partial 'cook/paper-note-current' /cook/paper/note/표지 로 들어온경우. 바로 펼쳐지도록  #}
+
     </div>
 
 
