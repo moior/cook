@@ -69,11 +69,16 @@ $(document).ready(function(){
         update_내지_인쇄();
         showDetailPayment(); /*가격 계산 paper.note.htm */
     });
-    $(".tile, #select-내지-중량 option").click(function(){
+    $(".tile").click(function(){
         update_내지_용지($(this));
         showDetailPayment(); /*가격 계산 paper.note.htm */
 
     });
+    $("#select-내지-중량").change(function(){
+        update_내지_용지($(this));
+        showDetailPayment(); /*가격 계산 paper.note.htm */
+    });
+
 
     setPageSetting();
 })
