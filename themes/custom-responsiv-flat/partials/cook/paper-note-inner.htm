@@ -50,7 +50,9 @@ function update_내지_용지($this) {
         $(".tile").removeClass("tile-selected");
         $this.toggleClass("tile-selected");
     }
-    var note_inner_type = $(".tile.tile-selected").data("value") + " " + $("#select-내지-중량 option:selected").val();
+    var note_inner_type = $(".tile.tile-selected").data("value") + " "
+        + $("#select-내지-중량 option:selected").val();
+    console.log(note_inner_type );
     $("#input-내지-용지").val( note_inner_type );
     $("#text-내지-용지").text( note_inner_type );
 }
