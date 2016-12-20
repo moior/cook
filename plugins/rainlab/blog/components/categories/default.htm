@@ -16,11 +16,11 @@
     <div class="panel-heading">
         카테고리
     </div>
-    <ul class="list-group filter-list-group">
+    <div class="list-group filter-list-group">
         {% partial __SELF__ ~ "::items"
             categories = __SELF__.categories
             currentCategorySlug = __SELF__.currentCategorySlug
         %}
-    </ul>
+    </div>
 </div>
 {% endif %}

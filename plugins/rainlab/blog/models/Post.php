@@ -151,7 +151,6 @@ class Post extends Model
             $params['month'] = $this->published_at->format('m');
             $params['day'] = $this->published_at->format('d');
         }
-
         return $this->url = $controller->pageUrl($pageName, $params);
     }
 

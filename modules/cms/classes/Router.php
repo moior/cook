@@ -176,7 +176,6 @@ class Router
         if ($this->routerObj !== null) {
             return $this->routerObj;
         }
-
         /*
          * Load up each route rule
          */

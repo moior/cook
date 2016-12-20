@@ -73,7 +73,6 @@ class Post extends ComponentBase
                 $category->setUrl($this->categoryPage, $this->controller);
             });
         }
-
         return $post;
     }
 }

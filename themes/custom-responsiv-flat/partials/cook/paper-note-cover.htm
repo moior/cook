@@ -84,6 +84,7 @@ $(document).ready(function(){
         $("#input-표지-방식").val( note_part );
         $("#text-표지-방식").text( note_part );
         showDetailPayment(); /*가격 계산 paper.note.htm */
+
     });
     $("#select_cover_paper").change(function() {
         var note_part = $(this).find("option:selected").val();
@@ -158,7 +159,7 @@ $(document).ready(function(){
 
         </select>
     </div>
-    <div class="col-sm-6">
+    <div class="col-sm-6" style="font-size:10pt;">
         표지의 안쪽까지 인쇄하려면 앞뒤 인쇄를 선택해주세요.
     </div>
 </div>
@@ -182,70 +183,89 @@ $(document).ready(function(){
     </div>
 </div>
 
-<h5>
-    <span style="background-position:-48px 5px;" class="number_title"></span>
-    표지의 두께 <small>표지 제작방식. 단단함에 차이가 있음</small>
-</h5>
-<select id="select_cover_type" class="form-control" size="4">
-    <option value="소프트커버">소프트커버</option>
-    <option value="하드커버 2합" class="only-spring">하드커버 (2합, 단단함)</option>
-    <option value="하드커버 3합" class="only-spring">하드커버 (3합, 단단함, 깔끔한 안쪽면)</option>
-    <option value="싸바리" class="if-양장">하드커버 (양장, 단단함, 싸바리)</option>
-</select>
-<div class="well well-sm" style="margin-top:5px;font-size:10pt;color:gray;">제본방식에 따라 선택할 수 있는 표지 방식이 제한됩니다. (예, 하드커버는 스프링제본에서만 가능)  </div>
+<div class="row" class="select_cover_paper">
+    <div class="col-sm-6">
 
-<h5>
-    <span style="background-position:-68px 5px;" class="number_title"></span>
-    재질 <small></small>
-</h5>
-<select id="select_cover_paper" class="form-control" size="4">
-    <!--<option value="아트">아트</option>
-    <option value="모조">모조</option>-->
-    <option value="스노우 일반">일반 스노우지</option>
-    <option value="스노우 180g">저가 연습장용 (스노우지 180g)</option>
-    <option value="스노우 250g">일반 노트용 (스노우지 250g+)</option>
-    <option value="크라프트">크라프트 (올드한 나무 질감, 글씨, 로고만 인쇄하는게 좋음)</option>
-    <option value="특수지">특수지 (다양한 질감 가능, 주로 금은박 할 때)</option>
-</select>
+        <h5>
+            <span style="background-position:-48px 5px;" class="number_title"></span>
+            표지의 두께 <br/>
+        </h5>
+        <select id="select_cover_type" class="form-control" size="4">
+            <option value="소프트커버">소프트커버</option>
+            <option value="하드커버 2합" class="only-spring">하드커버 (2합, 단단함)</option>
+            <option value="하드커버 3합" class="only-spring">하드커버 (3합, 단단함, 깔끔한 안쪽면)</option>
+            <option value="싸바리" class="if-양장">하드커버 (양장, 단단함, 싸바리)</option>
+        </select>
+        <div class="well well-sm" style="margin-top:5px;font-size:10pt;color:gray;">
+            제본방식에 따라 선택할 수 있는 표지 방식이 제한됩니다. (예, 하드커버는 스프링제본에서만 가능)
+            <small>표지 제작방식이 달라서 단단함이나 고급스러움에서 차이가 있습니다.</small>
 
+        </div>
+    </div>
+    <div class="col-sm-6">
 
-<h5>
-    <span style="background-position:-90px 5px;" class="number_title"></span>
-    금은먹박 <small>회사 로고 등</small>
-</h5>
-<select id="select_cover_bak" class="form-control" size="5">
-    <option value="">로고 없음</option>
-    <option value="금박">금박</option>
-    <option value="은박">은박</option>
-    <option value="먹박">먹박 (검정색 박)</option>
-    <option value="형압">형압 (글자만 돌출)</option>
-    <option value="청박">청박</option>
-    <option value="적박">적박</option>
-    <option value="녹박">녹박</option>
-    <option value="홀로그램박">홀로그램박</option>
-</select>
-<div style="margin-top:5px;">
-    <select id="select_cover_bak_size" class="form-control" size="1">
-        <option value="">기본</option>
-        <option value="2개">박 2군데 (예1)앞표지 위아래 (예2)앞뒤에 각1개</option>
-        <option value="3개">박 3군데 (예)앞표지 위/아래, 뒤표지 중간</option>
-        <option value="4개">박 4군데</option>
-        <option value="전체">전체 사이즈 박작업</option>
-    </select>
-    <span style="font-size:10px;">※ 박 가격은 명함사이즈가 기준입니다. 그 이상 크기를 쓰거나 2군데 이상 위치에 박을 넣을 경우 아래 선택</span>
+        <h5>
+            <span style="background-position:-68px 5px;" class="number_title"></span>
+            재질 <small></small>
+        </h5>
+        <select id="select_cover_paper" class="form-control" size="4">
+            <!--<option value="아트">아트</option>
+            <option value="모조">모조</option>-->
+            <option value="스노우 일반">일반 스노우지</option>
+            <option value="스노우 180g">저가 연습장용 (스노우지 180g)</option>
+            <option value="스노우 250g">일반 노트용 (스노우지 250g+)</option>
+            <option value="크라프트">크라프트 (올드한 나무 질감, 글씨, 로고만 인쇄하는게 좋음)</option>
+            <option value="특수지">특수지 (다양한 질감 가능, 주로 금은박 할 때)</option>
+        </select>
+    </div>
 
 </div>
 
-<h5>
-    <span style="background-position:-8px -45px;" class="number_title"></span>
-    코팅
-</h5>
-<select id="select_cover_coating" class="form-control" size="4">
-    <option value="">코팅없음</option>
-    <option value="유광코팅">유광코팅 (약1.5만/1천권)</option>
-    <option value="무광코팅">무광코팅 (약1.5만/1천권)</option>
-    <option value="엠보코팅">엠보코팅 (약3만/1천권)</option>
-</select>
+<div class="row" class="select_cover_etc">
+    <div class="col-sm-6">
+
+        <h5>
+            <span style="background-position:-90px 5px;" class="number_title"></span>
+            금은먹박 <small>회사 로고 등</small>
+        </h5>
+        <select id="select_cover_bak" class="form-control" size="5">
+            <option value="">로고 없음</option>
+            <option value="금박">금박</option>
+            <option value="은박">은박</option>
+            <option value="먹박">먹박 (검정색 박)</option>
+            <option value="형압">형압 (글자만 돌출)</option>
+            <option value="청박">청박</option>
+            <option value="적박">적박</option>
+            <option value="녹박">녹박</option>
+            <option value="홀로그램박">홀로그램박</option>
+        </select>
+
+        <div style="margin-top:5px;">
+            <select id="select_cover_bak_size" class="form-control" size="1">
+                <option value="">기본</option>
+                <option value="2개">박 2군데 (예1)앞표지 위아래 (예2)앞뒤에 각1개</option>
+                <option value="3개">박 3군데 (예)앞표지 위/아래, 뒤표지 중간</option>
+                <option value="4개">박 4군데</option>
+                <option value="전체">전체 사이즈 박작업</option>
+            </select>
+            <span style="font-size:10px;">※ 박 가격은 명함사이즈가 기준입니다. 그 이상 크기를 쓰거나 2군데 이상 위치에 박을 넣을 경우 아래 선택</span>
+
+        </div>
+    </div>
+    <div class="col-sm-6">
+
+        <h5>
+            <span style="background-position:-8px -45px;" class="number_title"></span>
+            코팅
+        </h5>
+        <select id="select_cover_coating" class="form-control" size="4">
+            <option value="">코팅없음</option>
+            <option value="유광코팅">유광코팅 (약1.5만/1천권)</option>
+            <option value="무광코팅">무광코팅 (약1.5만/1천권)</option>
+            <option value="엠보코팅">엠보코팅 (약3만/1천권)</option>
+        </select>
+    </div>
+</div>
 
 <h5>
     <span style="background-position:-27px -45px;;" class="number_title"></span>

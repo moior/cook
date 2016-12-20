@@ -1,19 +1,28 @@
 {% for category in categories %}
     {% set postCount = category.post_count %}
-    <li {% if category.slug == currentCategorySlug %}class="active"{% endif %}
-        class="list-group-item">
-        <a href="{{ category.url }}">{{ category.name }}</a> 
-        {% if postCount %}
-            <span class="badge">{{ postCount }}</span>
-        {% endif %}
 
+        <a href="{{ category.url }}"
+           {% if category.slug == currentCategorySlug %}
+           class="list-group-item active"
+           {% else %}
+           class="list-group-item"
+           {% endif %}>
+
+            {{ category.name }}
+
+            {% if postCount %}
+            <span class="badge">{{ postCount }}</span>
+            {% endif %}
+        </a>
+
+        <!--이부분은 다시 보아야함. sk-->
         {% if category.children %}
-            <ul>
+            <div>
                 {% partial __SELF__ ~ "::items"
                     categories=category.children
                     currentCategorySlug=currentCategorySlug
                 %}
-            </ul>
+            </div>
         {% endif %}
-    </li>
+
 {% endfor %}

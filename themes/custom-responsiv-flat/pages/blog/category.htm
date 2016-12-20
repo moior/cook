@@ -1,23 +1,20 @@
-title = "Blog"
-url = "/blog/:page?"
+title = "Blog - Category"
+url = "/blog/category/:slug/:page?"
 layout = "cooking"
 
 [blogPosts]
 postsPerPage = "2"
 postPage = "blog/post"
+categoryFilter = ":slug"
 
 [blogCategories]
 categoryPage = "blog/category"
+
 ==
-<style>
-    div, p { font-size:10pt;}
-</style>
-
-
-<!--postPage = "/blog/post/:slugCategory/:slugPost-->
+<!--카테고리들만 모아 보는 페이지-->
 <section id="layout-title">
     <div class="container">
-        <h3>요리사 Blog</h3>
+        <h3>요리사 Blog <small>{{ category.name }}</small></h3>
     </div>
 </section>
 
