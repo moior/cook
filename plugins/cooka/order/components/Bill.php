@@ -52,7 +52,12 @@ class Bill extends ComponentBase
                                 );*/
         $form = post();
         $order->name        = $form['client_name'];
-        $order->user_id     = $user->id;
+        if($user->id){
+            $order->user_id     = $user->id;
+        }else{
+            $order->user_id     = "";
+
+        }
         $order->title       = $form["title"];
         $order->phone       = $form["client_tel"];
         $order->addr        = $form["client_addr"];
