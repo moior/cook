@@ -40,7 +40,11 @@ class Orders extends ComponentBase
 
         $user = BackendAuth::getUser(); //$user["email"]. $user->name; //
 
-        $orders = Order::where('user_id', $user->id)->orderBy("id", "desc")->get(); //find( $user->id );
+        if(isset($user->id)){
+            $orders = Order::where('user_id', $user->id)->orderBy("id", "desc")->get(); //find( $user->id );
+        }else{
+            $orders = Order::pagination(20); //find( $user->id );
+        }
         $this->page['orders'] = $orders;
         //return "<pre>".$this->page['orders'];
         foreach( $orders as $key => $order){
