@@ -98,9 +98,16 @@ $(document).ready(function(){
 
 
     /*수량 변경시 가격 계산*/
-    $("#select_amount").change(function() {
+    var previous;
+    $("#select_amount").on('focus', function() {
+        previous = $(this).find("option:selected").val();
+
+    }).change(function() {
         var note_part = $(this).find("option:selected").val();
-        $("#input-수량").val( note_part );
+        if(note_part == "소량"){
+            $(this).find("option[value="+previous+"]").prop("selected", true);
+            $('#modal소량주문').modal('show');
+        }else $("#input-수량").val( note_part );
         showDetailPayment(); /*가격 계산 paper.note.htm */
     });
 
@@ -293,7 +300,7 @@ $(document).ready(function(){
                 </div>
             </div>-->
             <select id="select_amount" class="form-control" >
-                <option value="-">소량:기성품에 박작업</option>
+                <option value="소량">소량:기성품에 박작업</option>
 
                 {% for i in 2..30 %}
                     {% if i == 2  %}
@@ -330,3 +337,22 @@ $(document).ready(function(){
 
 
 
+
+<div class="control-popup modal fade" id="modal소량주문" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">1000권 미만 주문방법</h4>
+            </div>
+            <div class="modal-body">
+                <p>1천권보다 적은 수량을 주문시, 기존 제작된 제품들에 박잡업으로 진행합니다.</p>
+                <p>최소 50권 부터 가능합니다.</p>
+                <p>1661-5521 전화문의 바랍니다. 감사합니다.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">확인</button>
+            </div>
+        </div>
+    </div>
+</div>
