@@ -5,6 +5,7 @@ use Cms\Classes\ComponentBase;
 use ApplicationException;
 use Cook\Classes\FeeCalculator;
 use Cooka\Order\Models\Order;
+use RainLab\User\Facades\Auth;
 
 class Orders extends ComponentBase
 {
@@ -38,12 +39,12 @@ class Orders extends ComponentBase
     public function onRun()
     {
 
-        $user = BackendAuth::getUser(); //$user["email"]. $user->name; //
+        $user = Auth::getUser(); //$user["email"]. $user->name; //
 
         if(isset($user->id)){
             $orders = Order::where('user_id', $user->id)->orderBy("id", "desc")->get(); //find( $user->id );
         }else{
-            $orders = Order::paginate(20); //find( $user->id );
+            $orders = Order::orderBy("id", "desc")->paginate(20); //find( $user->id );
         }
         $this->page['orders'] = $orders;
         //return "<pre>".$this->page['orders'];
