@@ -19,7 +19,7 @@
                         on {{ post.published_at|date('Y-m-d') }}
                     </p>
                     <p class="excerpt">{{ post.summary }}</p>
-                    <a class="btn btn-xs btn-default" href="{{ 'blog/post'|page }}">Read More...</a>
+                    <a class="btn btn-xs btn-default" href="{{ post.url }}">Read More...</a><!--'blog/post'|page-->
 
                 </div>
 
