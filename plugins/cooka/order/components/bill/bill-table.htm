@@ -6,7 +6,7 @@
     {{ posts.제본 }}
 {% endfor%}-->
 <style>
-    #div견적서html {padding:10px 0px;font-size:9pt;text-align:center;}
+    #div견적서html {padding:10px 0px;font-size:9pt;}
     #number_payment {color:tomato;font-size:1.5em;font-weight:bold;}
     .step-final-title {font-weight:bold;font-size:1.1em;}
     .step-final-content {text-align:left;overflow-x:hidden;}
@@ -20,10 +20,10 @@
 
 <div id="div견적서html" class="">
 
-    <div class="final-title" style="font-weight:bold;font-size:1.2em;">견 적 서</div>
+    <div class="final-title text-center" style="font-weight:bold;font-size:1.2em;">견 적 서</div>
     <div class="row bill-row">
 
-        <div class="step-final-title col-xs-2">표지</div>
+        <div class="step-final-title col-xs-2 text-center">표지</div>
         <div class="step-final-content col-xs-10">
             <div class="step-final-content2">
 
@@ -44,7 +44,7 @@
     </div>
 
     <div class="row bill-row">
-        <div class="step-final-title col-xs-2">삽지</div>
+        <div class="step-final-title col-xs-2 text-center">삽지</div>
         <div class="step-final-content col-xs-10">
             <div class="step-final-content2">
 
@@ -55,7 +55,7 @@
         </div>
     </div>
     <div class="row bill-row">
-        <div class="step-final-title col-xs-2">내지</div>
+        <div class="step-final-title col-xs-2 text-center">내지</div>
         <div class="step-final-content col-xs-10">
             <div class="step-final-content2">
                 <div>종이값 : {{ 내지_종이값|number_format() }} 원</div>
@@ -65,7 +65,7 @@
         </div>
     </div>
     <div class="row bill-row">
-        <div class="step-final-title col-xs-2">작업</div>
+        <div class="step-final-title col-xs-2 text-center">작업</div>
         <div class="step-final-content col-xs-10">
             <div class="step-final-content2">
                 <div>제본비 : {{ 제본비|number_format() }} 원</div>
@@ -84,7 +84,7 @@
      </div>
 
 
-    <p>
+    <p class="text-center">
         <span id="number_payment">{{ 합계금액|number_format() }}</span>원
     </p>
     <!--<p>

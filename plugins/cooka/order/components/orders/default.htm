@@ -29,7 +29,9 @@
                     <a href="javascript:void(0);" onclick="$(this).next('.div상세견적서보기').toggle();">
                         견적서
                     </a>
-                    <div id="" class="div상세견적서보기" style="display:none;text-align:center;background-color:#efefef;">
+                    <div id="" class="div상세견적서보기"
+                         style="display:none;background-color:#efefef;">
+                        <!--DB에 저장되어 있는 정보-->
                         <small>{{ item.bill|raw  }}</small>
                     </div>
             </td>

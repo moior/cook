@@ -50,7 +50,9 @@ class Orders extends ComponentBase
         foreach( $orders as $key => $order){
             $cook_data_arr[] = json_decode($order['cook_data'], true);
         }
-        $this->page['specs'] = $cook_data_arr;
+        if( isset($cook_data_arr)){
+            $this->page['specs'] = $cook_data_arr;
+        }
         /*print_r($cook_data_arr);*/
     }
 }
