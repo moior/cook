@@ -25,6 +25,7 @@ function onCalcFee(){
 ?>
 ==
 
+
 <script>
     function setDefaultInfo(){
         var f = $("#form-currentnote");
@@ -63,10 +64,10 @@ function onCalcFee(){
     function showDetailPayment(){
         /*가격 계산*/
         var datas = $("#form-currentnote").serializeArray(); //JSON.stringify(
-        console.log(datas);
+        console.log("111111 "+datas);
         $.request('onCalcFee', {
             update: { 'cook/paper-calculator': '#div_brief' },
-            data: datas
+            data: datas,
         })
     }
 $(document).ready(function(){

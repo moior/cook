@@ -1,0 +1,20 @@
+<form  role="form" class="form-inline" method="GET" action="{{ __SELF__.resultPage|page }}">
+    <div class="well">
+        <div class="input-group">
+        <input type="text" name="search" class="form-control">
+
+        {% if __SELF__.categoryFilter %}
+            <select name="cat[]" class="form-control">
+            {% for key,cat in __SELF__.categories %}
+                <option value="{{ key }}">{{ cat }}</option>
+            {% endfor %}
+            </select>
+        {% endif %}
+        <span class="input-group-btn">
+            <button class="btn btn btn-primary" type="submit"><i class="fa fa-search"></i></button>
+         </span>
+
+        </div>
+    </div>
+
+</form>

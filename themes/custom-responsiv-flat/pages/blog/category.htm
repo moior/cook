@@ -1,22 +1,47 @@
-title = "Blog - Category"
+title = "Blog"
 url = "/blog/category/:slug/:page?"
 layout = "cooking"
 
 [blogPosts]
 postsPerPage = "2"
 postPage = "blog/post"
-categoryFilter = ":slug"
+categoryFilter = "{{:slug}}"
+
+[blogSearchForm]
+resultPage = "blog/search"
+categoryFilter = 0
 
 [blogCategories]
 categoryPage = "blog/category"
-
 ==
+<?php
+use RainLab\Blog\Models\Post;
+function onStart(){
+    $this['onStart'] = "onStart";
+
+}
+function onInit(){
+    $this['onInit'] = "onInit";
+}
+function onRun(){
+    $this['onRun'] = "onRun";
+}
+function onHandleForm()
+{
+    $this['onHandleForm'] = "onHandleForm";
+}
+?>
+==
+<!--{{ onStart }}-{{ onStart }}--{{ onInit }}
+{{ onHandleForm }}-{{ onRun }}--->
 <!--카테고리들만 모아 보는 페이지-->
 <section id="layout-title">
     <div class="container">
-        <h3>요리사 Blog <small>{{ category.name }}</small></h3>
+        <h3>Blog <small>{{ category.name }}</small></h3>
     </div>
 </section>
+
+
 
 <div class="container">
     <div class="row">
@@ -27,6 +52,8 @@ categoryPage = "blog/category"
             <div class="clearfix"></div>
         </div>
         <div class="col-sm-3">
+            {% component "blogSearchForm" %}
+
             {% component "blogCategories" %}
 
             {# partial 'blog/sidebar' #}

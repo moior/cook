@@ -1,10 +1,19 @@
 title = "Blog"
-url = "/blog/:page?"
+url = "/blog/search/:search?/:page?"
 layout = "cooking"
 
-[blogPosts]
-postsPerPage = "2"
-postPage = "blog/post"
+[blogSearchResult]
+searchTerm = "{{ :search }}"
+pageNumber = "{{ :page }}"
+hightlight = 1
+postsPerPage = 10
+noPostsMessage = "No posts found"
+sortOrder = "published_at desc"
+excludeCategories[] = 1
+excludeCategories[] = 2
+excludeCategories[] = 3
+categoryPage = "blog"
+postPage = "blog/posts"
 
 [blogSearchForm]
 resultPage = "blog/search"
@@ -29,13 +38,13 @@ categoryPage = "blog/category"
     <div class="row">
         <div class="col-sm-9">
 
-            {% component "blogPosts" %}
+            {% component "blogSearchResult" %}
 
             <div class="clearfix"></div>
         </div>
         <div class="col-sm-3">
-            {% component "blogSearchForm" %}
 
+            {% component "blogSearchForm" %}
             {% component "blogCategories" %}
 
             {# partial 'blog/sidebar' #}

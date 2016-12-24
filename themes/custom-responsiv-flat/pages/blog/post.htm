@@ -5,6 +5,10 @@ layout = "cooking"
 [blogPost]
 [blogCategories]
 
+[blogSearchForm]
+resultPage = "blog/search"
+categoryFilter = 0
+
 ==
 <style>
     div, p { font-size:10pt;}
@@ -58,6 +62,8 @@ layout = "cooking"
 
         </div>
         <div class="col-sm-3">
+            {% component "blogSearchForm" %}
+
             {% component "blogCategories" %}
 
             {# partial 'blog/sidebar' #}
