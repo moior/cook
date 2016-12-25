@@ -19,7 +19,7 @@ paramCode = "code"
 $(document).ready(function(){
 
     var isMobile = true;
-    if (window.matchMedia("(min-width: 760px)").matches) { //"only screen and (max-width: 760px)"
+    if($(window).innerWidth() >= 760) {
         isMobile = false;
     }
     /*따라다니는 메뉴*/

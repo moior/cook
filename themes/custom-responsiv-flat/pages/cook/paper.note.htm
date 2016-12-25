@@ -64,7 +64,7 @@ function onCalcFee(){
     function showDetailPayment(){
         /*가격 계산*/
         var datas = $("#form-currentnote").serializeArray(); //JSON.stringify(
-        console.log("111111 "+datas);
+        //console.log("111111 "+datas);
         $.request('onCalcFee', {
             update: { 'cook/paper-calculator': '#div_brief' },
             data: datas,
@@ -79,7 +79,8 @@ $(document).ready(function(){
 
 
     var isMobile = true;
-    if (window.matchMedia("(min-width: 760px)").matches) { //"only screen and (max-width: 760px)"
+    if($(window).innerWidth() >= 760) {
+    //if (window.matchMedia("(min-width: 760px)").matches) { // matchMedia는 ex 10, 11만됨
         isMobile = false;
     }
     /*따라다니는 메뉴*/
@@ -88,6 +89,7 @@ $(document).ready(function(){
         $(window).scroll(function() {
             var scrollTop = $(window).scrollTop(); var newPosition = scrollTop + floatPosition1 + "px"; // 현재 스크롤 위치를 가져온다.
             $("#col-leftdesk").css('top', newPosition);
+
         });
         var floatPosition2 = parseInt($("#col-rightdesk").css('top'));// 250px 에서 숫자만
         $(window).scroll(function() {
@@ -95,7 +97,6 @@ $(document).ready(function(){
             $("#col-rightdesk").css('top', newPosition);
         });
     }
-
 
 
     /*수량 변경시 가격 계산*/
@@ -115,6 +116,7 @@ $(document).ready(function(){
 
 })
 </script>
+
 <style>
 
     #col-leftdesk {padding:0px;border-left:1px solid gray;}
