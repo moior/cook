@@ -10,41 +10,13 @@ cate = "{{:cate}}"
 ==
 <?php
 function onInit(){
-    $this->page["text_cate"] = "{{:cate}}";
-    $this->page["text_cate"] = "ssssss";
+    //$this["text_cate"] = param("cate"); //{{:cate}}
+    // 잘안됨..
 }
-function onQuickOrder(){
+/*function onQuickOrder(){
     $this['result'] = input('value1') + input('value2');
-    $this->page["result"]  = $this['result'];
     return $this->page["result"];
-
-    $order = new Order; /*Db::table('users')->insert(
-                                ['email' => 'john@example.com', 'votes' => 0]
-                                );*/
-    $form = post();
-    $order->name        = $form['client_name'];
-    if( isset($user->id)){
-        $order->user_id     = $user->id;
-    }else{
-        $order->user_id     = "";
-
-    }
-    $order->title       = $form["title"];
-    $order->phone       = $form["client_tel"];
-    $order->addr        = $form["client_addr"];
-    $order->email       = $form["client_email"];
-    $order->comment     = $form["client_comment"];
-    //$order->wishlist_id = form[""];
-    $order->cook_data   = $form["cook_data"]; // yml 으로 변환 //$parsed = yaml_parse($yaml);        // convert the YAML back into a PHP variable
-    $order->bill        = $form["bill"];
-    $order->fee_offer       = $form["fee_offer"];
-    //$order->fee_payment     = $form[""];
-    $order->status_show     = "주문완료. 입금확인중";
-    $order->shipping_number = "";
-    //$order->is_complete     = "";
-
-    return $order->save();
-}
+}*/
 ?>
 ==
 <script>
@@ -101,9 +73,18 @@ $(document).ready(function(){
 
     </div>
     <div class="col-sm-10" id="col-rightdesk" style="">
+        <h5>{{ text_cate }}</h5>
+
+        <div class="well text-center" >
+            <span class="fa fa-search fa-3x" style="color:tomato; vertical-align: middle;"></span>
+            가장 비슷한 샘플을 고른 후
+            <span class="fa fa-arrow-right" style="margin:0 20px;"></span>
+            <span class="fa fa-pencil-square-o fa-3x" style="color:tomato; vertical-align: middle;"></span>
+            하단에서 견적서 작성
+        </div>
 
         <div class="" id="" style="">
-            <h5>{{ text_cate }}</h5>
+
             {% component "Samplelist" %}
         </div>
 
@@ -120,7 +101,7 @@ $(document).ready(function(){
             <!--data-request-update="'{{ __SELF__ }}::list': '#result'"-->
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title">간단 주문 접수</h3>
+                    <h3 class="panel-title">견적요청서</h3>
                 </div>
                 <div class="panel-body">
                     <div style="border:0px solid #9c9c9c;margin-bottom:10px;" class="col-sm-8">

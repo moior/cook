@@ -23,17 +23,29 @@
                 <small>{{ item.created_at|slice(0,10) }}</small>
             </td>
             <td >
-                    {{ item.title }}<br/>
-                    주문자성함 : {{ item.name }}<br/>
-                    배송주소 : {{ item.addr|slice(0,6) }}<br/>
-                    <a href="javascript:void(0);" onclick="$(this).next('.div상세견적서보기').toggle();">
-                        견적서
-                    </a>
-                    <div id="" class="div상세견적서보기"
-                         style="display:none;background-color:#efefef;">
-                        <!--DB에 저장되어 있는 정보-->
-                        <small>{{ item.bill|raw  }}</small>
-                    </div>
+                    {{ item.title }}
+                    {% if item.name %}
+                    / 성함 : {{ item.name }}
+                    {% endif %}
+                    {% if item.phone %}
+                    / 폰 : {{ item.phone|slice(-4) }}
+                    {% endif %}
+                    <br/>
+                    {% if item.addr %}
+                        배송주소 : {{ item.addr|slice(0,6) }}<br/>
+                    {% endif %}
+                    {% if item.bill %}
+
+                        <a href="javascript:void(0);" onclick="$(this).next('.div상세견적서보기').toggle();">
+                            견적서
+                        </a>
+                        <div id="" class="div상세견적서보기"
+                             style="display:none;background-color:#efefef;">
+                            <!--DB에 저장되어 있는 정보-->
+                            <small>{{ item.bill|raw  }}</small>
+                        </div>
+                    {% endif %}
+
             </td>
             <td>
                 {{ item.fee_offer|number_format }}
