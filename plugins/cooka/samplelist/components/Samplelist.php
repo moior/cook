@@ -46,11 +46,16 @@ class Samplelist extends ComponentBase
         chdir($_SERVER['DOCUMENT_ROOT'].$dirpath);
 
         $imgdata = array();
-        foreach (glob("$notename*") as $filename) {
+        foreach (glob("$notename*") as $key => $filename) {
             //echo "<br/>$filename " . "\n"; //filesize($filename)
             $temp["src"] = $dirpath."/".$filename;
             $temp["name"] = substr($filename, 0, strrpos($filename, "."));
             $imgdata[] = $temp;
+            if($key > 6) {
+                $temp["src"] = $dirpath."/../"."더보기.png";
+                $temp["name"] = "더보기";
+                $imgdata[] = $temp; break;
+            }
         }
         $this->page['imgdata'] = $imgdata;
 

@@ -6,6 +6,8 @@ is_hidden = 0
 [Bill]
 type = Final
 
+[Orders]
+
 [account]
 redirect = "home"
 paramCode = "code"
@@ -62,14 +64,14 @@ $(document).ready(function(){
 <div id="last"></div>
 <div class="container">
     <br>
-    {{ form_ajax('Bill::onOrderPaper',
+    {{ form_ajax('Orders::onSaveOrder',
         {
             success:"alert('접수 완료되었습니다. 확인 후 연락드리겠습니다. :-)')",
             redirect:"/my/cooking",
         }
     ) }}
     <!--<form
-        data-request="Bill::onOrderPaper"
+        data-request="Orders::onSaveOrder"
         data-request-before-update="settingPostData"
         data-request-success="alert('접수 완료되었습니다. 확인 후 연락드리겠습니다. :-)')"
         data-request-redirect="/my/cooking"

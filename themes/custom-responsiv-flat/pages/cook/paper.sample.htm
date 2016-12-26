@@ -2,6 +2,7 @@ title = "샘플"
 url = "/sample/:cate?"
 layout = "cooking"
 
+[Orders]
 [CategoryByFilename]
 
 [Samplelist]
@@ -11,6 +12,38 @@ cate = "{{:cate}}"
 function onInit(){
     $this->page["text_cate"] = "{{:cate}}";
     $this->page["text_cate"] = "ssssss";
+}
+function onQuickOrder(){
+    $this['result'] = input('value1') + input('value2');
+    $this->page["result"]  = $this['result'];
+    return $this->page["result"];
+
+    $order = new Order; /*Db::table('users')->insert(
+                                ['email' => 'john@example.com', 'votes' => 0]
+                                );*/
+    $form = post();
+    $order->name        = $form['client_name'];
+    if( isset($user->id)){
+        $order->user_id     = $user->id;
+    }else{
+        $order->user_id     = "";
+
+    }
+    $order->title       = $form["title"];
+    $order->phone       = $form["client_tel"];
+    $order->addr        = $form["client_addr"];
+    $order->email       = $form["client_email"];
+    $order->comment     = $form["client_comment"];
+    //$order->wishlist_id = form[""];
+    $order->cook_data   = $form["cook_data"]; // yml 으로 변환 //$parsed = yaml_parse($yaml);        // convert the YAML back into a PHP variable
+    $order->bill        = $form["bill"];
+    $order->fee_offer       = $form["fee_offer"];
+    //$order->fee_payment     = $form[""];
+    $order->status_show     = "주문완료. 입금확인중";
+    $order->shipping_number = "";
+    //$order->is_complete     = "";
+
+    return $order->save();
 }
 ?>
 ==
@@ -29,6 +62,13 @@ $(document).ready(function(){
     $(".btn_cate").click(function(){
         location.href="/sample/" + $.trim($(this).text());
     })
+    $(".sample_image").click(function() {
+        $(".sample_image").css("border", "");
+        $(this).css("border", "3px solid royalblue");
+
+        $("#input_sample_code").val( $(this).next("figcaption").text() )
+            .css("border", "1px solid royalblue");
+    });
 
 })
 </script>
@@ -46,20 +86,12 @@ $(document).ready(function(){
 
             {% component "CategoryByFilename" %} <!--파라미터로 디렉토리 넘기도록-->
             <hr>
-            <div class="btn_cate"><span class="fa fa-chevron-right"></span> 홍보-일반</div>
-            <div class="btn_cate"><span class="fa fa-chevron-right"></span> 학원-수학</div>
-            <div class="btn_cate"><span class="fa fa-chevron-right"></span> 학원-영어</div>
-            <div class="btn_cate"><span class="fa fa-chevron-right"></span> 학원-미술</div>
-            <div class="btn_cate"><span class="fa fa-chevron-right"></span> 학원-체육</div>
             <div class="btn_cate"><span class="fa fa-chevron-right"></span> 오답노트-영어</div>
             <div class="btn_cate"><span class="fa fa-chevron-right"></span> 학습플래너</div>
             <div class="btn_cate"><span class="fa fa-chevron-right"></span> 독서기록장</div>
             <div class="btn_cate"><span class="fa fa-chevron-right"></span> 학교노트</div>
-            <div class="btn_cate"><span class="fa fa-chevron-right"></span> 알림장</div>
 
             <div class="btn_cate"><span class="fa fa-chevron-right"></span> 업무노트</div>
-            <div class="btn_cate"><span class="fa fa-chevron-right"></span> 연구노트</div>
-            <div class="btn_cate"><span class="fa fa-chevron-right"></span> 회사</div>
             <div class="btn_cate"><span class="fa fa-chevron-right"></span> 연습장</div>
 
 
@@ -77,47 +109,74 @@ $(document).ready(function(){
 
 
         <form
-            data-request="Bill::onOrderPaper"
-            data-request-success="alert('접수 완료되었습니다. 확인 후 연락드리겠습니다. :-)')"
-            data-request-redirect="/my">
+            data-request="Orders::onSaveOrder"
+            data-request-success="$('#msg_ajax').show().text('접수 완료되었습니다. 확인 후 연락드리겠습니다. :-)')"
+            data-request-complete=""
+            data-request-loading="<span class='fa fa-loading'></span>"
+            >
+            <input type="hidden" name="title" value="간단 주문접수" />
+            <input type="hidden" name="status_show" value="견적 접수" />
+
             <!--data-request-update="'{{ __SELF__ }}::list': '#result'"-->
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title">간단 주문 순서</h3>
+                    <h3 class="panel-title">간단 주문 접수</h3>
                 </div>
                 <div class="panel-body">
-                    <div  style="border:0px solid gray;margin-bottom:10px;" class="col-sm-8">
-
+                    <div style="border:0px solid #9c9c9c;margin-bottom:10px;" class="col-sm-8">
                         <ol>
                             <li>
-                                견적문의 (샘플번호를 함께 불러주세요)
+                                샘플 선택 (최대한 비슷한 제품 선택)
+                                <input type="input" name="sample_code" id="input_sample_code" placeholder="샘플을 선택해주세요."
+                                       style="border:0px solid tomato" readonly class="form-control" />
                             </li>
                             <li>
-                                파일 검토
-                            </li>
-                            <li>
-                                견적 및 입금
-                            </li>
-                            <li>
-                                시안확인 및 교정
-                            </li>
-                            <li>
-                                인쇄 제작
-                            </li>
-                            <li>
-                                배송
-                            </li>
-                            
-                        </ol>
+                                연락처, 참고파일(디자인 등) 입력
+                                <p>
+                                <input type="input" name="client_tel" id="input_client_tel"
+                                       placeholder="연락처" class="form-control" />
+                                </p>
+                                <p>
+                                <input type="file" name="files" id="input_files" class="form-control" />
+                                </p>
 
+                            </li>
+
+                            <li>세부 전달사항
+                                <textarea name="client_comment" class="form-control"></textarea>
+
+                            </li>
+                            <li>
+                                견적을 문자/전화/메일로 드립니다.
+                            </li>
+                            <li>
+                                비용입금 후 절차
+                                <ul>
+                                    <li>  디자인 시안 확인 > 교정 > 확정 (약3일)</li>
+                                    <li>
+                                        인쇄, 제작, 제본 (약 5일~14일)
+                                    </li>
+                                    <li>
+                                        배송 (1일)
+                                    </li>
+                                </ul>
+                            </li>
+
+                            <p class="text-right">
+                                <button type="submit" id="input_files" class="btn btn-default btn-block" >접수</button>
+                            </p>
+                        </ol>
+                        <div style="display:none;" id="msg_ajax" class="well bg-info">
+
+                        </div>
 
                     </div>
 
                     <div  style="border:0px solid gray;" class="col-sm-4">
                         <p>
                             <b>주의</b><br/>
-                            ① 입금 순서대로 작업 진행됩니다.
-                            <br><b>주문이 밀릴 경우</b> 출고일이 조정될 수 있습니다.
+                            ① <b>입금 순서대로</b> 작업 진행됩니다.
+                            <br>주문이 밀릴 경우 <b>출고일이 조정될 수</b> 있습니다.
                             <br>
                             ② 세부사항 조율 완료 후, 실제작 및 배송까지 약 10일 소요됩니다.
                         </p>
@@ -126,7 +185,8 @@ $(document).ready(function(){
                         </p>
                         <p class="well well-sm text-center">
                             회계팀 : 02-1661-5521 <br/>
-                            디자인팀 : 02-2038-2438
+                            디자인팀 : 02-2038-2438 <br/>
+                            help@moior.com
                         </p>
                     </div>
                 </div>

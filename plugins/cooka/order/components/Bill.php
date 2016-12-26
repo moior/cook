@@ -1,10 +1,10 @@
 <?php namespace Cooka\Order\Components;
 
-use Backend\Facades\BackendAuth;
 use Cms\Classes\ComponentBase;
 use ApplicationException;
 use Cook\Classes\FeeCalculator;
 use Cooka\Order\Models\Order;
+use RainLab\User\Facades\Auth;
 
 class Bill extends ComponentBase
 {
@@ -37,43 +37,7 @@ class Bill extends ComponentBase
         return ($user);
 
     }
-    /*접수버튼 클릭시*/
-    public function onOrderPaper()
-    {
-        //$items = post('items', []); // 원래있는것. 배열처리방법.
-        /*if (!count($items)) {
-            throw new ApplicationException(sprintf('뭔가 이상 : %s ', $this->property('type')));
-        }*/
-        $user = BackendAuth::getUser(); //$user["email"]. $user->name; //
-        /*만약 로긴 아니면, guest 모델 만들어서 가입할까......*/
-        /*$user = $this->user;*/
-        $order = new Order; /*Db::table('users')->insert(
-                                ['email' => 'john@example.com', 'votes' => 0]
-                                );*/
-        $form = post();
-        $order->name        = $form['client_name'];
-        if( isset($user->id)){
-            $order->user_id     = $user->id;
-        }else{
-            $order->user_id     = "";
 
-        }
-        $order->title       = $form["title"];
-        $order->phone       = $form["client_tel"];
-        $order->addr        = $form["client_addr"];
-        $order->email       = $form["client_email"];
-        $order->comment     = $form["client_comment"];
-        //$order->wishlist_id = form[""];
-        $order->cook_data   = $form["cook_data"]; // yml 으로 변환 //$parsed = yaml_parse($yaml);        // convert the YAML back into a PHP variable
-        $order->bill        = $form["bill"];
-        $order->fee_offer       = $form["fee_offer"];
-        //$order->fee_payment     = $form[""];
-        $order->status_show     = "주문완료. 입금확인중";
-        $order->shipping_number = "";
-        //$order->is_complete     = "";
-
-        return $order->save();
-    }
 
     /*노트 다 조합 후 저장버튼 클릭시*/
     public function onRun()
