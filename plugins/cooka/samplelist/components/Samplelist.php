@@ -39,31 +39,20 @@ class Samplelist extends ComponentBase
     {
 
         $user = Auth::getUser(); //$user["email"]. $user->name; //
-        $imgpath = array();
+
+
         $notename = $this->property('cate'); //"알림장";
+        $dirpath = $this->property('dir')?:"/plugins/cooka/samplelist/assets/images/note"; // 해당 디렉토리 내 모든 파일 나열
+        chdir($_SERVER['DOCUMENT_ROOT'].$dirpath);
 
-        for ($num =1; $num <  10; $num++){
-            $numm = sprintf("%02d", $num);
+        $imgdata = array();
+        foreach (glob("$notename*") as $filename) {
+            //echo "<br/>$filename " . "\n"; //filesize($filename)
+            $temp["src"] = $dirpath."/".$filename;
+            $temp["name"] = substr($filename, 0, strrpos($filename, "."));
+            $imgdata[] = $temp;
+        }
+        $this->page['imgdata'] = $imgdata;
 
-            $file_path = '/plugins/cooka/samplelist/assets/images/note/'.$notename.'-'.$numm.'.jpg';
-            if( file_exists($_SERVER['DOCUMENT_ROOT'].$file_path)){
-                $imgpath[] = $file_path;
-            }
-        }
-        $this->page['imgsrc'] = $imgpath;
-        /*if(isset($user->id)){
-            $orders = Order::where('user_id', $user->id)->orderBy("created_at", "desc")->get(); //find( $user->id );
-        }else{
-            $orders = Order::orderBy("created_at", "desc")->paginate(20); //find( $user->id );
-        }
-        $this->page['orders'] = $orders;
-        //return "<pre>".$this->page['orders'];
-        foreach( $orders as $key => $order){
-            $cook_data_arr[] = json_decode($order['cook_data'], true);
-        }
-        if( isset($cook_data_arr)){
-            $this->page['specs'] = $cook_data_arr;
-        }*/
-        /*print_r($cook_data_arr);*/
     }
 }

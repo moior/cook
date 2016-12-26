@@ -8,6 +8,10 @@ layout = "cooking"
 cate = "{{:cate}}"
 ==
 <?php
+function onInit(){
+    $this->page["text_cate"] = "{{:cate}}";
+    $this->page["text_cate"] = "ssssss";
+}
 ?>
 ==
 <script>
@@ -39,6 +43,9 @@ $(document).ready(function(){
             <span class="fa fa-toggle-right"></span> 노트
         </div>
         <div id="title-left-top" style="">
+
+            {% component "CategoryByFilename" %} <!--파라미터로 디렉토리 넘기도록-->
+            <hr>
             <div class="btn_cate"><span class="fa fa-chevron-right"></span> 홍보-일반</div>
             <div class="btn_cate"><span class="fa fa-chevron-right"></span> 학원-수학</div>
             <div class="btn_cate"><span class="fa fa-chevron-right"></span> 학원-영어</div>
@@ -55,7 +62,6 @@ $(document).ready(function(){
             <div class="btn_cate"><span class="fa fa-chevron-right"></span> 회사</div>
             <div class="btn_cate"><span class="fa fa-chevron-right"></span> 연습장</div>
 
-            {% component "CategoryByFilename" %}
 
         </div>
     </div>
@@ -65,6 +71,7 @@ $(document).ready(function(){
     <div class="col-sm-10" id="col-rightdesk" style="">
 
         <div class="" id="" style="">
+            <h5>{{ text_cate }}</h5>
             {% component "Samplelist" %}
         </div>
 
@@ -83,10 +90,7 @@ $(document).ready(function(){
 
                         <ol>
                             <li>
-                                샘플번호와 함께, 견적문의
-                            </li>
-                            <li>
-                                파일 검토
+                                견적문의 (샘플번호를 함께 불러주세요)
                             </li>
                             <li>
                                 파일 검토

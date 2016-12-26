@@ -1,13 +1,24 @@
 
 <style>
     .table td, .table th {font-size:10pt;}
+    .sample_image {height:150px; }
+    figure {  position:relative;
+        border: 1px solid #ccc;
+        float:left;
+        overflow: hidden;margin:10px;}
+    figcaption {text-align:center;}
 </style>
 
-<div class="div-order">
-    <p></p>
+<div class="div-order clearfix">
 
-    {% for src in imgsrc %}
-        <img src="{{ src }}" alt="" class="tile-image">
+    {% for _imgdata in imgdata %}
+        <figure>
+            <img src="{{ _imgdata.src }}" class="sample_image" alt="{{ _imgdata.name }}"/>
+            <figcaption>{{ _imgdata.name }}</figcaption>
+        </figure>
+
     {% endfor %}
 
 </div>
+
+
