@@ -55,6 +55,10 @@ $(document).ready(function(){
             <span class="fa fa-toggle-right"></span> 노트
         </div>
         <div id="title-left-top" style="">
+            <a class="visible-xs pull-center" href="javascript:$('#category_list').toggleClass('hidden-xs');" onclick="">
+                카테고리 보기
+            </a>
+            <div id="category_list" class="hidden-xs">
 
             {% component "CategoryByFilename" %} <!--파라미터로 디렉토리 넘기도록-->
             <hr>
@@ -67,6 +71,7 @@ $(document).ready(function(){
             <div class="btn_cate"><span class="fa fa-chevron-right"></span> 연습장</div>
 
 
+            </div>
         </div>
     </div>
     <div class="col-sm0" id="col-centerdesk" style="">
