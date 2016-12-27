@@ -7,10 +7,6 @@ use Model;
  */
 class Order extends Model
 {
-
-    /**
-     * @var string The database table used by the model.
-     */
     public $table = 'cooka_orders';
 
     protected $jsonable = ['cook_data', 'bill'];
@@ -26,7 +22,7 @@ class Order extends Model
     protected $fillable = [];
 
     /**
-     * @var array Relations
+     * @var array Relations , 'public' => false
      */
     public $hasOne = [];
     public $hasMany = [];
@@ -35,7 +31,10 @@ class Order extends Model
     public $morphTo = [];
     public $morphOne = [];
     public $morphMany = [];
-    public $attachOne = [];
-    public $attachMany = [];
+    public $attachOne = [
+        'upload_file' => ['System\Models\File']
+    ];
+    public $attachMany = [
+    ];
 
 }

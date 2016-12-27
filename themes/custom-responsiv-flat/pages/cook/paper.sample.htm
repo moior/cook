@@ -88,13 +88,13 @@ $(document).ready(function(){
             {% component "Samplelist" %}
         </div>
 
+        <!--file 저장은 ajax로 안되고 enctype=multipart 넣어줘야!! 맨날 삽질2시간-->
+        {{ form_open({ request: 'Orders::onSaveOrder', files : true }) }}
 
-        <form
-            data-request="Orders::onSaveOrder"
+            <!--data-request="Orders::onSaveOrder"
             data-request-success="$('#msg_ajax').show().text('접수 완료되었습니다. 확인 후 연락드리겠습니다. :-)')"
             data-request-complete=""
-            data-request-loading="<span class='fa fa-loading'></span>"
-            >
+            data-request-loading="<span class='fa fa-loading'></span>"-->
             <input type="hidden" name="title" value="간단 주문접수" />
             <input type="hidden" name="status_show" value="견적 접수" />
 
@@ -108,17 +108,17 @@ $(document).ready(function(){
                         <ol>
                             <li>
                                 샘플 선택 (최대한 비슷한 제품 선택)
-                                <input type="input" name="sample_code" id="input_sample_code" placeholder="샘플을 선택해주세요."
+                                <input type="text" name="sample_code" id="input_sample_code" placeholder="샘플을 선택해주세요."
                                        style="border:0px solid tomato" readonly class="form-control" />
                             </li>
                             <li>
                                 연락처, 참고파일(디자인 등) 입력
                                 <p>
-                                <input type="input" name="client_tel" id="input_client_tel"
+                                <input type="text" name="client_tel" id="input_client_tel"
                                        placeholder="연락처" class="form-control" />
                                 </p>
                                 <p>
-                                <input type="file" name="files" id="input_files" class="form-control" />
+                                <input type="file" name="upload_file" id="input_files" class="form-control" />
                                 </p>
 
                             </li>
@@ -144,7 +144,7 @@ $(document).ready(function(){
                             </li>
 
                             <p class="text-right">
-                                <button type="submit" id="input_files" class="btn btn-default btn-block" >접수</button>
+                                <button type="submit" id="btn_submit" class="btn btn-default btn-block" >접수</button>
                             </p>
                         </ol>
                         <div style="display:none;" id="msg_ajax" class="well bg-info">
@@ -175,7 +175,8 @@ $(document).ready(function(){
 
                 </div>
             </div>
-        </form>
+        {{ form_close() }}
+
     </div>
 
 

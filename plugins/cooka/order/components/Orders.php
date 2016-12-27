@@ -5,6 +5,7 @@ use Cms\Classes\ComponentBase;
 use ApplicationException;
 use Cook\Classes\FeeCalculator;
 use Cooka\Order\Models\Order;
+use Illuminate\Support\Facades\Input;
 use RainLab\User\Facades\Auth;
 
 class Orders extends ComponentBase
@@ -47,14 +48,21 @@ class Orders extends ComponentBase
             $orders = Order::orderBy("created_at", "desc")->paginate(20); //find( $user->id );
         }
         $this->page['orders'] = $orders;
-        //return "<pre>".$this->page['orders'];
+
+        foreach( $orders as $key => $order){
+            if($order->upload_file)
+                $upload_file_arr[] = $order->upload_file->getPath();
+            else  $upload_file_arr[] = '';
+        }
+        $this->page['upload_file_arr'] = $upload_file_arr;
+        /*print_r( $upload_file_arr);*/
         foreach( $orders as $key => $order){
             $cook_data_arr[] = json_decode($order['cook_data'], true);
         }
         if( isset($cook_data_arr)){
             $this->page['specs'] = $cook_data_arr;
         }
-        /*print_r($cook_data_arr);*/
+
     }
 
     /*접수버튼 클릭시*/
@@ -88,6 +96,10 @@ class Orders extends ComponentBase
 
         //$order->wishlist_id = form[""];
         $order->cook_data       = isset($form["cook_data"])?$form["cook_data"]:""; // yml 으로 변환 //$parsed = yaml_parse($yaml);        // convert the YAML back into a PHP variable
+        $input = Input::all();
+        if(Input::hasFile('upload_file')){//Request::hasFile(
+            $order->upload_file     = Input::file('upload_file'); //$form["upload_file"]; //
+        }
         $order->bill            = isset($form["bill"])?$form["bill"]:"";
         $order->fee_offer       = isset($form["fee_offer"])?$form["fee_offer"]:"0";
         //$order->fee_payment     = $form[""];

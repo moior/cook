@@ -5,7 +5,6 @@
 <!--<form data-request="{{ __SELF__ }}::onOrderPaper">
 여기서는 __self__하면되네    
 </form>-->
-
 <div class="div-order">
     <p></p>
 
@@ -23,28 +22,34 @@
                 <small>{{ item.created_at|slice(0,10) }}</small>
             </td>
             <td >
-                    {{ item.title }}
-                    {% if item.name %}
-                    / 성함 : {{ item.name }}
-                    {% endif %}
-                    {% if item.phone %}
-                    / 폰 : {{ item.phone|slice(-4) }}
-                    {% endif %}
-                    <br/>
-                    {% if item.addr %}
-                        배송주소 : {{ item.addr|slice(0,6) }}<br/>
-                    {% endif %}
-                    {% if item.bill %}
 
-                        <a href="javascript:void(0);" onclick="$(this).next('.div상세견적서보기').toggle();">
-                            견적서
-                        </a>
-                        <div id="" class="div상세견적서보기"
-                             style="display:none;background-color:#efefef;">
-                            <!--DB에 저장되어 있는 정보-->
-                            <small>{{ item.bill|raw  }}</small>
-                        </div>
-                    {% endif %}
+
+                {{ item.title }}
+                {% if item.name %}
+                / 성함 : {{ item.name }}
+                {% endif %}
+                {% if item.phone %}
+                / 폰 : {{ item.phone|slice(-4) }}
+                {% endif %}
+                <br/>
+                {% if item.addr %}
+                    배송주소 : {{ item.addr|slice(0,6) }}<br/>
+                {% endif %}
+                <!--첨부파일이 있으면 -->
+                {% if upload_file_arr[key] %}
+                <a href="{{upload_file_arr[key]}}" target="_blank">파일</a>
+                {% endif %}
+                {% if item.bill %}
+
+                    <a href="javascript:void(0);" onclick="$(this).next('.div상세견적서보기').toggle();">
+                        견적서
+                    </a>
+                    <div id="" class="div상세견적서보기"
+                         style="display:none;background-color:#efefef;">
+                        <!--DB에 저장되어 있는 정보-->
+                        <small>{{ item.bill|raw  }}</small>
+                    </div>
+                {% endif %}
 
             </td>
             <td>
