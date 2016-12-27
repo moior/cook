@@ -1,14 +1,14 @@
 
 <style>
-    .table td, .table th {font-size:10pt;}
+    .table td, .table th {}
 </style>
 <!--<form data-request="{{ __SELF__ }}::onOrderPaper">
-여기서는 __self__하면되네    
+여기서는 __self__하면되네
 </form>-->
 <div class="div-order">
     <p></p>
 
-    <table id="talbe-order-list" class="table">
+    <table id="talbe-order-list" class="table table-sm">
         <tr>
             <th>날짜</th>
             <th>내용</th>
@@ -19,7 +19,7 @@
         {% for key, item in orders %}
         <tr class="">
             <td>
-                <small>{{ item.created_at|slice(0,10) }}</small>
+                <small>{{ item.created_at|slice(5,5) }}</small>
             </td>
             <td >
 
@@ -55,8 +55,8 @@
             <td>
                 {{ item.fee_offer|number_format }}
             </td>
-            
-            
+
+
             <!--관리자만 보이도록-->
             <!--<td>
                 {% for key, spec in specs[loop.index0] %}

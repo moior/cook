@@ -49,28 +49,34 @@ $(document).ready(function(){
     .btn_cate {cursor:pointer;}
 </style>
 
-<div class="container">
+<div class="container ">
+    <div class="row">  <!--row class 할때마다 마진 15 사라짐.-->
+
     <div class="col-sm-2" id="col-leftdesk" style="">
-        <div id="title-cate" style="padding-left:5px;margin-top:10px;">
-            <span class="fa fa-toggle-right"></span> 노트
-        </div>
-        <div id="title-left-top" style="">
-            <a class="visible-xs pull-center" href="javascript:$('#category_list').toggleClass('hidden-xs');" onclick="">
-                카테고리 보기
-            </a>
-            <div id="category_list" class="hidden-xs">
+        <div class="">
+            <div id="title-cate" style="padding-left:5px;margin-top:10px;">
+                <span class="fa fa-toggle-right"></span> 노트
+            </div>
+            <div id="title-left-top" style="">
+                <div class="visible-xs pull-center text-center well well-sm">
+                <a class="" href="javascript:$('#category_list').toggleClass('hidden-xs');" onclick="">
+                    카테고리 보기
+                </a>
+                </div>
+                <div id="category_list" class="hidden-xs">
 
-            {% component "CategoryByFilename" %} <!--파라미터로 디렉토리 넘기도록-->
-            <hr>
-            <div class="btn_cate"><span class="fa fa-chevron-right"></span> 오답노트-영어</div>
-            <div class="btn_cate"><span class="fa fa-chevron-right"></span> 학습플래너</div>
-            <div class="btn_cate"><span class="fa fa-chevron-right"></span> 독서기록장</div>
-            <div class="btn_cate"><span class="fa fa-chevron-right"></span> 학교노트</div>
+                {% component "CategoryByFilename" %} <!--파라미터로 디렉토리 넘기도록-->
+                <hr>
+                <div class="btn_cate"><span class="fa fa-chevron-right"></span> 오답노트-영어</div>
+                <div class="btn_cate"><span class="fa fa-chevron-right"></span> 학습플래너</div>
+                <div class="btn_cate"><span class="fa fa-chevron-right"></span> 독서기록장</div>
+                <div class="btn_cate"><span class="fa fa-chevron-right"></span> 학교노트</div>
 
-            <div class="btn_cate"><span class="fa fa-chevron-right"></span> 업무노트</div>
-            <div class="btn_cate"><span class="fa fa-chevron-right"></span> 연습장</div>
+                <div class="btn_cate"><span class="fa fa-chevron-right"></span> 업무노트</div>
+                <div class="btn_cate"><span class="fa fa-chevron-right"></span> 연습장</div>
 
 
+                </div>
             </div>
         </div>
     </div>
@@ -78,20 +84,24 @@ $(document).ready(function(){
 
     </div>
     <div class="col-sm-10" id="col-rightdesk" style="">
-        <h5>{{ text_cate }}</h5>
+        <div class=" ">
 
-        <div class="well text-center" >
-            <span class="fa fa-search fa-3x" style="color:tomato; vertical-align: middle;"></span>
-            가장 비슷한 샘플을 고른 후
-            <span class="fa fa-arrow-right" style="margin:0 20px;"></span>
-            <span class="fa fa-pencil-square-o fa-3x" style="color:tomato; vertical-align: middle;"></span>
-            하단에서 견적서 작성
+            <h5>{{ text_cate }}</h5>
+
+            <div class="well text-center" >
+                <span class="fa fa-search fa-3x" style="color:tomato; vertical-align: middle;"></span>
+                가장 비슷한 샘플을 고른 후
+                <span class="fa fa-arrow-right" style="margin:0 20px;"></span>
+                <span class="fa fa-pencil-square-o fa-3x" style="color:tomato; vertical-align: middle;"></span>
+                하단에서 견적서 작성
+            </div>
         </div>
 
-        <div class="" id="" style="">
-
+        <!--row class 할때마다 마진 15 사라짐.-->
+        <div class="row" id="" style="">
             {% component "Samplelist" %}
         </div>
+        <div class=" ">
 
         <!--file 저장은 ajax로 안되고 enctype=multipart 넣어줘야!! 맨날 삽질2시간-->
         {{ form_open({ request: 'Orders::onSaveOrder', files : true }) }}
@@ -182,8 +192,9 @@ $(document).ready(function(){
             </div>
         {{ form_close() }}
 
+        </div>
     </div>
 
-
+    </div>
 
 </div>
