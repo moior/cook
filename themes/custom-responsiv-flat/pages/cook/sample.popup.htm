@@ -2,7 +2,7 @@ title = "샘플 상세"
 url = "/sample-detail/paper/note"
 layout = ""
 
-[SampleEach]
+
 ==
 <?php
 function onInit(){
@@ -10,6 +10,12 @@ function onInit(){
     $this['src'] =  \Illuminate\Support\Facades\Input::get('src');
 
     $this['related_img'] = "";
+
+
+    /*[SampleEach]
+    if ($this->user->hasAccess('acme.blog.*')) {
+        $this['haha'] = "haha";
+    }*/
 }
 ?>
 ==
@@ -42,6 +48,7 @@ function onInit(){
                 <p>상세스펙</p>
 
                 {% if admin %}
+
                     <!--어드민이면....... 바로바로 입력하도록.-->
                 {% endif %}
             </div>
