@@ -84,14 +84,33 @@ $(document).ready(function(){
 
 <div style=" " class="well">
     <div class="box-크기-wrap col-xs-6">
-        <div class="box-크기 size-a4" data-cate="크기" data-value="A4">A4</div>
-        <div class="box-크기 size-a5" data-cate="크기" data-value="A5">A5</div>
-        <div class="box-크기 size-a6" data-cate="크기" data-value="A6">A6</div>
+        <div class="box-크기 size-a4" data-cate="크기" data-value="A4">
+            A4
+            <small>210x297</small>
+        </div>
+        <div class="box-크기 size-a5" data-cate="크기" data-value="A5">
+            A5
+            <small>148x210</small>
+        </div>
+        <div class="box-크기 size-a6" data-cate="크기" data-value="A6">
+            A6
+            <small>105x148</small>
+            <br>
+            <small><small>단위:mm</small></small>
+
+        </div>
+
     </div>
     <div class="box-크기-wrap col-xs-6">
         <!--<div class="box-크기 size-b4" data-cate="크기" data-value="B4">B4</div>-->
-        <div class="box-크기 size-b5" data-cate="크기" data-value="B5">B5</div>
-        <div class="box-크기 size-b6" data-cate="크기" data-value="B6">B6</div>
+        <div class="box-크기 size-b5" data-cate="크기" data-value="B5">
+            B5
+            <small>176x250</small>
+        </div>
+        <div class="box-크기 size-b6" data-cate="크기" data-value="B6">
+            B6
+            <small>125x176</small>
+        </div>
     </div>
     <div style="clear:both;"></div>
 
@@ -101,10 +120,11 @@ $(document).ready(function(){
 
 <label for="chk-inner3mm" class="well well-sm">
     <input type="checkbox" id="chk-inner3mm"  name="chk_inner3mm" value="내지 -3mm"  />
-    <b>내지는 표지보다 3mm 작게 (기본)</b>
+    <b>표지와 내지 사이즈 같음 (기본)</b>
     <div><small>
-        위 크기에 표지를 맞춘 후, 내지는 표지보다 3mm 작게 만들어집니다.
-        내지도 동일크기로 만드실거면 체크 해제.
+        스프링제본의 경우 내지를 표지보다 3mm 작게 만들 수 있습니다.
+        내지를 약간 작게 만드실거면 체크 해주주세요.
+             (중철제본의 경우에는 무조건 동일사이즈입니다)
     </small></div>
 </label>
 <!--<p>
