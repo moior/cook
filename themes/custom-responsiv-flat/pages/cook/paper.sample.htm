@@ -40,8 +40,15 @@ $(document).ready(function(){
 
         $("#input_sample_code").val( $(this).next("figcaption").text() )
             .css("border", "1px solid royalblue");
+        $('#modal예제상세').modal({
+            remote : '/sample-detail/paper/note?title=' + $(this).attr("alt")
+                + "&src="  + $(this).attr("src")
+        });
     });
-
+    /*모달 매번 다시 부름.*/
+    $(document).on('hidden.bs.modal', function (e) {
+        $(e.target).removeData('bs.modal');
+    });
 })
 </script>
 <style>
@@ -201,4 +208,12 @@ $(document).ready(function(){
 
     </div>
 
+</div>
+
+<div class="modal fade" id="modal예제상세" tabindex="-1" role="dialog"><!--control-popup -->
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <p>여기는 ajax 자동으로 불러온다.</p>
+        </div>
+    </div>
 </div>

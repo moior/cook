@@ -46,7 +46,9 @@ class Samplelist extends ComponentBase
         chdir($_SERVER['DOCUMENT_ROOT'].$dirpath);
 
         $imgdata = array();
-        foreach (glob("$notename*") as $key => $filename) {
+        $glob =glob("$notename*");
+        shuffle($glob);
+        foreach ($glob as $key => $filename) {
             //echo "<br/>$filename " . "\n"; //filesize($filename)
             $temp["src"] = $dirpath."/".$filename;
             $temp["name"] = substr($filename, 0, strrpos($filename, "."));
@@ -60,4 +62,6 @@ class Samplelist extends ComponentBase
         $this->page['imgdata'] = $imgdata;
 
     }
+
+
 }

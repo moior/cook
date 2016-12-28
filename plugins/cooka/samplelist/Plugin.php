@@ -60,4 +60,16 @@ class Plugin extends PluginBase
             ]
         ];
     }
+
+
+    public function registerPermissions()
+    {
+        return [
+            'cooka.sample.update_sample' => [
+                'tab' => 'Cooka',
+                'label' => '샘플 이미지와 설명을 저장, 수정할 권한',
+               'order' => 10,
+            ],
+        ];
+    }
 }

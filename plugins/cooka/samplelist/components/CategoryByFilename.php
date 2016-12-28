@@ -51,7 +51,7 @@ class CategoryByFilename extends ComponentBase
             }
             closedir($handle);
         }
-
+        asort($filelist);
         /*알림장-02.jpg 에서 -02.jpg 를 빼고, 중복 제거해서 디렉토리 리스트 만듬*/
         foreach( $filelist as $key => $file){ //"알림장-수학-02.jpg";
             //$catename_all[] = basename($file, strrchr($file, '-')); // 뒤에서 처음 나오는 "-"까지 // 이상함. 될때있고 안될떄 있고... 나중 이상생기면 여기가 문제.

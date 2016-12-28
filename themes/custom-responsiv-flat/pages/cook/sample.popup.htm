@@ -1,0 +1,54 @@
+title = "샘플 상세"
+url = "/sample-detail/paper/note"
+layout = ""
+
+[SampleEach]
+==
+<?php
+function onInit(){
+    $this['title'] =  \Illuminate\Support\Facades\Input::get('title');
+    $this['src'] =  \Illuminate\Support\Facades\Input::get('src');
+
+    $this['related_img'] = "";
+}
+?>
+==
+<style>
+    .img-sample-detail {max-width:100%;}
+</style>
+
+<script>
+
+    $(document).ready(function(){
+
+    })
+
+</script>
+<div class="modal-content">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">{{ title }}   </h4>
+    </div>
+    <div class="modal-body">
+        <div class="row ">
+            <div class="col-sm-9">
+
+                <img src="{{src}}" class="img-sample-detail" />
+                {% if related_img %}
+                    <!--파일명이 이 파일명+숫자 붙은게 더 있으면, 해당 이미지 보여줌.-->
+                {% endif %}
+            </div>
+            <div class="col-sm-3">
+                <p>상세스펙</p>
+
+                {% if admin %}
+                    <!--어드민이면....... 바로바로 입력하도록.-->
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+    </div>
+</div>
