@@ -1,4 +1,4 @@
-<?php namespace Cooka\Samplelist\Components;
+<?php namespace Cooka\Sample\Components;
 
 use Backend\Facades\BackendAuth;
 use Cms\Classes\ComponentBase;
@@ -41,7 +41,7 @@ class CategoryByFilename extends ComponentBase
         $user = Auth::getUser(); //$user["email"]. $user->name; //
 
         /*파라미터로 디렉토리 넘기도록*/
-        $dirpath = "/plugins/cooka/samplelist/assets/images/note";
+        $dirpath = "/plugins/cooka/sample/assets/images/note";
         if ($handle = opendir(".".$dirpath)) {         // glob가 더 편하다 함. 나중. foreach (glob("/") as $filename) { echo "<br/><br/>$filename size " . filesize($filename) . "\n"; }
             while (false !== ($entry = readdir($handle))) {
                 if ($entry != "." && $entry != "..") {

@@ -1,21 +1,54 @@
 title = "샘플 상세"
-url = "/sample-detail/paper/note"
-layout = ""
+url = "/sample-detail/:sample-id"
+layout = "popup"
 
+[SampleControl]
 
 ==
 <?php
-function onInit(){
-    $this['title'] =  \Illuminate\Support\Facades\Input::get('title');
-    $this['src'] =  \Illuminate\Support\Facades\Input::get('src');
+use Backend\Facades\BackendAuth;
+use Illuminate\Support\Facades\Input;
+use Cooka\Sample\Models\Sample;
+function onStart(){
 
-    $this['related_img'] = "";
+    $this['title'] =  Input::get('title');
+    $this['src'] =   Input::get('src');
 
+    // Sample 모델 이용
+    $sample = Sample::find($this->param('sample-id'));
+    if($sample){
 
-    /*[SampleEach]
-    if ($this->user->hasAccess('acme.blog.*')) {
-        $this['haha'] = "haha";
-    }*/
+        $this['sample_id'] =  $sample->id;
+        $this['cate']       = $sample->cate;
+        $this['title']      = $sample->title;
+        $this['spec']       = $sample->spec;
+        $this['comment']    = $sample->comment;
+        $this['cook_data']  = $sample->cook_data;
+        $this['bill']       = $sample->bill;
+        $this['status_show'] = $sample->status_show;
+        $this['ord']        = $sample->ord;
+        $this['is_hidden']  = $sample->is_hidden;
+
+        $imgarr = array();
+        foreach($sample->sample_images as $image){
+            $imgarr[] = $image->getPath();
+
+        }
+        $this['sample_images_path'] = $imgarr;
+
+    }
+
+    /*관리자 로그인이랑, 일반회원 로그인 로직이 완전 다른듯. Admin은 슈퍼유저.*/
+    $user = BackendAuth::getUser();
+    /*[SampleEach]*/
+
+    if ($user->hasAccess('cooka.sample.*')) {
+        $this['admin'] = true;
+
+    }else {
+        $this['admin'] = false;
+
+    }
 }
 ?>
 ==
@@ -37,19 +70,70 @@ function onInit(){
     </div>
     <div class="modal-body">
         <div class="row ">
-            <div class="col-sm-9">
+            <div class="col-sm-8">
 
                 <img src="{{src}}" class="img-sample-detail" />
+                <!--위에건 지우자. 파일기반..-->
+
+                {% for key, value in sample_images_path %}
+
+                     <img src="{{value}}" class="img-sample-detail" style="border:1px solid #eee;" />
+
+                {% endfor %}
+
                 {% if related_img %}
                     <!--파일명이 이 파일명+숫자 붙은게 더 있으면, 해당 이미지 보여줌.-->
                 {% endif %}
+
+
             </div>
-            <div class="col-sm-3">
-                <p>상세스펙</p>
-
+            <div class="col-sm-4">
+                <div style="font-size:11pt;">
+                    <b>상세스펙</b>
+                    <p style="border-bottom:1px solid #eee">{{ cate }}</p>
+                    <p style="border-bottom:1px solid #eee">{{ spec }}</p>
+                    <p style="border-bottom:1px solid #eee">{{ comment }}</p>
+                </div>
+                <!--어드민이면....... 바로바로 입력하도록.-->
                 {% if admin %}
+                    <hr>
+                    <p style="color:darkred;font-size:9pt;">관리자만 가능합니다. (만약 관리자가 아닌데 이 글이 보인다면, 알려주세요 ^.^)</p>
 
-                    <!--어드민이면....... 바로바로 입력하도록.-->
+                    {{ form_ajax('SampleControl::onEditSample',
+                        {
+                            success:"alert('수정되었습니다.')",
+                        }
+                    ) }}
+                        <input type="hidden" name="sample_id" value="{{ sample_id }}" />
+                        <div class="">
+                            <div class=""> 카테</div>
+                            <input type="text" name="cate" value="{{ cate }}" class="form-control" placeholder="종이/노트/학원" />
+                        </div>
+                        <div class="">
+                            <div class=""> 제목</div>
+                            <input type="text" name="title" value="{{ title }}" class="form-control" placeholder="제목" />
+                        </div>
+                        <div class="">
+                            <div class=""> 스펙</div>
+                            <textarea name="spec" class="form-control" placeholder="스펙">{{ spec }}</textarea>
+                        </div>
+                        <div class="">
+                            <div class=""> 설명</div>
+                            <textarea name="comment" class="form-control" placeholder="코멘트">{{ comment }}</textarea>
+                        </div>
+                        <button type="submit" onclick="beforeFormSubmit();" class="btn btn btn-primary"
+                                data-attach-loading>수정</button>
+                    {{ form_close() }}
+
+                    {{ form_ajax('SampleControl::onDeleteSample',
+                        {
+                            success:"alert('삭제되었습니다.')",
+                            confirm: "정말 삭제합니까?",
+                        }
+                    ) }}
+                        <input type="hidden" name="id" value="{{ sample_id }}" />
+                        <button type="submit" class="btn btn-xs btn-link" data-attach-loading>삭제</button>
+                    {{ form_close() }}
                 {% endif %}
             </div>
         </div>

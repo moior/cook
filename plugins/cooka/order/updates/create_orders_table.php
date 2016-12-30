@@ -34,6 +34,6 @@ class CreateOrdersTable extends Migration
 
     public function down()
     {
-        Schema::dropIfExists('cooka_orderscooka_orders');
+        Schema::dropIfExists('cooka_orders');
     }
 }

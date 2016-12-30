@@ -1,4 +1,4 @@
-<?php namespace Cooka\Samplelist;
+<?php namespace Cooka\Sample;
 
 /**
  * The plugin.php file (called the plugin initialization script) defines the plugin information class.
@@ -13,8 +13,8 @@ class Plugin extends PluginBase
     public function pluginDetails()
     {
         return [
-            'name'        => 'Cooka Samplelist',
-            'description' => 'Samplelist',
+            'name'        => 'Cooka Sample',
+            'description' => 'Sample',
             'author'      => 'Kenny Heisher',
             'icon'        => 'icon-leaf'
         ];
@@ -23,8 +23,9 @@ class Plugin extends PluginBase
     public function registerComponents()
     {
         return [
-            '\Cooka\Samplelist\Components\Samplelist' => 'Samplelist',
-            '\Cooka\Samplelist\Components\CategoryByFilename' => 'CategoryByFilename',
+            '\Cooka\Sample\Components\SampleControl' => 'SampleControl',
+            '\Cooka\Sample\Components\SampleList' => 'SampleList',
+            '\Cooka\Sample\Components\CategoryByFilename' => 'CategoryByFilename',
 
         ];
     }
@@ -55,7 +56,7 @@ class Plugin extends PluginBase
                 'label'       => 'Sample',
                 'url'         => Backend::url('cooka/sample'),
                 'icon'        => 'icon-pencil',
-                'permissions' => ['cooka.samplelist.*'],
+                'permissions' => ['cooka.sample.*'],
                 'order'       => 500,
             ]
         ];

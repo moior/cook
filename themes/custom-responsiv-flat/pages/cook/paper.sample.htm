@@ -5,13 +5,28 @@ layout = "cooking"
 [Orders]
 [CategoryByFilename]
 
-[Samplelist]
+[SampleList]
 cate = "{{:cate}}"
+[SampleControl]
+
 ==
 <?php
+use Backend\Facades\BackendAuth;
+
 function onInit(){
     //$this["text_cate"] = param("cate"); //{{:cate}}
     // 잘안됨..
+
+
+    /*관리자 로그인이랑, 일반회원 로그인 로직이 완전 다른듯. Admin은 슈퍼유저.*/
+    $user = BackendAuth::getUser();
+    if ($user->hasAccess('cooka.sample.create')) {
+        $this['admin'] = true;
+
+    }else {
+        $this['admin'] = false;
+
+    }
 }
 /*function onQuickOrder(){
     $this['result'] = input('value1') + input('value2');
@@ -40,10 +55,12 @@ $(document).ready(function(){
 
         $("#input_sample_code").val( $(this).next("figcaption").text() )
             .css("border", "1px solid royalblue");
+        var url = '/sample-detail/' + $(this).data("sample_id")
+            + '?title=' + $(this).attr("alt") + '&src=' + $(this).attr("src");
+
         $('#modal예제상세').modal({
-            remote : '/sample-detail/paper/note?title=' + $(this).attr("alt")
-                + "&src="  + $(this).attr("src")
-        });
+            remote : url
+        }); //remote : '/sample-detail/paper/note?title=' + $(this).attr("alt")
     });
     /*모달 매번 다시 부름.*/
     $(document).on('hidden.bs.modal', function (e) {
@@ -96,6 +113,9 @@ $(document).ready(function(){
             <h5>{{ text_cate }}</h5>
 
             <div class="well text-center" >
+                <div style="font-size:1.4em;position:;top:2px;left:15px;color:#828282;">
+                    <i>다른 소비자분들이 제작한 제품들입니다.</i>
+                </div>
                 <span class="fa fa-search fa-3x" style="color:tomato; vertical-align: middle;"></span>
                 가장 비슷한 샘플을 고른 후
                 <span class="fa fa-arrow-right" style="margin:0 20px;"></span>
@@ -106,7 +126,7 @@ $(document).ready(function(){
 
         <!--row class 할때마다 마진 15 사라짐.-->
         <div class="row" id="" style="">
-            {% component "Samplelist" %}
+            {% component "SampleList" %}
         </div>
         <div class=" ">
 
@@ -179,18 +199,18 @@ $(document).ready(function(){
 
                     </div>
 
-                    <div  style="border:0px solid gray;" class="col-sm-4">
-                        <p>
+                    <div  style="border:0px solid gray;font-size:10pt;" class="col-sm-4">
+                        <p style=" font-size:10pt;" >
                             <b>주의</b><br/>
                             ① <b>입금 순서대로</b> 작업 진행됩니다.
                             <br>주문이 밀릴 경우 <b>출고일이 조정될 수</b> 있습니다.
                             <br>
                             ② 세부사항 조율 완료 후, 실제작 및 배송까지 약 10일 소요됩니다.
                         </p>
-                        <p class="well well-sm text-center">
+                        <p class="well well-sm text-center" style=" font-size:10pt;" >
                             입금계좌 : 우리은행 <span style="font-size:1.2em;">1005-502-237770</span> (주)모이어
                         </p>
-                        <p class="well well-sm text-center">
+                        <p class="well well-sm text-center" style=" font-size:10pt;" >
                             회계팀 : 02-1661-5521 <br/>
                             디자인팀 : 02-2038-2438 <br/>
                             help@moior.com
@@ -213,7 +233,36 @@ $(document).ready(function(){
 <div class="modal fade" id="modal예제상세" tabindex="-1" role="dialog"><!--control-popup -->
     <div class="modal-dialog">
         <div class="modal-content">
-            <p>여기는 ajax 자동으로 불러온다.</p>
+            <p style="margin:20px;">loading...</p>
         </div>
     </div>
 </div>
+
+
+
+
+{% if admin %}
+<div class="container">
+    {{ form_open({ request: 'SampleControl::onCreateSample', files : true }) }}
+        <h3>새 샘플 입력</h3>
+        <p style="color:darkred">관리자만 가능합니다. (만약 관리자가 아닌데 이 글이 보인다면, 알려주세요 ^.^)</p>
+        <input type="text" name="cate" class="form-control" placeholder="종이/노트/학원" />
+        <input type="text" name="title" class="form-control" placeholder="제목" />
+
+        <textarea name="spec" class="form-control" placeholder="스펙"></textarea>
+        <textarea name="comment" class="form-control" placeholder="코멘트"></textarea>
+
+
+    <input type="file" name="sample_images[]" class="form-control" placeholder=".." />
+    <input type="file" name="sample_images[]" class="form-control" placeholder=".." />
+    <input type="file" name="sample_images[]" class="form-control" placeholder=".." />
+    <input type="file" name="sample_images[]" class="form-control" placeholder=".." />
+    <input type="file" name="sample_images[]" class="form-control" placeholder=".." />
+    <input type="file" name="sample_images[]" class="form-control" placeholder=".." />
+    <input type="file" name="sample_images[]" class="form-control" placeholder=".." />
+    <input type="file" name="sample_images[]" class="form-control" placeholder=".." />
+
+    <button type="submit" onclick="" class="btn btn btn-primary" data-attach-loading>저장</button>
+    {{ form_close() }}
+</div>
+{% endif %}

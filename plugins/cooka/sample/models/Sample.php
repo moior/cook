@@ -1,19 +1,19 @@
-<?php namespace Cooka\Order\Models;
+<?php namespace Cooka\Sample\Models;
 
 use Model;
 
 /**
  * Order Model
  */
-class Order extends Model
+class Sample extends Model
 {
 
     /**
      * @var string The database table used by the model.
      */
-    public $table = 'cooka_orders';
+    public $table = 'cooka_samples';
 
-    protected $jsonable = ['cook_data', 'bill'];
+    //protected $jsonable = ['cook_data', 'bill'];
 
     /**
      * @var array Guarded fields
@@ -36,6 +36,8 @@ class Order extends Model
     public $morphOne = [];
     public $morphMany = [];
     public $attachOne = [];
-    public $attachMany = [];
+    public $attachMany = [
+        'sample_images' => ['System\Models\File', 'order' => 'sort_order']
+    ];
 
 }

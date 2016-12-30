@@ -96,7 +96,6 @@ class Orders extends ComponentBase
 
         //$order->wishlist_id = form[""];
         $order->cook_data       = isset($form["cook_data"])?$form["cook_data"]:""; // yml 으로 변환 //$parsed = yaml_parse($yaml);        // convert the YAML back into a PHP variable
-        $input = Input::all();
         if(Input::hasFile('upload_file')){//Request::hasFile(
             $order->upload_file     = Input::file('upload_file'); //$form["upload_file"]; //
         }
