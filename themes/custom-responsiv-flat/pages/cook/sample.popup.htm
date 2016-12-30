@@ -11,9 +11,6 @@ use Illuminate\Support\Facades\Input;
 use Cooka\Sample\Models\Sample;
 function onStart(){
 
-    $this['title'] =  Input::get('title');
-    $this['src'] =   Input::get('src');
-
     // Sample 모델 이용
     $sample = Sample::find($this->param('sample-id'));
     if($sample){
@@ -36,13 +33,18 @@ function onStart(){
         }
         $this['sample_images_path'] = $imgarr;
 
+    }else{ // 이부분은 나중 지워.
+
+        $this['title'] =  Input::get('title');
+        $this['src'] =   Input::get('src');
+
     }
 
     /*관리자 로그인이랑, 일반회원 로그인 로직이 완전 다른듯. Admin은 슈퍼유저.*/
     $user = BackendAuth::getUser();
     /*[SampleEach]*/
 
-    if ($user->hasAccess('cooka.sample.*')) {
+    if ($user && $user->hasAccess('cooka.sample.*')) {
         $this['admin'] = true;
 
     }else {

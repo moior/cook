@@ -20,7 +20,7 @@ function onInit(){
 
     /*관리자 로그인이랑, 일반회원 로그인 로직이 완전 다른듯. Admin은 슈퍼유저.*/
     $user = BackendAuth::getUser();
-    if ($user->hasAccess('cooka.sample.create')) {
+    if ($user && $user->hasAccess('cooka.sample.create')) {
         $this['admin'] = true;
 
     }else {
@@ -253,14 +253,14 @@ $(document).ready(function(){
         <textarea name="comment" class="form-control" placeholder="코멘트"></textarea>
 
 
-    <input type="file" name="sample_images[]" class="form-control" placeholder=".." />
-    <input type="file" name="sample_images[]" class="form-control" placeholder=".." />
-    <input type="file" name="sample_images[]" class="form-control" placeholder=".." />
-    <input type="file" name="sample_images[]" class="form-control" placeholder=".." />
-    <input type="file" name="sample_images[]" class="form-control" placeholder=".." />
-    <input type="file" name="sample_images[]" class="form-control" placeholder=".." />
-    <input type="file" name="sample_images[]" class="form-control" placeholder=".." />
-    <input type="file" name="sample_images[]" class="form-control" placeholder=".." />
+        <div class="col-xs-6"><input type="file" name="sample_images[]" class="form-control" placeholder=".." /></div>
+        <div class="col-xs-6"><input type="file" name="sample_images[]" class="form-control" placeholder=".." /></div>
+        <div class="col-xs-6"><input type="file" name="sample_images[]" class="form-control" placeholder=".." /></div>
+        <div class="col-xs-6"><input type="file" name="sample_images[]" class="form-control" placeholder=".." /></div>
+        <div class="col-xs-6"><input type="file" name="sample_images[]" class="form-control" placeholder=".." /></div>
+        <div class="col-xs-6"><input type="file" name="sample_images[]" class="form-control" placeholder=".." /></div>
+        <div class="col-xs-6"><input type="file" name="sample_images[]" class="form-control" placeholder=".." /></div>
+        <div class="col-xs-6"><input type="file" name="sample_images[]" class="form-control" placeholder=".." /></div>
 
     <button type="submit" onclick="" class="btn btn btn-primary" data-attach-loading>저장</button>
     {{ form_close() }}
