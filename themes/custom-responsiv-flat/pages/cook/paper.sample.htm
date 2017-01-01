@@ -4,6 +4,7 @@ layout = "cooking"
 
 [Orders]
 [CategoryByFilename]
+[SampleMenu]
 
 [SampleList]
 cate = "{{:cate}}"
@@ -87,7 +88,12 @@ $(document).ready(function(){
                 </div>
                 <div id="category_list" class="hidden-xs">
 
-                {% component "CategoryByFilename" %} <!--파라미터로 디렉토리 넘기도록-->
+
+
+                    {% component "SampleMenu" %}
+                    <hr>
+                    {% component "CategoryByFilename" %} <!--파라미터로 디렉토리 넘기도록-->
+
                 <hr>
                 <div class="btn_cate"><span class="fa fa-chevron-right"></span> 오답노트-영어</div>
                 <div class="btn_cate"><span class="fa fa-chevron-right"></span> 학습플래너</div>

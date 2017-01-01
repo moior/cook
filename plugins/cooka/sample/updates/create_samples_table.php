@@ -11,7 +11,8 @@ class CreateOrdersTable extends Migration
         Schema::create('cooka_samples', function(Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id')->autoincrese();
-            $table->string('cate'); /* 슬래시(/)로 구분. 종이/노트/업무 */
+            $table->string('cate'); /* 슬래시(/)로 구분. 종이/노트 */
+            $table->string('menu'); /* 업무노트. 식으로 메뉴구성. group by 로 뽑아낼것임. */
             $table->string('title');
             $table->text('spec'); /*사이즈 재질 등 객관 스펙*/
             $table->text('comment'); /*우리가 쓰는 코멘트. 만드는데 힘들었다.. 등*/

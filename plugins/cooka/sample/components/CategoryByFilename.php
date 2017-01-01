@@ -59,7 +59,7 @@ class CategoryByFilename extends ComponentBase
 
         }
         $catename = array_unique($catename_all);
-        $this->page['catelist'] = $catename;
+        $this->page['catelist2'] = $catename;
 
 
     }

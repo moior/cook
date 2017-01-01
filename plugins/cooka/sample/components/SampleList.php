@@ -40,27 +40,8 @@ class SampleList extends ComponentBase
     {
 
         $user = Auth::getUser(); //$user["email"]. $user->name; //
-
-
-        $notename = $this->property('cate'); //"알림장";
-        $dirpath = $this->property('dir')?:"/plugins/cooka/sample/assets/images/note"; // 해당 디렉토리 내 모든 파일 나열
-        chdir($_SERVER['DOCUMENT_ROOT'].$dirpath);
-
         $imgdata = array();
-        $glob =glob("$notename*");
-        shuffle($glob);
-        foreach ($glob as $key => $filename) {
-            //echo "<br/>$filename " . "\n"; //filesize($filename)
-            $temp["src"] = $dirpath."/".$filename;
-            $temp["name"] = substr($filename, 0, strrpos($filename, "."));
-            $temp["sample_id"] = 0;
-            $imgdata[] = $temp;
-            if($key > 6) {
-                $temp["src"] = $dirpath."/../"."더보기.png";
-                $temp["name"] = "더보기";
-                $imgdata[] = $temp; break;
-            }
-        }
+
         /*DB에 있는것 부름. 나중 위에 파일기반은 삭제해야함.*/
         $samples = Sample::orderByRaw("RAND()")->limit(15)->get();
         foreach ($samples as $key => $sample) {
@@ -76,6 +57,31 @@ class SampleList extends ComponentBase
             }
             //getThumb(100, 100, ['mode' => 'crop']);
         }
+
+
+
+
+        $notename = $this->property('cate'); //"알림장";
+        $dirpath = $this->property('dir')?:"/plugins/cooka/sample/assets/images/note"; // 해당 디렉토리 내 모든 파일 나열
+        chdir($_SERVER['DOCUMENT_ROOT'].$dirpath);
+
+        $glob =glob("$notename*");
+        shuffle($glob);
+        foreach ($glob as $key => $filename) {
+            //echo "<br/>$filename " . "\n"; //filesize($filename)
+            $temp["src"] = $dirpath."/".$filename;
+            $temp["name"] = substr($filename, 0, strrpos($filename, "."));
+            $temp["sample_id"] = 0;
+            $imgdata[] = $temp;
+            if($key > 6) {
+                $temp["src"] = $dirpath."/../"."더보기.png";
+                $temp["name"] = "더보기";
+                $imgdata[] = $temp; break;
+            }
+        }
+
+
+
         $this->page['imgdata'] = $imgdata;
 
     }

@@ -25,6 +25,7 @@ class Plugin extends PluginBase
         return [
             '\Cooka\Sample\Components\SampleControl' => 'SampleControl',
             '\Cooka\Sample\Components\SampleList' => 'SampleList',
+            '\Cooka\Sample\Components\SampleMenu' => 'SampleMenu',
             '\Cooka\Sample\Components\CategoryByFilename' => 'CategoryByFilename',
 
         ];
