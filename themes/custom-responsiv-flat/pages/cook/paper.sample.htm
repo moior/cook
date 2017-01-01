@@ -244,23 +244,24 @@ $(document).ready(function(){
 {% if admin %}
 <div class="container">
     {{ form_open({ request: 'SampleControl::onCreateSample', files : true }) }}
-        <h3>새 샘플 입력</h3>
-        <p style="color:darkred">관리자만 가능합니다. (만약 관리자가 아닌데 이 글이 보인다면, 알려주세요 ^.^)</p>
-        <input type="text" name="cate" class="form-control" placeholder="종이/노트/학원" />
-        <input type="text" name="title" class="form-control" placeholder="제목" />
-
-        <textarea name="spec" class="form-control" placeholder="스펙"></textarea>
-        <textarea name="comment" class="form-control" placeholder="코멘트"></textarea>
+    <h3>새 샘플 입력</h3>
+    <p style="color:darkred">관리자만 가능합니다. (만약 관리자가 아닌데 이 글이 보인다면, 알려주세요 ^.^)</p>
+    <input type="text" name="title" class="form-control" placeholder="노출 제목 (학원-영어-003 식)" />
+    <input type="text" name="cate" class="form-control" placeholder="대분류 (종이/노트 고정)" />
+    <input type="text" name="menu" class="form-control" placeholder="메뉴 (학원-수학 식)" />
 
 
-        <div class="col-xs-6"><input type="file" name="sample_images[]" class="form-control" placeholder=".." /></div>
-        <div class="col-xs-6"><input type="file" name="sample_images[]" class="form-control" placeholder=".." /></div>
-        <div class="col-xs-6"><input type="file" name="sample_images[]" class="form-control" placeholder=".." /></div>
-        <div class="col-xs-6"><input type="file" name="sample_images[]" class="form-control" placeholder=".." /></div>
-        <div class="col-xs-6"><input type="file" name="sample_images[]" class="form-control" placeholder=".." /></div>
-        <div class="col-xs-6"><input type="file" name="sample_images[]" class="form-control" placeholder=".." /></div>
-        <div class="col-xs-6"><input type="file" name="sample_images[]" class="form-control" placeholder=".." /></div>
-        <div class="col-xs-6"><input type="file" name="sample_images[]" class="form-control" placeholder=".." /></div>
+    <textarea name="spec" class="form-control" placeholder="스펙"></textarea>
+    <textarea name="comment" class="form-control" placeholder="코멘트"></textarea>
+
+    <div class="col-xs-6"><input type="file" name="sample_images[]" class="form-control" placeholder=".." /></div>
+    <div class="col-xs-6"><input type="file" name="sample_images[]" class="form-control" placeholder=".." /></div>
+    <div class="col-xs-6"><input type="file" name="sample_images[]" class="form-control" placeholder=".." /></div>
+    <div class="col-xs-6"><input type="file" name="sample_images[]" class="form-control" placeholder=".." /></div>
+    <div class="col-xs-6"><input type="file" name="sample_images[]" class="form-control" placeholder=".." /></div>
+    <div class="col-xs-6"><input type="file" name="sample_images[]" class="form-control" placeholder=".." /></div>
+    <div class="col-xs-6"><input type="file" name="sample_images[]" class="form-control" placeholder=".." /></div>
+    <div class="col-xs-6"><input type="file" name="sample_images[]" class="form-control" placeholder=".." /></div>
 
     <button type="submit" onclick="" class="btn btn btn-primary" data-attach-loading>저장</button>
     {{ form_close() }}
