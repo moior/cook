@@ -1,8 +1,12 @@
 
 <div class="">
 
-    {% for cate in catelist %}
-        <div class="btn_cate"><span class="fa fa-chevron-right"></span> {{cate}}</div>
+    <div class="" onclick="location.href='/sample/paper/note'">
+        <span class="fa fa-chevron-right"></span> 전체
+    </div>
+
+    {% for menu in menulist %}
+        <div class="btn_menu"><span class="fa fa-chevron-right"></span> {{menu}}</div>
     {% endfor %}
 
 </div>

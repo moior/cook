@@ -58,8 +58,8 @@ class CategoryByFilename extends ComponentBase
             $catename_all[]  = substr($file, 0, strrpos($file, "-"));
 
         }
-        $catename = array_unique($catename_all);
-        $this->page['catelist2'] = $catename;
+        $menuname = array_unique($catename_all);
+        $this->page['catelist2'] = $menuname;
 
 
     }

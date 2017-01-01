@@ -1,5 +1,5 @@
 title = "샘플"
-url = "/sample/paper/note/:cate?"
+url = "/sample/paper/note/:menu?"
 layout = "cooking"
 
 [Orders]
@@ -7,7 +7,7 @@ layout = "cooking"
 [SampleMenu]
 
 [SampleList]
-cate = "{{:cate}}"
+menu = "{{:menu}}"
 [SampleControl]
 
 ==
@@ -15,7 +15,7 @@ cate = "{{:cate}}"
 use Backend\Facades\BackendAuth;
 
 function onInit(){
-    //$this["text_cate"] = param("cate"); //{{:cate}}
+    //$this["text_menu"] = param("menu"); //{{:menu}}
     // 잘안됨..
 
 
@@ -47,7 +47,7 @@ $(document).ready(function(){
     if(isMobile == false){
     }
 
-    $(".btn_cate").click(function(){
+    $(".btn_menu").click(function(){
         location.href="/sample/paper/note/" + $.trim($(this).text());
     })
     $(".sample_image").click(function() {
@@ -69,7 +69,7 @@ $(document).ready(function(){
 </script>
 <style>
     div, p {font-size:10pt;color:#444444;}
-    .btn_cate {cursor:pointer;}
+    .btn_menu {cursor:pointer;}
 </style>
 
 <div class="container ">
@@ -77,7 +77,7 @@ $(document).ready(function(){
 
     <div class="col-sm-2" id="col-leftdesk" style="">
         <div class="">
-            <div id="title-cate" style="padding-left:5px;margin-top:10px;">
+            <div id="title-menu" style="padding-left:5px;margin-top:10px;">
                 <span class="fa fa-toggle-right"></span> 노트
             </div>
             <div id="title-left-top" style="">
@@ -95,13 +95,13 @@ $(document).ready(function(){
                     {% component "CategoryByFilename" %} <!--파라미터로 디렉토리 넘기도록-->
 
                 <hr>
-                <div class="btn_cate"><span class="fa fa-chevron-right"></span> 오답노트-영어</div>
-                <div class="btn_cate"><span class="fa fa-chevron-right"></span> 학습플래너</div>
-                <div class="btn_cate"><span class="fa fa-chevron-right"></span> 독서기록장</div>
-                <div class="btn_cate"><span class="fa fa-chevron-right"></span> 학교노트</div>
+                <div class="btn_menu"><span class="fa fa-chevron-right"></span> 오답노트-영어</div>
+                <div class="btn_menu"><span class="fa fa-chevron-right"></span> 학습플래너</div>
+                <div class="btn_menu"><span class="fa fa-chevron-right"></span> 독서기록장</div>
+                <div class="btn_menu"><span class="fa fa-chevron-right"></span> 학교노트</div>
 
-                <div class="btn_cate"><span class="fa fa-chevron-right"></span> 업무노트</div>
-                <div class="btn_cate"><span class="fa fa-chevron-right"></span> 연습장</div>
+                <div class="btn_menu"><span class="fa fa-chevron-right"></span> 업무노트</div>
+                <div class="btn_menu"><span class="fa fa-chevron-right"></span> 연습장</div>
 
 
                 </div>
@@ -114,7 +114,7 @@ $(document).ready(function(){
     <div class="col-sm-10" id="col-rightdesk" style="">
         <div class=" ">
 
-            <h5>{{ text_cate }}</h5>
+            <h5>{{ text_menu }}</h5>
 
             <div class="well text-center" >
                 <div style="font-size:1.4em;position:;top:2px;left:15px;color:#828282;">

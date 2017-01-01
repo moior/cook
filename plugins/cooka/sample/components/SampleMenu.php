@@ -43,16 +43,15 @@ class SampleMenu extends ComponentBase
 
         $cate = "종이/노트";
         $catename = array();
-
         /*DB에 있는것 부름. 나중 위에 파일기반은 삭제해야함.*/
         $sampleMenus = Sample::select("menu")->where("cate", $cate)->groupBy("menu")->get();
         //$sampleMenus = DB::table("cooka_samples")->groupBy("menu")->get();
         foreach ($sampleMenus as $key => $menu) {
 
                 $catename[] = $menu->menu;
-        }
 
-        $this->page['catelist'] = $catename;
+        }
+        $this->page['menulist'] = $catename;
 
 
     }

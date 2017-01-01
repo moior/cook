@@ -43,7 +43,13 @@ class SampleList extends ComponentBase
         $imgdata = array();
 
         /*DB에 있는것 부름. 나중 위에 파일기반은 삭제해야함.*/
-        $samples = Sample::orderByRaw("RAND()")->limit(15)->get();
+        if($this->property('menu')){
+            $samples = Sample::where("menu", $this->property('menu'))->orderByRaw("RAND()")->get(); //limit(15)->
+
+        }else{
+            $samples = Sample::orderByRaw("RAND()")->get(); //limit(15)->
+
+        }
         foreach ($samples as $key => $sample) {
             /*$temp["src"] = $dirpath."/../"."더보기.png";
             $temp["name"] = "더보기";
@@ -61,7 +67,7 @@ class SampleList extends ComponentBase
 
 
 
-        $notename = $this->property('cate'); //"알림장";
+        $notename = $this->property('menu'); //"알림장";
         $dirpath = $this->property('dir')?:"/plugins/cooka/sample/assets/images/note"; // 해당 디렉토리 내 모든 파일 나열
         chdir($_SERVER['DOCUMENT_ROOT'].$dirpath);
 
