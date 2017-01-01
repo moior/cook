@@ -56,6 +56,7 @@ function onStart(){
 ==
 <style>
     .img-sample-detail {max-width:100%;}
+    .txt_spec p {font-size:11pt;}
 </style>
 
 <script>
@@ -90,11 +91,11 @@ function onStart(){
 
             </div>
             <div class="col-sm-4">
-                <div style="font-size:11pt;">
+                <div class="txt_spec" style="">
                     <b>상세스펙</b>
-                    <p style="border-bottom:1px solid #eee">{{ cate }}</p>
-                    <p style="border-bottom:1px solid #eee">{{ spec }}</p>
-                    <p style="border-bottom:1px solid #eee">{{ comment }}</p>
+                    <p style="border-bottom:1px solid #eee">{{ cate|nl2br }}</p>
+                    <p style="border-bottom:1px solid #eee">{{ spec|nl2br }}</p>
+                    <p style="border-bottom:1px solid #eee">{{ comment|nl2br }}</p>
                 </div>
                 <!--어드민이면....... 바로바로 입력하도록.-->
                 {% if admin %}
