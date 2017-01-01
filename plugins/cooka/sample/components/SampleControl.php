@@ -41,6 +41,7 @@ class SampleControl extends ComponentBase
         $form = post();
         $sample->cate        = isset($form['cate'])?$form['cate']:"";
         $sample->title        = isset($form['title'])?$form['title']:"";
+        $sample->menu        = isset($form['menu'])?$form['menu']:"";
         $sample->spec        = isset($form['spec'])?$form['spec']:"";
         $sample->comment        = isset($form['comment'])?$form['comment']:"";
         $sample->cook_data        = isset($form['cook_data'])?$form['cook_data']:"";
@@ -80,6 +81,7 @@ class SampleControl extends ComponentBase
         if($sample){
             if(isset($form['cate']))        $sample->cate       = $form['cate'];
             if(isset($form['title']))       $sample->title      = $form['title'];
+            if(isset($form['menu']))        $sample->menu      = $form['menu'];
             if(isset($form['spec']))        $sample->spec       = $form['spec'];
             if(isset($form['comment']))     $sample->comment    = $form['comment'];
             if(isset($form['cook_data']))   $sample->cook_data  = $form['cook_data'];
