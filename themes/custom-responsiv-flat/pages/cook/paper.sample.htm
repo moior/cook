@@ -58,6 +58,7 @@ $(document).ready(function(){
         var url = '/sample-detail/' + $(this).data("sample_id")
             + '?title=' + $(this).attr("alt") + '&src=' + $(this).attr("src");
         console.log(url);
+        window.open( url );
         $('#modal예제상세').modal({
             remote : url
         }); //remote : '/sample-detail/paper/note?title=' + $(this).attr("alt")
