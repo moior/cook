@@ -54,7 +54,9 @@ class SampleControl extends ComponentBase
         //attatchMany 복수일경우, save다음에!! (또는 Deferred binding해야. , $form['_session_key'])
         if(Input::hasFile('sample_images')){
             foreach(Input::file('sample_images') as $file){
-                $sample->sample_images()->create(['data' => $file ]);
+                if($file) {
+                    $sample->sample_images()->create(['data' => $file]);
+                }
             }
         }
 
