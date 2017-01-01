@@ -244,9 +244,9 @@ $(document).ready(function(){
     {{ form_open({ request: 'SampleControl::onCreateSample', files : true }) }}
     <h3>새 샘플 입력</h3>
     <p style="color:darkred">관리자만 가능합니다. (만약 관리자가 아닌데 이 글이 보인다면, 알려주세요 ^.^)</p>
-    <input type="text" name="title" class="form-control" placeholder="노출 제목 (학원-영어-003 식)" />
-    <input type="text" name="cate" class="form-control" placeholder="대분류 (종이/노트 고정)" />
-    <input type="text" name="menu" class="form-control" placeholder="메뉴 (학원-수학 식)" />
+    <input type="text" name="cate" class="form-control" value="종이/노트" placeholder="대분류 (종이/노트 고정)" readonly />
+    <input type="text" name="title" class="form-control" placeholder="노출 제목 (시스코 업무노트 식)" />
+    <input type="text" name="menu" class="form-control" placeholder="메뉴 (학원-수학 or 업무노트)" />
 
 
     <textarea name="spec" class="form-control" placeholder="스펙"></textarea>
