@@ -37,7 +37,7 @@ class Sample extends Model
     public $morphMany = [];
     public $attachOne = [];
     public $attachMany = [
-        'sample_images' => ['System\Models\File', 'order' => 'sort_order']
+        'sample_images' => ['System\Models\File', 'order' => 'sort_order', 'delete' => 'true' ]
     ];
 
 }

@@ -95,14 +95,10 @@ $(document).ready(function(){
                     {% component "CategoryByFilename" %} <!--파라미터로 디렉토리 넘기도록-->
 
                 <hr>
-                <div class="btn_menu"><span class="fa fa-chevron-right"></span> 오답노트-영어</div>
                 <div class="btn_menu"><span class="fa fa-chevron-right"></span> 학습플래너</div>
                 <div class="btn_menu"><span class="fa fa-chevron-right"></span> 독서기록장</div>
                 <div class="btn_menu"><span class="fa fa-chevron-right"></span> 학교노트</div>
-
-                <div class="btn_menu"><span class="fa fa-chevron-right"></span> 업무노트</div>
                 <div class="btn_menu"><span class="fa fa-chevron-right"></span> 연습장</div>
-
 
                 </div>
             </div>
@@ -153,7 +149,7 @@ $(document).ready(function(){
                     <div style="border:0px solid #9c9c9c;margin-bottom:10px;" class="col-sm-8">
                         <ol>
                             <li>
-                                샘플 선택 (최대한 비슷한 제품 선택)
+                                최대한 비슷한 제품을 목록에서 선택
                                 <input type="text" name="sample_code" id="input_sample_code" placeholder="샘플을 선택해주세요."
                                        style="border:0px solid tomato" readonly class="form-control" />
                             </li>
@@ -170,12 +166,13 @@ $(document).ready(function(){
                             </li>
 
                             <li>세부 전달사항
-                                <textarea name="client_comment" class="form-control"></textarea>
+                                <textarea name="client_comment" class="form-control"
+                                    placeholder="내지매수: 50장
+20일 내에 제작되어야 합니다.
+식으로 " style="height:100px;"></textarea>
 
                             </li>
-                            <li>
-                                견적을 문자/전화/메일로 드립니다.
-                            </li>
+
 
 
                             <p class="text-right">
@@ -184,6 +181,9 @@ $(document).ready(function(){
                                     접수
                                 </button>
                             </p>
+                            <li>
+                                접수 후 담당자가 연락을 드립니다.
+                            </li>
                             <li>
                                 비용입금 후 절차
                                 <ul>
@@ -205,11 +205,12 @@ $(document).ready(function(){
 
                     <div  style="border:0px solid gray;font-size:10pt;" class="col-sm-4">
                         <p style=" font-size:10pt;" >
-                            <b>주의</b><br/>
-                            ① <b>입금 순서대로</b> 작업 진행됩니다.
-                            <br>주문이 밀릴 경우 <b>출고일이 조정될 수</b> 있습니다.
+                            <b>절차</b><br/>
+                            ① 담당자가 내용 확인 후 전화를 드립니다.<br>
+                            ② <b>입금 순서대로</b> 작업 진행됩니다.<br>
+                            주문이 밀릴 경우 <b>출고일이 조정될 수</b> 있습니다.
                             <br>
-                            ② 세부사항 조율 완료 후, 실제작 및 배송까지 약 10일 소요됩니다.
+                            ③ 세부사항 조율 완료 후, 실제작 및 배송까지 약 10일 소요됩니다.
                         </p>
                         <p class="well well-sm text-center" style=" font-size:10pt;" >
                             입금계좌 : 우리은행 <span style="font-size:1.2em;">1005-502-237770</span> (주)모이어

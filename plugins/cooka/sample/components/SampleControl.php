@@ -6,6 +6,7 @@ use ApplicationException;
 use Cook\Classes\FeeCalculator;
 use Cooka\Sample\Models\Sample;
 use Illuminate\Support\Facades\Input;
+use System\Models\File;
 use RainLab\User\Facades\Auth;
 
 class SampleControl extends ComponentBase
@@ -73,6 +74,45 @@ class SampleControl extends ComponentBase
         Sample::destroy($form['id']);
     }
 
+    public function onAddAttachment()
+    {
+        // if owner
+        $form = post();
+        $sample = Sample::find( $form["sample_id"] );
+        if($sample){
+
+
+            if(Input::hasFile('sample_images')){
+                foreach(Input::file('sample_images') as $file){
+                    if($file) {
+                        $sample->sample_images()->create(['data' => $file]);
+                    }
+                }
+            }
+            $sample->save();
+        }else{
+            //
+        }
+
+    }
+    public function onDelAttachment()
+    {
+        // if owner
+        $form = post();
+        $sample = Sample::find($form['sample_id']);
+        if($sample) {
+            foreach($sample->sample_images as $imagefile){
+                if($imagefile->id == $form['attatch_id'])
+                    $imagefile->delete();
+            }
+        }else{
+
+        }
+
+        //`File::destroy($form['attatch_id']); //////////// 근데......... 이건 db만 지우지 실제 파일은 안지우는듯함..
+    }
+
+
     public function onEditSample()
     {
         $form = post();
@@ -89,10 +129,13 @@ class SampleControl extends ComponentBase
             if(isset($form['status_show'])) $sample->status_show= $form['status_show'];
             if(isset($form['ord']))         $sample->ord        = $form['ord'];
             if(isset($form['is_hidden']))   $sample->is_hidden  = $form['is_hidden'];
-            if(Input::hasFile('sample_images')){
-                // $sample->sample_images     = Input::file('upload_file'); //$form["upload_file"]; //
-                $sample->sample_images()->create(['data' => Input::file('sample_images')]); //attatchMany 복수일경우
 
+            if(Input::hasFile('sample_images')){
+                foreach(Input::file('sample_images') as $file){
+                    if($file) {
+                        $sample->sample_images()->create(['data' => $file]);
+                    }
+                }
             }
             $sample->save();
         }else{

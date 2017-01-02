@@ -14,13 +14,14 @@ function onStart(){
     // Sample 모델 이용
     $sample = Sample::find($this->param('sample-id'));
     if($sample){
-
+        $this['sample'] = $sample;
         $this['sample_id'] =  $sample->id;
         $this['cate']       = $sample->cate;
         $this['menu']       = $sample->menu;
         $this['title']      = $sample->title;
         $this['spec']       = $sample->spec;
         $this['comment']    = $sample->comment;
+        $this['sample_images']    = $sample->sample_images;
         $this['cook_data']  = $sample->cook_data;
         $this['bill']       = $sample->bill;
         $this['status_show'] = $sample->status_show;
@@ -28,11 +29,14 @@ function onStart(){
         $this['is_hidden']  = $sample->is_hidden;
 
         $imgarr = array();
+        $thumb_arr = array();
         foreach($sample->sample_images as $image){
-            $imgarr[] = $image->getPath();
 
+            $imgarr[] = $image->getPath();
+            $thumb_arr[] = $image->getThumb(100, 100, ['mode' => 'crop']);
         }
         $this['sample_images_path'] = $imgarr;
+        $this['sample_thumbs_path'] = $thumb_arr;
 
     }else{ // 이부분은 나중 지워.
 
@@ -98,53 +102,83 @@ function onStart(){
                     <p style="border-bottom:1px solid #eee">{{ spec|nl2br }}</p>
                     <p style="border-bottom:1px solid #eee">{{ comment|nl2br }}</p>
                 </div>
-                <!--어드민이면....... 바로바로 입력하도록.-->
-                {% if admin %}
-                    <hr>
-                    <p style="color:darkred;font-size:9pt;">관리자만 가능합니다. (만약 관리자가 아닌데 이 글이 보인다면, 알려주세요 ^.^)</p>
 
-                    {{ form_ajax('SampleControl::onEditSample',
-                        {
-                            success:"alert('수정되었습니다.')",
-                        }
-                    ) }}
-                        <input type="hidden" name="sample_id" value="{{ sample_id }}" />
-                        <div class="">
-                            <div class=""> 카테</div>
-                            <input type="text" name="cate" value="{{ cate }}" class="form-control" placeholder="종이/노트" />
-                        </div>
-                        <div class="">
-                            <div class=""> 메뉴</div>
-                            <input type="text" name="menu" value="{{ menu }}" class="form-control" placeholder="업무노트" />
-                        </div>
-                        <div class="">
-                            <div class=""> 제목</div>
-                            <input type="text" name="title" value="{{ title }}" class="form-control" placeholder="제목" />
-                        </div>
-                        <div class="">
-                            <div class=""> 스펙</div>
-                            <textarea name="spec" class="form-control" placeholder="스펙">{{ spec }}</textarea>
-                        </div>
-                        <div class="">
-                            <div class=""> 설명</div>
-                            <textarea name="comment" class="form-control" placeholder="코멘트">{{ comment }}</textarea>
-                        </div>
-                        <button type="submit" onclick="beforeFormSubmit();" class="btn btn btn-primary"
-                                data-attach-loading>수정</button>
-                    {{ form_close() }}
-
-                    {{ form_ajax('SampleControl::onDeleteSample',
-                        {
-                            success:"alert('삭제되었습니다.')",
-                            confirm: "정말 삭제합니까?",
-                        }
-                    ) }}
-                        <input type="hidden" name="id" value="{{ sample_id }}" />
-                        <button type="submit" class="btn btn-xs btn-link" data-attach-loading>삭제</button>
-                    {{ form_close() }}
-                {% endif %}
             </div>
         </div>
+
+        <!--어드민이면....... 바로바로 입력하도록.-->
+        {% if admin %}
+        <hr>
+        <p style="color:darkred;font-size:9pt;">관리자만 가능합니다. (만약 관리자가 아닌데 이 글이 보인다면, 알려주세요 ^.^)</p>
+
+        {{ form_ajax('SampleControl::onEditSample',
+        {
+        success:"alert('수정되었습니다.')",
+        }
+        ) }}
+        <input type="hidden" name="sample_id" value="{{ sample_id }}" />
+        <div class="">
+            <div class=""> 카테 (종이/노트)</div>
+            <input type="text" name="cate" value="{{ cate }}" class="form-control" placeholder="종이/노트" />
+        </div>
+        <div class="">
+            <div class=""> 메뉴 (업무노트, 알링장 등)</div>
+            <input type="text" name="menu" value="{{ menu }}" class="form-control" placeholder="업무노트" />
+        </div>
+        <div class="">
+            <div class=""> 제목</div>
+            <input type="text" name="title" value="{{ title }}" class="form-control" placeholder="제목" />
+        </div>
+        <div class="">
+            <div class=""> 스펙</div>
+            <textarea name="spec" class="form-control" placeholder="스펙">{{ spec }}</textarea>
+        </div>
+        <div class="">
+            <div class=""> 설명</div>
+            <textarea name="comment" class="form-control" placeholder="코멘트" style="height:120px;">{{ comment }}</textarea>
+        </div>
+
+        <button type="submit" onclick="beforeFormSubmit();" class="btn btn btn-primary"
+                data-attach-loading>수정</button>
+        {{ form_close() }}
+
+        {{ form_ajax('SampleControl::onDeleteSample',
+        {
+        success:"alert('삭제되었습니다.')",
+        confirm: "정말 삭제합니까?",
+        }
+        ) }}
+        <input type="hidden" name="id" value="{{ sample_id }}" />
+        <button type="submit" class="btn btn-xs btn-link" data-attach-loading>삭제</button>
+        {{ form_close() }}
+        <hr>
+
+        <div class="">
+            <h5 class=""> 첨부파일 추가</h5>
+            {{ form_open({ request: 'SampleControl::onAddAttachment', files : true, url : '/sample/paper/note' }) }}
+                    <input type="hidden" name="sample_id" value="{{ sample_id }}" />
+                    <div class="col-xs-6"><input type="file" name="sample_images[]" class="form-control" placeholder=".." /></div>
+                    <div class="col-xs-6"><input type="file" name="sample_images[]" class="form-control" placeholder=".." /></div>
+                    <div class="text-right">
+                        <button type="submit" onclick="" class="btn btn-xs btn-default" data-attach-loading>첨부파일 추가</button>
+                    </div>
+            {{ form_close() }}
+            <hr>
+            <h5 class=""> 첨부파일 삭제</h5>
+
+
+            {% for key,sample_thumb_path in sample_thumbs_path %}
+                <div data-request-data="sample_id: '{{sample.id }}', attatch_id: '{{sample_images[key].id}}'">
+                    <img src="{{ sample_thumb_path }}" />
+                    <a href="{{sample_images[key].path }}" target="_blank">{{sample_images[key].file_name }}</a>
+                    <button data-request="SampleControl::onDelAttachment"
+                            data-request-complete="$('#modal예제상세').modal('hide');" class="btn btn-xs btn-default" >삭제 X</button>
+                </div>
+            {% endfor %}
+            <hr>
+
+        </div>
+        {% endif %}
     </div>
 
     <div class="modal-footer">
