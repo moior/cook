@@ -44,12 +44,16 @@ class SampleList extends ComponentBase
 
         /*DB에 있는것 부름. 나중 위에 파일기반은 삭제해야함.*/
         if($this->property('menu')){
-            $samples = Sample::where("menu", $this->property('menu'))->orderByRaw("RAND()")->get(); //limit(15)->
+            $samples = Sample::where("menu", $this->property('menu'))->orderByRaw("RAND()"); //limit(15)->
 
         }else{
-            $samples = Sample::orderByRaw("RAND()")->get(); //limit(15)->
-
+            $samples = Sample::orderByRaw("RAND()"); //limit(15)->
         }
+        if($this->property('count')) {
+            $samples = $samples->limit($this->property('count'));
+        }
+        $samples = $samples->get();
+
         foreach ($samples as $key => $sample) {
             /*$temp["src"] = $dirpath."/../"."더보기.png";
             $temp["name"] = "더보기";

@@ -4,6 +4,9 @@ layout = "cooking"
 is_hidden = 0
 
 [session]
+[SampleList]
+count = "5"
+
 ==
 <section class="home-title">
     <div class="container">
@@ -40,10 +43,16 @@ is_hidden = 0
                         <input type="checkbox" autocomplete="off" disabled> 금속
                     </label>
                 </div>-->
+                <div class="row" style="margin-top:20px;">
 
-                <a href="/cook/paper/note" class="btn btn-block btn-info">
-                    시작하기
-                </a>
+                    <div class="col-xs-12">
+
+                    <a href="/cook/paper/note" class="btn btn-block btn-info">
+                        시작하기
+                    </a>
+                    </div>
+    
+                </div>
 
                 <!--<div class="signup-form">
                     <form>
@@ -74,6 +83,20 @@ is_hidden = 0
             </div>
         </div>
     </div>
+</section>
+
+<section class="">
+    <div class="container" style="font-size:9pt;color:gray;">
+
+        <div class="" onclick="location.href='/sample/paper/note'">
+            <a href="/sample/paper/note" class="">
+                샘플보기
+            </a>
+            {% component "SampleList" %}
+
+        </div>
+    </div>
+
 </section>
 
 <section class="logos">
