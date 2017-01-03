@@ -61,7 +61,7 @@ class SampleList extends ComponentBase
             /*attatchMany 복수이므로*/
             foreach ($sample->sample_images as $sample_image) {
                 $temp["src"] = $sample_image->getPath();
-                $temp["thumb"] = $sample_image->getThumb(150, 150, ['mode'=>'portrait']);
+                $temp["thumb"] = $sample_image->getThumb(150, 150, ['mode'=>'crop']);
                 $temp["name"] = $sample->title;//"첨부";//$sample_image->getName();
                 $temp["sample_id"] = $sample->id;//$sample_image->getName();
                 $imgdata[] = $temp;
