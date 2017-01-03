@@ -61,6 +61,7 @@ class SampleList extends ComponentBase
             /*attatchMany 복수이므로*/
             foreach ($sample->sample_images as $sample_image) {
                 $temp["src"] = $sample_image->getPath();
+                $temp["thumb"] = $sample_image->getThumb(150, 150, ['mode'=>'portrait']);
                 $temp["name"] = $sample->title;//"첨부";//$sample_image->getName();
                 $temp["sample_id"] = $sample->id;//$sample_image->getName();
                 $imgdata[] = $temp;
@@ -80,6 +81,7 @@ class SampleList extends ComponentBase
         foreach ($glob as $key => $filename) {
             //echo "<br/>$filename " . "\n"; //filesize($filename)
             $temp["src"] = $dirpath."/".$filename;
+            $temp["thumb"] = "";
             $temp["name"] = substr($filename, 0, strrpos($filename, "."));
             $temp["sample_id"] = 0;
             $imgdata[] = $temp;

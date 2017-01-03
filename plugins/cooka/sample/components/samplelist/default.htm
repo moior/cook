@@ -19,7 +19,7 @@
 
     .sample_image {
         max-width: 100%;
-        max-height: 130px;
+        max-height: 135px;
         height: auto;
 
     }
@@ -32,11 +32,14 @@
     {% for _imgdata in imgdata %}
         <figure class="thumbnail-wrapper">
 
-
             <figcaption>{{ _imgdata.name }}</figcaption>
-
-            <img src="{{ _imgdata.src }}" class="sample_image" data-sample_id="{{ _imgdata.sample_id }}" alt="{{ _imgdata.name }}"
+            {% if _imgdata.thumb %}
+            <img src="{{ _imgdata.thumb }}" class="sample_image" data-sample_id="{{ _imgdata.sample_id }}" alt="{{ _imgdata.name }}"
                   />
+            {% else %}
+            <img src="{{ _imgdata.src }}" class="sample_image" data-sample_id="{{ _imgdata.sample_id }}" alt="{{ _imgdata.name }}"
+            />
+            {% endif %}
         </figure>
 
     {% endfor %}
