@@ -55,7 +55,7 @@ class Plugin extends PluginBase
         return [
             'Sample' => [
                 'label'       => 'Sample',
-                'url'         => Backend::url(''),
+                'url'         => Backend::url('/s'),
                 'icon'        => 'icon-pencil',
 
                 'order'       => 500,
