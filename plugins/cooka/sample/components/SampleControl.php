@@ -95,6 +95,27 @@ class SampleControl extends ComponentBase
         }
 
     }
+
+    public function onRotateAttachment()
+    {
+        $form = post();
+        $sample = Sample::find($form['sample_id']);
+        if($sample) {
+            foreach($sample->sample_images as $imagefile){
+                if($imagefile->id == $form['attatch_id']){
+                    header('Content-type: image/jpeg');
+                    $source_path= $_SERVER['DOCUMENT_ROOT']. $imagefile->getPath();
+                    $original    = imagecreatefromjpeg($source_path);
+                    $rotated = imagerotate($original, 90, 0);
+                    imagejpeg($rotated);
+                }
+            }
+        }else{
+
+        }
+
+        //`File::destroy($form['attatch_id']); //////////// 근데......... 이건 db만 지우지 실제 파일은 안지우는듯함..
+    }
     public function onDelAttachment()
     {
         // if owner

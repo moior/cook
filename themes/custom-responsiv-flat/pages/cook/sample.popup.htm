@@ -173,6 +173,8 @@ function onStart(){
                     <a href="{{sample_images[key].path }}" target="_blank">{{sample_images[key].file_name }}</a>
                     <button data-request="SampleControl::onDelAttachment"
                             data-request-complete="$('#modal예제상세').modal('hide');" class="btn btn-xs btn-default" >삭제 X</button>
+                    <button data-request="SampleControl::onRotateAttachment"
+                            data-request-complete="$('#modal예제상세').modal('hide');" class="btn btn-xs btn-default" >90도 회전</button>
                 </div>
             {% endfor %}
             <hr>

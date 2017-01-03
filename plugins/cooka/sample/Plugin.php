@@ -55,11 +55,11 @@ class Plugin extends PluginBase
         return [
             'Sample' => [
                 'label'       => 'Sample',
-                'url'         => Backend::url('cooka/sample'),
+                'url'         => Backend::url(''),
                 'icon'        => 'icon-pencil',
-                'permissions' => ['cooka.sample.*'],
+
                 'order'       => 500,
-            ]
+            ]/*'permissions' => ['cooka.sample.*'],*/
         ];
     }
 
