@@ -114,18 +114,18 @@ $(document).ready(function(){
 
             <div class="well text-center" >
                 <div style="font-size:1.4em;position:;top:2px;left:15px;color:#828282;">
-                    <i>다른 소비자분들이 제작한 제품들입니다.</i>
+                    <i>다른 분들이 제작한 제품들입니다</i>
                 </div>
-                <span class="fa fa-search fa-3x" style="color:tomato; vertical-align: middle;"></span>
-                가장 비슷한 샘플을 고른 후
+                <nobr><span class="fa fa-search fa-3x" style="color:tomato; vertical-align: middle;"></span>
+                가장 비슷한 샘플을 고른 후</nobr>
                 <span class="fa fa-arrow-right" style="margin:0 20px;"></span>
-                <span class="fa fa-pencil-square-o fa-3x" style="color:tomato; vertical-align: middle;"></span>
-                하단에서 견적서 작성
+                <nobr><span class="fa fa-pencil-square-o fa-3x" style="color:tomato; vertical-align: middle;"></span>
+                하단에서 견적서 작성</nobr>
             </div>
         </div>
 
         <!--row class 할때마다 마진 15 사라짐.-->
-        <div class="row" id="" style="">
+        <div class="row" id="" style="padding:0px 4px;">
             {% component "SampleList" %}
         </div>
         <div class=" ">
@@ -259,14 +259,14 @@ $(document).ready(function(){
     <textarea name="spec" class="form-control" placeholder="스펙"></textarea>
     <textarea name="comment" class="form-control" placeholder="코멘트"></textarea>
 
-    <div class="col-xs-6"><input type="file" name="sample_images[]" class="form-control" placeholder=".." /></div>
-    <div class="col-xs-6"><input type="file" name="sample_images[]" class="form-control" placeholder=".." /></div>
-    <div class="col-xs-6"><input type="file" name="sample_images[]" class="form-control" placeholder=".." /></div>
-    <div class="col-xs-6"><input type="file" name="sample_images[]" class="form-control" placeholder=".." /></div>
-    <div class="col-xs-6"><input type="file" name="sample_images[]" class="form-control" placeholder=".." /></div>
-    <div class="col-xs-6"><input type="file" name="sample_images[]" class="form-control" placeholder=".." /></div>
-    <div class="col-xs-6"><input type="file" name="sample_images[]" class="form-control" placeholder=".." /></div>
-    <div class="col-xs-6"><input type="file" name="sample_images[]" class="form-control" placeholder=".." /></div>
+    <div class="col-xs-6"><input type="file" name="sample_images[]" class="form-control" accept="image/*, video/*" placeholder=".." /></div>
+    <div class="col-xs-6"><input type="file" name="sample_images[]" class="form-control" accept="image/*, video/*" placeholder=".." /></div>
+    <div class="col-xs-6"><input type="file" name="sample_images[]" class="form-control" accept="image/*, video/*" placeholder=".." /></div>
+    <div class="col-xs-6"><input type="file" name="sample_images[]" class="form-control" accept="image/*, video/*" placeholder=".." /></div>
+    <div class="col-xs-6"><input type="file" name="sample_images[]" class="form-control" accept="image/*, video/*" placeholder=".." /></div>
+    <div class="col-xs-6"><input type="file" name="sample_images[]" class="form-control" accept="image/*, video/*" placeholder=".." /></div>
+    <div class="col-xs-6"><input type="file" name="sample_images[]" class="form-control" accept="image/*, video/*" placeholder=".." /></div>
+    <div class="col-xs-6"><input type="file" name="sample_images[]" class="form-control" accept="image/*, video/*" placeholder=".." /></div>
 
     <button type="submit" onclick="" class="btn btn btn-primary" data-attach-loading>저장</button>
     {{ form_close() }}
