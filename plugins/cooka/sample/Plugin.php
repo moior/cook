@@ -50,12 +50,14 @@ class Plugin extends PluginBase
             'rainlab.user::mail.restore'  => 'Password reset instructions for front-end users.'
         ];
     }
+
+    /*이건 뭐지?? 장미라로 로그인하면 url로 리다이렉트됨.... 모두 삭제해볼까? 17.1.4.*/
     public function registerNavigation()
     {
         return [
             'Sample' => [
                 'label'       => 'Sample',
-                'url'         => Backend::url('/s'),
+                'url'         => Backend::url(''),
                 'icon'        => 'icon-pencil',
 
                 'order'       => 500,

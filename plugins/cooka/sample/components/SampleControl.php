@@ -6,6 +6,7 @@ use ApplicationException;
 use Cook\Classes\FeeCalculator;
 use Cooka\Sample\Models\Sample;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Log;
 use System\Models\File;
 use RainLab\User\Facades\Auth;
 
@@ -104,10 +105,14 @@ class SampleControl extends ComponentBase
             foreach($sample->sample_images as $imagefile){
                 if($imagefile->id == $form['attatch_id']){
                     header('Content-type: image/jpeg');
-                    $source_path= $_SERVER['DOCUMENT_ROOT']. $imagefile->getPath();
+                    $source_path = $_SERVER['DOCUMENT_ROOT']. $imagefile->getPath();
                     $original    = imagecreatefromjpeg($source_path);
                     $rotated = imagerotate($original, 90, 0);
-                    imagejpeg($rotated);
+                    //Log::info('KSK 겸1: '.$source_path);
+                    imagejpeg($rotated, $source_path);
+                    imagedestroy($original);
+                    imagedestroy($rotated);
+
                 }
             }
         }else{

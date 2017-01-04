@@ -85,7 +85,7 @@ function onStart(){
 
                 {% for key, value in sample_images_path %}
 
-                     <img src="{{value}}" class="img-sample-detail" style="border:1px solid #eee;" />
+                     <img src="{{value}}?skrefresh=sk{{ "now"|date("mdHis") }}" class="img-sample-detail" style="border:1px solid #eee;" />
 
                 {% endfor %}
 
@@ -169,12 +169,12 @@ function onStart(){
 
             {% for key,sample_thumb_path in sample_thumbs_path %}
                 <div data-request-data="sample_id: '{{sample.id }}', attatch_id: '{{sample_images[key].id}}'">
-                    <img src="{{ sample_thumb_path }}" />
+                    <img src="{{ sample_thumb_path }}?skrefresh=skgood{{ "now"|date("mdHis") }}" />
                     <a href="{{sample_images[key].path }}" target="_blank">{{sample_images[key].file_name }}</a>
                     <button data-request="SampleControl::onDelAttachment"
-                            data-request-complete="$('#modal예제상세').modal('hide');" class="btn btn-xs btn-default" >삭제 X</button>
+                            data-request-success="$('#modal예제상세').modal('hide');" class="btn btn-xs btn-default" >삭제 X</button>
                     <button data-request="SampleControl::onRotateAttachment"
-                            data-request-complete="$('#modal예제상세').modal('hide');" class="btn btn-xs btn-default" >90도 회전</button>
+                            data-request-success="console.log(textStatus  );$('#modal예제상세').modal('hide');" class="btn btn-xs btn-default" >90도 회전</button>
                 </div>
             {% endfor %}
             <hr>
