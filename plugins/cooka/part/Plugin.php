@@ -1,4 +1,4 @@
-<?php namespace Cooka\Sample;
+<?php namespace Cooka\Part;
 
 /**
  * The plugin.php file (called the plugin initialization script) defines the plugin information class.
@@ -14,7 +14,7 @@ class Plugin extends PluginBase
     {
         return [
             'name'        => 'Cooka Sample',
-            'description' => 'Sample',
+            'description' => 'Parts',
             'author'      => 'Kenny Heisher',
             'icon'        => 'icon-leaf'
         ];
@@ -23,13 +23,13 @@ class Plugin extends PluginBase
     public function registerComponents()
     {
         return [
-            '\Cooka\Sample\Components\SampleControl' => 'SampleControl',
-            '\Cooka\Sample\Components\SampleList' => 'SampleList',
-            '\Cooka\Sample\Components\SampleMenu' => 'SampleMenu',
-            '\Cooka\Sample\Components\CategoryByFilename' => 'CategoryByFilename',
-
+            '\Cooka\Sample\Components\PartControl' => 'PartControl',
         ];
     }
+    /*'\Cooka\Sample\Components\SampleControl' => 'SampleControl',
+            '\Cooka\Sample\Components\SampleList' => 'SampleList',
+            '\Cooka\Sample\Components\SampleMenu' => 'SampleMenu',
+*/
     public function registerReportWidgets()
     {
         return [
@@ -52,24 +52,16 @@ class Plugin extends PluginBase
     }
 
     /*이건 뭐지?? 장미라로 로그인하면 url로 리다이렉트됨.... 모두 삭제해볼까? 17.1.4.*/
-    /*public function registerNavigation()
+    public function registerNavigation()
     {
-        return [
-            'Sample' => [
-                'label'       => 'Sample',
-                'url'         => Backend::url(''),
-                'icon'        => 'icon-pencil',
-
-                'order'       => 500,
-            ]/*'permissions' => ['cooka.sample.*'],* /
-        ];
-    }*/
+        return [];
+    }
 
 
     public function registerPermissions()
     {
         return [
-            'cooka.sample.update_sample' => [
+            'cooka.part.update_part' => [
                 'tab' => 'Cooka',
                 'label' => '샘플 이미지와 설명을 저장, 수정할 권한',
                'order' => 10,

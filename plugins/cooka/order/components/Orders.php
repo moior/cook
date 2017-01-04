@@ -42,11 +42,13 @@ class Orders extends ComponentBase
 
         $user = Auth::getUser(); //$user["email"]. $user->name; //
 
-        if(isset($user->id)){
+        /*if(isset($user->id)){
             $orders = Order::where('user_id', $user->id)->orderBy("created_at", "desc")->get(); //find( $user->id );
         }else{
             $orders = Order::orderBy("created_at", "desc")->paginate(20); //find( $user->id );
-        }
+        }*/
+        $orders = Order::orderBy("created_at", "desc")->paginate(10); //find( $user->id );
+
         $this->page['orders'] = $orders;
 
         foreach( $orders as $key => $order){
