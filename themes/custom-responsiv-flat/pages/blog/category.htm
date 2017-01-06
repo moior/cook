@@ -14,10 +14,6 @@ categoryFilter = 0
 [blogCategories]
 categoryPage = "blog/category"
 ==
-<style>
-    div, p { font-size:10pt;}
-    .post-list {list-style:none;}
-</style>
 <?php
 use RainLab\Blog\Models\Post;
 function onStart(){
@@ -36,6 +32,11 @@ function onHandleForm()
 }
 ?>
 ==
+
+<style>
+    div, p { font-size:10pt;}
+    .post-list {list-style:none;}
+</style>
 <!--{{ onStart }}-{{ onStart }}--{{ onInit }}
 {{ onHandleForm }}-{{ onRun }}--->
 <!--카테고리들만 모아 보는 페이지-->
