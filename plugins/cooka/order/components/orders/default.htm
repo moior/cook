@@ -54,14 +54,24 @@
 
                 {% if admin and item.cook_data %}
                     <a href="javascript:void(0);" onclick="$(this).next('.div상세주문내용보기').toggle();">
-                        주문내용(관리자만보임)
+                        / 주문내용(관리자만보임)
                     </a>
                     <div id="" class="div상세주문내용보기"
                          style="display:none;background-color:#efefef;">
                         <!--DB에 저장되어 있는 정보-->
 
-                        <a href="http://json.bloople.net/">변환사이트</a><br><br>
-                        <small onclick="javascript:$(this).select();">{{ item.cook_data  }}</small>
+                        <!--<a href="http://json.bloople.net/" target="_blank">변환사이트</a><br><br>-->
+                        <small onclick="javascript:$(this).select();" style="padding:10px;">
+                            <table class="table table-sm">
+                            {% for key2, cook_data__ in cook_data[key] %}
+                                <tr>
+                                <td>{{ key2 }}</td>
+                                <td>{{ cook_data__ }} </td>
+                                </tr>
+                            {% endfor %}
+                            </table>
+                        </small>
+
 
                     </div>
 
@@ -75,7 +85,8 @@
 
             <!--관리자만 보이도록-->
             <!--<td>
-                {% for key, spec in specs[loop.index0] %}
+                {% for key, spec in
+                [loop.index0] %}
                     {{ key }} : {{ spec }}<br/>
                 {% endfor %}-->
                 <!--{{ loop.index0 }}?? 이게 뭐야. 이거 없애니 에러나네-->

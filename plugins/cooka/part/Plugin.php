@@ -23,13 +23,14 @@ class Plugin extends PluginBase
     public function registerComponents()
     {
         return [
-            '\Cooka\Sample\Components\PartControl' => 'PartControl',
+            '\Cooka\Part\Components\PartControl' => 'PartControl',
         ];
     }
     /*'\Cooka\Sample\Components\SampleControl' => 'SampleControl',
-            '\Cooka\Sample\Components\SampleList' => 'SampleList',
-            '\Cooka\Sample\Components\SampleMenu' => 'SampleMenu',
-*/
+      '\Cooka\Sample\Components\SampleList' => 'SampleList',
+      '\Cooka\Sample\Components\SampleMenu' => 'SampleMenu',
+    */
+
     public function registerReportWidgets()
     {
         return [
