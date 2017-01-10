@@ -59,7 +59,7 @@ class Orders extends ComponentBase
         $this->page['upload_file_arr'] = $upload_file_arr;
         /*print_r( $upload_file_arr);*/
         foreach( $orders as $key => $order){
-            $cook_data_arr[] = json_decode($order['cook_data'], true);
+            $cook_data_arr[$key] = json_decode($order['cook_data'], true);
         }
         if( isset($cook_data_arr)){
             $this->page['specs'] = $cook_data_arr;

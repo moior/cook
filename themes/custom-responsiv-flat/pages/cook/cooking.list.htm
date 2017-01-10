@@ -12,9 +12,22 @@ paramCode = "code"
 [session]
 ==
 <?php
+use Backend\Facades\BackendAuth;
 
 function onInit(){
+    //$this["text_menu"] = param("menu"); //{{:menu}}
+    // 잘안됨..
 
+
+    /*관리자 로그인이랑, 일반회원 로그인 로직이 완전 다른듯. Admin은 슈퍼유저.*/
+    $user = BackendAuth::getUser();
+    if ($user && $user->hasAccess('cooka.order.*')) {
+        $this['admin'] = true;
+
+    }else {
+        $this['admin'] = false;
+
+    }
 }
 ?>
 ==

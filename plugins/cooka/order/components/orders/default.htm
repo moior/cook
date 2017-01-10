@@ -51,6 +51,22 @@
                     </div>
                 {% endif %}
 
+
+                {% if admin and item.cook_data %}
+                    <a href="javascript:void(0);" onclick="$(this).next('.div상세주문내용보기').toggle();">
+                        주문내용(관리자만보임)
+                    </a>
+                    <div id="" class="div상세주문내용보기"
+                         style="display:none;background-color:#efefef;">
+                        <!--DB에 저장되어 있는 정보-->
+
+                        <a href="http://json.bloople.net/">변환사이트</a><br><br>
+                        <small onclick="javascript:$(this).select();">{{ item.cook_data  }}</small>
+
+                    </div>
+
+                {% endif %}
+
             </td>
             <td>
                 {{ item.fee_offer|number_format }}
