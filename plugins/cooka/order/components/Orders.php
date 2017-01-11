@@ -6,6 +6,7 @@ use ApplicationException;
 use Cook\Classes\FeeCalculator;
 use Cooka\Order\Models\Order;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Mail;
 use RainLab\User\Facades\Auth;
 
 class Orders extends ComponentBase
@@ -108,6 +109,20 @@ class Orders extends ComponentBase
         $order->shipping_number = "";
         //$order->is_complete     = "";
 
-        return $order->save();
+        $order->save();
+
+        if( $order->email){
+            $data = [
+                'bill' => $order->bill,
+                'name' => $order->name,
+            ];
+            Mail::send('cooka.order::mail.ordered', $data, function($message) use ($order) {
+                $message->to($order->email, $order->name);
+            });
+        }
+
+        return true;
+
+
     }
 }

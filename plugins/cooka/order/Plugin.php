@@ -43,8 +43,8 @@ class Plugin extends PluginBase
     public function registerMailTemplates()
     {
         return [
-            'rainlab.user::mail.activate' => 'Activation mail sent to new users.',
-            'rainlab.user::mail.restore'  => 'Password reset instructions for front-end users.'
+            'cooka.order::mail.ordered'    => '주문완료 후 이메일 발송함.',
+
         ];
     }
     public function registerNavigation()
