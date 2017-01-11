@@ -52,25 +52,27 @@
                 {% endif %}
 
 
-                {% if admin and item.cook_data %}
+
+                {% if admin %}
                     <a href="javascript:void(0);" onclick="$(this).next('.div상세주문내용보기').toggle();">
                         / 주문내용(관리자만보임)
                     </a>
                     <div id="" class="div상세주문내용보기"
-                         style="display:none;background-color:#efefef;">
+                         style="display:none;background-color:#efefef;padding:10px; font-size:0.8em;">
                         <!--DB에 저장되어 있는 정보-->
-
-                        <!--<a href="http://json.bloople.net/" target="_blank">변환사이트</a><br><br>-->
-                        <small onclick="javascript:$(this).select();" style="padding:10px;">
-                            <table class="table table-sm">
-                            {% for key2, cook_data__ in cook_data[key] %}
-                                <tr>
-                                <td>{{ key2 }}</td>
-                                <td>{{ cook_data__ }} </td>
-                                </tr>
-                            {% endfor %}
-                            </table>
-                        </small>
+                        <div style="border-bottom:1px dotted gray;">메모 : {{ item.comment|nl2br }}</div>
+                        <div style="border-bottom:1px dotted gray;">메일 : {{ item.email }}</div>
+                        <div style="border-bottom:1px dotted gray;">
+                            전번 : <a href="tel:{{ item.phone }}" style="font-size:1.2em;color:royalblue;">{{ item.phone }}</a>
+                        </div>
+                        <table class="table table-sm">
+                        {% for key2, cook_data__ in cook_data[key] %}
+                            <tr>
+                            <td>{{ key2 }}</td>
+                            <td>{{ cook_data__ }} </td>
+                            </tr>
+                        {% endfor %}
+                        </table>
 
 
                     </div>
