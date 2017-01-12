@@ -65,6 +65,8 @@
                         <div style="border-bottom:1px dotted gray;">
                             전번 : <a href="tel:{{ item.phone }}" style="font-size:1.2em;color:royalblue;">{{ item.phone }}</a>
                         </div>
+                        <div style="border-bottom:1px dotted gray;">샘플 : {{ item.sample_code }}</div>
+
                         <table class="table table-sm">
                         {% for key2, cook_data__ in cook_data[key] %}
                             <tr>

@@ -37,10 +37,16 @@
 
             <figcaption>{{ _imgdata.name }}</figcaption>
             {% if _imgdata.thumb %}
-            <img src="{{ _imgdata.thumb }}" class="sample_image" data-sample_id="{{ _imgdata.sample_id }}" alt="{{ _imgdata.name }}"
+            <img src="{{ _imgdata.thumb }}" class="sample_image"
+                 data-sample_id="{{ _imgdata.sample_id }}"
+                 data-sample_name="{{ _imgdata.name }}"
+                 alt="{{ _imgdata.name }}"
                   />
             {% else %}
-            <img src="{{ _imgdata.src }}" class="sample_image" data-sample_id="{{ _imgdata.sample_id }}" alt="{{ _imgdata.name }}"
+            <img src="{{ _imgdata.src }}" class="sample_image"
+                 data-sample_id="{{ _imgdata.sample_id }}"
+                 data-sample_name="{{ _imgdata.name }}"
+                 alt="{{ _imgdata.name }}"
             />
             {% endif %}
         </figure>

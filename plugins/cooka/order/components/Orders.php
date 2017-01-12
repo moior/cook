@@ -95,7 +95,7 @@ class Orders extends ComponentBase
         $order->addr            = isset($form["client_addr"])?$form["client_addr"]:"";
         $order->email           = isset($form["client_email"])?$form["client_email"]:"";
         $order->comment         = isset($form["client_comment"])?$form["client_comment"]:"";
-        $order->sample_code     = isset($form["sample_code"])?$form["sample_code"]:"";
+        $order->sample_code     = isset($form["sample_code"])?$form["sample_code"]." ".$form["sample_name"]:"";
 
         //$order->wishlist_id = form[""];
         $order->cook_data       = isset($form["cook_data"])?$form["cook_data"]:""; // yml 으로 변환 //$parsed = yaml_parse($yaml);        // convert the YAML back into a PHP variable
@@ -121,8 +121,22 @@ class Orders extends ComponentBase
             });
         }
 
-        return true;
+        if($order->phone){
+            $ret = \Kenny\Sms\Components\SmsController::send([
+                /*======================80자======================================================?? */
+                'text'=>'노트요리사::주문완료되었습니다. 확인 후 연락 드리겠습니다. 노트요리사.com',
+                'from' => '02-1661-5521',
+                'to' => $order->phone
+            ]);
+        }
+        $ret = \Kenny\Sms\Components\SmsController::send([
+            'text'=>'노트요리사::주문접수됨! '. $order->name. '/' . $order->phone. '/'
+                .$order->title. '/'. $order->fee_offer,
+            'from' => '02-1661-5521',
+            'to' => '010-4775-0852, 010-4618-7725',
+        ]); /*김상겸, 장미라에게 문자*/
 
+        return true;
 
     }
 }

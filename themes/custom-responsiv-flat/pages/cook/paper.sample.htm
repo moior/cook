@@ -18,19 +18,13 @@ function onInit(){
     //$this["text_menu"] = param("menu"); //{{:menu}}
     // 잘안됨..
 
-
     /*관리자 로그인이랑, 일반회원 로그인 로직이 완전 다른듯. Admin은 슈퍼유저.*/
     $user = BackendAuth::getUser();
     if ($user && $user->hasAccess('cooka.sample.create')) {
         $this['admin'] = true;
-
     }else {
         $this['admin'] = false;
-
     }
-
-
-
 
 
 }
@@ -59,8 +53,10 @@ $(document).ready(function(){
         $(".sample_image").css("border", "");
         $(this).css("border", "3px solid royalblue");
 
-        $("#input_sample_code").val( $(this).next("figcaption").text() )
+        $("#input_sample_code").val( $(this).data("sample_id") );
+        $("#input_sample_name").val( $(this).data("sample_name") )
             .css("border", "1px solid royalblue");
+
         var url = '/sample-detail/' + $(this).data("sample_id"); //  + '?title=' + $(this).attr("alt") + '&src=' + $(this).attr("src")
         $('#modal예제상세').modal({
             remote : url
@@ -70,6 +66,11 @@ $(document).ready(function(){
     $(document).on('hidden.bs.modal', function (e) {
         $(e.target).removeData('bs.modal');
     });
+    $(document).on('click', '.btnSelectSample', function () {
+        //  data-dismiss="modal" 으로 모달 닫은 후,
+        $("#input_client_tel").focus();
+    });
+
 })
 </script>
 <style>
@@ -154,14 +155,19 @@ $(document).ready(function(){
                         <ol>
                             <li>
                                 최대한 비슷한 제품을 목록에서 선택
-                                <input type="text" name="sample_code" id="input_sample_code" placeholder="샘플을 선택해주세요."
+                                <input type="text" name="sample_name" id="input_sample_name" placeholder="샘플을 선택해주세요."
                                        style="border:0px solid tomato" readonly class="form-control" />
+                                <input type="hidden" name="sample_code" id="input_sample_code" />
                             </li>
                             <li>
                                 연락처, 참고파일(디자인 등) 입력
                                 <p>
-                                <input type="text" name="client_tel" id="input_client_tel"
-                                       placeholder="연락처" class="form-control" />
+                                    <input type="text" name="client_tel" id="input_client_tel"
+                                           placeholder="연락처" class="form-control" />
+                                </p>
+                                <p>
+                                    <input type="text" name="client_email" id="input_client_email"
+                                           placeholder="이메일" class="form-control" />
                                 </p>
                                 <p>
                                 <input type="file" name="upload_file" id="input_files" class="form-control" />
