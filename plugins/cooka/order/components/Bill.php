@@ -58,7 +58,10 @@ class Bill extends ComponentBase
 
         /*paper.note.htm 의 form 안에 있는 정보*/
         /*한번에 $fee->setCate( aa, @data[ aa ] )*/
-        $fee->setCate("제본"      , $data["제본"       ]);//제본에서 라벨링제본은 의미없음. 라벨스틱작업비에서 계산.
+        foreach($data as $key=> $data_){
+            $fee->setCate($key, $data_);
+        }
+        /*$fee->setCate("제본"      , $data["제본"       ]);//제본에서 라벨링제본은 의미없음. 라벨스틱작업비에서 계산.
         $fee->setCate("크기"      , $data["크기"       ]);
         $fee->setCate("크기-내지" , $data["크기-내지"       ]);
         $fee->setCate("표지-스타일" , $data["표지-스타일"  ]);// 인쇄, 박
@@ -75,19 +78,19 @@ class Bill extends ComponentBase
         $fee->setCate("삽지-매수" , $data["삽지-매수"  ]);//
 
         $fee->setCate("내지-용지" , $data["내지-용지"  ]);// 미색모조 80g 등
-        /*$fee->setCate("내지-평량" , $data["내지-평량"  ]);//*/
+        $fee->setCate("내지-평량" , $data["내지-평량"  ]);//
         $fee->setCate("내지-매수" , $data["내지-매수"  ]);//
 
         $fee->setCate("데코-라벨스틱", $data["데코-라벨스틱"]);//
         $fee->setCate("데코-라운딩", $data["데코-라운딩"]);//
         $fee->setCate("데코-OPP"  , $data["데코-OPP"   ]);
-        /*$fee->setCate("수량"      , $data["수량"       ]);*/
 
         $fee->setCate("표지-인쇄"      , $data["표지-인쇄"       ]); // 단면4도
         $fee->setCate("삽지-인쇄"      , $data["삽지-인쇄"       ]); // 양면1도
-        $fee->setCate("내지-인쇄"      , $data["내지-인쇄"       ]); // 양면1도
+        $fee->setCate("내지-인쇄"      , $data["내지-인쇄"       ]); // 양면1도*/
 
         $fee->setQuantity( $data['수량'] );
+        /*$fee->setCate("수량"      , $data["수량"       ]);*/
 
         $this->page["수량"] = $data['수량'];
 
@@ -142,7 +145,8 @@ class Bill extends ComponentBase
             $this->page["내지_종이값"] +    $this->page["내지_인쇄비"] +    $this->page["내지_판비"] +
 
             $this->page["제본비"] +    $this->page["라운딩비"] +    $this->page["포장비"] +   $this->page["라벨작업비"] +
-            $this->page["디자인_표지"] +    $this->page["디자인_삽지"] +    $this->page["디자인_내지"] ;
+            $this->page["디자인비"]  ;
+        /*$this->page["디자인_표지"] +    $this->page["디자인_삽지"] +    $this->page["디자인_내지"] ;*/
         //$final = FeeCalculator::feeNote(); // + 제단비() + 제본비() + 포장비() + 배송비();
         $this->page['합계금액'] = $final;
     }

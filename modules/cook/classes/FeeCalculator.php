@@ -29,8 +29,8 @@ class FeeCalculator
         $종이값["B5"] = $종이값["B0"] / 32;
         $종이값["B6"] = $종이값["B0"] / 64;
 
-        $selected = $종이값["B6"];
-        return $selected;
+        /*$selected = $종이값["B6"];
+        return $selected;*/
     }
     public $fee, $userSetting;
     public $danka, $quantity;
@@ -54,19 +54,28 @@ class FeeCalculator
         );
         $this->danka['용지'] = array( /*국전(A1) 500장(1연)*/
             '' => 0,
-            '미색모조 70g' => 22222,
+            ' ' => 0,
+            '모조 180g' => 34000, /*표지에서 그냥 모조지 선택시*/
+            '모조 250g' => 41000,
+            '모조 300g' => 45000,
+
+            '미색모조 70g' => 22000,
             '미색모조 80g' => 26384,
-            '미색모조 100g' => 32694, 
+            '미색모조 100g' => 32694,
             '미색모조 120g' => 44444,
             '백색모조 70g' => 22222,
             '백색모조 80g' => 25616,
             '백색모조 100g' => 32694,
             '백색모조 120g' => 36000,
 
-            '아트 70g' => 22222,
+            '아트' => 26000,
+            '아트 70g' => 22500,
             '아트 80g' => 26384,
             '아트 100g' => 32694,
             '아트 120g' => 44444,
+            '아트 180g' => 47000,
+            '아트 250g' => 48000,
+            '아트 300g' => 49000,
 
             '스노우 일반' => 49999,
             '스노우 100g' => 22000, /*노트의달인*/
@@ -76,8 +85,19 @@ class FeeCalculator
             '스노우 200g' => 36000, /*노트의달인*/
             '스노우 250g' => 41000, /*노트의달인*/
             '스노우 300g' => 45000, /*노트의달인*/
+
             '크라프트' => 44444,
-            '특수지' => 55555,
+            '크라프트 180g' => 49000, /*표지에서 선택시*/
+            '크라프트 250g' => 51000,
+            '크라프트 300g' => 53000,
+
+            '특수지' => 57000,
+            '특수지 80g' => 54000, /*표지에서 선택시*/
+            '특수지 100g' => 55000,
+            '특수지 150g' => 56000,
+            '특수지 180g' => 57000,
+            '특수지 250g' => 58000,
+            '특수지 300g' => 59000,
 
         );
 
@@ -89,7 +109,7 @@ class FeeCalculator
                           * 쿡어노트 : 500권까지 250원/장 / 1000권까지 150원/장",
         );
         $this->danka_easy['박'] = array( /*기본 5만원 */
-            '기본비용' => "100000", /*수량상관없이 기본  */
+            '기본비용' => "80000", /*수량상관없이 기본  */
             '기본수량' => "1000",
             '1000' => "30", /*1000권 초과부터는 개당 원 */
         );
@@ -109,6 +129,7 @@ class FeeCalculator
             '양면 4도' => 80000, /*8배*/
         );
         $this->danka['내지인쇄'] = array( /*1R 비용. 보통 1도 1R(1장 16매x500장=>8000장)에 6000원(내지) ~ 10000원(표지)*/
+            '' => 0,
             '단면 1도' => 8000,
             '양면 1도' => 16000, /*2배*/
             '단면 4도' => 32000, /*4배*/
@@ -171,6 +192,18 @@ class FeeCalculator
             '일반' => 200, /**/
             '4모서리 라운딩' => 200, /**/
         );
+        $this->danka['배송'] = array(
+            '' => 0,
+            '일반' => 50000, /**/
+            '트럭' => 50000, /**/
+        );
+
+        $this->danka['디자인'] = array(
+            '' => 0,
+            '제작만' => 0, /**/
+            '디자인보완' => 100000, /**/
+            '디자인기획' => 200000, /**/
+        );
         /*   접지   에폭시
         */
     }
@@ -181,7 +214,8 @@ class FeeCalculator
     {   /* 표지는 1권에 2장 */
         if($real == "real") {
             //$용지비 = $this->quantity * 2 * $this->feePaper1page($this->userSetting["표지-용지"]); // R수(연수) 상관없이 실제 들어가는 종이비.
-            $용지비 = ceil($this->numNeededR("표지")) * $this->danka["용지"][$this->userSetting["표지-용지"]];
+            $용지비 = ceil($this->numNeededR("표지"))
+                * $this->danka["용지"][$this->userSetting["표지-용지"]." ".$this->userSetting["표지-평량"]];
         }
         return $용지비 ;
     }
@@ -203,7 +237,7 @@ class FeeCalculator
     }
     /*표지-박비 //  */
     function feeCoverBak($real = "real", $size = "국-2절"){
-        if( $this->userSetting["표지-박"] ){
+        if( $this->userSetting["표지-박개수"] ){
             $기본비 = $this->danka_easy["박"]["기본비용"]
                     * $this->danka["박개수"][$this->userSetting["표지-박개수"]];
             $기본수량 = $this->danka_easy["박"]["기본수량"];
@@ -263,7 +297,8 @@ class FeeCalculator
     {   /* 표지는 1권에 2장 */
         if($real == "real") {
             //$용지비 = $this->quantity * 2 * $this->feePaper1page($this->userSetting["표지-용지"]); // R수(연수) 상관없이 실제 들어가는 종이비.
-            $용지비 = ceil($this->numNeededR("삽지")) * $this->danka["용지"][$this->userSetting["삽지-용지"]];
+            $용지비 = ceil($this->numNeededR("삽지"))
+                * $this->danka["용지"][$this->userSetting["삽지-용지"]." ".$this->userSetting["삽지-평량"]];
         }
         return $용지비 ;
     }
@@ -277,7 +312,9 @@ class FeeCalculator
     /*표지-판비 // 국-2절 or 46-2절 */
     function feeIntroPan($real = "real", $size = "국-2절"){
         if($real == "real"){
-            $판비 = $this->danka["판비"][$this->userSetting["삽지-인쇄"]];
+            if($this->userSetting["삽지-매수"]){
+                $판비 = $this->danka["판비"][$this->userSetting["삽지-인쇄"]];
+            }else return 0;
         }else{
         }
         return $판비;
@@ -292,18 +329,19 @@ class FeeCalculator
     {   /* 표지는 1권에 2장 */
         if($real == "real") {
             //$용지비 = $this->quantity * 2 * $this->feePaper1page($this->userSetting["표지-용지"]); // R수(연수) 상관없이 실제 들어가는 종이비.
-            $용지비 = ceil($this->numNeededR("내지")) * $this->danka["용지"][$this->userSetting["내지-용지"]];
+            $용지비 = ceil($this->numNeededR("내지"))
+                *$this->danka["용지"][$this->userSetting["내지-용지"]." ".$this->userSetting["내지-평량"]];
         }
         return $용지비 ;
     }
-    /*표지-인쇄 / 표지는 1권에 2장*/
+    /*내지-인쇄 / 표지는 1권에 2장*/
     function feeInnerPrint($real = "real", $paper_name = null, $size = null) {   /*  */
         if($real == "real") {
             $인쇄비 = ceil($this->numNeededR("내지")) * $this->danka["내지인쇄"][$this->userSetting["내지-인쇄"]];
         }
         return $인쇄비;
     }
-    /*표지-판비 // 국-2절 or 46-2절 */
+    /*내지-판비 // 국-2절 or 46-2절 */
     function feeInnerPan($real = "real", $size = "국-2절"){
         if($real == "real"){
             $판비 = $this->danka["판비"][$this->userSetting["내지-인쇄"]];
@@ -342,6 +380,19 @@ class FeeCalculator
         $OPP작업단가 = $this->danka['OPP'][$this->userSetting['데코-OPP']];
         $OPP작업비 = $OPP작업단가 * $this->quantity;
         return $OPP작업비;
+    }
+
+    /*디자인*/
+    function feeDesign($real = "real")
+    {
+        $최종디자인비 = $this->danka['디자인'][$this->userSetting['디자인']];
+        return $최종디자인비;
+    }
+    /*배송*/
+    function feeShipping($real = "real")
+    {
+        $배송비 = $this->danka['배송'][$this->userSetting['배송']];
+        return $배송비;
     }
 
 

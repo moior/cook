@@ -1,54 +1,41 @@
-description = ".."
+description = "메뉴"
 
 ==
 <?php
+use Backend\Facades\BackendAuth;
+function onStart(){
+    /*Note: Only one levels of sublinks are supported by Bootstrap 3*/
+    $navi = array (
+        'quickOrder' => array(
+            "/expert/paper/note/", "주문"
+        ),
+        'sample'=> array('/sample/paper/note', '샘플'),
+        'orders'=> array(
+            "/cooking/list", "주문확인"
+        ),
+        'blog'=> array(
+            'name'=> '정보',
+            'sublinks'=> array(
+                'blog' => array('/blog', '블로그'),
+            ),
+        ),
+    );
+    $user = BackendAuth::getUser();
+    if ( $user ) {
+        $this['admin'] = true;
+        array_push($navi,
+             array( '/cook/paper/note/', "(중급)")
+        );
+    }else {
+        $this['admin'] = false;
+    }
+    $this['links'] = $navi;
+}
+
+
 ?>
 ==
-{# Note: Only one levels of sublinks are supported by Bootstrap 3 #}
-{% set
-links = {
-
-
-    'bigOrder': [
-        "/cook/paper/note", "주문"
-],
-
-    'sample': ['/sample/paper/note', '샘플'],
-
-    'orders': [
-        "/cooking/list", "주문확인"
-    ],
-
-    'blog': {
-        name: '정보',
-        sublinks: {
-            'blog': ['/blog', '블로그'],
-
-        },
-    },
-
-}
-%}
 <!--
-'smallOrder': [
-        "/cook/paper/note", "소량주문"
-    ],
-
-블로그 개별 : 'post': ['/blog/post', 'Blog Post'],
-'home': ['/', '홈'],
-'pages': {
-    name: '제작',
-    sublinks: {
-        'about':         ['samples/about', 'About Us'],
-        'contact':       ['samples/contact', 'Contact Us'],
-        'pricing-table': ['samples/pricing-table', 'Pricing Table'],
-        'services':      ['samples/services', 'Services'],
-        'signin':        ['samples/signin', 'Sign In'],
-        'register':      ['samples/register', 'Register'],
-        'error':         ['error', 'Error Page'],
-        '404':           ['404', '404 Page'],
-    },
-},
 'portfolio': {
     name: '진행',
     sublinks: {
@@ -104,12 +91,6 @@ links = {
                 <ul class="nav navbar-nav navbar-right">
                     {{ nav.render_menu(links) }}
 
-                   <!-- ADMIN 일 경우... 추가 'admin': {
-                    name: 'Adm',
-                    sublinks: {
-                    'ui-elements': ['ui-elements', 'UI Elements'],
-                    },
-                    },-->
 
                     <li class=" dropdown">
                         <a  href="#"

@@ -34,13 +34,20 @@ function onCalcFee(){
         f.find("input[name=크기-내지]").val("내지 -3mm");
         f.find("input[name=표지-스타일]").val("인쇄"); /*인쇄, 박*/
         f.find("input[name=표지-방식]").val("소프트커버");
-        f.find("input[name=표지-용지]").val("스노우 250g");
+        f.find("input[name=표지-용지]").val("스노우");
+        f.find("input[name=표지-평량]").val("250g");
+        
         f.find("input[name=표지-인쇄]").val("단면 4도");
         f.find("input[name=표지-박]").val("");
         f.find("input[name=표지-박개수]").val("");
         f.find("input[name=표지-코팅]").val("");
         f.find("input[name=표지-날개]").val("");
-        f.find("input[name=내지-용지]").val("미색모조 80g");
+        f.find("input[name=삽지-용지]").val("");
+        f.find("input[name=삽지-평량]").val("");
+        f.find("input[name=삽지-인쇄]").val(");
+        f.find("input[name=삽지-매수]").val("");
+        f.find("input[name=내지-용지]").val("미색모조");
+        f.find("input[name=내지-평량]").val("80g");
         f.find("input[name=내지-인쇄]").val("양면 1도");
         f.find("input[name=내지-매수]").val("60");
         f.find("input[name=데코-라운딩]").val(""); //4모서리 라운딩
@@ -50,12 +57,15 @@ function onCalcFee(){
         $("#text-제본").text("라벨링");
         $("#text-크기").text("B5");
         $("#text-표지-방식").text("소프트커버");
-        $("#text-표지-용지").text("스노우 250g");
+        $("#text-표지-용지").text("스노우");
+        $("#text-표지-평량").text("250g");
+
         $("#text-표지-코팅").text("");
         $("#text-표지-박").text("");
         $("#text-표지-박개수").text("");
         $("#text-표지-날개").text("");
-        $("#text-내지-용지").text("미색모조 80g");
+        $("#text-내지-용지").text("미색모조");
+        $("#text-내지-평량").text("80g");
         $("#text-내지-매수").text("60");
         $("#text-데코-라운딩").text(""); //4모서리 라운딩
         $("#text-데코-OPP").text("");
@@ -164,6 +174,7 @@ $(document).ready(function(){
         <input type="hidden" name="데코-OPP" id="input-데코-OPP" value=""  />
         <input type="hidden" name="수량" id="input-수량" value=""  />
 
+        <input type="hidden" name="디자인" id="input-디자인" value=""  />
         <input type="hidden" name="디자인-표지-1" id="input-디자인-표지-1" value=""  />
         <!--<input type="hidden" name="디자인-표지-2" id="input-디자인-표지-2" value=""  />
         <input type="hidden" name="디자인-표지-3" id="input-디자인-표지-3" value=""  />
@@ -222,7 +233,8 @@ $(document).ready(function(){
             <span class="part_selected" id="text-표지-인쇄">단면 4도</span>
             <span class="part_selected" id="text-표지-방식">소프트커버</span>
 
-            <span class="part_selected" id="text-표지-용지">스노우지 180g</span>
+            <span class="part_selected" id="text-표지-용지">스노우지</span>
+            <span class="part_selected" id="text-표지-평량">180g</span>
 
             <span class="part_selected" id="text-표지-코팅"></span>
 
@@ -237,13 +249,15 @@ $(document).ready(function(){
             <span class="part_selected" id="text-삽지-매수">0</span><span class="part_selected">장</span>
             <span class="part_selected" id="text-삽지-인쇄"></span>
             <span class="part_selected" id="text-삽지-용지"></span>
+            <span class="part_selected" id="text-삽지-평량"></span>
         </a>
         <a class="cook-step"  id="cate-내지"
            data-request='onClickStep1' data-request-update="'cook/paper-note-inner': '#cookdesk-center'">
             <span class="part_title">내지</span>
             <span class="part_selected" id="text-내지-매수">80</span><span class="part_selected">장</span>
             <span class="part_selected" id="text-내지-인쇄">양면 1도</span>
-            <span class="part_selected" id="text-내지-용지">미색모조 80g</span>
+            <span class="part_selected" id="text-내지-용지">미색모조</span>
+            <span class="part_selected" id="text-내지-평량">80g</span>
         </a>
 
         <a class="cook-step"  id="cate-데코"
