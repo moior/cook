@@ -7,7 +7,7 @@ function onStart(){
     /*Note: Only one levels of sublinks are supported by Bootstrap 3*/
     $navi = array (
         'quickOrder' => array(
-            "/expert/paper/note/", "주문"
+            "/cook/paper/note/", "주문"
         ),
         'sample'=> array('/sample/paper/note', '샘플'),
         'orders'=> array(
@@ -24,7 +24,8 @@ function onStart(){
     if ( $user ) {
         $this['admin'] = true;
         array_push($navi,
-             array( '/cook/paper/note/', "(중급)")
+            array( '/guide/paper/note/', "(adm)")
+
         );
     }else {
         $this['admin'] = false;
