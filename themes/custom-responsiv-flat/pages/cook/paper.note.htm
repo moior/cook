@@ -50,6 +50,26 @@ function onCalcFee(){
 
 
     }
+    function setImageUrl(){
+        var sel = $("#select-제본").find("option:selected").val();
+        if( sel == "무선" ){
+            $("#leftimg-1").css("background-image", "url({{ 'assets/images/cook/paper/note/jebon/샘플-무선제본2.jpg'|theme }}");
+            $("#leftimg-2").css("background-image", "url({{ 'assets/images/cook/paper/note/jebon/샘플-떡제본.jpg'|theme }}");
+            $("#leftimg-3").css("background-image", "url({{ 'assets/images/cook/paper/note/jebon/단면도-무선제본2.jpg'|theme }}");
+        }else if( sel == "중철" ){
+            $("#leftimg-1").css("background-image", "url({{ 'assets/images/cook/paper/note/jebon/샘플-중철제본2.jpg'|theme }}");
+            $("#leftimg-2").css("background-image", "url({{ 'assets/images/cook/paper/note/jebon/샘플-중철제본.jpg'|theme }}");
+            $("#leftimg-3").css("background-image", "url({{ 'assets/images/cook/paper/note/jebon/단면도-중철제본2.jpg'|theme }}");
+        }else if( sel == "스프링" ){
+            $("#leftimg-1").css("background-image", "url({{ 'assets/images/cook/paper/note/jebon/샘플-스프링제본2.jpg'|theme }}");
+            $("#leftimg-2").css("background-image", "url({{ 'assets/images/cook/paper/note/jebon/샘플-스프링제본.jpg'|theme }}");
+            $("#leftimg-3").css("background-image", "url({{ 'assets/images/cook/paper/note/jebon/샘플-스프링제본3.jpg'|theme }}");
+        }else if( sel == "양장" ){
+            $("#leftimg-1").css("background-image", "url({{ 'assets/images/cook/paper/note/jebon/샘플-양장제본.jpg'|theme }}");
+            $("#leftimg-2").css("background-image", "url({{ 'assets/images/cook/paper/note/jebon/샘플-양장제본2.jpg'|theme }}");
+            $("#leftimg-3").css("background-image", "url({{ 'assets/images/cook/paper/note/jebon/단면도-양장제본2.jpg'|theme }}");
+        }
+    }
     function showDetailPayment(){
         /*가격 계산*/
         var datas = $("#form-currentnote").serializeArray(); //JSON.stringify(
@@ -59,12 +79,13 @@ function onCalcFee(){
             data: datas,
         })
     }
+
 $(document).ready(function(){
 
     setFormInputData();
     setAreaDisplay();
     showDetailPayment();
-
+    setImageUrl();
     /*수량 변경시 가격 계산*/
     var previous;
     $("#select_amount").change(function() {
@@ -82,24 +103,7 @@ $(document).ready(function(){
         showDetailPayment();
     });
     $("#select-제본").change(function() {
-        var sel = $(this).find("option:selected").val();
-        if( sel == "무선" ){
-            $("#leftimg-1").css("background-image", "url({{ 'assets/images/cook/paper/note/jebon/샘플-무선제본.jpg'|theme }}");
-            $("#leftimg-2").css("background-image", "url({{ 'assets/images/cook/paper/note/jebon/단면도-무선제본.jpg'|theme }}");
-            $("#leftimg-3").css("background-image", "url({{ 'assets/images/cook/paper/note/jebon/단면도-무선제본.jpg'|theme }}");
-        }else if( sel == "중철" ){
-            $("#leftimg-1").css("background-image", "url({{ 'assets/images/cook/paper/note/jebon/샘플-중철제본.jpg'|theme }}");
-            $("#leftimg-2").css("background-image", "url({{ 'assets/images/cook/paper/note/jebon/단면도-중철제본.jpg'|theme }}");
-            $("#leftimg-3").css("background-image", "url({{ 'assets/images/cook/paper/note/jebon/단면도-중철제본.jpg'|theme }}");
-        }else if( sel == "스프링" ){
-            $("#leftimg-1").css("background-image", "url({{ 'assets/images/cook/paper/note/jebon/샘플-스프링제본.jpg'|theme }}");
-            $("#leftimg-2").css("background-image", "url({{ 'assets/images/cook/paper/note/jebon/단면도-스프링제본.jpg'|theme }}");
-            $("#leftimg-3").css("background-image", "url({{ 'assets/images/cook/paper/note/jebon/단면도-스프링제본.jpg'|theme }}");
-        }else if( sel == "양장" ){
-            $("#leftimg-1").css("background-image", "url({{ 'assets/images/cook/paper/note/jebon/샘플-양장제본.jpg'|theme }}");
-            $("#leftimg-2").css("background-image", "url({{ 'assets/images/cook/paper/note/jebon/단면도-양장제본.jpg'|theme }}");
-            $("#leftimg-3").css("background-image", "url({{ 'assets/images/cook/paper/note/jebon/단면도-양장제본.jpg'|theme }}");
-        }
+        setImageUrl();
     });
 
     /*따라다니는 메뉴*/
@@ -151,19 +155,16 @@ $(document).ready(function(){
         height:300px;
         margin-bottom:10px;
         border:1px solid gray;
-        background-image:url({{ "assets/images/cook/paper/note/jebon/샘플-무선제본.jpg"|theme }});
         background-size:cover;
     }
     #leftimg-2 {
         height:200px;
         border:1px solid gray;
-        background-image:url({{ "assets/images/cook/paper/note/jebon/단면도-무선제본.jpg"|theme }});
-        background-size:contain;
+        background-size:cover;
     }
     #leftimg-3 {
         height:200px;
         border:1px solid gray;
-        background-image:url({{ "assets/images/cook/paper/note/jebon/단면도-떡제본.jpg"|theme }});
         background-size:cover;
     }
     .step_title {border-bottom:2px solid #666;padding:4px;margin-bottom:10px;color:royalblue}
