@@ -37,13 +37,18 @@ function onCalcFee(){
         var quantity = $("#select_amount option:selected").val();
         if( quantity == "" || quantity == '소량') {
             $(".div_파트선택영역").hide();
+            $("#div_삽지영역").hide();
         }else{
             $(".div_파트선택영역").show();
-
+            if( $("#checkbox_삽지있음").prop("checked") == true ){
+                $("#div_삽지영역").show();
+            }else $("#div_삽지영역").hide();
         }
         if( $("#select-제본 option:selected").val() == "스프링") {
             $("#select-데코-라벨스틱").prop("disabled", false);
         }else $("#select-데코-라벨스틱").prop("disabled", true);
+
+
     }
     function showDetailPayment(){
         /*가격 계산*/
@@ -106,13 +111,12 @@ $(document).ready(function(){
     if(isMobile == false){
         var floatPosition1 = parseInt($("#area이미지").css('top'));// 250px 에서 숫자만
         $(window).scroll(function() {
-            var scrollTop = $(window).scrollTop(); var newPosition = scrollTop + floatPosition1 + "px"; // 현재 스크롤 위치를 가져온다.
+            var newPosition = $(window).scrollTop() + floatPosition1 + "px"; // 현재 스크롤 위치를 가져온다.
             $("#area이미지").css('top', newPosition);
-
         });
         var floatPosition2 = parseInt($("#area견적서").css('top'));// 250px 에서 숫자만
         $(window).scroll(function() {
-            var scrollTop = $(window).scrollTop(); var newPosition = scrollTop + floatPosition2 + "px"; // 현재 스크롤 위치를 가져온다.
+            var newPosition = $(window).scrollTop() + floatPosition2 + "px"; // 현재 스크롤 위치를 가져온다.
             $("#area견적서").css('top', newPosition);
         });
     }
@@ -153,10 +157,10 @@ $(document).ready(function(){
         background-image:url({{ "assets/images/cook/paper/note/jebon/단면도-떡제본.jpg"|theme }});
         background-size:cover;
     }
-    .step_title {border-bottom:2px solid #666;padding:4px;margin-bottom:10px;}
+    .step_title {border-bottom:2px solid #666;padding:4px;margin-bottom:10px;color:royalblue}
 
     .step_content {font-size:11pt;}
-    .step_content_title {text-align:center;padding:8px 0;font-weight:bold;color:royalblue;}
+    .step_content_title {text-align:center;padding:8px 0;font-weight:bold;color: #909090;}
     .step_content_row {margin-top:0px;}
 
 </style>
@@ -221,7 +225,7 @@ $(document).ready(function(){
     <div class="col-sm-5" id="area이미지" style="">
         <div class="leftimg" style="margin-top:10px;">
             <div class="row">
-                <div class="col-xs-12">
+                <div class="col-sm-12 col-xs-4">
                     <div id="leftimg-1">
 
                     </div>
@@ -229,10 +233,10 @@ $(document).ready(function(){
             </div>
 
             <div class="row">
-                <div class="col-xs-6">
+                <div class="col-sm-6 col-xs-4">
                     <div id="leftimg-2"></div>
                 </div>
-                <div class="col-xs-6">
+                <div class="col-sm-6 col-xs-4">
                     <div id="leftimg-3"></div>
                 </div>
             </div>
@@ -410,10 +414,10 @@ $(document).ready(function(){
 
         <div class="step_title" style="">
             삽지
-            <input type="checkbox" name="삽지있음" id="checkbox_삽지있음" onclick="javascript:$('#div_삽지영역').toggle();" s/>
+            <input type="checkbox" name="삽지있음" id="checkbox_삽지있음" onclick="javascript:setAreaDisplay()" />
 
         </div>
-        <div class="step_content div_파트선택영역" id="div_삽지영역" style="display:none;">
+        <div class="step_content div_파트선택영역" id="div_삽지영역" style="">
             <div class="row step_content_row">
                 <div class="col-xs-3">
                     <div class="step_content_title">매수</div>
