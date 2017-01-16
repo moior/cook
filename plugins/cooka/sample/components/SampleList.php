@@ -43,11 +43,18 @@ class SampleList extends ComponentBase
         $imgdata = array();
 
         /*DB에 있는것 부름. 나중 위에 파일기반은 삭제해야함.*/
-        if($this->property('menu')){
-            $samples = Sample::where("menu", $this->property('menu'))->orderByRaw("RAND()"); //limit(15)->
-
+        if($this->property('search')) {
+            $samples = Sample::where("title","like", "%".$this->property('search')."%")
+                ->orWhere("menu","like", "%".$this->property('search')."%")
+                ->orWhere("spec","like", "%".$this->property('search')."%")
+                ->orWhere("comment","like", "%".$this->property('search')."%")
+                ->orderByRaw("RAND()"); //limit(15)->
         }else{
-            $samples = Sample::orderByRaw("RAND()"); //limit(15)->
+            if ($this->property('menu')) {
+                $samples = Sample::where("menu", $this->property('menu'))->orderByRaw("RAND()"); //limit(15)->
+            } else {
+                $samples = Sample::orderByRaw("RAND()"); //limit(15)->
+            }
         }
         if($this->property('count')) {
             $samples = $samples->limit($this->property('count'));
