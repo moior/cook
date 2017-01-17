@@ -46,7 +46,7 @@ $(document).ready(function(){
 
     $(".btn_menu, .btn카테고리").click(function(){
         var txt = $.trim($(this).text());
-        if(txt == "랜덤") txt = "";
+        if(txt == "랜덤" || txt == "홈") txt = "";
         location.href="/sample/paper/note/" + txt;
     });
     $("#form검색").submit(function(){

@@ -53,21 +53,21 @@ function onCalcFee(){
     function setImageUrl(){
         var sel = $("#select-제본").find("option:selected").val();
         if( sel == "무선" ){
-            $("#leftimg-1").css("background-image", "url({{ 'assets/images/cook/paper/note/jebon/샘플-무선제본2.jpg'|theme }}");
-            $("#leftimg-2").css("background-image", "url({{ 'assets/images/cook/paper/note/jebon/샘플-떡제본.jpg'|theme }}");
-            $("#leftimg-3").css("background-image", "url({{ 'assets/images/cook/paper/note/jebon/단면도-무선제본2.jpg'|theme }}");
+            $("#leftimg-1").css("background-image", "url({{ 'assets/images/cook/paper/note/jebon/샘플-무선제본2.jpg'|theme }})");
+            $("#leftimg-2").css("background-image", "url({{ 'assets/images/cook/paper/note/jebon/샘플-떡제본.jpg'|theme }})");
+            $("#leftimg-3").css("background-image", "url({{ 'assets/images/cook/paper/note/jebon/단면도-무선제본2.jpg'|theme }})");
         }else if( sel == "중철" ){
-            $("#leftimg-1").css("background-image", "url({{ 'assets/images/cook/paper/note/jebon/샘플-중철제본2.jpg'|theme }}");
-            $("#leftimg-2").css("background-image", "url({{ 'assets/images/cook/paper/note/jebon/샘플-중철제본.jpg'|theme }}");
-            $("#leftimg-3").css("background-image", "url({{ 'assets/images/cook/paper/note/jebon/단면도-중철제본2.jpg'|theme }}");
+            $("#leftimg-1").css("background-image", "url({{ 'assets/images/cook/paper/note/jebon/샘플-중철제본2.jpg'|theme }})");
+            $("#leftimg-2").css("background-image", "url({{ 'assets/images/cook/paper/note/jebon/샘플-중철제본.jpg'|theme }})");
+            $("#leftimg-3").css("background-image", "url({{ 'assets/images/cook/paper/note/jebon/단면도-중철제본2.jpg'|theme }})");
         }else if( sel == "스프링" ){
-            $("#leftimg-1").css("background-image", "url({{ 'assets/images/cook/paper/note/jebon/샘플-스프링제본2.jpg'|theme }}");
-            $("#leftimg-2").css("background-image", "url({{ 'assets/images/cook/paper/note/jebon/샘플-스프링제본.jpg'|theme }}");
-            $("#leftimg-3").css("background-image", "url({{ 'assets/images/cook/paper/note/jebon/샘플-스프링제본3.jpg'|theme }}");
+            $("#leftimg-1").css("background-image", "url({{ 'assets/images/cook/paper/note/jebon/샘플-스프링제본2.jpg'|theme }})");
+            $("#leftimg-2").css("background-image", "url({{ 'assets/images/cook/paper/note/jebon/샘플-스프링제본.jpg'|theme }})");
+            $("#leftimg-3").css("background-image", "url({{ 'assets/images/cook/paper/note/jebon/샘플-스프링제본3.jpg'|theme }})");
         }else if( sel == "양장" ){
-            $("#leftimg-1").css("background-image", "url({{ 'assets/images/cook/paper/note/jebon/샘플-양장제본.jpg'|theme }}");
-            $("#leftimg-2").css("background-image", "url({{ 'assets/images/cook/paper/note/jebon/샘플-양장제본2.jpg'|theme }}");
-            $("#leftimg-3").css("background-image", "url({{ 'assets/images/cook/paper/note/jebon/단면도-양장제본2.jpg'|theme }}");
+            $("#leftimg-1").css("background-image", "url({{ 'assets/images/cook/paper/note/jebon/샘플-양장제본.jpg'|theme }})");
+            $("#leftimg-2").css("background-image", "url({{ 'assets/images/cook/paper/note/jebon/샘플-양장제본2.jpg'|theme }})");
+            $("#leftimg-3").css("background-image", "url({{ 'assets/images/cook/paper/note/jebon/단면도-양장제본2.jpg'|theme }})");
         }
     }
     function showDetailPayment(){
@@ -118,7 +118,11 @@ $(document).ready(function(){
             var newPosition = $(window).scrollTop() + floatPosition1 + "px"; // 현재 스크롤 위치를 가져온다.
             $("#area이미지").css('top', newPosition);
         });*/
-        var floatPosition2 = parseInt($("#area견적서").css('top'));// 250px 에서 숫자만
+
+        var floatPosition2 = $("#area견적서").css('top'); //parseInt(.css('top'));// Exp에서 'auto'라고 나옴 / 250px 에서 숫자만
+        //var floatPosition2 = parseInt($("#area견적서").position().top); //parseInt(.css('top'));// Exp에서 'auto'라고 나옴 / 250px 에서 숫자만
+        if(floatPosition2 == 'auto') floatPosition2 = 0; //ex때문에
+        else floatPosition2 = parseInt(floatPosition2);
         $(window).scroll(function() {
             var newPosition = $(window).scrollTop() + floatPosition2 + "px"; // 현재 스크롤 위치를 가져온다.
             $("#area견적서").css('top', newPosition);
