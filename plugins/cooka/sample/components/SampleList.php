@@ -79,7 +79,7 @@ class SampleList extends ComponentBase
 
 
 
-        $notename = $this->property('menu'); //"알림장";
+        /*$notename = $this->property('menu'); //"알림장";
         $dirpath = $this->property('dir')?:"/plugins/cooka/sample/assets/images/note"; // 해당 디렉토리 내 모든 파일 나열
         chdir($_SERVER['DOCUMENT_ROOT'].$dirpath);
 
@@ -92,12 +92,12 @@ class SampleList extends ComponentBase
             $temp["name"] = substr($filename, 0, strrpos($filename, "."));
             $temp["sample_id"] = 0;
             $imgdata[] = $temp;
-            /*if($key > 6) {
+            if($key > 6) {
                 $temp["src"] = $dirpath."/../"."더보기.png";
                 $temp["name"] = "더보기";
                 $imgdata[] = $temp; break;
-            }*/
-        }
+            }
+        }*/
 
 
 
