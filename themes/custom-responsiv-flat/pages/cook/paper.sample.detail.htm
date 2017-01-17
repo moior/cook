@@ -1,0 +1,482 @@
+title = "샘플"
+url = "/sample/detail/:sample_id?"
+layout = "cooking"
+
+[Orders]
+
+[SampleList]
+sample_id = "{{:sample_id}}"
+
+[SampleControl]
+
+==
+<?php
+use Backend\Facades\BackendAuth;
+use Cooka\Sample\Models\Sample;
+
+function onInit(){
+    $this['sample_id'] = $this->param('sample_id');
+
+    /*관리자 로그인이랑, 일반회원 로그인 로직이 완전 다른듯. Admin은 슈퍼유저.*/
+    $user = BackendAuth::getUser();
+    if ($user && $user->hasAccess('cooka.sample.create')) {
+        $this['admin'] = true;
+    }else {
+        $this['admin'] = false;
+    }
+
+
+}
+function onStart(){
+
+    // Sample 모델 이용
+    $sample = Sample::find($this->param('sample_id'));
+    if($sample){
+        $this['sample'] = $sample;
+        $this['sample_id'] =  $sample->id;
+        $this['cate']       = $sample->cate;
+        $this['menu']       = $sample->menu;
+        $this['title']      = $sample->title;
+        $this['spec']       = $sample->spec;
+        $this['comment']    = $sample->comment;
+        $this['sample_images']    = $sample->sample_images;
+        $this['cook_data']  = $sample->cook_data;
+        $this['bill']       = $sample->bill;
+        $this['status_show'] = $sample->status_show;
+        $this['ord']        = $sample->ord;
+        $this['is_hidden']  = $sample->is_hidden;
+
+        $imgarr = array();
+        $thumb_arr = array();
+        foreach($sample->sample_images as $image){
+
+            $imgarr[] = $image->getPath();
+            $thumb_arr[] = $image->getThumb(100, 100, ['mode' => 'crop']);
+        }
+        $this['sample_images_path'] = $imgarr;
+        $this['sample_thumbs_path'] = $thumb_arr;
+
+    }
+}
+
+/*function onQuickOrder(){
+    $this['result'] = input('value1') + input('value2');
+    return $this->page["result"];
+}*/
+?>
+==
+<script>
+
+$(document).ready(function(){
+
+    var isMobile = true;
+    if($(window).innerWidth() >= 760) {
+        isMobile = false;
+    }
+    /*따라다니는 메뉴*/
+    if(isMobile == false){
+    }
+
+    $(".btn_menu, .btn카테고리").click(function(){
+        var txt = $.trim($(this).text());
+        if(txt == "랜덤") txt = "";
+        location.href="/sample/paper/note/" + txt;
+    });
+    $("#form검색").submit(function(){
+        location.href="/sample/paper/note/" + $("#input검색창").val();
+        return false;
+    });
+    $(".sample_image").click(function() {
+        $(".sample_image").css("border", "");
+        $(this).css("border", "3px solid royalblue");
+
+        $("#input_sample_code").val( $(this).data("sample_id") );
+        $("#input_sample_name").val( $(this).data("sample_name") )
+            .css("border", "1px solid royalblue");
+
+        var url = '/sample-detail/' + $(this).data("sample_id"); //  + '?title=' + $(this).attr("alt") + '&src=' + $(this).attr("src")
+        $('#modal예제상세').modal({
+            remote : url
+        }); //remote : '/sample-detail/paper/note?title=' + $(this).attr("alt")
+    });
+    /*모달 매번 다시 부름.*/
+    $(document).on('hidden.bs.modal', function (e) {
+        $(e.target).removeData('bs.modal');
+    });
+    $(document).on('click', '.btnSelectSample', function () {
+        //  data-dismiss="modal" 으로 모달 닫은 후,
+        $("#input_client_tel").focus();
+    });
+
+})
+</script>
+<style>
+    .img-sample-detail {max-width:100%;}
+    .txt_spec p {font-size:11pt;}
+
+    div, p {font-size:10pt;}
+    .btn_menu {cursor:pointer;}
+
+    h5 {color:gray;}
+    #div카테고리버튼들 .row {margin-bottom:10px;}
+    .title카테고리버튼 {font-weight:bold;color: #7a7a7a;}
+    /*눌러지는 3D btn*/
+    #div카테고리버튼들 .btn:active {
+        transform: translate(0px, 5px);
+        -webkit-transform: translate(0px, 5px);
+        box-shadow: 0px 1px 0px 0px;
+    }
+    #div카테고리버튼들 .btn {font-weight:bold;color:white;margin-top:5px;margin-bottom:5px;}
+
+    .btn-gray {        background-color: #b9b5b9;        box-shadow: 0px 5px 0px 0px #9d9a9c;    }
+    .btn-gray:hover {        background-color: #d6cdd5;    }
+    .btn-blue {        background-color: #55acee;        box-shadow: 0px 5px 0px 0px #3C93D5;    }
+    .btn-blue:hover {        background-color: #6FC6FF;    }
+    .btn-green {        background-color: #2ecc71;        box-shadow: 0px 5px 0px 0px #15B358;    }
+    .btn-green:hover {        background-color: #48E68B;    }
+    .btn-red {        background-color: #e74c3c;        box-shadow: 0px 5px 0px 0px #CE3323;    }
+    .btn-red:hover {        background-color: #FF6656;    }
+    .btn-purple {        background-color: #9b59b6;        box-shadow: 0px 5px 0px 0px #82409D;    }
+    .btn-purple:hover {        background-color: #B573D0;    }
+    .btn-orange {        background-color: #e67e22;        box-shadow: 0px 5px 0px 0px #CD6509;    }
+    .btn-orange:hover {        background-color: #FF983C;    }
+    .btn-yellow {       background-color: #f1c40f;        box-shadow: 0px 5px 0px 0px #D8AB00;  }
+    .btn-yellow:hover {        background-color: #FFDE29;    }
+</style>
+
+
+<div class="container ">
+    <div class="row">
+
+    <div class="col-sm-4" id="" style="">
+
+        <h5>{{ text_menu }}</h5>
+        <div class="well" >
+            <div class="row" style="margin-bottom:15px;">
+                <div class="col-xs-12 text-center">
+                        <span type="" class="" style="font-weight:bold;color:#6c6c6c;font-size:16pt;
+                            font-family:'Futura, Helvetica'">
+                            Samples
+                        </span>
+                </div>
+                <div class="col-xs-10 col-xs-offset-1">
+                    <div class="row">
+                        <form id="form검색">
+                            <div class="input-group">
+
+                                <input type="text" placeholder="키워드 검색" id="input검색창" class="text-center form-control"
+                                    value="{{ search_text }}" />
+                                <span class="input-group-btn">
+
+                                        <button type="submit" id="btn검색버튼" class="btn btn-default">
+                                            <span class="fa fa-search"></span>
+                                        </button>
+                                    </span>
+                            </div>
+
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+            <div id="div카테고리버튼들">
+
+                <div class="row">
+                    <div class="col-xs-12">
+                        <button type="button" class="btn카테고리 btn btn-xs btn-orange">홈</button>
+                        <button type="button" class="btn카테고리 btn btn-xs btn-orange">랜덤</button>
+                        <!--<button type="button" class="btn btn-xs btn-gray">인기순</button>-->
+                        <!--<button type="button" class="btn btn-xs btn-gray">표지만</button>-->
+                        <!--<button type="button" class="btn btn-xs btn-gray">내지만</button>-->
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 ">
+                        <span type="" class="title카테고리버튼">제본별</span>
+                    </div>
+                    <div class="col-xs-12">
+                        <button type="button" class="btn카테고리 btn btn-xs btn-blue">중철</button>
+                        <button type="button" class="btn카테고리 btn btn-xs btn-blue">무선</button>
+                        <button type="button" class="btn카테고리 btn btn-xs btn-blue">스프링</button>
+                        <button type="button" class="btn카테고리 btn btn-xs btn-blue">양장</button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 ">
+                        <span type="" class="title카테고리버튼">업종별</span>
+                    </div>
+                    <div class="col-xs-12">
+                        <button type="button" class="btn카테고리 btn btn-xs btn-blue">학원</button>
+                        <button type="button" class="btn카테고리 btn btn-xs btn-blue">회사</button>
+                        <button type="button" class="btn카테고리 btn btn-xs btn-blue">연구소</button>
+                        <button type="button" class="btn카테고리 btn btn-xs btn-blue">공공기관</button>
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 ">
+                        <span type="" class="title카테고리버튼">용도별</span>
+                    </div>
+                    <div class="col-xs-12">
+                        <button type="button" class="btn카테고리 btn btn-xs btn-blue">연습장</button>
+                        <button type="button" class="btn카테고리 btn btn-xs btn-blue">알림장</button>
+                        <button type="button" class="btn카테고리 btn btn-xs btn-blue">학습플래너</button>
+                        <button type="button" class="btn카테고리 btn btn-xs btn-blue">독서기록장</button>
+                        <button type="button" class="btn카테고리 btn btn-xs btn-blue">연구노트</button>
+                    </div>
+                </div>
+                <!--<div class="row">
+                    <div class="col-xs-2 text-right">
+                        <span type="" class="title카테고리버튼">연령별</span>
+                    </div>
+                    <div class="col-xs-10">
+                        <button type="button" class="btn btn-xs btn-blue">유아</button>
+                        <button type="button" class="btn btn-xs btn-blue">초등생</button>
+                        <button type="button" class="btn btn-xs btn-blue">중고생</button>
+                        <button type="button" class="btn btn-xs btn-blue">대학생</button>
+                        <button type="button" class="btn btn-xs btn-blue">회사원</button>
+                        <button type="button" class="btn btn-xs btn-blue">중장년</button>
+                    </div>
+                </div>-->
+
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-8" id="col-rightdesk" style="margin-top:20px;">
+        <h5 class=" ">
+            {{ title }}
+            <!--<small>{{ cate }}</small>-->
+        </h5>
+
+        <div class="row" id="" style="padding:0px 4px;">
+
+            <div class="col-sm-8">
+
+                {% for key, value in sample_images_path %}
+
+                <img class="img-sample-detail"
+                     src="{{value}}?skrefresh=sk{{ "now"|date("mdHis") }}"
+                     style="border:1px solid #ddd;margin:5px;" />
+
+                {% endfor %}
+
+            </div>
+            <div class="col-sm-4">
+                <div class="txt_spec" style="">
+
+                    <b>상세스펙</b>
+                    <p style="border-bottom:1px solid #eee">{{ spec|raw|nl2br }}</p>
+                    <p style="border-bottom:1px solid #eee">{{ comment|raw|nl2br }}</p>
+                    <p style="border-bottom:1px solid #eee">{{ cate|raw|nl2br }}</p>
+
+                </div>
+                <div class="text-right">
+                    <a class="btn btn-sm btn-info btnSelectSample" data-dismiss="modal">견적요청</a>
+                </div>
+            </div>
+        </div>
+
+
+
+
+        <!--견적요청서-->
+        <div class=" " style="margin-top:20px;">
+        <!--file 저장은 ajax로 안되고 enctype=multipart 넣어줘야!! 맨날 삽질2시간-->
+        {{ form_open({ request: 'Orders::onSaveOrder', files : true, url : '/cooking/list' }) }}
+
+            <!--data-request="Orders::onSaveOrder"
+            data-request-success="$('#msg_ajax').show().text('접수 완료되었습니다. 확인 후 연락드리겠습니다. :-)')"
+            data-request-complete=""
+            data-request-loading="<span class='fa fa-loading'></span>"-->
+            <input type="hidden" name="title" value="간단 주문접수" />
+            <input type="hidden" name="status_show" value="견적 접수" />
+
+            <!--data-request-update="'{{ __SELF__ }}::list': '#result'"-->
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">견적요청서</h3>
+                </div>
+                <div class="panel-body">
+                    <div style="border:0px solid #9c9c9c;margin-bottom:10px;" class="col-sm-8">
+                        <ol>
+                                <input type="hidden" name="sample_name" id="input_sample_name" placeholder="샘플을 선택해주세요."
+                                       style="border:0px solid tomato" readonly class="form-control" />
+                                <input type="hidden" name="sample_code" value="{{ sample_id }}" id="input_sample_code" />
+                            <li>
+                                연락처 입력
+                                <p>
+                                    <input type="text" name="client_tel" id="input_client_tel"
+                                           placeholder="연락처" class="form-control" />
+                                </p>
+                                <p>
+                                    <input type="text" name="client_email" id="input_client_email"
+                                           placeholder="이메일" class="form-control" />
+                                </p>
+                            </li>
+                            <li>
+                                참고파일(디자인 등)
+                                <p>
+                                <input type="file" name="upload_file" id="input_files" class="form-control" />
+                                </p>
+
+                            </li>
+
+                            <li>세부 전달사항
+                                <textarea name="client_comment" class="form-control"
+                                    placeholder="내지매수: 50장
+20일 내에 제작되어야 합니다.
+식으로 " style="height:100px;"></textarea>
+                            </li>
+
+                            <p class="" style="margin-top:10px;">
+                                <button type="submit" id="btn_submit"
+                                        class="btn btn-info btn-block" >
+                                    접수
+                                </button>
+                            </p>
+                            <li>
+                                접수 후 담당자가 연락을 드립니다.
+                            </li>
+                            <li>
+                                비용입금 후 절차
+                                <ul>
+                                    <li>  디자인 시안 확인 > 교정 > 확정 (약3일)</li>
+                                    <li>
+                                        인쇄, 제작, 제본 (약 5일~14일)
+                                    </li>
+                                    <li>
+                                        배송 (1일)
+                                    </li>
+                                </ul>
+                            </li>
+                        </ol>
+                        <div style="display:none;" id="msg_ajax" class="well bg-info">
+
+                        </div>
+
+                    </div>
+
+                    <div  style="border:0px solid gray;font-size:10pt;" class="col-sm-4">
+                        <p style=" font-size:10pt;" >
+                            <b>절차</b><br/>
+                            ① 담당자가 내용 확인 후 전화를 드립니다.<br>
+                            ② <b>입금 순서대로</b> 작업 진행됩니다.<br>
+                            주문이 밀릴 경우 <b>출고일이 조정될 수</b> 있습니다.
+                            <br>
+                            ③ 세부사항 조율 완료 후, 실제작 및 배송까지 약 10일 소요됩니다.
+                        </p>
+                        <p class="well well-sm text-center" style=" font-size:10pt;" >
+                            입금계좌 : 우리은행 <span style="font-size:1.2em;">1005-502-237770</span> (주)모이어
+                        </p>
+                        <p class="well well-sm text-center" style=" font-size:10pt;" >
+                            회계팀 : 02-1661-5521 <br/>
+                            디자인팀 : 02-2038-2438 <br/>
+                            help@moior.com
+                        </p>
+                    </div>
+                </div>
+                <div class="panel-footer text-right">
+
+                </div>
+            </div>
+        {{ form_close() }}
+
+        </div>
+    </div>
+
+    </div>
+
+</div>
+
+<div class="modal fade" id="modal예제상세" tabindex="-1" role="dialog"><!--control-popup -->
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <p style="margin:20px;">loading...</p>
+        </div>
+    </div>
+</div>
+
+
+
+
+<div class="container ">
+    <div class="row">  <!--row class 할때마다 마진 15 사라짐.-->
+
+        <!--어드민이면....... 바로바로 입력하도록.-->
+        {% if admin %}
+        <hr>
+        <p style="color:darkred;font-size:9pt;">관리자만 가능합니다. (만약 관리자가 아닌데 이 글이 보인다면, 알려주세요 ^.^)</p>
+
+        {{ form_ajax('SampleControl::onEditSample',
+        {
+        success:"alert('수정되었습니다.')",
+        }
+        ) }}
+        <input type="hidden" name="sample_id" value="{{ sample_id }}" />
+        <div class="">
+            <div class=""> 카테 (종이/노트)</div>
+            <input type="text" name="cate" value="{{ cate }}" class="form-control" placeholder="종이/노트" />
+        </div>
+        <div class="">
+            <div class=""> 메뉴 (업무노트, 알링장 등)</div>
+            <input type="text" name="menu" value="{{ menu }}" class="form-control" placeholder="업무노트" />
+        </div>
+        <div class="">
+            <div class=""> 제목</div>
+            <input type="text" name="title" value="{{ title }}" class="form-control" placeholder="제목" />
+        </div>
+        <div class="">
+            <div class=""> 스펙</div>
+            <textarea name="spec" class="form-control" placeholder="스펙">{{ spec }}</textarea>
+        </div>
+        <div class="">
+            <div class=""> 설명</div>
+            <textarea name="comment" class="form-control" placeholder="코멘트" style="height:120px;">{{ comment }}</textarea>
+        </div>
+
+        <button type="submit" onclick="beforeFormSubmit();" class="btn btn btn-primary"
+                data-attach-loading>수정</button>
+        {{ form_close() }}
+
+        {{ form_ajax('SampleControl::onDeleteSample',
+        {
+        success:"alert('삭제되었습니다.')",
+        confirm: "정말 삭제합니까?",
+        }
+        ) }}
+        <input type="hidden" name="id" value="{{ sample_id }}" />
+        <button type="submit" class="btn btn-xs btn-link" data-attach-loading>삭제</button>
+        {{ form_close() }}
+        <hr>
+
+        <div class="">
+            <h5 class=""> 첨부파일 추가</h5>
+            {{ form_open({ request: 'SampleControl::onAddAttachment', files : true, url : '/sample/paper/note' }) }}
+            <input type="hidden" name="sample_id" value="{{ sample_id }}" />
+            <div class="col-xs-6"><input type="file" name="sample_images[]" class="form-control" placeholder=".." /></div>
+            <div class="col-xs-6"><input type="file" name="sample_images[]" class="form-control" placeholder=".." /></div>
+            <div class="text-right">
+                <button type="submit" onclick="" class="btn btn-xs btn-default" data-attach-loading>첨부파일 추가</button>
+            </div>
+            {{ form_close() }}
+            <hr>
+            <h5 class=""> 첨부파일 삭제</h5>
+
+
+            {% for key,sample_thumb_path in sample_thumbs_path %}
+            <div data-request-data="sample_id: '{{sample.id }}', attatch_id: '{{sample_images[key].id}}'">
+                <img src="{{ sample_thumb_path }}?skrefresh=skgood{{ "now"|date("mdHis") }}" />
+                <a href="{{sample_images[key].path }}" target="_blank">{{sample_images[key].file_name }}</a>
+                <button data-request="SampleControl::onDelAttachment"
+                        data-request-success="$('#modal예제상세').modal('hide');" class="btn btn-xs btn-default" >삭제 X</button>
+                <button data-request="SampleControl::onRotateAttachment"
+                        data-request-success="console.log(textStatus  );$('#modal예제상세').modal('hide');" class="btn btn-xs btn-default" >90도 회전</button>
+            </div>
+            {% endfor %}
+            <hr>
+
+        </div>
+        {% endif %}
+    </div>
+</div>

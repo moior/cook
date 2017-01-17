@@ -3,8 +3,6 @@ url = "/sample/paper/note/:search?"
 layout = "cooking"
 
 [Orders]
-[CategoryByFilename]
-[SampleMenu]
 
 [SampleList]
 search = "{{:search}}"
@@ -16,8 +14,7 @@ search = "{{:search}}"
 use Backend\Facades\BackendAuth;
 
 function onInit(){
-    //$this["text_menu"] = param("menu"); //{{:menu}}
-    // 잘안됨..
+    $this['search_text'] = $this->param('search');
 
     /*관리자 로그인이랑, 일반회원 로그인 로직이 완전 다른듯. Admin은 슈퍼유저.*/
     $user = BackendAuth::getUser();
@@ -48,14 +45,18 @@ $(document).ready(function(){
     }
 
     $(".btn_menu, .btn카테고리").click(function(){
-        location.href="/sample/paper/note/" + $.trim($(this).text());
-    })
+        var txt = $.trim($(this).text());
+        if(txt == "랜덤") txt = "";
+        location.href="/sample/paper/note/" + txt;
+    });
     $("#form검색").submit(function(){
         location.href="/sample/paper/note/" + $("#input검색창").val();
         return false;
-    })
+    });
     $(".sample_image").click(function() {
-        $(".sample_image").css("border", "");
+
+        location= "/sample/detail/" + $(this).data("sample_id");
+        /*$(".sample_image").css("border", "");
         $(this).css("border", "3px solid royalblue");
 
         $("#input_sample_code").val( $(this).data("sample_id") );
@@ -65,7 +66,7 @@ $(document).ready(function(){
         var url = '/sample-detail/' + $(this).data("sample_id"); //  + '?title=' + $(this).attr("alt") + '&src=' + $(this).attr("src")
         $('#modal예제상세').modal({
             remote : url
-        }); //remote : '/sample-detail/paper/note?title=' + $(this).attr("alt")
+        });*/ //remote : '/sample-detail/paper/note?title=' + $(this).attr("alt")
     });
     /*모달 매번 다시 부름.*/
     $(document).on('hidden.bs.modal', function (e) {
@@ -82,7 +83,11 @@ $(document).ready(function(){
     div, p {font-size:10pt;}
     .btn_menu {cursor:pointer;}
 
-    #div카테고리버튼들 .row {margin-top:10px;margin-bottom:10px;}
+    #div상단배너 {
+        border-bottom:1px dotted #ccc;margin-bottom:20px;
+        height:80px; background-repeat: no-repeat; background-size: contain;
+        background-image:url('{{ "assets/images/cook/site/타이틀배너-노트샘플.jpg"|theme }}');}
+    #div카테고리버튼들 .row {margin-bottom:10px;}
     .title카테고리버튼 {font-weight:bold;color: #7a7a7a;}
     /*눌러지는 3D btn*/
     #div카테고리버튼들 .btn:active {
@@ -90,7 +95,8 @@ $(document).ready(function(){
         -webkit-transform: translate(0px, 5px);
         box-shadow: 0px 1px 0px 0px;
     }
-    #div카테고리버튼들 .btn {font-weight:bold;color:white;}
+    #div카테고리버튼들 .btn {font-weight:bold;color:white;margin-top:5px;margin-bottom:5px;}
+
     .btn-gray {        background-color: #b9b5b9;        box-shadow: 0px 5px 0px 0px #9d9a9c;    }
     .btn-gray:hover {        background-color: #d6cdd5;    }
     .btn-blue {        background-color: #55acee;        box-shadow: 0px 5px 0px 0px #3C93D5;    }
@@ -111,107 +117,104 @@ $(document).ready(function(){
 <div class="container ">
     <div class="row">  <!--row class 할때마다 마진 15 사라짐.-->
 
-    <div class="col-sm-2" id="col-leftdesk" style="">
-        <div class="">
-            <div id="title-menu" style="padding-left:5px;margin-top:10px;">
-                <span class="fa fa-toggle-right"></span> 노트
-            </div>
-            <div id="title-left-top" style="">
-                <div class="visible-xs pull-center text-center well well-sm">
-                <a class="" href="javascript:$('#category_list').toggleClass('hidden-xs');" onclick="">
-                    카테고리 보기
-                </a>
+    <div class="col-sm-4" id="" style="">
+
+        <h5>{{ text_menu }}</h5>
+        <div class="well" >
+            <div class="row" style="margin-bottom:15px;">
+                <div class="col-xs-12 text-center">
+                        <span type="" class="" style="font-weight:bold;color:#6c6c6c;font-size:16pt;
+                            font-family:'Futura, Helvetica'">
+                            Samples
+                        </span>
                 </div>
-                <div id="category_list" class="hidden-xs">
-
-
-
-                    {% component "SampleMenu" %}
-                    <hr>
-                    {% component "CategoryByFilename" %} <!--파라미터로 디렉토리 넘기도록-->
-
-                <hr>
-                    <div class=""><span class="fa fa-chevron-right"></span> 학습플래너</div>
-                    <div class=""><span class="fa fa-chevron-right"></span> 독서기록장</div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-sm0" id="col-centerdesk" style="">
-
-    </div>
-    <div class="col-sm-10" id="col-rightdesk" style="">
-        <div class=" ">
-
-            <h5>{{ text_menu }}</h5>
-
-            <div class="well" >
-
-
-                <div id="div카테고리버튼들">
-
+                <div class="col-xs-10 col-xs-offset-1">
                     <div class="row">
-                        <div class="col-xs-2 text-right">
-                            <span type="" class="title카테고리버튼"></span>
-                        </div>
-                        <div class="col-xs-8">
-                            <div class="row">
-                                <form id="form검색">
-                                    <div class="input-group">
+                        <form id="form검색">
+                            <div class="input-group">
 
-                                    <input type="text" placeholder="검색" id="input검색창" class="text-center form-control" />
-                                    <span class="input-group-btn">
+                                <input type="text" placeholder="키워드 검색" id="input검색창" class="text-center form-control"
+                                    value="{{ search_text }}" />
+                                <span class="input-group-btn">
 
                                         <button type="submit" id="btn검색버튼" class="btn btn-default">
                                             <span class="fa fa-search"></span>
                                         </button>
                                     </span>
-                                    </div>
-
-                                </form>
-
                             </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-xs-2 text-right">
-                            <span type="" class="title카테고리버튼">제본별</span>
-                        </div>
-                        <div class="col-xs-10">
-                            <button type="button" class="btn카테고리 btn btn-xs btn-blue">중철</button>
-                            <button type="button" class="btn카테고리 btn btn-xs btn-blue">무선</button>
-                            <button type="button" class="btn카테고리 btn btn-xs btn-blue">스프링</button>
-                            <button type="button" class="btn카테고리 btn btn-xs btn-blue">양장</button>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-xs-2 text-right">
-                            <span type="" class="title카테고리버튼">용도별</span>
-                        </div>
-                        <div class="col-xs-10">
-                            <button type="button" class="btn카테고리 btn btn-xs btn-blue">학원</button>
-                            <button type="button" class="btn카테고리 btn btn-xs btn-blue">회사</button>
-                            <button type="button" class="btn카테고리 btn btn-xs btn-blue">알림장</button>
-                            <button type="button" class="btn카테고리 btn btn-xs btn-blue">연구노트</button>
-                            <button type="button" class="btn카테고리 btn btn-xs btn-blue">연습장</button>
-                        </div>
-                    </div>
-                    <!--<div class="row">
-                        <div class="col-xs-2 text-right">
-                            <span type="" class="title카테고리버튼">연령별</span>
-                        </div>
-                        <div class="col-xs-10">
-                            <button type="button" class="btn btn-xs btn-blue">유아</button>
-                            <button type="button" class="btn btn-xs btn-blue">초등생</button>
-                            <button type="button" class="btn btn-xs btn-blue">중고생</button>
-                            <button type="button" class="btn btn-xs btn-blue">대학생</button>
-                            <button type="button" class="btn btn-xs btn-blue">회사원</button>
-                            <button type="button" class="btn btn-xs btn-blue">중장년</button>
-                        </div>
-                    </div>-->
 
+                        </form>
+
+                    </div>
                 </div>
             </div>
+            <div id="div카테고리버튼들">
+
+                <div class="row">
+                    <div class="col-xs-12">
+                        <button type="button" class="btn카테고리 btn btn-xs btn-orange">홈</button>
+                        <button type="button" class="btn카테고리 btn btn-xs btn-orange">랜덤</button>
+                        <!--<button type="button" class="btn btn-xs btn-gray">인기순</button>-->
+                        <!--<button type="button" class="btn btn-xs btn-gray">표지만</button>-->
+                        <!--<button type="button" class="btn btn-xs btn-gray">내지만</button>-->
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 ">
+                        <span type="" class="title카테고리버튼">제본별</span>
+                    </div>
+                    <div class="col-xs-12">
+                        <button type="button" class="btn카테고리 btn btn-xs btn-blue">중철</button>
+                        <button type="button" class="btn카테고리 btn btn-xs btn-blue">무선</button>
+                        <button type="button" class="btn카테고리 btn btn-xs btn-blue">스프링</button>
+                        <button type="button" class="btn카테고리 btn btn-xs btn-blue">양장</button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 ">
+                        <span type="" class="title카테고리버튼">업종별</span>
+                    </div>
+                    <div class="col-xs-12">
+                        <button type="button" class="btn카테고리 btn btn-xs btn-blue">학원</button>
+                        <button type="button" class="btn카테고리 btn btn-xs btn-blue">회사</button>
+                        <button type="button" class="btn카테고리 btn btn-xs btn-blue">연구소</button>
+                        <button type="button" class="btn카테고리 btn btn-xs btn-blue">공공기관</button>
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 ">
+                        <span type="" class="title카테고리버튼">용도별</span>
+                    </div>
+                    <div class="col-xs-12">
+                        <button type="button" class="btn카테고리 btn btn-xs btn-blue">연습장</button>
+                        <button type="button" class="btn카테고리 btn btn-xs btn-blue">알림장</button>
+                        <button type="button" class="btn카테고리 btn btn-xs btn-blue">학습플래너</button>
+                        <button type="button" class="btn카테고리 btn btn-xs btn-blue">독서기록장</button>
+                        <button type="button" class="btn카테고리 btn btn-xs btn-blue">연구노트</button>
+                    </div>
+                </div>
+                <!--<div class="row">
+                    <div class="col-xs-2 text-right">
+                        <span type="" class="title카테고리버튼">연령별</span>
+                    </div>
+                    <div class="col-xs-10">
+                        <button type="button" class="btn btn-xs btn-blue">유아</button>
+                        <button type="button" class="btn btn-xs btn-blue">초등생</button>
+                        <button type="button" class="btn btn-xs btn-blue">중고생</button>
+                        <button type="button" class="btn btn-xs btn-blue">대학생</button>
+                        <button type="button" class="btn btn-xs btn-blue">회사원</button>
+                        <button type="button" class="btn btn-xs btn-blue">중장년</button>
+                    </div>
+                </div>-->
+
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-8" id="col-rightdesk" style="margin-top:20px;">
+        <div id="div상단배너" class=" " style="        ">
+
         </div>
 
         <!--row class 할때마다 마진 15 사라짐.-->
