@@ -24,8 +24,14 @@ function onStart(){
     if ( $user ) {
         $this['admin'] = true;
         array_push($navi,
-            array( '/guide/paper/note/', "(adm)")
+            array(
+                'name'=> 'A',
+                'sublinks'=> array(
+                    'oldorderss' => array( '/guide/paper/note/', "주문Page-Old"),
+                    '주문관리' => array( '/order', "주문관리"),
+                )
 
+            )
         );
     }else {
         $this['admin'] = false;

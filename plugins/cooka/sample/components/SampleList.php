@@ -53,7 +53,7 @@ class SampleList extends ComponentBase
             if ($this->property('menu')) {
                 $samples = Sample::where("menu", $this->property('menu'))->orderByRaw("RAND()"); //limit(15)->
             } else {
-                $samples = Sample::orderByRaw("RAND()"); //limit(15)->
+                $samples = Sample::limit(40)->orderByRaw("RAND()"); //limit(15)->
             }
         }
         if($this->property('count')) {
