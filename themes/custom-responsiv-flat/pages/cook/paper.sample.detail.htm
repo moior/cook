@@ -88,25 +88,17 @@ $(document).ready(function(){
         location.href="/sample/paper/note/" + $("#input검색창").val();
         return false;
     });
-    $(".sample_image").click(function() {
-        $(".sample_image").css("border", "");
-        $(this).css("border", "3px solid royalblue");
+    $(".img-sample-detail").click(function() {
+        var url = $(this).attr('src');
 
-        $("#input_sample_code").val( $(this).data("sample_id") );
-        $("#input_sample_name").val( $(this).data("sample_name") )
-            .css("border", "1px solid royalblue");
-
-        var url = '/sample-detail/' + $(this).data("sample_id"); //  + '?title=' + $(this).attr("alt") + '&src=' + $(this).attr("src")
-        $('#modal예제상세').modal({
-            remote : url
-        }); //remote : '/sample-detail/paper/note?title=' + $(this).attr("alt")
+        $('#modal예제상세').find("img").attr("src", url);
+        $('#modal예제상세').modal(); //remote : '/sample-detail/paper/note?title=' + $(this).attr("alt")
     });
     /*모달 매번 다시 부름.*/
     $(document).on('hidden.bs.modal', function (e) {
         $(e.target).removeData('bs.modal');
     });
     $(document).on('click', '.btnSelectSample', function () {
-        //  data-dismiss="modal" 으로 모달 닫은 후,
         $("#input_client_tel").focus();
     });
 
@@ -279,9 +271,11 @@ $(document).ready(function(){
 </div>
 
 <div class="modal fade" id="modal예제상세" tabindex="-1" role="dialog"><!--control-popup -->
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg ">
         <div class="modal-content">
-            <p style="margin:20px;">loading...</p>
+            <p style="margin:20px;">
+                <img src="about:blank" style="width:100%;" alt="loading..." />
+            </p>
         </div>
     </div>
 </div>
@@ -358,9 +352,9 @@ $(document).ready(function(){
                 <img src="{{ sample_thumb_path }}?skrefresh=skgood{{ "now"|date("mdHis") }}" />
                 <a href="{{sample_images[key].path }}" target="_blank">{{sample_images[key].file_name }}</a>
                 <button data-request="SampleControl::onDelAttachment"
-                        data-request-success="$('#modal예제상세').modal('hide');" class="btn btn-xs btn-default" >삭제 X</button>
+                        data-request-success="" class="btn btn-xs btn-default" >삭제 X</button>
                 <button data-request="SampleControl::onRotateAttachment"
-                        data-request-success="console.log(textStatus  );$('#modal예제상세').modal('hide');" class="btn btn-xs btn-default" >90도 회전</button>
+                        data-request-success="console.log(textStatus  );" class="btn btn-xs btn-default" >90도 회전</button>
             </div>
             {% endfor %}
             <hr>
