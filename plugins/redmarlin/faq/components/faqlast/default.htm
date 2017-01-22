@@ -1,11 +1,11 @@
 {% set faqs = __SELF__.faqs %}
-<ul>
+<ul class="ulFaqlast">
  	{% for faq in faqs %}
-		<li>
+		<li class="liFaqlast">
 			<div id="question_{{ faq.id }}">
- 				<h3>Q: {{ faq.question }} </h3>
- 				<span>{{ faq.created_at|date("d-m-Y")}}</span>
- 				<span>{{ faq.answer|md }}</span>
+ 				<a href="/faq/1/">Q: {{ faq.question }} </a>
+ 				<!--<span>{{ faq.created_at|date("d-m-Y")}}</span>-->
+ 				<!--<span>{{ faq.answer|md }}</span>-->
  			</div>
  		</li>
 	{% endfor %}

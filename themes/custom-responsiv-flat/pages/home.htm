@@ -7,11 +7,17 @@ is_hidden = 0
 [SampleList]
 count = "5"
 
+[FaqLast]
+questionNumber = 5
 ==
 <style>
     .div멤버사진 {padding:20px;position:relative;}
     .div멤버사진 img {width:100%;}
     .div소개이미지제목 {position:;margin-top:-30px;font-weight:bold;color:white;width:100%;text-align:center;}
+
+    .ulFaqlast {padding-left:0px;}
+    .liFaqlast {list-style:none;}
+    .liFaqlast h5 {font-size:1em;}
 </style>
 <section class="home-title">
     <div class="container">
@@ -56,8 +62,14 @@ count = "5"
                             시작하기
                         </a>
                         <div class="text-center" style="margin-top:30px;font-size:11pt;">
-                        <a href="tel:1661-5521">문의 : 1661-5521</a>
+                            <a href="tel:1661-5521">문의 : 1661-5521</a>
                         </div>
+
+                        <div>
+                            <h6>Hot Q&A</h6>
+                            {% component 'FaqLast' %}
+                        </div>
+
                     </div>
     
                 </div>
