@@ -1,0 +1,26 @@
+# ===================================
+#  List Column Definitions
+# ===================================
+
+columns:
+    id:
+        label: ID
+        searchable: true
+    question: Question
+    answer: Answer
+    category_id: 
+        label: Category
+        type: text
+        searchable: true
+        sortable: true
+        relation: category
+        select: title
+    is_approved:
+         label: Public
+         type: Switch
+    is_featured:
+         label: Featured
+         type: Switch
+    reply_email:
+         label: N. Email
+    created_at: Date

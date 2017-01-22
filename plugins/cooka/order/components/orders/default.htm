@@ -83,7 +83,11 @@
 
             </td>
             <td>
-                {{ item.fee_offer|number_format }}
+                {% if item.fee_offer == 0 %}
+                    미확정
+                {% else %}
+                    {{ item.fee_offer|number_format }}
+                {% endif %}
             </td>
 
 

@@ -1,0 +1,16 @@
+1.0.7: Added Translation support by MilosStanic
+1.0.6: Patch by kubis, show Category name istead of Category ID in backend
+1.0.5: Updated to work with October satble
+1.0.4: Fix for issue #3 spelling mistake in new Question admin link
+1.0.3: Fix for issue #2 No hint path defined for [faq]
+1.0.2: Redirect route fix for sorting questions
+1.0.1: 
+- Added question sorting
+- Fixed menu highlighting
+- Controller naming and backend url corrected
+- sorting_questions_upgrade.php
+
+1.0.0: 
+- Initialize plugin
+- create_questions_table.php
+- create_faqcategory_table.php
