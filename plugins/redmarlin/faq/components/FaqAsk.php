@@ -2,7 +2,7 @@
 
 use Cms\Classes\ComponentBase;
 use RedMarlin\Faq\Models\Question;
-use System\Models\MailSettings as MailSettings;
+use System\Models\MailSetting as MailSetting;
 use Flash;
 use Event;
 use Request;
@@ -64,10 +64,10 @@ class FaqAsk extends ComponentBase
         **/
         $params = compact('question');
         Mail::send('redmarlin.faq::mail.asked',$params, function ($message) {
-            $message->to(MailSettings::get('sender_email'));
+            $message->to(MailSetting::get('sender_email'));
             $email = post('email');
         });
-        Flash::success('Your question was received correctly.');
+        Flash::success('질문이 전송되었습니다. 곧 연락드리겠습니다. :-)');
     }
 }
 
