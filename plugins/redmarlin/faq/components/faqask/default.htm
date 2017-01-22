@@ -2,8 +2,8 @@
         {% flash %}
             <div class="alert alert-{{ type }}">{{ message }}</div>
         {% endflash %}
-        <textarea name="question" rows="3">Question</textarea> 
-        <input type="text" value="Email" name="email">
-        <input type="submit" value="Send"/>
+        <textarea name="question" rows="3" class="form-control" placeholder="Question"></textarea>
+        <input type="text" value="" name="email" class="form-control" placeholder="E-mail" />
+        <input type="submit" value="입력" class="form-control" />
     {{ form_close() }}
 

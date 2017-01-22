@@ -1,0 +1,144 @@
+title = "주문 내역"
+url = "/faq/category/:catid?"
+
+layout = "cooking"
+is_hidden = 0
+
+[account]
+redirect = "home"
+paramCode = "code"
+
+[session]
+
+[FaqFeatured]
+featuredNumber = 10
+[FaqAsk]
+
+[FaqList]
+categoryId = {{ :catid }}
+==
+<?php
+use Backend\Facades\BackendAuth;
+
+function onInit(){
+    //$this["text_menu"] = param("menu"); //{{:menu}}
+    // 잘안됨..
+
+    /*관리자 로그인이랑, 일반회원 로그인 로직이 완전 다른듯. Admin은 슈퍼유저.*/
+    $user = BackendAuth::getUser();
+    if ($user && $user->hasAccess('cooka.order.*')) {
+        $this['admin'] = true;
+
+    }else {
+        $this['admin'] = false;
+    }
+
+}
+?>
+==
+<script>
+
+$(document).ready(function(){
+
+    var isMobile = true;
+    if($(window).innerWidth() >= 760) {
+        isMobile = false;
+    }
+    /*따라다니는 메뉴*/
+    if(isMobile == false){
+    }
+
+
+
+})
+</script>
+<style>
+    div, p {font-size:10pt;}
+    #faq-question-column input {margin:10px auto;}
+</style>
+
+
+
+<div class="container">
+    <br>
+    <div class="row">
+
+    <form
+        data-request="Orders::onSaveOrder"
+        data-request-success="alert('접수 완료되었습니다. 확인 후 연락드리겠습니다. :-)')"
+        data-request-redirect="/my">
+        <!--data-request-update="'{{ __SELF__ }}::list': '#result'"-->
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Q & A</h3>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+
+
+                    <div  style=" margin-bottom:10px;" class="col-sm-8">
+
+
+                        <div>
+                            <h2 class="green-sec center">{{ category }}</h2>
+                            <p>Please feel free to browse Frequently asked questions in this</p>
+                            {% set faqs = FaqList.faqs %}
+                            <ul>
+                                {% for faq in faqs %}
+                                <li>
+                                    <div id="question_{{ faq.id }}">
+                                        <h3>Q: {{ faq.question }}</h3>
+                                        <span>{{ faq.created_at|date("d-m-Y")}}</span>
+                                        <span>{{ faq.answer|md }} </span>
+                                    </div>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+
+                    </div>
+
+                    <div  style="border:0px solid gray;" class="col-sm-4">
+                        <h4>Hot Q&A</h4>
+                        <div>
+                            {% component 'FaqFeatured' %}
+                        </div>
+
+
+                    </div>
+                </div>
+
+            </div>
+            <div class="panel-footer">
+                <div id=""  class="row">
+                    <div id=""  class="col-sm-8">
+                        <div id="faq-question-column">
+                            <h5>무엇이든 물어보세요 </h5>
+                            {% component 'FaqAsk' %}
+                        </div>
+                    </div>
+
+                    <div  style="" class="col-sm-4">
+                        <p>
+                            ① 제작관련 문의 환영합니다.
+                            <br>
+                            ② 노트제작과정 전반을 배우실 분은 "교습" 신청해주세요.
+                        </p>
+                        <p class="well well-sm text-center">
+                            문의 : 010-4775-0852 <br/>
+                            회계팀 : 02-1661-5521 <br/>
+                            디자인팀 : 02-2038-2438
+
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <ul class="list-group" id="result">
+            </ul>
+
+        </div>
+    </form>
+    </div>
+
+</div>
+
