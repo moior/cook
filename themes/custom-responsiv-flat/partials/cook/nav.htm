@@ -19,9 +19,9 @@ function onStart(){
         'blog'=> array(
             'name'=> '게시판',
             'sublinks'=> array(
+                'faq' => array('/faq/category/1', '질문'),
                 'blog' => array('/blog', '블로그'),
-                'faq' => array('/faq/category/1', '질의응답'),
-                
+
             ),
         ),
     );
@@ -69,7 +69,7 @@ function onStart(){
 <li class="{{ code == currentPage ? 'active' }} {{ link.sublinks ? 'dropdown' }}">
     <!--href="{{ link.sublinks ? '#' : (link.page ?: link[0])|page }}"-->
 
-        <!--SK-->
+    <!--SK-->
     <a style="font-size:9pt;"
 
 

@@ -32,10 +32,10 @@ class FaqFeatured extends ComponentBase
     {
         $this->faqsfeatured = Question::whereIsApproved('1')
                                 ->whereIsFeatured('1')
-                                ->orderBy('id', 'desc')
+                                ->orderBy('sort_order', 'asc')
                                 ->take($this->property['featuredNumber'])
                                 ->get();
-       
+
     }
 
 

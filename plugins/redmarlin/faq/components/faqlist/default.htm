@@ -3,9 +3,9 @@
  	{% for faq in faqs %}
 		<li>
 			<div id="question_{{ faq.id }}">
-				<h3>Q: {{ faq.question }}</h3>
+				<h5>{{ faq.question }}</h5>
 				<span>{{ faq.answer|md }} </span>
-				<span>{{ faq.created_at|date("d-m-Y")}}</span>
+				<div class="text-right">{{ faq.created_at|date("d-m-Y")}}</div>
 			</div>
  		</li>
  	{% endfor %}
