@@ -150,7 +150,7 @@ $(document).ready(function(){
         margin-top:10px;
     }
     #area주문서_안쪽 {
-        padding:5px 15px 10px  15px;background-color:white;
+        padding:5px 15px 10px  15px;background-color:white;opacity:0.75;
     }
     #area견적서 {padding:0px;border:1px solid gray;border-bottom:1px solid gray;}
     .cook-step {text-align:left;clear:both;display:block;padding:5px;border-bottom:1px dotted gray; ;}
@@ -299,6 +299,7 @@ $(document).ready(function(){
                 <div class="col-xs-9">
                     <select name="수량" id="select_amount" class=" select_part input-sm form-control" >
                         <option value="">수량을 선택해주세요</option>
+                        <option value="100">100권 (실제 가격 별도문의)</option>
                         <option value="소량">1천권 미만:기성품에 박작업</option>
 
                         {% for i in 2..10 %}
