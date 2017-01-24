@@ -53,9 +53,9 @@ function onCalcFee(){
     function setImageUrl(){
         var sel = $("#select-제본").find("option:selected").val();
         if( sel == "무선" ){
-            $("#leftimg-1").css("background-image", "url({{ 'assets/images/cook/paper/note/jebon/샘플-무선제본2.jpg'|theme }})");
-            $("#leftimg-2").css("background-image", "url({{ 'assets/images/cook/paper/note/jebon/샘플-떡제본.jpg'|theme }})");
-            $("#leftimg-3").css("background-image", "url({{ 'assets/images/cook/paper/note/jebon/단면도-무선제본2.jpg'|theme }})");
+            $("#leftimg-1").css("background-image", "url({{ 'assets/images/cook/site/제작-제본-무선-1.jpg'|theme }})");
+            $("#leftimg-2").css("background-image", "url({{ 'assets/images/cook/site/제작-제본-무선-2.jpg'|theme }})");
+            $("#leftimg-3").css("background-image", "url({{ 'assets/images/cook/site/제작-제본-무선-3.jpg'|theme }})");
         }else if( sel == "중철" ){
             $("#leftimg-1").css("background-image", "url({{ 'assets/images/cook/paper/note/jebon/샘플-중철제본2.jpg'|theme }})");
             $("#leftimg-2").css("background-image", "url({{ 'assets/images/cook/paper/note/jebon/샘플-중철제본.jpg'|theme }})");
@@ -139,12 +139,19 @@ $(document).ready(function(){
     }
 })
 </script>
-
+<link href='http://fonts.googleapis.com/earlyaccess/nanumbrushscript.css' rel='stylesheet' type='text/css' />
 <style>
 
     #cookdesk-center {border-left:0px solid gray;border-right:0px solid gray;min-height:100px;}
     #area이미지 {padding:5px;}
-    #area주문서 {padding:5px;border-left:0px solid gray;}
+    #area주문서 {
+        padding:5px 10px 5px 10px;
+        border-left:0px solid gray;
+        margin-top:10px;
+    }
+    #area주문서_안쪽 {
+        padding:5px 15px 10px  15px;background-color:white;
+    }
     #area견적서 {padding:0px;border:1px solid gray;border-bottom:1px solid gray;}
     .cook-step {text-align:left;clear:both;display:block;padding:5px;border-bottom:1px dotted gray; ;}
     .cook-step:hover {background-color:#eee;cursor:pointer;}
@@ -171,14 +178,31 @@ $(document).ready(function(){
         border:1px solid gray;
         background-size:cover;
     }
-    .step_title {border-bottom:2px solid #666;padding:4px;margin-bottom:10px;color:royalblue}
+    .step_title {border-bottom:2px solid #308fc6;padding:4px;margin-bottom:10px;}
 
     .step_content {font-size:11pt;}
-    .step_content_title {text-align:center;padding:8px 0;font-weight:bold;color: #909090;}
-    .step_content_row {margin-top:0px;}
+    .step_content_title {text-align:center;padding:3px 0;font-weight:bold;color: #909090;}
+    .step_content_row {margin-top:0px;margin-bottom:3px;}
 
+    #bodyWrap {
+        background-image:url('{{ "assets/images/cook/site/bg그레이노트.jpg?ㅁ=2"|theme }}');
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position:right top;
+        background-size:auto 100% ;
+    }
+
+    #area주문서 div {
+        font-family:'Nanum Gothic';color: #505050;font-size:20px;font-weight: bold;
+    }
+    #area주문서 div.step_content_title {
+        font-size:14px;
+    }
+    .form-control {padding:0px 12px;height:28px;line-height: 28px;}
+    select.input-sm {height:28px; height:28px; }
 </style>
 
+<div id="bodyWrap">
 <div class="container">
 
     <form id="form-currentnote" action="/cook/paper/note/order" method="post">
@@ -239,28 +263,29 @@ $(document).ready(function(){
     <div class="col-sm-5" id="area이미지" style="">
         <div class="leftimg" style="margin-top:10px;">
             <div class="row">
-                <div class="col-sm-12 col-xs-4">
+                <div class="col-sm-12 col-xs-12">
                     <div id="leftimg-1">
 
                     </div>
                 </div>
 
-                <div class="col-sm-6 col-xs-4">
+                <div class="col-sm-6 col-xs-6" style="padding-right:0px;">
                     <div id="leftimg-2"></div>
                 </div>
-                <div class="col-sm-6 col-xs-4">
+                <div class="col-sm-6 col-xs-6" style="padding-left:10px;">
                     <div id="leftimg-3"></div>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="col-sm-5" id="area주문서" style="margin-top:10px;padding-right:10px;">
+    <div class="col-sm-5" id="area주문서">
+        <div id="area주문서_안쪽">
 
-        <div id="title-cate" style="padding-left:5px;">
+        <!--<div id="title-cate" style="padding-left:5px;">
             <span class="fa fa-toggle-right"></span> 주문서
 
-        </div>
+        </div>-->
 
         <div class="step_title" style="">
             제본방식/ 사이즈
@@ -272,7 +297,7 @@ $(document).ready(function(){
                     <div class="step_content_title">수량</div>
                 </div>
                 <div class="col-xs-9">
-                    <select name="수량" id="select_amount" class="select_part input-sm form-control" >
+                    <select name="수량" id="select_amount" class=" select_part input-sm form-control" >
                         <option value="">수량을 선택해주세요</option>
                         <option value="소량">1천권 미만:기성품에 박작업</option>
 
@@ -637,7 +662,7 @@ $(document).ready(function(){
         </div>
 
 
-
+        </div>
     </div>
 
 
@@ -677,7 +702,7 @@ $(document).ready(function(){
     </div>
 
 </div>
-
+</div>
 
 
 
@@ -700,3 +725,4 @@ $(document).ready(function(){
         </div>
     </div>
 </div>
+
