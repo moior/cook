@@ -2,7 +2,8 @@
 <div>
     <ul>
         {% for faqfeatured in faqsfeatured %}
-      		<li><a href="/faq/{{ faqfeatured.id }}#question-{{ faqfeatured.id }}">{{ faqfeatured.question }}</a></li>
+      		<!--<li><a href="/faq/{{ faqfeatured.id }}#question-{{ faqfeatured.id }}">{{ faqfeatured.question }}</a></li>-->
+            <li><a href="/faq/cate/1/{{ faqfeatured.id }}">{{ faqfeatured.question }}</a></li>
         {% endfor %}
     </ul>
               

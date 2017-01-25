@@ -1,5 +1,5 @@
 title = "주문 내역"
-url = "/faq/:qid?"
+url = "/faq/cate/:category/:qid?"
 
 layout = "cooking"
 is_hidden = 0
@@ -15,14 +15,14 @@ featuredNumber = 10
 [FaqAsk]
 
 [FaqList]
-categoryId = 1
+categoryId = {{:category}}
 ==
 <?php
 use Backend\Facades\BackendAuth;
-
 function onInit(){
     //$this["text_menu"] = param("menu"); //{{:menu}}
     // 잘안됨..
+    $this['qid'] = $this->param('qid');
 
     /*관리자 로그인이랑, 일반회원 로그인 로직이 완전 다른듯. Admin은 슈퍼유저.*/
     $user = BackendAuth::getUser();
@@ -48,6 +48,14 @@ $(document).ready(function(){
     if(isMobile == false){
     }
 
+    $(".question_title").click(function(){
+        $(this).next(".content").toggle();
+    });
+    {% if qid %}
+        $("#question-{{ qid }}").find(".question_title").click();
+    {% endif %}
+
+
 
 
 })
@@ -64,7 +72,9 @@ $(document).ready(function(){
     <div class="row">
         <div class="panel panel-default">
             <div class="panel-heading clearfix">
-                <h3 class="panel-title pull-left">Q & A</h3>
+                <div class="pull-left" style="font-size:20px;font-weight:bold;">
+                    {{ category }} Q & A
+                </div>
                 <a href="#a질문입력영역" class="pull-right btn btn-sm btn-default">
                     <span class="fa fa-pencil"></span> 쓰기
                 </a>
@@ -73,16 +83,18 @@ $(document).ready(function(){
                 <div class="row">
                     <div  style=" margin-bottom:10px;" class="col-sm-8">
                         <div>
-                            <h5 class="green-sec center">{{ category }}</h5>
+                            <h5 class=""></h5>
 
                             {% set faqs = FaqList.faqs %}
                             <ul>
                                 {% for faq in faqs %}
                                 <li>
-                                    <div id="question_{{ faq.id }}">
-                                        <h5>{{ faq.question }}</h5>
-                                        <span>{{ faq.answer|md }} </span>
-                                        <span>{{ faq.created_at|date("Y-m-d")}}</span>
+                                    <div id="question-{{ faq.id }}">
+                                        <h5 class="question_title">{{ faq.question }}</h5>
+                                        <div class="content" style="display:none;">
+                                            <span>{{ faq.answer|md }} </span>
+                                            <span>{{ faq.created_at|date("Y-m-d")}}</span>
+                                        </div>
                                     </div>
                                 </li>
                                 {% endfor %}
