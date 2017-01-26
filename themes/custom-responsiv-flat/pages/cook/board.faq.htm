@@ -65,7 +65,7 @@ $(document).ready(function(){
     #faq-question-column input {margin:10px auto;}
 
     .question_ul {list-style: none; padding-left:0px;}
-    .question_title { padding:5px; cursor:pointer;  border-bottom:2px solid #e4cd55;}
+    .question_title { padding:5px; cursor:pointer;  border-bottom:2px solid #e7d87d;}
     .question_title:hover { border-left:5px solid gold; }
 
     .question_ul .content {padding:0 0 20px 10px;}
@@ -112,11 +112,17 @@ $(document).ready(function(){
 
                     </div>
 
-                    <div  style="border:0px solid gray;" class="col-sm-4">
+                    <div style="border-left:1px dotted #aaaaaa;" class="col-sm-4">
                         <h4>Hot Q&A</h4>
                         <div>
                             {% component 'FaqFeatured' %}
                         </div>
+
+                        <div class="col-xs-5 col-xs-offset-3" style="padding:20px 0">
+                            <img style="width:100%;" src="{{ "assets/images/cook/site/요리사-케니.jpg"|theme }}" class="img-circle" /><!-- img-thumbnail-->
+                            <div class="text-center">Main Chef</div>
+                        </div>
+
 
 
                     </div>
