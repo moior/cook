@@ -6,7 +6,7 @@
     {{ posts.제본 }}
 {% endfor%}-->
 <style>
-    #div견적서html {padding:10px 0px;font-size:9pt;}
+    #div견적서html {background-color:white;padding:10px 0px;font-size:9pt;}
     #number_payment {color:tomato;font-size:1.5em;font-weight:bold;}
     .step-final-title {font-weight:bold;font-size:1.1em;}
     .step-final-content {text-align:left;overflow-x:hidden;}
@@ -76,9 +76,11 @@
                     <div>라운딩 : {{ 라운딩비|number_format() }} 원</div>
                 {% endif %}
                 {% if 포장비 %}
-                    <div>포장비 : {{ 포장비|number_format() }} 원</div>
+                <div>포장비 : {{ 포장비|number_format() }} 원</div>
                 {% endif %}
-                <div>디자인 : {{ (디자인_표지 +  디자인_삽지 + 디자인_내지)|number_format() }} 원</div>
+
+                <div>디자인 : {{ 디자인비|number_format() }} 원</div>
+                <div style="font-size:0.7em;">배송비 별도 (약5만원)</div>
             </div>
         </div>
      </div>

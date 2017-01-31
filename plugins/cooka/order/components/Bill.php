@@ -125,6 +125,7 @@ class Bill extends ComponentBase
         $this->page["디자인_표지"] = "111";
         $this->page["디자인_삽지"] = "2";
         $this->page["디자인_내지"] = "3";
+        $this->page["디자인비"] = $fee->feeDesign("real");;
 
         $this->page['필요R수_표지'] = round($fee->numNeededR("표지"), 2);
         $this->page['필요R수_삽지'] = round($fee->numNeededR("삽지"), 2);
