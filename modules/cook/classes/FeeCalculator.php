@@ -105,6 +105,8 @@ class FeeCalculator
             '스노우 300g' => 99000,
 
             '크라프트' => 250000,
+            '크라프트 180g' => 218000,
+            '크라프트 220g' => 218000,
             '크라프트 250g' => 251000,
             '크라프트 300g' => 286000,
             '크라프트 410g' => 382000,
@@ -156,6 +158,8 @@ class FeeCalculator
             '스노우 300g' => 143100,
 
             '크라프트' => 250000,
+            '크라프트 180g' => 218000,
+            '크라프트 220g' => 218000,
             '크라프트 250g' => 251000,
             '크라프트 300g' => 286000,
             '크라프트 410g' => 382000,
@@ -286,7 +290,7 @@ class FeeCalculator
             if( $this->userSetting['크기'][0] == "A" ) $필요한용지 = "국전";
             else if( $this->userSetting['크기'][0] == "B" ) $필요한용지 = "46절";
             //$용지비 = $this->quantity * 2 * $this->feePaper1page($this->userSetting["표지-용지"]); // R수(연수) 상관없이 실제 들어가는 종이비.
-            $용지비 = ceil($this->numNeededR("표지"))
+            $용지비 = /*ceil*/($this->numNeededR("표지"))
                 * $this->danka["용지-".$필요한용지][$this->userSetting["표지-용지"]." ".$this->userSetting["표지-평량"]];
         }
         return $용지비 ;
