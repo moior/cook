@@ -88,6 +88,7 @@ function onStart()
         $this["라벨작업비"] = $fee->feeLarvelStick("real");
 
         $this["디자인비"] = $fee->feeDesign("real");
+        $this["노임비"] = $fee->feeWorking("real");
 
         $this['필요R수_표지'] = round($fee->numNeededR("표지"), 2);
         $this['필요R수_삽지'] = round($fee->numNeededR("삽지"), 2);
@@ -108,7 +109,7 @@ function onStart()
             $this["내지_종이값"] +    $this["내지_인쇄비"] +    $this["내지_판비"] +
 
             $this["제본비"] +    $this["라운딩비"] +    $this["포장비"] +   $this["라벨작업비"] +
-            $this["디자인비"]  ;
+            $this["디자인비"]  + $this["노임비"];
         //$final = FeeCalculator::feeNote(); // + 제단비() + 제본비() + 포장비() + 배송비();
         $this['합계금액'] = number_format($final);
     }
@@ -119,7 +120,7 @@ function onStart()
 <script>
 $(function(){
     /*계산서 보이면서 깜빡거리도록*/
-    $("#div_payment").css('backgroundColor', 'gold')
+    $("#div견적서html").css('backgroundColor', 'gold')
         .animate({backgroundColor: '#FFFFFF'}, '2000', 'linear');
 })
 </script>

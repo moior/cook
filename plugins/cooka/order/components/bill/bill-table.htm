@@ -8,7 +8,7 @@
 <style>
     #div견적서html {background-color:white;padding:10px 0px;font-size:9pt;}
     #number_payment {color:tomato;font-size:1.5em;font-weight:bold;}
-    .step-final-title {font-weight:bold;font-size:1.1em;}
+    .step-final-title {font-weight:bold;font-size:1.1em;line-height:130%;}
     .step-final-content {text-align:left;overflow-x:hidden;}
     .step-final-content2 {border-bottom:1px dotted gray;}
     .bill-row {padding-left:5px;}
@@ -80,17 +80,24 @@
                 {% endif %}
 
                 <div>디자인 : {{ 디자인비|number_format() }} 원</div>
+                <div>관리비 : {{ 노임비|number_format() }} 원</div>
+
                 <div style="font-size:0.7em;">배송비 별도 (약5만원)</div>
             </div>
         </div>
      </div>
 
 
-    <p class="text-center">
-        <span id="number_payment">{{ 합계금액|number_format() }}</span>원
-    </p>
-    <!--<p>
-        <span id="" class="btn btn-default">인쇄하기</span>
-    </p>-->
+    <div class="text-center">
+        <p>
+            <span id="number_payment">{{ 합계금액|number_format() }}</span>원
+        </p>
+        <div style="font-size:0.7em;margin-top:-20px;text-align:center;">VAT별도</div>
 
+    </p>
+<!--
+    <p>
+        <span id="" class="btn btn-default">인쇄하기</span>
+    </p>
+-->
 </div>
