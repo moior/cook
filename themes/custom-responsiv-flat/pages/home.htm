@@ -4,11 +4,19 @@ layout = "cooking"
 is_hidden = 0
 
 [session]
+
+[Orders]
+
 [SampleList]
 count = "5"
 
 [FaqLast]
 questionNumber = 5
+==
+<?php
+function onInit(){
+}
+?>
 ==
 <style>
     .div멤버사진 {padding:20px;position:relative;}
@@ -19,6 +27,14 @@ questionNumber = 5
     .liFaqlast {list-style:none;}
     .liFaqlast h5 {font-size:1em;}
 </style>
+<script>
+    function beforeFormSubmit() { /*폼 넘기기 전 실행*/
+        //폼체크
+    }
+    $(document).ready(function(){
+    });
+</script>
+
 <section class="home-title">
     <div class="container">
         <div class="row">
@@ -58,9 +74,58 @@ questionNumber = 5
 
                     <div class="col-xs-12">
 
-                        <a href="/cook/paper/note" class="btn btn-block btn-info">
-                            시작하기
-                        </a>
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <a href="/sample/paper/note" class="btn btn-block btn-info">
+                                    <span class="fa fa-database"> 샘플 보기</span>
+                                </a>
+
+                            </div>
+                            <div class="col-xs-6">
+                                <a href="/cook/paper/note" class="btn btn-block btn-info">
+                                    <span class="fa fa-cutlery"> 맞춤 제작</span>
+                                </a>
+                            </div>
+                        </div>
+<!--
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <div style="font-size:13pt;font-weight:bold;color:royalblue;">빠른 문의</div>
+                                <div style="font-size:9pt;">
+                                    * 연락처
+                                    * 이메일
+                                    * 제품종류 (용도)
+                                    * 제작수량
+                                    기타 구체적으로
+                                </div>
+                                <div>1시간 내에 문자와 이메일로 퀵견적 드립니다.</div>
+
+                            </div>
+
+                            <div class="col-xs-6">
+
+                                {{ form_ajax('Orders::onSaveOrder',{
+                                    success:"alert('접수되었습니다. 속히 연락드리겠습니다. :-)')",
+                                    redirect:"/",
+                                }) }}
+
+                                <input type="hidden" name="title" value="퀵 견적요청" />
+                                <input type="hidden" name="client_name" value="퀵고객" />
+                                <input type="text" name="client_tel" value="" placeholder="[필수] 연락처 (문자가능한 휴대폰)"  class="form-control"/>
+                                <input type="text" name="client_email" value="" placeholder="이메일"  class="form-control"/>
+                                <input type="text" id="input기타요청사항" class="form-control" value="" name="client_comment"
+                                       placeholder="기타 요청사항">
+
+                                <textarea name="client_comment" placeholder="기타 요청사항" class="form-control"></textarea>
+                                <button type="submit" onclick="beforeFormSubmit();" class="btn btn btn-primary" data-attach-loading>
+                                    <span class="fa fa-database"> 견적요청
+                                </button>
+
+                                {{ form_close() }}
+
+                            </div>
+                        </div>
+-->
 
 
                         <div class="well well-sm" style="font-size:0.8em;color:gray;margin-top:15px;">
@@ -105,9 +170,11 @@ questionNumber = 5
                 background-repeat:no-repeat;background-image:url('{{ "assets/images/cook/site/타이틀배너-스틱증정이벤트.jpg?a=2"|theme }}');}">
 
                 </div>
-            <div style="color:#304da6;font-size:0.8em;text-align:center;font-weight:bold;">
-                라벨링노트는 오직 노트요리사에서만!
-            </div>
+            
+                <div style="color:#304da6;font-size:0.8em;text-align:center;font-weight:bold;">
+                    라벨링노트는 오직 노트요리사에서만!
+                </div>
+            
                 <div class="player">
                     <iframe width="560" height="315" src="https://www.youtube.com/embed/V-gkKnpwARw" frameborder="0" allowfullscreen></iframe>
                     <!--<iframe src="http://player.vimeo.com/video/29568236?color=3498db" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>-->
