@@ -40,7 +40,12 @@ function onInit(){
 </style>
 <script>
     function beforeFormSubmit() { /*폼 넘기기 전 실행*/
-        //폼체크
+        if(  !$("#input퀵연락처").val() ) {
+            alert('연락처를 적어 주세요');
+            $("#input퀵연락처").focus();
+        } else {
+            $("#form퀵견적").submit();
+        }
     }
     $(document).ready(function(){
     });
@@ -104,7 +109,7 @@ function onInit(){
 
                             {% component 'FaqLast' %}
 
-                            <div class="text-right" style="margin-top:20px;font-size:11pt;">
+                            <div class="text-right" style="margin-top:20px;margin-right:20px;font-size:11pt;">
                                 <a href="tel:1661-5521">문의 : 1661-5521</a>
                             </div>
                         </div>
@@ -150,25 +155,27 @@ function onInit(){
                     <div class="col-xs-7" id="div퀵견적">
 
                         {{ form_ajax('Orders::onSaveOrder',{
-                        success:"alert('접수되었습니다. 속히 연락드리겠습니다. :-)')",
+                        id: "form퀵견적",
+                        success :"alert('접수되었습니다. 속히 연락드리겠습니다. :-)')",
                         redirect:"/",
                         }) }}
 
                         <input type="hidden" name="title" value="퀵 견적요청" />
                         <input type="hidden" name="client_name" value="퀵고객" />
-                        <input type="text" name="client_tel" value="" placeholder="휴대폰"  class="form-control"/>
+                        <input type="text" name="client_tel" value="" placeholder="휴대폰"  class="form-control" id="input퀵연락처"/>
                         <input type="text" name="client_email" value="" placeholder="이메일"  class="form-control"/>
                         <!--<input type="text" class="form-control" value="" name="sample_id"
                                placeholder="가장 비슷한 샘플">-->
 
                         <textarea name="client_comment" placeholder="기타 요청사항" class="form-control"
                                   style="height:170px;">
-제품용도 :&nbsp;
+제품용도 : (영어학원홍보용 등)&nbsp;
 
 제작수량 :&nbsp;
+
 </textarea>
-                        <button type="submit" onclick="beforeFormSubmit();" class="pull-right btn btn btn-primary" data-attach-loading>
-                                    <span class="fa fa-pencil"> 견적요청
+                        <button type="button" onclick="return beforeFormSubmit();" class="pull-right btn btn btn-primary" data-attach-loading>
+                                <span class="fa fa-pencil"> 견적요청
                         </button>
 
                         {{ form_close() }}
@@ -193,7 +200,8 @@ function onInit(){
                 </div>
             </div>
             <div class="col-sm-4" style="">
-                <div style="text-align:center;background-color: rgba(255, 255, 255, 0.3);margin-top:10px;margin-bottom:10px;padding:10px;color:#666666;height:150px;border:1px solid gray;font-size:0.8em;">
+                <div style="text-align:center;
+                background-image: url({{ 'assets/images/lines.png'|theme }});margin-top:10px;margin-bottom:10px;padding:10px;color:#666666;height:150px;border:1px solid gray;font-size:0.8em;">
                     <span style="font-size:1.2em;">02-1661-5521</span><br>
                     경기도 일산동구 장항로 40, 라벨링노트사<br>
                     서울 강남 테헤란로 207, 7층<br>
