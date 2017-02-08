@@ -97,26 +97,24 @@ $(document).ready(function(){
         showDetailPayment(); /*가격 계산 paper.note.htm */
     });
 
-    var previous용지;
-    $("#select-표지-용지").focus(function() {
-        previousaa = $(this).val();
-    }).change(function() {
-        if( $(this).val() == '합지' || $(this).val() == '특수지'){
-            $("#select-표지-평량").val('');
-        }else if(previousaa== '합지' || previousaa == '특수지') {
-            $("#select-표지-평량").val('250g');
-        }
-        previousaa = $(this).val();
-    });
-    $(".select_part").change(function(){
-        setFormInputData();
-        setAreaDisplay();
-        showDetailPayment();
-    });
     $("#select-제본").change(function() {
         setImageUrl();
         if( $(this).val() == "스프링" ) $("#div합지").show();
         else $("#div합지").hide();
+        if( $(this).val() == "양장" ) {
+            $("#select-표지-용지").val('스노우').prop('disabled', true);
+            $("#select-표지-평량").val('180g').prop('disabled', true);
+        } else{
+            $("#select-표지-용지").prop('disabled', false);
+            $("#select-표지-평량").prop('disabled', false);
+        }
+
+    });
+
+    $(".select_part").change(function(){
+        setFormInputData();
+        setAreaDisplay();
+        showDetailPayment();
     });
 
     /*따라다니는 메뉴*/
@@ -152,7 +150,7 @@ $(document).ready(function(){
     }
 })
 </script>
-<link href='http://fonts.googleapis.com/earlyaccess/nanumbrushscript.css' rel='stylesheet' type='text/css' />
+
 <style>
 
     #cookdesk-center {border-left:0px solid gray;border-right:0px solid gray;min-height:100px;}
@@ -319,14 +317,15 @@ $(document).ready(function(){
                         <option value="400">400권</option>
                         <option value="500">500권</option>
                         <option value="600">600권</option>
+                        <option value="700">700권</option>
                         <option value="800">800권</option>
+                        <option value="900">900권</option>
+                        <option value="1000">1000권</option>
+                        <option value="1100">1100권</option>
+                        <option value="1200">1200권</option>
 
-                        {% for i in 2..10 %}
-                        {% if i == 2  %}
-                            <option value="{{ i * 500 }}" >{{ i * 500}}권</option>
-                        {% else %}
+                        {% for i in 3..10 %}
                             <option value="{{ i * 500 }}">{{ i * 500}}권</option>
-                        {% endif %}
                         {% endfor %}
                         {% for i in 6..15 %}
                             <option value="{{ i * 1000 }}">{{ i * 1000}}권</option>

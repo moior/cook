@@ -1,0 +1,26 @@
+title = "노트 주문제작"
+url = "/cook/paper/note2"
+layout = "test"
+
+==
+<?php
+function onStart()
+{
+}
+?>
+==
+
+<script>
+
+    $(document).ready(function() {
+        $("#select_amount").select2();
+
+    });
+</script>
+
+<select name="수량" id="select_amount" class="" >
+    <option value="100">100권</option>
+    <option value="200">200권</option>
+    <option value="300">300권</option>
+    <option value="400">400권</option>
+</select>
