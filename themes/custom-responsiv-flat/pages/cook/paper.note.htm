@@ -97,6 +97,18 @@ $(document).ready(function(){
         showDetailPayment(); /*가격 계산 paper.note.htm */
     });
 
+    var previous용지;
+    $("#select-표지-용지").focus(function() {
+        previousaa = $(this).val();
+
+    }).change(function() {
+        if( $(this).val() == '합지' || $(this).val() == '특수지'){
+            $("#select-표지-평량").val('');
+        }else if(previousaa== '합지' || previousaa == '특수지') {
+            $("#select-표지-평량").val('250g');
+        }
+        previousaa = $(this).val();
+    });
     $(".select_part").change(function(){
         setFormInputData();
         setAreaDisplay();
@@ -374,6 +386,7 @@ $(document).ready(function(){
                                     <option value="스노우">스노우</option>
                                     <option value="모조">모조  </option>
                                     <option value="크라프트">크라프트  </option>
+                                    <option value="합지">합지</option>
                                     <option value="특수지">특수지</option>
                                 </select>
                             </div>
@@ -382,6 +395,7 @@ $(document).ready(function(){
                                     <option value="180g">180g</option>
                                     <option value="250g">250g</option>
                                     <option value="300g">300g</option>
+                                    <option value=""></option>
                                 </select>
                             </div>
                         </div>
