@@ -100,7 +100,6 @@ $(document).ready(function(){
     var previous용지;
     $("#select-표지-용지").focus(function() {
         previousaa = $(this).val();
-
     }).change(function() {
         if( $(this).val() == '합지' || $(this).val() == '특수지'){
             $("#select-표지-평량").val('');
@@ -116,6 +115,8 @@ $(document).ready(function(){
     });
     $("#select-제본").change(function() {
         setImageUrl();
+        if( $(this).val() == "스프링" ) $("#div합지").show();
+        else $("#div합지").hide();
     });
 
     /*따라다니는 메뉴*/
@@ -228,6 +229,8 @@ $(document).ready(function(){
         <input type="hidden" name="표지-용지" id="input-표지-용지" value=""  /><!--스노우 180g-->
         <input type="hidden" name="표지-평량" id="input-표지-평량" value=""  /><!--합지 포함 평량-->
         <input type="hidden" name="표지-코팅" id="input-표지-코팅" value=""  />
+        <input type="hidden" name="표지-합지" id="input-표지-합지" value=""  />
+
         <!--<input type="hidden" name="표지-박" id="input-표지-박" value=""  />--><!--1천회 기준 5만원-->
         <input type="hidden" name="표지-박개수" id="input-표지-박개수" value=""  /><!--1천회 기준 5만원-->
         <input type="hidden" name="표지-날개" id="input-표지-날개" value=""  />
@@ -386,7 +389,6 @@ $(document).ready(function(){
                                     <option value="스노우">스노우</option>
                                     <option value="모조">모조  </option>
                                     <option value="크라프트">크라프트  </option>
-                                    <option value="합지">합지</option>
                                     <option value="특수지">특수지</option>
                                 </select>
                             </div>
@@ -451,6 +453,17 @@ $(document).ready(function(){
                                 <option value="유광코팅">유광코팅</option>
                                 <option value="무광코팅">무광코팅</option>
                                 <option value="엠보코팅">엠보코팅</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row" id="div합지" style="display:none;">
+                        <div class="col-xs-3">
+                            <div class="step_content_title">합지</div>
+                        </div>
+                        <div class="col-xs-9">
+                            <select name="표지-합지" id="select-표지-합지"  class="select_part input-sm form-control">
+                                <option value="">합지없음</option>
+                                <option value="2합">합지</option>
                             </select>
                         </div>
                     </div>
@@ -704,7 +717,7 @@ $(document).ready(function(){
         </div>
 
         <!--견적서부분-->
-        <div id="div_brief"></div>
+        <div id="div_brief" style=""></div>
 
 
         <div id="">

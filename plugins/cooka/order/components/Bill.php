@@ -106,6 +106,7 @@ class Bill extends ComponentBase
         $this->page["표지_판비"] = $fee->feeCoverPan("real");
         $this->page["표지_코팅비"] = $fee->feeCoverCoating("real");
         $this->page["표지_박비"] = $fee->feeCoverBak("real");
+        $this->page["표지_합지비"] = $fee->feeCoverHapji("real");
         $this->page["표지_날개비"] = $fee->feeCoverWing("real");
 
         $this->page["삽지_종이값"] = $fee->feeIntroPaper("real");
@@ -140,7 +141,8 @@ class Bill extends ComponentBase
         //$this->page['최종가격_수량으로계산'] = number_format($fee->feeFinal_byQuantity());
 
         $final = $this->page["표지_종이값"] +    $this->page["표지_인쇄비"] +    $this->page["표지_판비"] +
-            $this->page["표지_코팅비"] +    $this->page["표지_박비"] +    $this->page["표지_날개비"]+
+            $this->page["표지_코팅비"] +    $this->page["표지_박비"] +    $this->page["표지_합지비"] +
+            $this->page["표지_날개비"] +
 
             $this->page["삽지_종이값"] +    $this->page["삽지_인쇄비"] +    $this->page["삽지_판비"] +
             $this->page["내지_종이값"] +    $this->page["내지_인쇄비"] +    $this->page["내지_판비"] +

@@ -8,10 +8,15 @@
 <style>
     #div견적서html {background-color:white;padding:10px 0px;font-size:9pt;}
     #number_payment {color:tomato;font-size:1.5em;font-weight:bold;}
-    .step-final-title {font-weight:bold;font-size:1.1em;line-height:130%;}
+    .step-final-title {padding:2px 5px;font-weight:bold;font-size:1.1em;line-height:130%;word-break:break-all;}
     .step-final-content {text-align:left;overflow-x:hidden;}
     .step-final-content2 {border-bottom:1px dotted gray;}
-    .bill-row {padding-left:5px;}
+    /*.bill-row {padding-left:5px;}*/
+    .bill-row [class*="col-"] {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
+
 </style>
 
 <!--최종 db에 넣을 용도-->
@@ -21,9 +26,11 @@
 <div id="div견적서html" class="">
 
     <div class="final-title text-center" style="font-weight:bold;font-size:1.2em;">견 적 서</div>
-    <div class="row bill-row">
+    <div class=" bill-row">
 
-        <div class="step-final-title col-xs-2 text-center">표지</div>
+        <div class="col-xs-2 text-center">
+            <div class="step-final-title">표지</div>
+        </div>
         <div class="step-final-content col-xs-10">
             <div class="step-final-content2">
 
@@ -36,6 +43,10 @@
                 {% if 표지_박비 %}
                     <div>박 : {{ 표지_박비|number_format() }} 원</div>
                 {% endif %}
+                {% if 표지_합지비 %}
+                <div>합지비 : {{ 표지_합지비|number_format() }} 원</div>
+                {% endif %}
+
                 {% if 표지_날개비 %}
                     <div>책날개 : {{ 표지_날개비|number_format() }} 원</div>
                 {% endif %}
@@ -43,8 +54,10 @@
         </div>
     </div>
 
-    <div class="row bill-row">
-        <div class="step-final-title col-xs-2 text-center">삽지</div>
+    <div class=" bill-row">
+        <div class="col-xs-2 text-center">
+            <div class="step-final-title">삽지</div>
+        </div>
         <div class="step-final-content col-xs-10">
             <div class="step-final-content2">
 
@@ -54,8 +67,10 @@
             </div>
         </div>
     </div>
-    <div class="row bill-row">
-        <div class="step-final-title col-xs-2 text-center">내지</div>
+    <div class=" bill-row">
+        <div class="col-xs-2 text-center">
+            <div class="step-final-title">내지</div>
+        </div>
         <div class="step-final-content col-xs-10">
             <div class="step-final-content2">
                 <div>종이값 : {{ 내지_종이값|number_format() }} 원</div>
@@ -64,8 +79,10 @@
             </div>
         </div>
     </div>
-    <div class="row bill-row">
-        <div class="step-final-title col-xs-2 text-center">작업</div>
+    <div class=" bill-row">
+        <div class="col-xs-2 text-center">
+            <div class="step-final-title">작업</div>
+        </div>
         <div class="step-final-content col-xs-10">
             <div class="step-final-content2">
                 <div>제본비 : {{ 제본비|number_format() }} 원</div>
