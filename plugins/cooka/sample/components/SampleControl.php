@@ -47,6 +47,7 @@ class SampleControl extends ComponentBase
         $sample->spec        = isset($form['spec'])?$form['spec']:"";
         $sample->comment     = isset($form['comment'])?$form['comment']:"";
         $sample->stock       = isset($form['stock'])?$form['stock']:"";
+        $sample->price       = isset($form['price'])?$form['price']:"";
         $sample->cook_data   = isset($form['cook_data'])?$form['cook_data']:"";
         $sample->bill        = isset($form['bill'])?$form['bill']:"";
         $sample->status_show = isset($form['status_show'])?$form['status_show']:"";
@@ -152,6 +153,7 @@ class SampleControl extends ComponentBase
             if(isset($form['spec']))        $sample->spec       = $form['spec'];
             if(isset($form['comment']))     $sample->comment    = $form['comment'];
             if(isset($form['stock']))       $sample->stock      = $form['stock'];
+            if(isset($form['price']))       $sample->price      = $form['price'];
             if(isset($form['cook_data']))   $sample->cook_data  = $form['cook_data'];
             if(isset($form['bill']))        $sample->bill       = $form['bill'];
             if(isset($form['status_show'])) $sample->status_show= $form['status_show'];

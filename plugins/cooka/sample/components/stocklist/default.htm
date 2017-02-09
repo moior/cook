@@ -9,10 +9,10 @@
 
     .thumbnail-wrapper{
         position:relative;
-        max-width: 45%;
+        max-width: 99%;
         overflow: hidden;
         position:relative;
-        margin:0px;
+
     }
     figcaption {
         position:; overflow:hidden; text-align:center;
@@ -36,29 +36,40 @@
     }
 
     .div간략설명 {font-size:12px;}
-
+    .row기성제품 {        border-bottom:1px solid #d1d1d1;
+        padding-bottom:10px;
+        margin-top:10px;
+    }
 </style>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <div class="justify-image">
 
     {% for key, sample in samples %}
-    <div class="thumbnail-wrapper">
-        <figure>
+    <div class="row row기성제품">
+    <div class="col-xs-6">
+        <div class="thumbnail-wrapper">
+            <figure>
 
-            <figcaption>{{ sample.title }}</figcaption>
-            <!--하나만 노출..-->
-            {% for key2, attach_img in attach_imgs[key] if key2 < 1 %}
-                <a href="/sample/detail/{{ attach_img.sample_id }}" target="_blank">
-                <img src="{{ attach_img.thumb }}" class="sample_image"
-                     data-sample_id="{{ attach_img.sample_id }}"
-                     data-sample_name="{{ attach_img.name }}"
-                     alt="{{ attach_img.name }}"
-                />
-                </a>
-            {% endfor %}
+                <figcaption>{{ sample.title }}</figcaption>
+                <!--하나만 노출..-->
+                {% for key2, attach_img in attach_imgs[key] if key2 < 1 %}
+                    <a href="/sample/detail/{{ attach_img.sample_id }}" target="_blank">
+                    <img src="{{ attach_img.thumb }}" class="sample_image"
+                         data-sample_id="{{ attach_img.sample_id }}"
+                         data-sample_name="{{ attach_img.name }}"
+                         alt="{{ attach_img.name }}"
+                    />
+                    </a>
+                {% endfor %}
 
-        </figure>
-        <div class="div간략설명">잔여재고 : {{ sample.stock }}</div>
+            </figure>
+        </div>
+    </div>
+    <div class="col-xs-6">
+        <div class="div간략설명"><b>권당가격</b> : {{ sample.price }}원</div>
+        <div class="div간략설명"><b>잔여재고</b> : {{ sample.stock }}개</div>
+
+    </div>
     </div>
     {% endfor %}
 

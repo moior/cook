@@ -42,6 +42,7 @@ function onStart(){
         $this['spec']       = $sample->spec;
         $this['comment']    = $sample->comment;
         $this['stock']    = $sample->stock;
+        $this['price']    = $sample->price;
         $this['sample_images']    = $sample->sample_images;
         $this['cook_data']  = $sample->cook_data;
         $this['bill']       = $sample->bill;
@@ -321,6 +322,10 @@ $(document).ready(function(){
         <div class="">
             <div class=""> 재고수량</div>
             <input type="text" name="stock" value="{{ stock }}" class="form-control" placeholder="0" />
+        </div>
+        <div class="">
+            <div class=""> 권당가격</div>
+            <input type="text" name="price" value="{{ price }}" class="form-control" placeholder="0" />
         </div>
 
         <button type="submit" onclick="beforeFormSubmit();" class="btn btn btn-primary"
