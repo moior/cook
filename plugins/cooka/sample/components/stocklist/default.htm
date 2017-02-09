@@ -46,8 +46,9 @@
         <figure>
 
             <figcaption>{{ sample.title }}</figcaption>
-            {% for attach_img in attach_imgs[key] %}
-                <img src="{{ attach_img.thumb }}?sk=4" class="sample_image"
+            <!--하나만 노출..-->
+            {% for key2, attach_img in attach_imgs[key] if key2 < 1 %}
+                <img src="{{ attach_img.thumb }}" class="sample_image"
                      data-sample_id="{{ attach_img.sample_id }}"
                      data-sample_name="{{ attach_img.name }}"
                      alt="{{ attach_img.name }}"
@@ -60,29 +61,7 @@
     {% endfor %}
 
     <div></div>
-    == 이하 지워 ==
-    <div></div>
 
-    {% for _imgdata in imgdata %}
-    <figure class="thumbnail-wrapper">
-
-        <figcaption>{{ _imgdata.name }}</figcaption>
-        {% if _imgdata.thumb %}
-        <img src="{{ _imgdata.thumb }}" class="sample_image"
-             data-sample_id="{{ _imgdata.sample_id }}"
-             data-sample_name="{{ _imgdata.name }}"
-             alt="{{ _imgdata.name }}"
-        />
-        {% else %}
-        <img src="{{ _imgdata.src }}" class="sample_image"
-             data-sample_id="{{ _imgdata.sample_id }}"
-             data-sample_name="{{ _imgdata.name }}"
-             alt="{{ _imgdata.name }}"
-        />
-        {% endif %}
-    </figure>
-
-    {% endfor %}
 </div>
 
 
