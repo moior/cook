@@ -56,7 +56,6 @@ class SampleList extends ComponentBase
                 $samples = Sample::limit(40)->orderByRaw("RAND()"); //limit(15)->
             }
         }
-        $samples = $samples->where("stock", ">", 0);
         if($this->property('count')) {
             $samples = $samples->limit($this->property('count'));
         }

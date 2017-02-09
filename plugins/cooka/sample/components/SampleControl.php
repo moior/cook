@@ -16,7 +16,7 @@ class SampleControl extends ComponentBase
     public function componentDetails()
     {
         return [
-            'name'        => 'Order list',
+            'name'        => 'Sample Control',
             'description' => ''
         ];
     }
@@ -42,15 +42,16 @@ class SampleControl extends ComponentBase
         $sample = new Sample;
         $form = post();
         $sample->cate        = isset($form['cate'])?$form['cate']:"";
-        $sample->title        = isset($form['title'])?$form['title']:"";
+        $sample->title       = isset($form['title'])?$form['title']:"";
         $sample->menu        = isset($form['menu'])?$form['menu']:"";
         $sample->spec        = isset($form['spec'])?$form['spec']:"";
-        $sample->comment        = isset($form['comment'])?$form['comment']:"";
-        $sample->cook_data        = isset($form['cook_data'])?$form['cook_data']:"";
+        $sample->comment     = isset($form['comment'])?$form['comment']:"";
+        $sample->stock       = isset($form['stock'])?$form['stock']:"";
+        $sample->cook_data   = isset($form['cook_data'])?$form['cook_data']:"";
         $sample->bill        = isset($form['bill'])?$form['bill']:"";
-        $sample->status_show        = isset($form['status_show'])?$form['status_show']:"";
-        $sample->ord        = isset($form['ord'])?$form['ord']:"100";
-        $sample->is_hidden        = isset($form['is_hidden'])?$form['is_hidden']:0;
+        $sample->status_show = isset($form['status_show'])?$form['status_show']:"";
+        $sample->ord         = isset($form['ord'])?$form['ord']:"100";
+        $sample->is_hidden   = isset($form['is_hidden'])?$form['is_hidden']:0;
 
         $sample->save();
 
@@ -150,6 +151,7 @@ class SampleControl extends ComponentBase
             if(isset($form['menu']))        $sample->menu      = $form['menu'];
             if(isset($form['spec']))        $sample->spec       = $form['spec'];
             if(isset($form['comment']))     $sample->comment    = $form['comment'];
+            if(isset($form['stock']))       $sample->stock      = $form['stock'];
             if(isset($form['cook_data']))   $sample->cook_data  = $form['cook_data'];
             if(isset($form['bill']))        $sample->bill       = $form['bill'];
             if(isset($form['status_show'])) $sample->status_show= $form['status_show'];

@@ -59,6 +59,7 @@ class StockList extends ComponentBase
         if($this->property('count')) {
             $samples = $samples->limit($this->property('count'));
         }
+        $samples = $samples->where("stock", ">", 0);
         $samples = $samples->get();
         $attach_imgs = array();
         foreach ($samples as $key => $sample) {
