@@ -13,7 +13,7 @@ class StockList extends ComponentBase
     public function componentDetails()
     {
         return [
-            'name'        => 'Stock list',
+            'name'        => 'Order list',
             'description' => ''
         ];
     }
@@ -56,12 +56,11 @@ class StockList extends ComponentBase
                 $samples = Sample::limit(40)->orderByRaw("RAND()"); //limit(15)->
             }
         }
-        $samples = $samples->where("stock", ">", 0);
         if($this->property('count')) {
             $samples = $samples->limit($this->property('count'));
         }
         $samples = $samples->get();
-
+        $attach_imgs = array();
         foreach ($samples as $key => $sample) {
             /*$temp["src"] = $dirpath."/../"."더보기.png";
             $temp["name"] = "더보기";
@@ -69,40 +68,18 @@ class StockList extends ComponentBase
             /*attatchMany 복수이므로*/
             foreach ($sample->sample_images as $sample_image) {
                 $temp["src"] = $sample_image->getPath();
-                $temp["thumb"] = $sample_image->getThumb(140, 160, ['mode'=>'crop']);
+                $temp["thumb"] = $sample_image->getThumb(450, 350, ['mode'=>'crop']);
                 $temp["name"] = $sample->title;//"첨부";//$sample_image->getName();
                 $temp["sample_id"] = $sample->id;//$sample_image->getName();
                 $imgdata[] = $temp;
+                $attach_imgs[$key][] = $temp;
             }
             //getThumb(100, 100, ['mode' => 'crop']);
         }
-
-
-
-
-        /*$notename = $this->property('menu'); //"알림장";
-        $dirpath = $this->property('dir')?:"/plugins/cooka/sample/assets/images/note"; // 해당 디렉토리 내 모든 파일 나열
-        chdir($_SERVER['DOCUMENT_ROOT'].$dirpath);
-
-        $glob =glob("$notename*");
-        shuffle($glob);
-        foreach ($glob as $key => $filename) {
-            //echo "<br/>$filename " . "\n"; //filesize($filename)
-            $temp["src"] = $dirpath."/".$filename;
-            $temp["thumb"] = "";
-            $temp["name"] = substr($filename, 0, strrpos($filename, "."));
-            $temp["sample_id"] = 0;
-            $imgdata[] = $temp;
-            if($key > 6) {
-                $temp["src"] = $dirpath."/../"."더보기.png";
-                $temp["name"] = "더보기";
-                $imgdata[] = $temp; break;
-            }
-        }*/
-
-
-
         $this->page['imgdata'] = $imgdata;
+
+        $this->page['samples'] = $samples;
+        $this->page['attach_imgs'] = $attach_imgs;
 
     }
 

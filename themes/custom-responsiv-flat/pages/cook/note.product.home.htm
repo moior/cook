@@ -1,9 +1,12 @@
-title = "노트 주문제작"
-url = "/cook/paper/note"
+title = "기성노트"
+url = "/product/paper/note"
 layout = "cooking"
 is_hidden = 0
 
 [session]
+
+[StockList]
+search = "{{:search}}"
 ==
 <?php
 /*use Symfony\Component\HttpFoundation\File\File as FileObj;*/
@@ -50,26 +53,6 @@ function onCalcFee(){
 
 
     }
-    function setImageUrl(){
-        var sel = $("#select-제본").find("option:selected").val();
-        if( sel == "무선" ){
-            $("#leftimg-1").css("background-image", "url({{ 'assets/images/cook/site/주문페이지/노트요리사_주문_무선제본_01.jpg'|theme }})");
-            $("#leftimg-2").css("background-image", "url({{ 'assets/images/cook/site/주문페이지/노트요리사_주문_무선제본_02.jpg'|theme }})");
-            $("#leftimg-3").css("background-image", "url({{ 'assets/images/cook/site/주문페이지/노트요리사_주문_무선제본_03.jpg'|theme }})");
-        }else if( sel == "중철" ){
-            $("#leftimg-1").css("background-image", "url({{ 'assets/images/cook/site/주문페이지/노트요리사_주문_중철제본_01.jpg'|theme }})");
-            $("#leftimg-2").css("background-image", "url({{ 'assets/images/cook/site/주문페이지/노트요리사_주문_중철제본_02.jpg'|theme }})");
-            $("#leftimg-3").css("background-image", "url({{ 'assets/images/cook/site/주문페이지/노트요리사_주문_중철제본_03.jpg'|theme }})");
-        }else if( sel == "스프링" ){
-            $("#leftimg-1").css("background-image", "url({{ 'assets/images/cook/site/주문페이지/노트요리사_주문_링제본_01.jpg'|theme }})");
-            $("#leftimg-2").css("background-image", "url({{ 'assets/images/cook/site/주문페이지/노트요리사_주문_링제본_02.jpg'|theme }})");
-            $("#leftimg-3").css("background-image", "url({{ 'assets/images/cook/site/주문페이지/노트요리사_주문_링제본_03.jpg'|theme }})");
-        }else if( sel == "양장" ){
-            $("#leftimg-1").css("background-image", "url({{ 'assets/images/cook/site/주문페이지/노트요리사_주문_양장제본_01.jpg'|theme }})");
-            $("#leftimg-2").css("background-image", "url({{ 'assets/images/cook/site/주문페이지/노트요리사_주문_양장제본_02.jpg'|theme }})");
-            $("#leftimg-3").css("background-image", "url({{ 'assets/images/cook/site/주문페이지/노트요리사_주문_양장제본_03.jpg'|theme }})");
-        }
-    }
     function showDetailPayment(){
         /*가격 계산*/
         var datas = $("#form-currentnote").serializeArray(); //JSON.stringify(
@@ -85,7 +68,6 @@ $(document).ready(function(){
     setFormInputData();
     setAreaDisplay();
     showDetailPayment();
-    setImageUrl();
     /*수량 변경시 가격 계산*/
     var previous;
     $("#select_amount").change(function() {
@@ -98,7 +80,6 @@ $(document).ready(function(){
     });
 
     $("#select-제본").change(function() {
-        setImageUrl();
         if( $(this).val() == "스프링" ) $("#div합지").show();
         else $("#div합지").hide();
         if( $(this).val() == "양장" ) {
@@ -173,22 +154,7 @@ $(document).ready(function(){
     #title-right-btm { text-align:center;color:white;background-color:tomato;padding:10px; }
     .input-current {width:100%;border:0px solid red;}
 
-    #leftimg-1 {
-        height:300px;
-        margin-bottom:10px;
-        border:1px solid gray;
-        background-size:cover;
-    }
-    #leftimg-2 {
-        height:200px;
-        border:1px solid gray;
-        background-size:cover;
-    }
-    #leftimg-3 {
-        height:200px;
-        border:1px solid gray;
-        background-size:cover;
-    }
+
     .step_title {border-bottom:2px solid #308fc6;padding:4px;margin-bottom:10px;}
 
     .step_content {font-size:11pt;}
@@ -258,7 +224,7 @@ $(document).ready(function(){
 
     <div id="area_top" class="row" style="font-size:11pt;padding:5px;border-top:2px solid #555;border-bottom:2px solid #555;">
         <div class="col-sm-5">
-            맞춤 주문제작
+            기성제품 주문
         </div>
         <div class="col-sm-7 text-right">
             <span style="margin:0px 25px;"></span>
@@ -275,18 +241,14 @@ $(document).ready(function(){
     <div class="col-sm-5" id="area이미지" style="">
         <div class="leftimg" style="margin-top:10px;">
             <div class="row">
-                <div class="col-sm-12 col-xs-12">
-                    <div id="leftimg-1">
 
+                <div class="col-sm-12 col-xs-12">
+                    {% component "StockList" %}
+                    <div>
+                        현재 재고가 있는 제품들입니다.
                     </div>
                 </div>
 
-                <div class="col-sm-6 col-xs-6" style="padding-right:0px;">
-                    <div id="leftimg-2"></div>
-                </div>
-                <div class="col-sm-6 col-xs-6" style="padding-left:10px;">
-                    <div id="leftimg-3"></div>
-                </div>
             </div>
         </div>
     </div>
@@ -300,7 +262,7 @@ $(document).ready(function(){
         </div>-->
 
         <div class="step_title" style="">
-            제본방식/ 사이즈
+            수량
         </div>
         <div class="step_content">
 
@@ -374,54 +336,11 @@ $(document).ready(function(){
             표지
         </div>
         <div class="step_content div_파트선택영역">
-            <div class=" ">
-                <div class="row step_content_row">
-                    <div class="col-xs-3">
-                        <div class="step_content_title">종이</div>
-                    </div>
-                    <div class="col-xs-9">
 
-                        <div class="row">
-                            <div class="col-xs-6">
-                                <select name="표지-용지" id="select-표지-용지"  class="select_part input-sm form-control">
-                                    <option value="아트">아트  </option>
-                                    <option value="스노우">스노우</option>
-                                    <option value="모조">모조  </option>
-                                    <option value="크라프트">크라프트  </option>
-                                    <option value="특수지">특수지</option>
-                                </select>
-                            </div>
-                            <div class="col-xs-6">
-                                <select name="표지-평량" id="select-표지-평량"  class="select_part input-sm form-control">
-                                    <option value="180g">180g</option>
-                                    <option value="250g">250g</option>
-                                    <option value="300g">300g</option>
-                                    <!--<option value=""></option>-->
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row step_content_row">
-
-                    <div class="col-xs-3">
-                        <div class="step_content_title">인쇄</div>
-                    </div>
-                    <div class="col-xs-9">
-                        <select name="표지-인쇄" id="select-표지-인쇄"  class="select_part input-sm form-control">
-                            <option value="단면 1도">바깥면만 흑백인쇄 (단면1도)</option>
-                            <option value="양면 1도">앞뒤 흑백인쇄 (양면1도)</option>
-                            <option value="단면 4도" selected>바깥면만 컬러인쇄 (단면4도)</option>
-                            <option value="양면 4도">앞뒤 컬러인쇄 (양면4도)</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
             <div class="row step_content_row">
                 <div class="col-xs-3">
                     <div class="step_content_title">
-                        <div class="step_content_title">후가공</div>
+                        <div class="step_content_title">로고작업</div>
                     </div>
                 </div>
                 <div class="col-xs-9">
@@ -442,180 +361,19 @@ $(document).ready(function(){
                         </div>
 
                     </div>
-                    <div class="row">
-                        <div class="col-xs-3">
-                            <div class="step_content_title">코팅</div>
-                        </div>
-                        <div class="col-xs-9">
-                            <select name="표지-코팅" id="select-표지-코팅"  class="select_part input-sm form-control">
-                                <option value="">코팅없음</option>
-                                <option value="유광코팅">유광코팅</option>
-                                <option value="무광코팅">무광코팅</option>
-                                <option value="엠보코팅">엠보코팅</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="row" id="div합지" style="display:none;">
-                        <div class="col-xs-3">
-                            <div class="step_content_title">합지</div>
-                        </div>
-                        <div class="col-xs-9">
-                            <select name="표지-합지" id="select-표지-합지"  class="select_part input-sm form-control">
-                                <option value="">합지없음</option>
-                                <option value="2합">합지</option>
-                            </select>
-                        </div>
-                    </div>
-                    <!--<div class="checkbox">
-                        <label>
-                            <input type="checkbox" name="데코-책날개" id="input-데코-책날개" value="" class="checkbox_part" />
-                            책날개
-                        </label>
-                    </div>-->
+
                 </div>
             </div>
         </div>
+
+
 
 
 
 
 
         <div class="step_title" style="">
-            삽지
-            <input type="checkbox" name="삽지있음" id="checkbox_삽지있음" onclick="javascript:setAreaDisplay()" />
-
-        </div>
-        <div class="step_content div_파트선택영역" id="div_삽지영역" style="">
-            <div class="row step_content_row">
-                <div class="col-xs-3">
-                    <div class="step_content_title">매수</div>
-                </div>
-                <div class="col-xs-9">
-                    <select name="삽지-매수" id="select-삽지-매수" class="select_part input-sm form-control" >
-                        <option value="0">삽지 없음</option>
-                        {% for i in 1..4 %}
-                        <option value="{{ i  }}">{{ i }}장 ({{ i * 2 }}페이지)</option>
-                        {% endfor %}
-                    </select>
-
-                </div>
-            </div>
-            <div class="row step_content_row">
-                <div class="col-xs-3">
-                    <div class="step_content_title">종이</div>
-                </div>
-                <div class="col-xs-9">
-
-                    <div class="row">
-                        <div class="col-xs-6">
-                            <select name="삽지-용지" id="select-삽지-용지"  class="select_part input-sm form-control">
-                                <option value="아트">아트  </option>
-                                <option value="스노우">스노우</option>
-                                <option value="모조">모조  </option>
-                                <option value="크라프트">크라프트  </option>
-                                <option value="특수지">특수지</option>
-                            </select>
-                        </div>
-                        <div class="col-xs-6">
-                            <select name="삽지-평량" id="select-삽지-평량"  class="select_part input-sm form-control">
-                                <option value="80g">80g</option>
-                                <option value="100g">100g</option>
-                                <option value="150g">120g</option>
-                            </select>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-
-            <div class="row step_content_row">
-
-                <div class="col-xs-3">
-                    <div class="step_content_title">인쇄</div>
-                </div>
-                <div class="col-xs-9">
-                    <select name="삽지-인쇄" id="select-삽지-인쇄"  class="select_part input-sm form-control">
-
-                        <option value="단면 1도">한쪽면만 흑백인쇄 (단면 먹1도)</option>
-                        <option value="양면 1도">앞뒤 흑백인쇄 (양면 먹1도) </option>
-                        <option value="단면 4도">한쪽면만 컬러인쇄 (단면 4도)</option>
-                        <option value="양면 4도">앞뒤 컬러인쇄 (양면 4도) </option>
-                    </select>
-                </div>
-            </div>
-        </div>
-
-
-
-
-        <div class="step_title" style="">
-            내지
-        </div>
-        <div class="step_content div_파트선택영역" id="div_내지영역">
-            <div class="row step_content_row">
-                <div class="col-xs-3">
-                    <div class="step_content_title">매수</div>
-                </div>
-                <div class="col-xs-9">
-                    <select name="내지-매수" id="select-내지-매수" class="select_part input-sm form-control" >
-                        {% for i in 1..60 %}
-                        {% if i == 20  %}
-                        <option value="{{ i * 4 }}" selected>{{ i * 4 }}장 ({{ i * 8 }}페이지)</option>
-                        {% else %}
-                        <option value="{{ i * 4 }}">{{ i * 4 }}장 ({{ i * 8 }}페이지)</option>
-                        {% endif %}
-                        {% endfor %}
-                    </select>
-                </div>
-            </div>
-            <div class="row step_content_row">
-                <div class="col-xs-3">
-                    <div class="step_content_title">종이</div>
-                </div>
-                <div class="col-xs-9">
-
-                    <div class="row">
-                        <div class="col-xs-6">
-                            <select name="내지-용지" id="select-내지-용지"  class="select_part input-sm form-control">
-                                <option value="미색모조">미색모조  </option>
-                                <option value="백색모조">백색모조  </option>
-                                <option value="특수지">특수지</option>
-                            </select>
-                        </div>
-                        <div class="col-xs-6">
-                            <select name="내지-평량" id="select-내지-평량"  class="select_part input-sm form-control">
-                                <option value="80g">80g</option>
-                                <option value="100g">100g</option>
-                                <option value="150g">120g</option>
-                            </select>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-
-            <div class="row step_content_row">
-
-                <div class="col-xs-3">
-                    <div class="step_content_title">인쇄</div>
-                </div>
-                <div class="col-xs-9">
-                    <select name="내지-인쇄" id="select-내지-인쇄"  class="select_part input-sm form-control">
-
-                        <option value="무지">인쇄 없음</option>
-                        <option value="단면 1도">한쪽면만 흑백인쇄 (단면 먹1도)</option>
-                        <option value="양면 1도" selected>앞뒤 흑백인쇄 (양면 먹1도) </option>
-                        <option value="단면 4도">한쪽면만 컬러인쇄 (단면 4도)</option>
-                        <option value="양면 4도">앞뒤 컬러인쇄 (양면 4도) </option>
-                    </select>
-                </div>
-            </div>
-        </div>
-
-
-
-        <div class="step_title" style="">
-            최종가공 및 포장
+            포장
         </div>
         <div class="step_content div_파트선택영역" id="">
             <div class="row step_content_row">
@@ -630,17 +388,6 @@ $(document).ready(function(){
                 </div>
             </div>
 
-            <div class="row step_content_row">
-                <div class="col-xs-3">
-                    <div class="step_content_title">라운딩</div>
-                </div>
-                <div class="col-xs-9">
-                    <select name="데코-라운딩" id="select-데코-라운딩" class="select_part input-sm form-control" >
-                        <option value="">없음</option>
-                        <option value="4모서리 라운딩">라운드 처리</option>
-                    </select>
-                </div>
-            </div>
             <div class="row step_content_row">
                 <div class="col-xs-3">
                     <div class="step_content_title">OPP포장</div>
@@ -668,7 +415,7 @@ $(document).ready(function(){
 
 
         <div class="step_title" style="">
-            디자인
+            로고 디자인
         </div>
         <div class="step_content div_파트선택영역" id="">
             <div class="row step_content_row">

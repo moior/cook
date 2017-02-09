@@ -28,6 +28,7 @@ class Plugin extends PluginBase
             '\Cooka\Sample\Components\SampleMenu' => 'SampleMenu',
             '\Cooka\Sample\Components\CategoryByFilename' => 'CategoryByFilename',
 
+            '\Cooka\Sample\Components\StockList' => 'StockList',
         ];
     }
     public function registerReportWidgets()
