@@ -1,5 +1,5 @@
 title = "홈"
-url = "/old"
+url = "/"
 layout = "cooking"
 is_hidden = 0
 
@@ -19,6 +19,12 @@ function onInit(){
 ?>
 ==
 <style>
+    .home-title-sk {
+        padding-top: 50px;
+        padding-bottom: 50px;
+        color: rgba(80, 80, 80, 0.75);
+        position: relative;
+    }
     .div멤버사진 {padding:20px;position:relative;}
     .div멤버사진 img {width:100%;}
     .div소개이미지제목 {position:;margin-top:-30px;font-weight:bold;color:white;width:100%;text-align:center;}
@@ -32,11 +38,14 @@ function onInit(){
         padding-right: 0 !important;
     }
     #divHotQna {
-        background-color: rgba(255, 255, 255, 0.9);padding:5px 10px;margin-bottom:20px;
+        background-color: rgba(0,0,0, 0.05);padding:5px 10px;margin-bottom:20px;
         font-size:0.8em;color:gray;margin-top:15px;
+
     }
     #divHotQna a {color:#666666;}
     #div퀵견적 input, textarea {margin-bottom:4px;}
+
+    #div메인배너1 {}
 </style>
 <script>
     function beforeFormSubmit() { /*폼 넘기기 전 실행*/
@@ -51,12 +60,28 @@ function onInit(){
     });
 </script>
 
-<section class="home-title">
+<section class="home-title-sk">
     <div class="container">
         <div class="row">
-            <div class="col-sm-5">
-                <h3>3분 주문제작</h3>
-                <p>당신이 원하는 제품을 전문 제작툴로 3분이면 구성할 수 있습니다. 시작해보세요.</p>
+            <div class="col-sm-6">
+                <div id="div메인배너1">
+                    <a href="/product/paper/note" class="">
+                        <img src="{{ 'assets/images/cook/site/메인/노트요리사_기성제품주문.png'|theme }}" alt="기성제품주문" style="width:100%;"/>
+                    </a>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div id="div메인배너2">
+                    <a href="/cook/paper/note" class="">
+                        <img src="{{ 'assets/images/cook/site/메인/노트요리사_맞춤주문제작.png'|theme }}" alt="맞춤주문제작" style="width:100%;"/>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-6" style="padding:0 30px;">
+
                 <!--<label class="btn btn-primary active " style="margin-bottom:10px;">
                     <input type="checkbox" class="btn_" autocomplete="off" checked disabled> 노트
                 </label>
@@ -87,15 +112,12 @@ function onInit(){
                     </label>
                 </div>-->
                 <div class="row" style="margin-top:20px;">
-
                     <div class="col-xs-12">
-
                         <div class="row">
                             <div class="col-xs-6">
                                 <a href="/sample/paper/note" class="btn btn-block btn-info">
                                     <span class="fa fa-database"> 샘플 보기</span>
                                 </a>
-
                             </div>
                             <div class="col-xs-6">
                                 <a href="/cook/paper/note" class="btn btn-block btn-info">
@@ -139,16 +161,16 @@ function onInit(){
                 <div class="additional-links">
                 </div>
             </div>
-            <div class="col-sm-6 col-sm-offset-1">
+            <div class="col-sm-6" style="padding:20px 35px;">
 
 
-                <div class="row " style=" background-color: rgba(255, 255, 255, 0.9);padding:20px 10px;">
+                <div class="row " style="background-color: rgba(0,0,0,0.05);padding:20px 10px;">
                     <div class="col-xs-5">
                         <div style="font-size:13pt;font-weight:bold;color:royalblue;">빠른 문의</div>
                         <div style="font-size:9pt;">
 
                         </div>
-                        <div>
+                        <div style="font-size:12px;">
                             시간이 없거나
                             디테일한 항목비교가 어려우신 경우,<br>
                             간략하게 용도만 적어주시면<br>
@@ -174,7 +196,7 @@ function onInit(){
                                placeholder="가장 비슷한 샘플">-->
 
                         <textarea name="client_comment" placeholder="기타 요청사항" class="form-control"
-                                  style="height:170px;">
+                                  style="height:95px;">
 제품용도 : (영어학원홍보용 등)&nbsp;
 
 제작수량 :&nbsp;
@@ -195,28 +217,31 @@ function onInit(){
             </div>
         </div>
 
-        <div class="row " style="border-top:2px solid gray;padding-top:10px;">
-            <div class="col-sm-4" id="div중단컬럼1">
-                <div style="margin-top:10px;margin-bottom:10px;
+        <div class="row no-padding " style="border-top:2px solid gray;padding-top:10px;">
+            <div class="col-sm-4 text-center" id="div중단컬럼1">
+                <img src="{{ 'assets/images/cook/site/메인/노트요리사_라벨스틱증정.png'|theme }}" alt="라벨스틱증정" style="width:100%;"/>
+                <!--<div style="margin-top:10px;margin-bottom:10px;
                 padding:10px;height:150px;background-size:contain;background-color:#dcdcdc;
                 background-repeat:no-repeat;background-position: bottom;
                 background-image:url('{{ "assets/images/cook/site/타이틀배너-스틱증정이벤트.jpg?a=2"|theme }}');}"
                 >
                 ※ 라벨스틱 무료 증정 이벤트! (소진시까지)
-                </div>
+                </div>-->
             </div>
-            <div class="col-sm-4" style=""><!--background-image: url({{ 'assets/images/lines.png'|theme }});-->
-                <div style="text-align:center;background-color:rgba(255,255,255,0.5);
+            <div class="col-sm-4 text-center" style=""><!--background-image: url({{ 'assets/images/lines.png'|theme }});-->
+                <img src="{{ 'assets/images/cook/site/메인/노트요리사_제작상담.png'|theme }}" alt="제작상담" style="width:100%;"/>
+
+                <!--<div style="text-align:center;background-color:rgba(255,255,255,0.5);
                 margin-top:10px;margin-bottom:10px;padding:10px;color:#666666;height:150px;border:1px solid gray;font-size:0.8em;">
                     <span style="font-size:1.2em;">02-1661-5521</span><br>
                     경기도 일산동구 장항로 40, 라벨링노트사<br>
                     서울 강남 테헤란로 207, 7층<br>
                     우리 1005-502-237770 (주)모이어
-                </div>
+                </div>-->
 
             </div>
             <div class="col-sm-4  player-wrapper text-center">
-                <iframe  style="height:150px;margin-top:10px;margin-bottom:10px;" src="https://www.youtube.com/embed/V-gkKnpwARw" frameborder="0" allowfullscreen></iframe>
+                <iframe  style="width:90%;height:140px;margin-top:10px;margin-bottom:10px;" src="https://www.youtube.com/embed/V-gkKnpwARw" frameborder="0" allowfullscreen></iframe>
                 <!--<iframe src="http://player.vimeo.com/video/29568236?color=3498db" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>-->
             </div>
         </div>
