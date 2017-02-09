@@ -65,9 +65,9 @@ function onCalcFee(){
 
 $(document).ready(function(){
 
-    setFormInputData();
-    setAreaDisplay();
-    showDetailPayment();
+    //setFormInputData();
+    //setAreaDisplay();
+    //showDetailPayment();
     /*수량 변경시 가격 계산*/
     var previous;
     $("#select_amount").change(function() {
@@ -76,7 +76,7 @@ $(document).ready(function(){
             //$(this).find("option[value="+previous+"]").prop("selected", true);
             $('#modal소량주문').modal('show');
         }else $("#input-수량").val( note_part );
-        showDetailPayment(); /*가격 계산 paper.note.htm */
+        //showDetailPayment(); /*가격 계산 paper.note.htm */
     });
 
     $("#select-제본").change(function() {
@@ -93,9 +93,9 @@ $(document).ready(function(){
     });
 
     $(".select_part").change(function(){
-        setFormInputData();
-        setAreaDisplay();
-        showDetailPayment();
+        //setFormInputData();
+        //setAreaDisplay();
+        //showDetailPayment();
     });
 
     /*따라다니는 메뉴*/
@@ -133,6 +133,10 @@ $(document).ready(function(){
         padding:5px 10px 5px 10px;
         border-left:0px solid gray;
         margin-top:10px;
+    }
+    #area주문서_위쪽 {
+        padding:5px 15px 10px  15px;background-color:white;opacity:0.75;
+        margin-bottom:25px;
     }
     #area주문서_안쪽 {
         padding:5px 15px 10px  15px;background-color:white;opacity:0.75;
@@ -246,7 +250,17 @@ $(document).ready(function(){
         </div>
     </div>
 
-    <div class="col-sm-6" id="area주문서">
+    <div class="col-sm-8" id="area주문서">
+        <div id="area주문서_위쪽">
+            1. 회사로고, 학원명 등을 금은박 작업해 출고됩니다.<br>
+            2. 기성 제품들은 <b>5일 내에 배송가능</b>합니다.<br>
+            3. 기성 제품은 완전주문제작보다 <b>약 30% 저렴</b>합니다.<br>
+            <br>
+            ※  기성제품은 전화로 주문 문의바랍니다. /
+            <a href="tel:1661-5521">1661-5521</a><br>
+            
+            
+        </div>
         <div id="area주문서_안쪽">
 
         <!--<div id="title-cate" style="padding-left:5px;">
@@ -292,41 +306,12 @@ $(document).ready(function(){
                 </div>
             </div>
 
-            <div class="row step_content_row">
-                <div class="col-xs-3">
-                    <div class="step_content_title">제본</div>
-                </div>
-                <div class="col-xs-9">
-                    <select name="제본" id="select-제본"   class="select_part input-sm form-control">
-                        <option value="무선">무선제본</option>
-                        <option value="중철">중철제본</option>
-                        <option value="스프링">스프링제본</option>
-                        <option value="양장">양장제본</option>
-                    </select>
-                </div>
-            </div>
-            <div class="row step_content_row">
-                <div class="col-xs-3">
-                    <div class="step_content_title">크기</div>
-                </div>
-                <div class="col-xs-9">
-                    <select name="크기" id="select-크기"  class="select_part input-sm form-control">
-                        <option value="A4">A4 (210 x 297mm)</option>
-                        <option value="B5">B5 (176 x 250mm)</option>
-                        <option value="A5">A5 (148 x 210mm)</option>
-                        <option value="B6">B6 (125 x 176mm)</option>
-                        <option value="A6">A6 (105 x 148mm)</option>
-                    </select>
-                    <!--<input type="text" name="크기" id="input-크기" value="" class="input-sm form-control" />-->
-                    <input type="hidden" name="크기-내지" id="input-크기-내지" value=""  />
-                </div>
-            </div>
         </div>
 
 
 
         <div class="step_title" style="">
-            표지
+            로고작업
         </div>
         <div class="step_content div_파트선택영역">
 
@@ -366,7 +351,7 @@ $(document).ready(function(){
 
 
         <div class="step_title" style="">
-            포장
+            기타
         </div>
         <div class="step_content div_파트선택영역" id="">
             <div class="row step_content_row">
@@ -439,7 +424,9 @@ $(document).ready(function(){
 
 
     
-    <div class="col-sm-2" id="area견적서" style="margin-top:15px;background-color:#ffffff;">
+    <div class="col-sm-0" id="area견적서" style="
+    display:none;
+    margin-top:15px;background-color:#ffffff;">
         <div style="padding-top:0px;text-align:center;">
 
         </div>

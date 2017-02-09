@@ -48,11 +48,13 @@
             <figcaption>{{ sample.title }}</figcaption>
             <!--하나만 노출..-->
             {% for key2, attach_img in attach_imgs[key] if key2 < 1 %}
+                <a href="/sample/detail/{{ attach_img.sample_id }}" target="_blank">
                 <img src="{{ attach_img.thumb }}" class="sample_image"
                      data-sample_id="{{ attach_img.sample_id }}"
                      data-sample_name="{{ attach_img.name }}"
                      alt="{{ attach_img.name }}"
                 />
+                </a>
             {% endfor %}
 
         </figure>
