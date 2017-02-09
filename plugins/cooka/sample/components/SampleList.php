@@ -7,7 +7,7 @@ use Cook\Classes\FeeCalculator;
 use Cooka\Sample\Models\Sample;
 use RainLab\User\Facades\Auth;
 
-class StockList extends ComponentBase
+class SampleList extends ComponentBase
 {
 
     public function componentDetails()
