@@ -57,6 +57,7 @@ $(document).ready(function(){
 <style>
     div, p {font-size:10pt;}
     #faq-question-column input {margin:10px auto;}
+    .faq제목 {font-size:1.2em;}
 </style>
 
 
@@ -84,7 +85,7 @@ $(document).ready(function(){
                                 {% for faq in faqs %}
                                 <li>
                                     <div id="question_{{ faq.id }}">
-                                        <h5>Q: {{ faq.question }}</h5>
+                                        <div class="faq제목">Q: {{ faq.question }}</div>
                                         <span>{{ faq.answer|md }} </span>
                                         <div class="text-right" style="color:gray;">
                                             {{ faq.created_at|date("Y-m-d")}}
