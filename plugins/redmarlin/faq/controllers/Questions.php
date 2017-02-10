@@ -58,11 +58,11 @@ class Questions extends Controller
                 });
             
             /**
-            * After notification is send mail is removed.
+            * After notification is send mail is removed. ?? 왜?? 보존함
             **/
-            $model->reply_email = "";
-            $model->save();
-            Flash::success('Notification send sucessfully to: ' .$reply_email);
+            //$model->reply_email = "";
+            //$model->save();
+            Flash::success('메일발송 성공 : ' .$reply_email);
             
             if ($redirect = $this->makeRedirect('update', $model)) {
                 return $redirect;
