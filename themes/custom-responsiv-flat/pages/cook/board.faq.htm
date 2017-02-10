@@ -110,14 +110,14 @@ $(document).ready(function(){
                                             <div class="row">
                                                 <div class="col-sm-2"><b>질문 :</b></div>
                                                 <div class="col-sm-10">
-                                                    {{ faq.question|md }}
+                                                    {{ faq.question|md|nl2br }}
                                                 </div>
                                             </div>
                                             <div class="row">
                                                 <div class="col-sm-2"><b>요리사 :</b></div>
                                                 <div class="col-sm-10">
                                                     {% if faq.answer %}
-                                                        {{ faq.answer|md }}
+                                                        {{ faq.answer|md|nl2br }}
                                                     {% else %}
                                                         답변 준비중입니다..
                                                     {% endif %}
