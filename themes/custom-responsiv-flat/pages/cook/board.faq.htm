@@ -100,8 +100,8 @@ $(document).ready(function(){
                                 <li>
                                     <div id="question-{{ faq.id }}">
                                         <div class="question_title">
-                                            {{ faq.question|slice(0,16) }}
-                                            {% if faq.question|length > 16 %}..{% endif %}
+                                            {{ faq.question|slice(0,30) }}
+                                            {% if faq.question|length > 30 %}..{% endif %}
                                         </div>
                                         <div class="content" style="display:none;">
                                             <div class="row">
