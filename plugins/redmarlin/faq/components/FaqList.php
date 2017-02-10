@@ -39,9 +39,13 @@ class FaqList extends ComponentBase
     }
      public function onRun()
     {
-     
-        $query = Question::whereIsApproved('1')->where('category_id', $this->property('categoryId'));
-        
+        // sk modi
+        if( $this->property('list')== 'all' ) { // public 안된것도
+            $query = Question::where('category_id', $this->property('categoryId'));
+        }else{ //기본이었음
+            $query = Question::whereIsApproved('1')->where('category_id', $this->property('categoryId'));
+        }
+
         switch ($this->property('sortOrder')) {
             case "desc":
                 $query = $query->orderBy('id', 'desc');

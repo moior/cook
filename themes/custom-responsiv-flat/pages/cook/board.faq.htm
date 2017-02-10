@@ -16,6 +16,7 @@ featuredNumber = 10
 
 [FaqList]
 categoryId = {{:category}}
+list = "all"
 ==
 <?php
 use Backend\Facades\BackendAuth;
@@ -73,6 +74,8 @@ $(document).ready(function(){
     .question_ul .content_date {text-align:right; color:gray; font-size:0.8em;}
 
     .backgroundClicked {background-color: #eee; border-left:5px solid gold; }
+    #divFaqFeature ul {margin-left:-15px;}
+    #divFaqFeature li a {color:gray;}
 </style>
 
 
@@ -108,13 +111,16 @@ $(document).ready(function(){
                                                 <div class="col-sm-2"><b>질문 :</b></div>
                                                 <div class="col-sm-10">
                                                     {{ faq.question|md }}
-                                                    <div class="content_date">{{ faq.created_at|date("Y-m-d")}}</div>
                                                 </div>
                                             </div>
                                             <div class="row">
                                                 <div class="col-sm-2"><b>요리사 :</b></div>
                                                 <div class="col-sm-10">
-                                                    {{ faq.answer|md }}
+                                                    {% if faq.answer %}
+                                                        {{ faq.answer|md }}
+                                                    {% else %}
+                                                        답변 준비중입니다..
+                                                    {% endif %}
                                                     <div class="content_date">{{ faq.created_at|date("Y-m-d")}}</div>
                                                 </div>
                                             </div>
@@ -128,8 +134,9 @@ $(document).ready(function(){
                     </div>
 
                     <div style="border-left:1px dotted #aaaaaa;" class="col-sm-4">
-                        <h4>Hot Q&A</h4>
-                        <div>
+                        <h4>
+                            <span style="color:#f36258">Hot</span> Q&A</h4>
+                        <div id="divFaqFeature" style="">
                             {% component 'FaqFeatured' %}
                         </div>
 
