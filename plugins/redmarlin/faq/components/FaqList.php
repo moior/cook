@@ -59,8 +59,11 @@ class FaqList extends ComponentBase
         }
 
         $query = $query->orderBy('id', 'desc');
+        /*$this->faqs = $query->with('category')
+            ->get();*/
         $this->faqs = $query->with('category')
-                       ->get();
+            ->paginate(4);
+
 
         $this->page['category'] = Category::where('id', $this->property('categoryId'))->pluck('title');
 
