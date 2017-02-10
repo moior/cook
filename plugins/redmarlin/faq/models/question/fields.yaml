@@ -37,4 +37,4 @@ fields:
         type: datepicker
     reply_email:
         label: Notification Email
-        disabled: true
+        disabled: false
