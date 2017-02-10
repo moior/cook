@@ -3,8 +3,12 @@
  	{% for faq in faqs %}
 		<li class="liFaqlast">
 			<div id="question_{{ faq.id }}">
- 				<a href="/faq/cate/1/{{faq.id}}">Q: {{ faq.question }} </a>
- 				<!--<span>{{ faq.created_at|date("d-m-Y")}}</span>-->
+ 				<a href="/faq/cate/1/{{faq.id}}">
+					Q: {{ faq.question|slice(0,20) }}{% if faq.question|length > 20 %}..{% endif %}
+				</a>
+
+
+				<!--<span>{{ faq.created_at|date("d-m-Y")}}</span>-->
  				<!--<span>{{ faq.answer|md }}</span>-->
  			</div>
  		</li>
