@@ -62,7 +62,7 @@ class FaqList extends ComponentBase
         /*$this->faqs = $query->with('category')
             ->get();*/
         $this->faqs = $query->with('category')
-            ->paginate(4);
+            ->paginate(10);
 
 
         $this->page['category'] = Category::where('id', $this->property('categoryId'))->pluck('title');
