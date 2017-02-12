@@ -67,14 +67,14 @@ $(document).ready(function(){
     {{ form_ajax('Orders::onSaveOrder',
         {
             success:"alert('접수 완료되었습니다. 확인 후 연락드리겠습니다. :-)')",
-            redirect:"/cooking/list",
+            redirect:"/order/list",
         }
     ) }}
     <!--<form
         data-request="Orders::onSaveOrder"
         data-request-before-update="settingPostData"
         data-request-success="alert('접수 완료되었습니다. 확인 후 연락드리겠습니다. :-)')"
-        data-request-redirect="/cooking/list"
+        data-request-redirect="/order/list"
     >-->
     <!--data-request-update="'{{ __SELF__ }}::list': '#last'"-->
 

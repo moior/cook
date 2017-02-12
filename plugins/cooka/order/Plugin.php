@@ -24,7 +24,8 @@ class Plugin extends PluginBase
     {
         return [
             '\Cooka\Order\Components\Bill' => 'Bill',
-            '\Cooka\Order\Components\Orders' => 'Orders'
+            '\Cooka\Order\Components\Orders' => 'Orders',
+            '\Cooka\Order\Components\Notecooker' => 'Notecooker'
         ];
     }
     public function registerReportWidgets()

@@ -166,7 +166,7 @@ $(document).ready(function(){
         <!--견적요청서-->
         <div class=" " style="margin-top:20px;">
         <!--file 저장은 ajax로 안되고 enctype=multipart 넣어줘야!! 맨날 삽질2시간-->
-        {{ form_open({ request: 'Orders::onSaveOrder', files : true, url : '/cooking/list' }) }}
+        {{ form_open({ request: 'Orders::onSaveOrder', files : true, url : '/order/list' }) }}
 
             <!--data-request="Orders::onSaveOrder"
             data-request-success="$('#msg_ajax').show().text('접수 완료되었습니다. 확인 후 연락드리겠습니다. :-)')"

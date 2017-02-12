@@ -1,0 +1,328 @@
+title = "주문관리"
+url = "/order/manage/:orderno?"
+layout = "cooking"
+is_hidden = 0
+
+
+[Orders]
+[Notecooker]
+
+[session]
+==
+<?php
+/*use Symfony\Component\HttpFoundation\File\File as FileObj;*/
+
+function onStart()
+{
+    /*$file = new FileObj("assets/images/cook/paper/note/jebon/샘플-떡제본.jpg");
+    $temp["thumb"] = $file->getThumb(140, 160, ['mode'=>'crop']);*/
+}
+function onClickStep1(){}
+function onClickStep2(){}
+
+/*메인 데스크(partial)에서 세부사항 선택시, 이곳(page)에서 가격 계산 / 동시에 js로 이곳 input 에 저장*/
+function onCalcFee(){
+
+}
+
+?>
+==
+
+
+<script>
+    function setFormInputData(){
+        $(".select_part").each(function(){
+            $("#input-" + $(this).attr("name")).val(
+                $(this).find("option:selected").val()
+            );
+        });
+    }
+    function setAreaDisplay(){
+        var quantity = $("#select_amount option:selected").val();
+        if( quantity == "" || quantity == '소량') {
+            $(".div_파트선택영역").hide();
+            $("#div_삽지영역").hide();
+        }else{
+            $(".div_파트선택영역").show();
+            if( $("#checkbox_삽지있음").prop("checked") == true ){
+                $("#div_삽지영역").show();
+            }else $("#div_삽지영역").hide();
+        }
+        if( $("#select-제본 option:selected").val() == "스프링") {
+            $("#select-데코-라벨스틱").prop("disabled", false);
+        }else $("#select-데코-라벨스틱").prop("disabled", true);
+
+
+    }
+    function showDetailPayment(){
+        /*가격 계산*/
+        var datas = $("#form-currentnote").serializeArray(); //JSON.stringify(
+        //console.log("111111 "+datas);
+        $.request('onCalcFee', {
+            update: { 'cook/paper-calculator': '#div_brief' },
+            data: datas,
+        })
+    }
+
+    $(document).ready(function(){
+
+        setFormInputData();
+        setAreaDisplay();
+        showDetailPayment();
+        /*수량 변경시 가격 계산*/
+        var previous;
+        $("#select_amount").change(function() {
+            var note_part = $(this).find("option:selected").val();
+            if(note_part == "소량"){
+                //$(this).find("option[value="+previous+"]").prop("selected", true);
+                $('#modal소량주문').modal('show');
+            }else $("#input-수량").val( note_part );
+            showDetailPayment(); /*가격 계산 paper.note.htm */
+        });
+
+        $("#select-제본").change(function() {
+            if( $(this).val() == "스프링" ) $("#div합지").show();
+            else $("#div합지").hide();
+            if( $(this).val() == "양장" ) {
+                $("#select-표지-용지").val('스노우').prop('disabled', true);
+                $("#select-표지-평량").val('180g').prop('disabled', true);
+            } else{
+                $("#select-표지-용지").prop('disabled', false);
+                $("#select-표지-평량").prop('disabled', false);
+            }
+
+        });
+
+        $(".select_part").change(function(){
+            setFormInputData();
+            setAreaDisplay();
+            showDetailPayment();
+        });
+
+        /*따라다니는 메뉴*/
+        var isMobile = true;
+        if($(window).innerWidth() >= 760) {
+            //if (window.matchMedia("(min-width: 760px)").matches) { // matchMedia는 ex 10, 11만됨
+            isMobile = false;
+        }
+        if(isMobile == false){
+            /*var floatPosition1 = parseInt($("#area이미지").css('top'));// 250px 에서 숫자만
+             $(window).scroll(function() {
+             var newPosition = $(window).scrollTop() + floatPosition1 + "px"; // 현재 스크롤 위치를 가져온다.
+             $("#area이미지").css('top', newPosition);
+             });*/
+
+            var floatPosition2 = $("#area견적서").css('top'); //parseInt(.css('top'));// Exp에서 'auto'라고 나옴 / 250px 에서 숫자만
+            //var floatPosition2 = parseInt($("#area견적서").position().top); //parseInt(.css('top'));// Exp에서 'auto'라고 나옴 / 250px 에서 숫자만
+            if(floatPosition2 == 'auto') floatPosition2 = 0; //ex때문에
+            else floatPosition2 = parseInt(floatPosition2);
+            $(window).scroll(function() {
+                var newPosition = $(window).scrollTop() + floatPosition2 + "px"; // 현재 스크롤 위치를 가져온다.
+                $("#area견적서").css('top', newPosition);
+            });
+
+            $("#leftimg-1").css("height", "300px");
+            $("#leftimg-2").css("height", "200px");
+            $("#leftimg-3").css("height", "200px");
+        }else{
+            $("#leftimg-1").css("height", "150px");
+            $("#leftimg-2").css("height", "150px");
+            $("#leftimg-3").css("height", "150px");
+
+        }
+    })
+</script>
+
+<style>
+
+    #cookdesk-center {border-left:0px solid gray;border-right:0px solid gray;min-height:100px;}
+    #area이미지 {padding:5px;}
+    #area노트조합기 {
+        padding:5px 10px 5px 10px;
+        border-left:0px solid gray;
+        margin-top:10px;
+    }
+    #area노트조합기_안쪽 {
+        padding:5px 15px 10px  15px;background-color:white;opacity:0.75;
+    }
+    #area견적서 {padding:0px;border:1px solid gray;border-bottom:1px solid gray;}
+    .cook-step {text-align:left;clear:both;display:block;padding:5px;border-bottom:1px dotted gray; ;}
+    .cook-step:hover {background-color:#eee;cursor:pointer;}
+    .part_title {font-size:1em;color:black;}
+    .part_selected {font-size:0.8em;letter-spacing: -1px;}
+    #title-left-top { text-align:center;color:white;background-color:tomato;padding:10px; }
+    #title-right-top { text-align:center;color:white;background-color:tomato;padding:10px; }
+    #title-right-btm { text-align:center;color:white;background-color:tomato;padding:10px; }
+    .input-current {width:100%;border:0px solid red;}
+
+    #leftimg-1 {
+        height:300px;
+        margin-bottom:10px;
+        border:1px solid gray;
+        background-size:cover;
+    }
+    #leftimg-2 {
+        height:200px;
+        border:1px solid gray;
+        background-size:cover;
+    }
+    #leftimg-3 {
+        height:200px;
+        border:1px solid gray;
+        background-size:cover;
+    }
+    .step_title {border-bottom:2px solid #308fc6;padding:4px;margin-bottom:10px;}
+
+    .step_content {font-size:11pt;}
+    .step_content_title {text-align:center;padding:3px 0;font-weight:bold;color: #909090;}
+    .step_content_row {margin-top:0px;margin-bottom:3px;}
+
+    #bodyWrap {
+        background-image:url('{{ "assets/images/cook/site/주문페이지/노트요리사_주문_BG.jpg"|theme }}');
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position:right top;
+        background-size:auto 100% ;
+    }
+    #area노트조합기 div {
+        font-family:'Malgun Gothic','맑은고딕','Nanum Gothic';color: #505050;font-size:20px;font-weight:300;
+    }
+    #area노트조합기 div.step_content_title {
+        font-size:14px;
+    }
+    .form-control {padding:0px 12px;height:28px;line-height: 28px;}
+    select.input-sm {height:28px; height:28px; }
+</style>
+
+<div id="bodyWrap">
+    <div class="container">
+
+        <form id="form-currentnote" action="/cook/paper/note/order" method="post">
+
+            <input type="hidden" name="제본" id="input-제본"  value=""  />
+            <input type="hidden" name="크기" id="input-크기" value=""  />
+            <input type="hidden" name="크기-내지" id="input-크기-내지" value=""  />
+
+            <input type="hidden" name="표지-스타일" id="input-표지-스타일" value=""  /><!--일반/금은박-->
+            <input type="hidden" name="표지-방식" id="input-표지-방식" value=""  /><!--소프트커버/하드커버 2합..-->
+            <input type="hidden" name="표지-인쇄" id="input-표지-인쇄" value=""  /><!--양면 1도-->
+            <input type="hidden" name="표지-용지" id="input-표지-용지" value=""  /><!--스노우 180g-->
+            <input type="hidden" name="표지-평량" id="input-표지-평량" value=""  /><!--합지 포함 평량-->
+            <input type="hidden" name="표지-코팅" id="input-표지-코팅" value=""  />
+            <input type="hidden" name="표지-합지" id="input-표지-합지" value=""  />
+
+            <!--<input type="hidden" name="표지-박" id="input-표지-박" value=""  />--><!--1천회 기준 5만원-->
+            <input type="hidden" name="표지-박개수" id="input-표지-박개수" value=""  /><!--1천회 기준 5만원-->
+            <input type="hidden" name="표지-날개" id="input-표지-날개" value=""  />
+
+            <input type="hidden" name="삽지-용지" id="input-삽지-용지" value=""  />
+            <input type="hidden" name="삽지-인쇄" id="input-삽지-인쇄" value=""  />
+            <input type="hidden" name="삽지-평량" id="input-삽지-평량" value=""  />
+            <input type="hidden" name="삽지-매수" id="input-삽지-매수" value=""  />
+
+            <input type="hidden" name="내지-용지" id="input-내지-용지" value=""  />
+            <input type="hidden" name="내지-인쇄" id="input-내지-인쇄" value=""  />
+            <input type="hidden" name="내지-평량" id="input-내지-평량" value=""  />
+            <input type="hidden" name="내지-매수" id="input-내지-매수" value=""  />
+
+            <input type="hidden" name="데코-라운딩" id="input-데코-라운딩" value=""  />
+            <input type="hidden" name="데코-라벨스틱" id="input-데코-라벨스틱" value=""  />
+            <input type="hidden" name="데코-OPP" id="input-데코-OPP" value=""  />
+
+            <input type="hidden" name="배송" id="input-배송" value=""  />
+
+            <input type="hidden" name="수량" id="input-수량" value=""  />
+
+            <input type="hidden" name="디자인" id="input-디자인" value=""  />
+
+
+        </form>
+
+        <div id="area_top" class="row" style="font-size:11pt;padding:5px;border-top:2px solid #555;border-bottom:2px solid #555;">
+            <div class="col-sm-5">
+                주문관리 (견적발송)
+            </div>
+            <div class="col-sm-7 text-right">
+                <span style="margin:0px 25px;"></span>
+                <span style="">문의 1661-5521</span>
+            </div>
+        </div>
+        <div id="area_top_banner" class="row">
+
+        </div>
+
+
+        <div id="area전체" class="row">
+
+            <div class="col-sm-5" id="area이미지" style="">
+                {% component "Orders" %}
+
+
+            </div>
+
+            <div class="col-sm-5" id="area노트조합기">
+                {% component "Notecooker" %}
+
+            </div>
+
+
+
+            <div class="col-sm-2" id="area견적서" style="margin-top:15px;background-color:#ffffff;">
+                <div style="padding-top:0px;text-align:center;">
+
+                </div>
+
+                <div style="">
+                    <!--position:fixed;right:5px;bottom:5px;border-radius:5px;-->
+                    <form>
+                        <input type="hidden" name="제본" />
+                        <input type="hidden" name="크기" />
+                        <input type="hidden" name="표지" />
+                        <input type="hidden" name="내지" />
+                        <input type="hidden" name="데코" />
+                    </form>
+                </div>
+
+                <!--견적서부분-->
+                <div id="div_brief" style=""></div>
+
+
+                <div id="">
+                    <a href="javascript:$('#form-currentnote').submit();" class="btn btn-primary btn-lg" style="display:block;margin:4px;ss">견적 발송</a>
+
+                </div>
+            </div>
+
+        </div><!--row-->
+
+
+        <div class="col-sm-12" id="cookdesk-center">
+
+
+        </div>
+
+    </div>
+</div>
+
+
+
+<div class="control-popup modal fade" id="modal소량주문" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">1천권 미만 주문방법</h4>
+            </div>
+            <div class="modal-body" style="font-size:11pt;">
+                <div>소량 주문시, 기존 제작된 제품에 금박, 은박, 먹박 작업만 가능합니다.</div>
+                <div>샘플페이지에서 제품을 선택해주세요!</div>
+                <div>(최소 100권 부터 가능)</div>
+            </div>
+            <div class="modal-footer">
+                <a href="/sample/paper/note" class="btn btn-primary">샘플페이지로</a>
+                <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+            </div>
+        </div>
+    </div>
+</div>
+
