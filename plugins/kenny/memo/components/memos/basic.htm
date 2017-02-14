@@ -1,0 +1,15 @@
+{% for memo in memos %}
+<li class="list-group-memo">
+    <input type="hidden" name="memos[]" value="{{ memo }}" />
+
+    {{ memo.user_id.name }} <!--user테이블의 id값의 name 을 자동 읽게 하자.-->
+    {{ memo.content }}
+    <small>{{ memo.created_at }}</small>
+
+    <button type="button"
+            class="close pull-right btn메모삭제"
+            aria-hidden="true"
+            class=""
+            onclick="$(this).closest('li').remove()">&times;</button>
+</li>
+{% endfor %}

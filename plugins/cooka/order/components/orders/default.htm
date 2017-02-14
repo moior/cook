@@ -17,20 +17,20 @@
         </tr>
         {{ orders.spec }}
         {% for key, item in orders %}
-        <tr class="">
+        <tr class="tr주문" data-id="{{ item.id }}">
             <td>
                 <small>{{ item.created_at|slice(5,5) }}</small>
             </td>
             <td >
-
-
-                {{ item.title }}
-                {% if item.name %}
-                / 성함 : {{ item.name }}
-                {% endif %}
-                {% if item.phone %}
-                / 폰 : {{ item.phone|slice(-4) }}
-                {% endif %}
+                <span class="span주문제목">
+                    {{ item.title }}
+                    {% if item.name %}
+                    / 성함 : {{ item.name }}
+                    {% endif %}
+                    {% if item.phone %}
+                    / 폰 : {{ item.phone|slice(-4) }}
+                    {% endif %}
+                </span>
                 <br/>
                 {% if item.addr %}
                     배송주소 : {{ item.addr|slice(0,6) }}<br/>

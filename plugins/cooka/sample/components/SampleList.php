@@ -39,7 +39,10 @@ class SampleList extends ComponentBase
     public function onRun()
     {
 
+        /*일반 로그인*/
         $user = Auth::getUser(); //$user["email"]. $user->name; //
+
+
         $imgdata = array();
 
         /*DB에 있는것 부름. 나중 위에 파일기반은 삭제해야함.*/

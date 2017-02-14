@@ -1,0 +1,19 @@
+
+
+
+{{ form_open({ request: 'Memos::onNewMemo' }) }}
+    <!--모델명..-->
+    <input type="hidden" name="attach_type" value="{{ attach_type }}" />
+    <input type="hidden" name="attach_id" value="{{ attach_id }}"  />
+
+    <div class="row" id="any메모">
+        <div id="any메모_입력" class="col-xs-12 ">
+            <textarea name="content" id="textarea메모" rows="6"
+                      placeholder="메모입력"
+                      class="form-control"></textarea>
+        </div>
+        <div id="any메모_버튼" class="col-xs-12">
+            <button type="submit" class="form-control">입력</button>
+        </div>
+    </div>
+{{ form_close() }}

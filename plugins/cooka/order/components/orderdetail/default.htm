@@ -1,0 +1,93 @@
+
+<style>
+    .table td, .table th {}
+</style>
+<!--<form data-request="{{ __SELF__ }}::onOrderPaper">
+여기서는 __self__하면되네
+</form>-->
+<div class="div-order">
+    <p></p>
+    {% if order %}
+        <div class="">
+            {% if order.name %}
+            <h5>{{ order.name }}님의 주문정보</h5>
+            {% endif %}
+
+            <div>주문시각 : {{ order.created_at }}</div>
+            <div>{{ order.title }}</div>
+            {% if order.phone %}
+            <div>폰 : <a href="tel:{{ order.phone }}">{{ order.phone }}</a></div>
+            {% endif %}
+            {% if order.email %}
+            <div>메일 : <a href="mailto:{{ order.email }}">{{ order.email }}</a></div>
+            {% endif %}
+
+            {% if order.addr %}
+            <div>배송주소 : {{ order.addr }}</div>
+            {% endif %}
+
+            {{ order.spec }}
+
+            <div style="border-bottom:1px dotted gray;">메모 : {{ order.comment|nl2br }}</div>
+            <div style="border-bottom:1px dotted gray;">
+                <a href="/sample/detail/{{ order.sample_code }}" target="_blank">
+                    샘플 : {{ order.sample_code }}
+                </a>
+            </div>
+
+            <div>
+                주문금액 :
+                {% if order.fee_offer == 0 %}
+                    미확정
+                {% else %}
+                    {{ order.fee_offer|number_format }}
+                {% endif %}
+            </div>
+            <div>
+                상태 :
+                <small>{{ order.status_show?:"확인중"  }}</small>
+            </div>
+
+        </div>
+        <br/>
+        <!--첨부파일이 있으면 -->
+        {% if upload_file_arr[key] %}
+        <a href="{{upload_file_arr[key]}}" target="_blank">파일</a>
+        {% endif %}
+        {% if order.bill %}
+
+        <a href="javascript:void(0);" onclick="$(this).next('.div상세견적서보기').toggle();">
+            견적서
+        </a>
+        <div id="" class="div상세견적서보기" style="display:none;background-color:#efefef;">
+            <!--DB에 저장되어 있는 정보-->
+            <small>{{ order.bill|raw  }}</small>
+        </div>
+        {% endif %}
+
+
+
+        {% if cook_data %}
+        <a href="javascript:void(0);" onclick="$(this).next('.div상세주문내용보기').toggle();">
+            [스펙상세]
+        </a>
+            <div id="" class="div상세주문내용보기"
+                 style="display:none;background-color:#efefef;padding:10px; font-size:0.8em;">
+            <!--DB에 저장되어 있는 정보-->
+            <table class="table table-sm">
+                {% for key2, cook_data__ in cook_data %}
+                <tr>
+                    <td>{{ key2 }}</td>
+                    <td>{{ cook_data__ }} </td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+
+        {% endif %}
+
+    {% else %}
+        <h5>리스트에서 클릭해주세요</h5>
+    {% endif %}
+
+</div>

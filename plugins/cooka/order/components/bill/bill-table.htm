@@ -6,7 +6,9 @@
     {{ posts.제본 }}
 {% endfor%}-->
 <style>
-    #div견적서html {background-color:white;padding:10px 0px;font-size:9pt;}
+    #div견적서html {
+        background-color:white;padding:10px 0px;font-size:9pt;
+    }
     #number_payment {color:tomato;font-size:1.5em;font-weight:bold;}
     .step-final-title {padding:2px 5px;font-weight:bold;font-size:1.1em;line-height:130%;word-break:break-all;}
     .step-final-content {text-align:left;overflow-x:hidden;}
@@ -17,11 +19,12 @@
         padding-right: 0 !important;
     }
 
+
 </style>
 
 <!--최종 db에 넣을 용도-->
 <input type="hidden" name="cook_data" id="" value="{{ total_data|json_encode }}" />
-<input type="hidden" name="fee_offer" value="{{ 합계금액 }}" />
+<input type="hidden" name="fee_offer" value="{{ 합계금액 }}" id="input견적합계액"/>
 
 <div id="div견적서html" class="">
 

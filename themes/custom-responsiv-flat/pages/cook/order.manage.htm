@@ -5,12 +5,27 @@ is_hidden = 0
 
 
 [Orders]
+[OrderDetail]
+id = {{ :orderno }}
+
+[Memos]
+attach_type = "Order"
+attach_id = {{ :orderno }}
+
 [Notecooker]
+
+[Invoices]
 
 [session]
 ==
 <?php
 /*use Symfony\Component\HttpFoundation\File\File as FileObj;*/
+
+
+function onInit()
+{
+    $this["orderno"] = $this->param('orderno'); //파라매터 받는법?
+}
 
 function onStart()
 {
@@ -64,8 +79,17 @@ function onCalcFee(){
         })
     }
 
-    $(document).ready(function(){
+    function invoceFormSubmit(){
+        /*가격 계산*/
+        //var datas = $("#form-currentnote").serializeArray(); //JSON.stringify(
+        var datas = JSON.stringify( $("#form-currentnote").serializeArray() );
+        $("#inputCookaData").val(datas);
+        $("#inputBill").val($("#div견적서html").html());
+        $("#inputFee").val( $("#input견적합계액").val() );
 
+    }
+
+    $(document).ready(function(){
         setFormInputData();
         setAreaDisplay();
         showDetailPayment();
@@ -99,6 +123,13 @@ function onCalcFee(){
             showDetailPayment();
         });
 
+        /* Orders 플러그인에 쓰이는 jquery */
+        $(".span주문제목").click(function(){
+            location.href="/order/manage/" + $(this).parents(".tr주문").data("id");
+        })
+
+        /* Orders 플러그인에 쓰이는 jquery 끝 */
+
         /*따라다니는 메뉴*/
         var isMobile = true;
         if($(window).innerWidth() >= 760) {
@@ -121,15 +152,17 @@ function onCalcFee(){
                 $("#area견적서").css('top', newPosition);
             });
 
-            $("#leftimg-1").css("height", "300px");
-            $("#leftimg-2").css("height", "200px");
-            $("#leftimg-3").css("height", "200px");
         }else{
-            $("#leftimg-1").css("height", "150px");
-            $("#leftimg-2").css("height", "150px");
-            $("#leftimg-3").css("height", "150px");
 
         }
+
+        /*Memo 플러그인 전용 JS*/
+        $(".btn메모삭제").click(function(){
+            if( confirm("메모를 삭제할까요? (지금은 안됨)") ){
+                //메모 삭제 로직
+            }
+        })
+
     })
 </script>
 
@@ -142,40 +175,8 @@ function onCalcFee(){
         border-left:0px solid gray;
         margin-top:10px;
     }
-    #area노트조합기_안쪽 {
-        padding:5px 15px 10px  15px;background-color:white;opacity:0.75;
-    }
+
     #area견적서 {padding:0px;border:1px solid gray;border-bottom:1px solid gray;}
-    .cook-step {text-align:left;clear:both;display:block;padding:5px;border-bottom:1px dotted gray; ;}
-    .cook-step:hover {background-color:#eee;cursor:pointer;}
-    .part_title {font-size:1em;color:black;}
-    .part_selected {font-size:0.8em;letter-spacing: -1px;}
-    #title-left-top { text-align:center;color:white;background-color:tomato;padding:10px; }
-    #title-right-top { text-align:center;color:white;background-color:tomato;padding:10px; }
-    #title-right-btm { text-align:center;color:white;background-color:tomato;padding:10px; }
-    .input-current {width:100%;border:0px solid red;}
-
-    #leftimg-1 {
-        height:300px;
-        margin-bottom:10px;
-        border:1px solid gray;
-        background-size:cover;
-    }
-    #leftimg-2 {
-        height:200px;
-        border:1px solid gray;
-        background-size:cover;
-    }
-    #leftimg-3 {
-        height:200px;
-        border:1px solid gray;
-        background-size:cover;
-    }
-    .step_title {border-bottom:2px solid #308fc6;padding:4px;margin-bottom:10px;}
-
-    .step_content {font-size:11pt;}
-    .step_content_title {text-align:center;padding:3px 0;font-weight:bold;color: #909090;}
-    .step_content_row {margin-top:0px;margin-bottom:3px;}
 
     #bodyWrap {
         background-image:url('{{ "assets/images/cook/site/주문페이지/노트요리사_주문_BG.jpg"|theme }}');
@@ -184,59 +185,12 @@ function onCalcFee(){
         background-position:right top;
         background-size:auto 100% ;
     }
-    #area노트조합기 div {
-        font-family:'Malgun Gothic','맑은고딕','Nanum Gothic';color: #505050;font-size:20px;font-weight:300;
-    }
-    #area노트조합기 div.step_content_title {
-        font-size:14px;
-    }
-    .form-control {padding:0px 12px;height:28px;line-height: 28px;}
-    select.input-sm {height:28px; height:28px; }
+
+
 </style>
 
 <div id="bodyWrap">
     <div class="container">
-
-        <form id="form-currentnote" action="/cook/paper/note/order" method="post">
-
-            <input type="hidden" name="제본" id="input-제본"  value=""  />
-            <input type="hidden" name="크기" id="input-크기" value=""  />
-            <input type="hidden" name="크기-내지" id="input-크기-내지" value=""  />
-
-            <input type="hidden" name="표지-스타일" id="input-표지-스타일" value=""  /><!--일반/금은박-->
-            <input type="hidden" name="표지-방식" id="input-표지-방식" value=""  /><!--소프트커버/하드커버 2합..-->
-            <input type="hidden" name="표지-인쇄" id="input-표지-인쇄" value=""  /><!--양면 1도-->
-            <input type="hidden" name="표지-용지" id="input-표지-용지" value=""  /><!--스노우 180g-->
-            <input type="hidden" name="표지-평량" id="input-표지-평량" value=""  /><!--합지 포함 평량-->
-            <input type="hidden" name="표지-코팅" id="input-표지-코팅" value=""  />
-            <input type="hidden" name="표지-합지" id="input-표지-합지" value=""  />
-
-            <!--<input type="hidden" name="표지-박" id="input-표지-박" value=""  />--><!--1천회 기준 5만원-->
-            <input type="hidden" name="표지-박개수" id="input-표지-박개수" value=""  /><!--1천회 기준 5만원-->
-            <input type="hidden" name="표지-날개" id="input-표지-날개" value=""  />
-
-            <input type="hidden" name="삽지-용지" id="input-삽지-용지" value=""  />
-            <input type="hidden" name="삽지-인쇄" id="input-삽지-인쇄" value=""  />
-            <input type="hidden" name="삽지-평량" id="input-삽지-평량" value=""  />
-            <input type="hidden" name="삽지-매수" id="input-삽지-매수" value=""  />
-
-            <input type="hidden" name="내지-용지" id="input-내지-용지" value=""  />
-            <input type="hidden" name="내지-인쇄" id="input-내지-인쇄" value=""  />
-            <input type="hidden" name="내지-평량" id="input-내지-평량" value=""  />
-            <input type="hidden" name="내지-매수" id="input-내지-매수" value=""  />
-
-            <input type="hidden" name="데코-라운딩" id="input-데코-라운딩" value=""  />
-            <input type="hidden" name="데코-라벨스틱" id="input-데코-라벨스틱" value=""  />
-            <input type="hidden" name="데코-OPP" id="input-데코-OPP" value=""  />
-
-            <input type="hidden" name="배송" id="input-배송" value=""  />
-
-            <input type="hidden" name="수량" id="input-수량" value=""  />
-
-            <input type="hidden" name="디자인" id="input-디자인" value=""  />
-
-
-        </form>
 
         <div id="area_top" class="row" style="font-size:11pt;padding:5px;border-top:2px solid #555;border-bottom:2px solid #555;">
             <div class="col-sm-5">
@@ -255,13 +209,23 @@ function onCalcFee(){
         <div id="area전체" class="row">
 
             <div class="col-sm-5" id="area이미지" style="">
-                {% component "Orders" %}
+                <div id="area주문정보">
 
+                    {% component "OrderDetail" %}
+                    {% component "Memos" %}
+
+                </div>
+
+                <h3>전체 리스트</h3>
+                {% component "Orders" %}
 
             </div>
 
-            <div class="col-sm-5" id="area노트조합기">
-                {% component "Notecooker" %}
+            <div class="col-sm-5" id="">
+
+                <div id="area노트조합기">
+                    {% component "Notecooker" %}
+                </div>
 
             </div>
 
@@ -272,25 +236,36 @@ function onCalcFee(){
 
                 </div>
 
-                <div style="">
-                    <!--position:fixed;right:5px;bottom:5px;border-radius:5px;-->
-                    <form>
-                        <input type="hidden" name="제본" />
-                        <input type="hidden" name="크기" />
-                        <input type="hidden" name="표지" />
-                        <input type="hidden" name="내지" />
-                        <input type="hidden" name="데코" />
-                    </form>
-                </div>
+
 
                 <!--견적서부분-->
                 <div id="div_brief" style=""></div>
 
-
                 <div id="">
-                    <a href="javascript:$('#form-currentnote').submit();" class="btn btn-primary btn-lg" style="display:block;margin:4px;ss">견적 발송</a>
+                    <!--position:fixed;right:5px;bottom:5px;border-radius:5px;-->
+                    {{ form_ajax('Invoices::onSendInvoice',
+                    {
+                    success:"alert('발송 완료되었습니다.')",
+                    redirect:"/order/manage/" ~ orderno,
+                    }
+                    ) }}
+                        <input type="hidden" name="order_id" id="" value="{{ orderno }}"/>
+                        <input type="hidden" name="cook_data" id="inputCookaData" />
+                        <input type="hidden" name="bill" id="inputBill" />
+                        <input type="hidden" name="fee" id="inputFee" />
+
+                        <input type="text" name="name" placeholder="성함" class="form-control" value="{{ order.name }}"/>
+                        <input type="text" name="email" placeholder="이메일" class="form-control" value="{{ order.email }}"/>
+                        <input type="text" name="phone" placeholder="전화번호" class="form-control" value="{{ order.phone }}" />
+
+                        <textarea name="content" placeholder="기타사항" class="form-control"></textarea>
+                        <button type="submit" onclick="invoceFormSubmit();" class="btn btn-primary btn-lg" style="display:block;margin:4px;"  data-attach-loading>
+                            견적 발송
+                        </button>
+                    {{ form_close() }}
 
                 </div>
+
             </div>
 
         </div><!--row-->
@@ -304,25 +279,4 @@ function onCalcFee(){
     </div>
 </div>
 
-
-
-<div class="control-popup modal fade" id="modal소량주문" tabindex="-1" role="dialog">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">1천권 미만 주문방법</h4>
-            </div>
-            <div class="modal-body" style="font-size:11pt;">
-                <div>소량 주문시, 기존 제작된 제품에 금박, 은박, 먹박 작업만 가능합니다.</div>
-                <div>샘플페이지에서 제품을 선택해주세요!</div>
-                <div>(최소 100권 부터 가능)</div>
-            </div>
-            <div class="modal-footer">
-                <a href="/sample/paper/note" class="btn btn-primary">샘플페이지로</a>
-                <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
-            </div>
-        </div>
-    </div>
-</div>
 

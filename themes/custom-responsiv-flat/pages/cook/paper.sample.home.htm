@@ -16,7 +16,7 @@ search = "{{:search}}"
 use Backend\Facades\BackendAuth;
 
 function onInit(){
-    $this['search_text'] = $this->param('search');
+    $this['search_text'] = $this->param('search'); //파라매터 받는법
 
     /*관리자 로그인이랑, 일반회원 로그인 로직이 완전 다른듯. Admin은 슈퍼유저.*/
     $user = BackendAuth::getUser();

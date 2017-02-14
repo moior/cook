@@ -1,3 +1,58 @@
+<style>
+    #area노트조합기_안쪽 {
+        font-family:'Malgun Gothic','맑은고딕','Nanum Gothic';color: #505050;font-size:20px;font-weight:300;
+        padding:5px 15px 10px  15px;background-color:white;opacity:0.75;
+    }
+    .step_title {border-bottom:2px solid #308fc6;padding:4px;margin-bottom:10px;}
+
+    .step_content {font-size:11pt;}
+    .step_content_title {text-align:center;padding:3px 0;font-weight:bold;color: #909090;font-size:14px;}
+    .step_content_row {margin-top:0px;margin-bottom:3px;}
+    #area노트조합기_안쪽 .form-control {padding:0px 12px;height:28px;line-height: 28px;}
+    #area노트조합기_안쪽 select.input-sm {height:28px; height:28px; }
+</style>
+
+<form id="form-currentnote" action="/cook/paper/note/order" method="post">
+
+    <input type="hidden" name="제본" id="input-제본"  value=""  />
+    <input type="hidden" name="크기" id="input-크기" value=""  />
+    <input type="hidden" name="크기-내지" id="input-크기-내지" value=""  />
+
+    <input type="hidden" name="표지-스타일" id="input-표지-스타일" value=""  /><!--일반/금은박-->
+    <input type="hidden" name="표지-방식" id="input-표지-방식" value=""  /><!--소프트커버/하드커버 2합..-->
+    <input type="hidden" name="표지-인쇄" id="input-표지-인쇄" value=""  /><!--양면 1도-->
+    <input type="hidden" name="표지-용지" id="input-표지-용지" value=""  /><!--스노우 180g-->
+    <input type="hidden" name="표지-평량" id="input-표지-평량" value=""  /><!--합지 포함 평량-->
+    <input type="hidden" name="표지-코팅" id="input-표지-코팅" value=""  />
+    <input type="hidden" name="표지-합지" id="input-표지-합지" value=""  />
+
+    <!--<input type="hidden" name="표지-박" id="input-표지-박" value=""  />--><!--1천회 기준 5만원-->
+    <input type="hidden" name="표지-박개수" id="input-표지-박개수" value=""  /><!--1천회 기준 5만원-->
+    <input type="hidden" name="표지-날개" id="input-표지-날개" value=""  />
+
+    <input type="hidden" name="삽지-용지" id="input-삽지-용지" value=""  />
+    <input type="hidden" name="삽지-인쇄" id="input-삽지-인쇄" value=""  />
+    <input type="hidden" name="삽지-평량" id="input-삽지-평량" value=""  />
+    <input type="hidden" name="삽지-매수" id="input-삽지-매수" value=""  />
+
+    <input type="hidden" name="내지-용지" id="input-내지-용지" value=""  />
+    <input type="hidden" name="내지-인쇄" id="input-내지-인쇄" value=""  />
+    <input type="hidden" name="내지-평량" id="input-내지-평량" value=""  />
+    <input type="hidden" name="내지-매수" id="input-내지-매수" value=""  />
+
+    <input type="hidden" name="데코-라운딩" id="input-데코-라운딩" value=""  />
+    <input type="hidden" name="데코-라벨스틱" id="input-데코-라벨스틱" value=""  />
+    <input type="hidden" name="데코-OPP" id="input-데코-OPP" value=""  />
+
+    <input type="hidden" name="배송" id="input-배송" value=""  />
+
+    <input type="hidden" name="수량" id="input-수량" value=""  />
+
+    <input type="hidden" name="디자인" id="input-디자인" value=""  />
+
+
+</form>
+
 <div id="area노트조합기_안쪽">
 
     <!--<div id="title-cate" style="padding-left:5px;">

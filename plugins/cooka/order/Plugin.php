@@ -25,6 +25,7 @@ class Plugin extends PluginBase
         return [
             '\Cooka\Order\Components\Bill' => 'Bill',
             '\Cooka\Order\Components\Orders' => 'Orders',
+            '\Cooka\Order\Components\OrderDetail' => 'OrderDetail',
             '\Cooka\Order\Components\Notecooker' => 'Notecooker'
         ];
     }
