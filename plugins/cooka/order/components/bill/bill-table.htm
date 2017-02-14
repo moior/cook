@@ -6,10 +6,11 @@
     {{ posts.제본 }}
 {% endfor%}-->
 <style>
+    /*이메일로 견적서가 발송됨. html에 삽입되어야 css가능*/
     #div견적서html {
         background-color:white;padding:10px 0px;font-size:9pt;
     }
-    #number_payment {color:tomato;font-size:1.5em;font-weight:bold;}
+    #number_payment {}
     .step-final-title {padding:2px 5px;font-weight:bold;font-size:1.1em;line-height:130%;word-break:break-all;}
     .step-final-content {text-align:left;overflow-x:hidden;}
     .step-final-content2 {border-bottom:1px dotted gray;}
@@ -19,6 +20,7 @@
         padding-right: 0 !important;
     }
 
+    #div견적나열 {padding:2px 8px; font-weight: bold;}
 
 </style>
 
@@ -28,8 +30,54 @@
 
 <div id="div견적서html" class="">
 
-    <div class="final-title text-center" style="font-weight:bold;font-size:1.2em;">견 적 서</div>
-    <div class=" bill-row">
+    <div class="final-title"
+         style="text-align:center;font-weight:bold;font-size:1.2em;border-bottom:1px solid #b4b4b4;">
+        견 적 서
+    </div>
+
+    {% if total_data["수량"] %}
+    <div class="" id="div견적나열" style="border-bottom:1px solid #b4b4b4;">
+        <div class="" style="word-break: break-all;">
+                {{ total_data["크기"] }}
+                {{ total_data["제본"] }}
+
+                {{ total_data["수량"] }}권
+
+                / 표지 :
+                    {{ total_data["표지-용지"] }}
+                    {{ total_data["표지-평량"] }}
+                    {{ total_data["표지-합지"] }}
+                    {{ total_data["표지-인쇄"] }}
+                    {{ total_data["표지-박"] }}
+                    {{ total_data["표지-코팅"] }}
+                {% if total_data["삽지-매수"] %}
+                    / 삽지 :
+                        {{ total_data["삽지-용지"] }}
+                        {{ total_data["삽지-평량"] }}
+                        {{ total_data["삽지-인쇄"] }}
+                        {{ total_data["삽지-매수"] }}장
+                {% endif %}
+                / 내지 :
+                    {{ total_data["내지-용지"] }}
+                    {{ total_data["내지-평량"] }}
+                    {{ total_data["내지-인쇄"] }}
+                    {{ total_data["내지-매수"] }}장
+                /   {{ total_data["디자인"] }}
+                {% if total_data["데코-라벨스틱"] %}
+                    /   {{ total_data["데코-라벨스틱"] }}
+                {% endif %}
+                {% if total_data["데코-라운딩"] %}
+                    /   {{ total_data["데코-라운딩"] }}
+                {% endif %}
+                {% if total_data["데코-OPP"] %}
+                    /   {{ total_data["데코-OPP"] }}
+                {% endif %}
+
+        </div>
+    </div>
+    {% endif %}
+
+    <div class="bill-row">
 
         <div class="col-xs-2 text-center">
             <div class="step-final-title">표지</div>
@@ -57,6 +105,8 @@
         </div>
     </div>
 
+
+    {% if total_data["삽지-매수"] %}
     <div class=" bill-row">
         <div class="col-xs-2 text-center">
             <div class="step-final-title">삽지</div>
@@ -70,6 +120,9 @@
             </div>
         </div>
     </div>
+    {% endif %}
+
+
     <div class=" bill-row">
         <div class="col-xs-2 text-center">
             <div class="step-final-title">내지</div>
@@ -110,7 +163,7 @@
 
     <div class="text-center">
         <p>
-            <span id="number_payment">{{ 합계금액|number_format() }}</span>원
+            <span id="number_payment" style="color:tomato;font-size:1.5em;font-weight:bold;">{{ 합계금액|number_format() }}</span>원
         </p>
         <div style="font-size:0.7em;margin-top:-20px;text-align:center;">VAT별도</div>
 

@@ -77,8 +77,10 @@ function onCalcFee(){
         var datas = $("#form-currentnote").serializeArray(); //JSON.stringify(
         //console.log("111111 "+datas);
         $.request('onCalcFee', {
-            update: { 'cook/paper-calculator': '#div_brief' },
             data: datas,
+
+            update: { 'cook/paper-calculator': '#div_brief' },
+
         })
     }
 
