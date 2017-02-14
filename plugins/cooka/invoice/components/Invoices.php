@@ -99,7 +99,7 @@ class Invoices extends ComponentBase
             $memo = new Memo;
             $memo->attach_type = "Order";
             $memo->attach_id = $invoice->order_id;
-            $memo->content = "견적서 발송함. 총액: ".number_format(ceil($invoice->fee))."원. ".date("Y-m-d H:i");
+            $memo->content = "견적서 발송 (총액: ".number_format(ceil($invoice->fee))."원) ";
             $memo->save();
         }
     }
