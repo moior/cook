@@ -12,6 +12,62 @@
     #area노트조합기_안쪽 select.input-sm {height:28px; height:28px; }
 </style>
 
+<script>
+function setFormInputData(){
+    $(".select_part").each(function(){
+        $("#input-" + $(this).attr("name")).val(
+            $(this).find("option:selected").val()
+        );
+    });
+}
+function setAreaDisplay(){
+    var quantity = $("#select_amount option:selected").val();
+    if( quantity == "" || quantity == '소량') {
+        $(".div_파트선택영역").hide();
+        $("#div_삽지영역").hide();
+    }else{
+        $(".div_파트선택영역").show();
+        if( $("#checkbox_삽지있음").prop("checked") == true ){
+            $("#div_삽지영역").show();
+        }else $("#div_삽지영역").hide();
+    }
+    if( $("#select-제본 option:selected").val() == "스프링") {
+        $("#select-데코-라벨스틱").prop("disabled", false);
+    }else $("#select-데코-라벨스틱").prop("disabled", true);
+}
+
+
+$(document).ready(function(){
+    setFormInputData(); /*플러그인 함수*/
+    setAreaDisplay(); /*플러그인 함수*/
+
+    /*수량 변경시 가격 계산*/
+    var previous;
+    $("#select_amount").change(function() {
+        var note_part = $(this).find("option:selected").val();
+        if(note_part == "소량"){
+            //$(this).find("option[value="+previous+"]").prop("selected", true);
+            $('#modal소량주문').modal('show');
+        }else $("#input-수량").val( note_part );
+        showDetailPayment(); /*가격 계산 paper.note.htm */
+    });
+
+    $("#select-제본").change(function() {
+        setImageUrl();
+        if( $(this).val() == "스프링" ) $("#div합지").show();
+        else $("#div합지").hide();
+        if( $(this).val() == "양장" ) {
+            $("#select-표지-용지").val('스노우').prop('disabled', true);
+            $("#select-표지-평량").val('180g').prop('disabled', true);
+        } else{
+            $("#select-표지-용지").prop('disabled', false);
+            $("#select-표지-평량").prop('disabled', false);
+        }
+    });
+
+});
+</script>
+
 <form id="form-currentnote" action="/cook/paper/note/order" method="post">
 
     <input type="hidden" name="제본" id="input-제본"  value=""  />

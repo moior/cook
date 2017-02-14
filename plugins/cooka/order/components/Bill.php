@@ -148,7 +148,7 @@ class Bill extends ComponentBase
             $this->page["내지_종이값"] +    $this->page["내지_인쇄비"] +    $this->page["내지_판비"] +
 
             $this->page["제본비"] +    $this->page["라운딩비"] +    $this->page["포장비"] +   $this->page["라벨작업비"] +
-            $this->page["디자인비"]  ;
+            $this->page["디자인비"] + $this->page["노임비"]  ;
         /*$this->page["디자인_표지"] +    $this->page["디자인_삽지"] +    $this->page["디자인_내지"] ;*/
         //$final = FeeCalculator::feeNote(); // + 제단비() + 제본비() + 포장비() + 배송비();
         $this->page['합계금액'] = $final;

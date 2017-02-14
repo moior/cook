@@ -93,29 +93,7 @@ function onCalcFee(){
         setFormInputData();
         setAreaDisplay();
         showDetailPayment();
-        /*수량 변경시 가격 계산*/
-        var previous;
-        $("#select_amount").change(function() {
-            var note_part = $(this).find("option:selected").val();
-            if(note_part == "소량"){
-                //$(this).find("option[value="+previous+"]").prop("selected", true);
-                $('#modal소량주문').modal('show');
-            }else $("#input-수량").val( note_part );
-            showDetailPayment(); /*가격 계산 paper.note.htm */
-        });
 
-        $("#select-제본").change(function() {
-            if( $(this).val() == "스프링" ) $("#div합지").show();
-            else $("#div합지").hide();
-            if( $(this).val() == "양장" ) {
-                $("#select-표지-용지").val('스노우').prop('disabled', true);
-                $("#select-표지-평량").val('180g').prop('disabled', true);
-            } else{
-                $("#select-표지-용지").prop('disabled', false);
-                $("#select-표지-평량").prop('disabled', false);
-            }
-
-        });
 
         $(".select_part").change(function(){
             setFormInputData();
@@ -221,7 +199,7 @@ function onCalcFee(){
 
             </div>
 
-            <div class="col-sm-5" id="">
+            <div class="col-sm-4" id="">
 
                 <div id="area노트조합기">
                     {% component "Notecooker" %}
@@ -231,43 +209,41 @@ function onCalcFee(){
 
 
 
-            <div class="col-sm-2" id="area견적서" style="margin-top:15px;background-color:#ffffff;">
+            <div class="col-sm-3" id="area견적서" style="margin-top:15px;background-color:#ffffff;">
                 <div style="padding-top:0px;text-align:center;">
 
                 </div>
 
-
-
                 <!--견적서부분-->
                 <div id="div_brief" style=""></div>
 
-                <div id="">
-                    <!--position:fixed;right:5px;bottom:5px;border-radius:5px;-->
-                    {{ form_ajax('Invoices::onSendInvoice',
-                    {
-                    success:"alert('발송 완료되었습니다.')",
-                    redirect:"/order/manage/" ~ orderno,
-                    }
-                    ) }}
-                        <input type="hidden" name="order_id" id="" value="{{ orderno }}"/>
-                        <input type="hidden" name="cook_data" id="inputCookaData" />
-                        <input type="hidden" name="bill" id="inputBill" />
-                        <input type="hidden" name="fee" id="inputFee" />
-
-                        <input type="text" name="name" placeholder="성함" class="form-control" value="{{ order.name }}"/>
-                        <input type="text" name="email" placeholder="이메일" class="form-control" value="{{ order.email }}"/>
-                        <input type="text" name="phone" placeholder="전화번호" class="form-control" value="{{ order.phone }}" />
-
-                        <textarea name="content" placeholder="기타사항" class="form-control"></textarea>
-                        <button type="submit" onclick="invoceFormSubmit();" class="btn btn-primary btn-lg" style="display:block;margin:4px;"  data-attach-loading>
-                            견적 발송
-                        </button>
-                    {{ form_close() }}
-
-                </div>
 
             </div>
 
+            <div id="">
+                <!--position:fixed;right:5px;bottom:5px;border-radius:5px;-->
+                {{ form_ajax('Invoices::onSendInvoice',
+                {
+                success:"alert('발송 완료되었습니다.')",
+                redirect:"/order/manage/" ~ orderno,
+                }
+                ) }}
+                <input type="hidden" name="order_id" id="" value="{{ orderno }}"/>
+                <input type="hidden" name="cook_data" id="inputCookaData" />
+                <input type="hidden" name="bill" id="inputBill" />
+                <input type="hidden" name="fee" id="inputFee" />
+
+                <input type="text" name="name" placeholder="성함" class="form-control" value="{{ order.name }}"/>
+                <input type="text" name="email" placeholder="이메일" class="form-control" value="{{ order.email }}"/>
+                <input type="text" name="phone" placeholder="전화번호" class="form-control" value="{{ order.phone }}" />
+
+                <textarea name="content" placeholder="기타사항" class="form-control" style="height:250px;"></textarea>
+                <button type="submit" onclick="invoceFormSubmit();" class="btn btn-primary btn-lg" style="display:block;margin:4px;"  data-attach-loading>
+                    견적 발송
+                </button>
+                {{ form_close() }}
+
+            </div>
         </div><!--row-->
 
 

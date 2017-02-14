@@ -72,15 +72,18 @@ class Invoices extends ComponentBase
             $invoice->save();
 
             /*이메일 보내기*/
+            if(!$form["name"]) $customer_name = $form["name"];
+            else $customer_name = "고객";
+
             $data = [
-                'name' => $form["name"],
+                'name' => $customer_name,
                 'content' => $form["content"],
                 'bill' => $invoice->bill,
             ];
             $emails = explode(',', $form["email"]);
             foreach( $emails as $key => $email ) {
-                Mail::send('cooka.invoice::mail.sendinvoice', $data, function($message) use ($form, $email) {
-                    $message->to($email, $form["name"]);
+                Mail::send('cooka.invoice::mail.sendinvoice', $data, function($message) use ($customer_name, $email) {
+                    $message->to($email, $customer_name);
                 });
             }
 
@@ -89,7 +92,7 @@ class Invoices extends ComponentBase
             foreach( $phones as $key => $phone ) {
                 $ret = \Kenny\Sms\Components\SmsController::send([
                     /*======================80자======================================================?? */
-                    'text'=>'노트요리사::견적서가 이메일로 발송되었습니다. (총금액:'.$invoice->fee.'원) 노트요리사.com',
+                    'text'=>'노트요리사::견적서가 이메일로 발송되었습니다. (총금액:'.number_format(ceil($invoice->fee)).'원) 노트요리사.com',
                     'from' => '02-1661-5521',
                     'to' => $phone
                 ]);

@@ -11,7 +11,7 @@
         background-color:white;padding:10px 0px;font-size:9pt;
     }
     #number_payment {}
-    .step-final-title {padding:2px 5px;font-weight:bold;font-size:1.1em;line-height:130%;word-break:break-all;}
+    .step-final-title {padding:2px 5px;font-size:1.1em;line-height:130%;word-break:break-all;}
     .step-final-content {text-align:left;overflow-x:hidden;}
     .step-final-content2 {border-bottom:1px dotted gray;}
     /*.bill-row {padding-left:5px;}*/
@@ -20,7 +20,7 @@
         padding-right: 0 !important;
     }
 
-    #div견적나열 {padding:2px 8px; font-weight: bold;}
+    #div견적나열 {padding:2px 8px; }
 
 </style>
 
@@ -38,12 +38,12 @@
     {% if total_data["수량"] %}
     <div class="" id="div견적나열" style="border-bottom:1px solid #b4b4b4;">
         <div class="" style="word-break: break-all;">
-                {{ total_data["크기"] }}
-                {{ total_data["제본"] }}
+                <b>{{ total_data["크기"] }}</b>
+                <b>{{ total_data["제본"] }}</b>
 
-                {{ total_data["수량"] }}권
+                <b>{{ total_data["수량"] }}권</b>
 
-                / 표지 :
+                / <b>표지 :</b>
                     {{ total_data["표지-용지"] }}
                     {{ total_data["표지-평량"] }}
                     {{ total_data["표지-합지"] }}
@@ -51,13 +51,13 @@
                     {{ total_data["표지-박"] }}
                     {{ total_data["표지-코팅"] }}
                 {% if total_data["삽지-매수"] %}
-                    / 삽지 :
+                    / <b>삽지 :</b>
                         {{ total_data["삽지-용지"] }}
                         {{ total_data["삽지-평량"] }}
                         {{ total_data["삽지-인쇄"] }}
                         {{ total_data["삽지-매수"] }}장
                 {% endif %}
-                / 내지 :
+                / <b>내지 :</b>
                     {{ total_data["내지-용지"] }}
                     {{ total_data["내지-평량"] }}
                     {{ total_data["내지-인쇄"] }}
@@ -79,8 +79,8 @@
 
     <div class="bill-row">
 
-        <div class="col-xs-2 text-center">
-            <div class="step-final-title">표지</div>
+        <div class="col-xs-2" style="text-align:center;">
+            <div class="step-final-title" style="font-weight:bold;">표지</div>
         </div>
         <div class="step-final-content col-xs-10">
             <div class="step-final-content2">
@@ -108,8 +108,8 @@
 
     {% if total_data["삽지-매수"] %}
     <div class=" bill-row">
-        <div class="col-xs-2 text-center">
-            <div class="step-final-title">삽지</div>
+        <div class="col-xs-2" style="text-align:center;">
+            <div class="step-final-title" style="font-weight:bold;">삽지</div>
         </div>
         <div class="step-final-content col-xs-10">
             <div class="step-final-content2">
@@ -124,8 +124,8 @@
 
 
     <div class=" bill-row">
-        <div class="col-xs-2 text-center">
-            <div class="step-final-title">내지</div>
+        <div class="col-xs-2" style="text-align:center;">
+            <div class="step-final-title" style="font-weight:bold;">내지</div>
         </div>
         <div class="step-final-content col-xs-10">
             <div class="step-final-content2">
@@ -136,8 +136,8 @@
         </div>
     </div>
     <div class=" bill-row">
-        <div class="col-xs-2 text-center">
-            <div class="step-final-title">작업</div>
+        <div class="col-xs-2" style="text-align:center;">
+            <div class="step-final-title" style="font-weight:bold;">작업</div>
         </div>
         <div class="step-final-content col-xs-10">
             <div class="step-final-content2">
@@ -161,9 +161,10 @@
      </div>
 
 
-    <div class="text-center">
+    <div style="text-align:center;">
         <p>
-            <span id="number_payment" style="color:tomato;font-size:1.5em;font-weight:bold;">{{ 합계금액|number_format() }}</span>원
+            <span id="number_payment" style="color:tomato;font-size:1.5em;font-weight:bold;">
+                {{ 합계금액|number_format() }}</span>원
         </p>
         <div style="font-size:0.7em;margin-top:-20px;text-align:center;">VAT별도</div>
 

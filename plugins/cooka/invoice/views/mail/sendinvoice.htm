@@ -22,11 +22,11 @@ layout = "default"
     </div>
 
     <div style="margin-bottom:20px;">
-        {{- content -}}
+        {{- content|raw|nl2br -}}
     </div>
 
 
-    <div id="" style="border:1px solid gray;margin-bottom:20px;max-width:400px;">
+    <div id="" style="padding:10px;border:1px solid gray;margin-bottom:20px;max-width:400px;">
         {{- bill|raw -}}
     </div>
 

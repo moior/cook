@@ -401,6 +401,7 @@ class FeeCalculator
             4도가 풀컬러. 앞뒤가 다르고 풀컬러이면 8만원*/
     function feeCoverPaper($real = "real", $paper_name = null, $size = null) // 내부확인용
     {   /* 표지는 1권에 2장 */
+        if( ! $this->quantity ) return 0;
         if($real == "real") {
             if( $this->userSetting['크기'][0] == "A" ) $필요한용지 = "국전";
             else if( $this->userSetting['크기'][0] == "B" ) $필요한용지 = "46절";
@@ -684,6 +685,8 @@ class FeeCalculator
     function feeWorking($real = "real")
     {
         $노임비 = $this->danka['노임']['일반'];
+        /*100권기준으로 증액*/
+        $노임비 = $노임비 + $노임비 * $this->quantity / 100 * 0.1;
         return $노임비;
     }
 
