@@ -32,7 +32,12 @@ class Plugin extends PluginBase
             ]
         ];
     }
-
+    public function registerComponents()
+    {
+        return [
+            'AnandPatel\WysiwygEditors\Components\SKEditor' => 'SKEditor',
+        ];
+    }
     public function registerSettings()
     {
         return [
