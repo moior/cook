@@ -2,14 +2,8 @@
 
 </style>
 
-<!--<form data-request="{{ __SELF__ }}::onOrderPaper">
-폼쓸때 여기서는 __self__하면됨
-</form>-->
+<div class="div발송한견적서">
 
-<div class="div메모">
-
-    {% partial 'Memos::basic' %}
-
-    {% partial 'Memos::new_memo' %}
+    {% partial 'Invoices::list' %}
 
 </div>

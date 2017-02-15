@@ -366,9 +366,10 @@ class FeeCalculator
             '일반' => 200, /**/
             '라벨스틱' => 200, /**/
         );
+
         $this->danka['OPP'] = array(
             '' => 0,
-            '개별OPP포장' => 60, /**/
+            '개별OPP포장' => 65, /**/
         );
         $this->danka['라운딩'] = array(
             '' => 0,

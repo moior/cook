@@ -35,18 +35,28 @@ class Invoices extends ComponentBase
 
     public function onRun()
     {
-        // This code will be executed when the page or layout is
-        // loaded and the component is attached to it.
-        if ($this->property('attach_type')) {
-            $this->page['attach_type'] = $this->property('attach_type');
+
+        if ($this->property('order_id')) {
+            $this->page['invoices'] = Invoice::where( 'order_id',  $this->property('order_id'))
+                ->get();
+            //$this->page['order_id'] = $this->property('order_id');
+        }else{
+            $this->page['invoices'] = Invoice::paginate(10);
         }
-        if ($this->property('attach_id')) {
-            $this->page['attach_id'] = $this->property('attach_id');
-        }
-        $this->page['invoices'] = Memo::where( 'attach_type',  $this->property('attach_type'))
-                        ->where( 'attach_id',  $this->property('attach_id'))->get();
 
     }
+
+    public function onShowAllList()
+    {
+
+    }
+
+    public function onShowRelatedList()
+    {
+        $this->page['invoices'] = Invoices::where( 'order_id',  $this->property('order_id'))
+            ->get();
+    }
+
     public function onSendInvoice()
     {
 

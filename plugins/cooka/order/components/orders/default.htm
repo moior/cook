@@ -54,9 +54,15 @@
 
 
                 {% if admin %}
+                <span style="font-size:9pt">
+                    [<b>관리자</b>:
                     <a href="javascript:void(0);" onclick="$(this).next('.div상세주문내용보기').toggle();">
-                        / 주문내용(관리자만보임)
+                        주문상세
                     </a>
+                    <a href="/order/manage/{{ item.id }}" target="_blank">
+                        견적서작성
+                    </a>
+
                     <div id="" class="div상세주문내용보기"
                          style="display:none;background-color:#efefef;padding:10px; font-size:0.8em;">
                         <!--DB에 저장되어 있는 정보-->
@@ -79,12 +85,10 @@
                             </tr>
                         {% endfor %}
                         </table>
-                        <a href="/order/manage/{{ item.id }}" target="_blank">
-                            견적서 작성하기
-                        </a>
 
                     </div>
-
+                    ]
+                </span>
                 {% endif %}
 
             </td>
