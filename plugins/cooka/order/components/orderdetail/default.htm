@@ -2,6 +2,40 @@
 <style>
     .table td, .table th {}
 </style>
+<script>
+$(document).ready(function(){
+    //$("#select상태").select2(); // 왜 안됨 ㅜ.ㅜ
+
+    $("#select상태 option[value='{{order.status_show}}']").prop("selected", true);
+    $("#select상태").change(function(){
+        var txt상태 = $("#select상태 option:selected").val();
+        var datas = {   'order_id' : {{ order.id }},
+                        'status_show' : txt상태 ,
+        }
+        $.request("onUpdateStatus", {
+            data: datas,
+            success: function(){
+                $("#text상태").text( txt상태 );
+            }
+        })
+    });
+    $("#btn상태입력").click(function(){
+        var txt상태 = $("#input상태").val();
+        var datas = {   'order_id' : {{ order.id }},
+                        'status_show' : txt상태 ,
+        }
+        $.request("onUpdateStatus", {
+            data: datas,
+            success: function(){
+                $("#text상태").text( txt상태 );
+            }
+        })
+    })
+
+})
+
+</script>
+
 <!--<form data-request="{{ __SELF__ }}::onOrderPaper">
 여기서는 __self__하면되네
 </form>-->
@@ -45,7 +79,22 @@
             </div>
             <div>
                 상태 :
-                <small>{{ order.status_show?:"확인중"  }}</small>
+                <span style="color:royalblue" id="text상태">{{ order.status_show?:"확인중"  }}</span>
+
+                <form class="form-inline">
+                    <select name="status_select" id="select상태"  class="input-sm form-control">
+                        <option value=""></option>
+                        <option value="견적접수">견적접수</option>
+                        <option value="입금확인중">입금확인중</option>
+                        <option value="상담완료">상담완료</option>
+                        <option value="제작완료">제작완료</option>
+                    </select>
+                    <div class="form-group">
+                        <input type="text" name="status_show" id="input상태" class="input-sm form-control" placeholder="자유입력"/>
+                    </div>
+                    <button type="button" id="btn상태입력" class="btn btn-xs">변경</button>
+                </form>
+
             </div>
 
         </div>
