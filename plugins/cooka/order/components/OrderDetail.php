@@ -41,7 +41,16 @@ class OrderDetail extends ComponentBase
     {
         $orderId = $this->property('id');
         $order = Order::find($orderId);
+        /*$imsiOrder = $order;
+        print_r($order);
+        foreach($order->attribute as $key => $order__){
+            if( !$order__ ){
+                $order->attribute->$key = "[값없음]";
+                echo $key."----------@@ ";
+            }
+        }*/
         $this->page['order'] = $order;
+
 
         if (isset($order->cook_data)) {
             $this->page['cook_data'] = json_decode($order->cook_data, true);
@@ -65,4 +74,18 @@ class OrderDetail extends ComponentBase
         $order->status_show = post('status_show');
         $order->save();
     }
+
+    /*텍스트 클릭시 입력창이 뜨고 바로수정 가능케*/
+    public function onUpdateColumnEasy(){
+        $post = post();
+        if( $post["order_id"] ){
+            $orderId = $post["order_id"];
+            $order = Order::find($orderId);
+            /*$order->update(['name' => $post["column_value"]]);*/
+            $column_name = $post["column_name"];
+            $order->$column_name = $post["column_value"];
+            $order->save();
+        }
+    }
+
 }

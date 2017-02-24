@@ -33,7 +33,18 @@ $(document).ready(function(){
         })
     })
 
+    $(".easy수정").click(function() {
+        $("#div개별수정").show();
+        $("#input개별수정").val( $(this).text() );
+        $("#input컬럼이름").val( $(this).data("colname") );
+
+    });
 })
+function check개별수정폼(){
+    if($("#input컬럼이름").val()){
+        $("#form개별수정").submit();
+    }else {alert('수정할것을 선택하세요');}
+}
 
 </script>
 
@@ -41,28 +52,44 @@ $(document).ready(function(){
 여기서는 __self__하면되네
 </form>-->
 <div id="div주문상세">
-    <p></p>
+    <div id="div개별수정" style="display:none;">
+    {{ form_ajax('OrderDetail::onUpdateColumnEasy',
+    {
+        success:"$('#easy수정-' + $('#input컬럼이름').val() ).text( $('#input개별수정').val() ); $('#div개별수정').hide();",
+        id : "form개별수정"
+    }
+    ) }}
+        <input type="hidden" name="order_id" value="{{ order.id }}" />
+        <input type="hidden" name="column_name" id="input컬럼이름" />
+        <input type="text" name="column_value" value="" id="input개별수정" />
+        <button type="button" onclick="check개별수정폼()" class="btn btn-xs">수정</button>
+    {{ form_close() }}
+    </div>
     {% if order %}
-        <div class="">
+        <div class="" data-id="{{ order.id }}">
             {% if order.name %}
-            <h5>{{ order.name }}님의 주문정보</h5>
+            <h5><span class="easy수정" data-colname="name" id="easy수정-name">{{ order.name }}</span>님의 주문정보</h5>
             {% endif %}
 
             <div><b>주문시각</b> : {{ order.created_at|slice(0, -3) }}</div>
-            <div><b>제목</b> : {{ order.title }}</div>
+            <div><b>제목</b> : <span class="easy수정" data-colname="title" id="easy수정-title">{{ order.title }}</span></div>
 
             <div>
-                <b>성함</b> : {{ order.name }}
-                ( <span><b>폰</b> : <a href="tel:{{ order.phone }}">{{ order.phone }}</a></span> )
+                <b>성함</b> : <span class="easy수정" data-colname="name" id="easy수정-name">{{ order.name }}</span>
+                (
+                <span><b>폰</b> : <span class="easy수정" data-colname="phone" id="easy수정-phone">{{ order.phone }}</span>
+                    <a href="tel:{{ order.phone }}">Call</a>
+                )
             </div>
 
-            <div><b>메일</b> : <a href="mailto:{{ order.email }}">{{ order.email }}</a></div>
+            <div><b>메일</b> : <span class="easy수정" data-colname="email" id="easy수정-email">{{ order.email }}</span>
+                <a href="mailto:{{ order.email }}">Mail</a></div>
             <div style="border-bottom:1px dotted gray;">
-                <b>배송주소</b> : {{ order.addr }}
+                <b>배송주소</b> : <span class="easy수정" data-colname="addr" id="easy수정-addr">{{ order.addr }}</span>
             </div>
 
             <div style="border-bottom:1px dotted gray;">
-                {{ order.spec }}
+                <span class="easy수정" data-colname="spec" id="easy수정-spec">{{ order.spec }}</span></span>
             </div>
 
             <div style="border-bottom:1px dotted gray;"><b>메모</b>

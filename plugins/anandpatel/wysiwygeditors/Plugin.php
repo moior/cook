@@ -35,7 +35,7 @@ class Plugin extends PluginBase
     public function registerComponents()
     {
         return [
-            'AnandPatel\WysiwygEditors\Components\SKEditor' => 'SKEditor',
+            'AnandPatel\WysiwygEditors\Components\Skeditor' => 'Skeditor',
         ];
     }
     public function registerSettings()

@@ -17,6 +17,7 @@ attach_id = {{ :orderno }}
 [Invoices]
 order_id = {{ :orderno }}
 
+
 [session]
 ==
 <?php
@@ -191,11 +192,16 @@ function onCalcFee(){
                 <div id="area주문정보">
 
                     {% component "OrderDetail" %}
+
+                    <h5>견적서 작성</h5>
+                    {% component "Skeditor" %}
+
                     <h5>발송한 견적서</h5>
                     {% component "Invoices" %}
 
                     <h5>메모</h5>
                     {% component "Memos" %}
+
 
                 </div>
 
