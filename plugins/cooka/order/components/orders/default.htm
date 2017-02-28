@@ -12,7 +12,6 @@
         <tr>
             <th>날짜</th>
             <th>내용</th>
-            <th>주문금액</th>
             <th>상태</th>
         </tr>
         {{ orders.spec }}
@@ -90,17 +89,14 @@
                         </table>
 
                     </div>
+
+
+                    / 주문금액 :
+                    {{ item.fee_offer|number_format }}
                     ]
                 </span>
                 {% endif %}
 
-            </td>
-            <td>
-                {% if item.fee_offer == 0 %}
-                    미확정
-                {% else %}
-                    {{ item.fee_offer|number_format }}
-                {% endif %}
             </td>
 
 
