@@ -194,8 +194,7 @@ function onCalcFee(){
 
                     {% component "OrderDetail" %}
 
-                    <h5>견적서 작성</h5>
-                    {% component "Skeditor" %}
+
 
                     <h5>발송한 견적서</h5>
                     {% component "Invoices" %}
@@ -206,11 +205,7 @@ function onCalcFee(){
 
                 </div>
 
-                <div id="area전체리스트" style="background-color: white;">
-                    <h3>전체 리스트</h3>
-                    {% component "Orders" %}
 
-                </div>
             </div>
 
             <div class="col-sm-4" id="">
@@ -219,6 +214,34 @@ function onCalcFee(){
                     {% component "Notecooker" %}
                 </div>
 
+
+                <h5>견적서 작성</h5>
+                {% component "Skeditor" %}
+
+                <div id="">
+                    <!--position:fixed;right:5px;bottom:5px;border-radius:5px;-->
+                    {{ form_ajax('Invoices::onSendInvoice',
+                    {
+                    success:"alert('발송 완료되었습니다.')",
+                    redirect:"/order/manage/" ~ orderno,
+                    }
+                    ) }}
+                    <input type="hidden" name="order_id" id="" value="{{ orderno }}"/>
+                    <input type="hidden" name="cook_data" id="inputCookaData" />
+                    <input type="hidden" name="bill" id="inputBill" />
+                    <input type="hidden" name="fee" id="inputFee" />
+
+                    <input type="text" name="name" placeholder="성함" class="form-control" value="{{ order.name }}"/>
+                    <input type="text" name="email" placeholder="이메일" class="form-control" value="{{ order.email }}"/>
+                    <input type="text" name="phone" placeholder="전화번호" class="form-control" value="{{ order.phone }}" />
+
+                    <textarea name="content" placeholder="기타사항" class="form-control" style="height:250px;"></textarea>
+                    <button type="submit" onclick="invoceFormSubmit();" class="btn btn-primary btn-lg" style="display:block;margin:4px;"  data-attach-loading>
+                        견적 발송
+                    </button>
+                    {{ form_close() }}
+
+                </div>
             </div>
 
 
@@ -234,30 +257,6 @@ function onCalcFee(){
 
             </div>
 
-            <div id="">
-                <!--position:fixed;right:5px;bottom:5px;border-radius:5px;-->
-                {{ form_ajax('Invoices::onSendInvoice',
-                {
-                success:"alert('발송 완료되었습니다.')",
-                redirect:"/order/manage/" ~ orderno,
-                }
-                ) }}
-                <input type="hidden" name="order_id" id="" value="{{ orderno }}"/>
-                <input type="hidden" name="cook_data" id="inputCookaData" />
-                <input type="hidden" name="bill" id="inputBill" />
-                <input type="hidden" name="fee" id="inputFee" />
-
-                <input type="text" name="name" placeholder="성함" class="form-control" value="{{ order.name }}"/>
-                <input type="text" name="email" placeholder="이메일" class="form-control" value="{{ order.email }}"/>
-                <input type="text" name="phone" placeholder="전화번호" class="form-control" value="{{ order.phone }}" />
-
-                <textarea name="content" placeholder="기타사항" class="form-control" style="height:250px;"></textarea>
-                <button type="submit" onclick="invoceFormSubmit();" class="btn btn-primary btn-lg" style="display:block;margin:4px;"  data-attach-loading>
-                    견적 발송
-                </button>
-                {{ form_close() }}
-
-            </div>
         </div><!--row-->
 
 
@@ -265,8 +264,15 @@ function onCalcFee(){
 
 
         </div>
+        <div id="area전체리스트" style="background-color: white;">
+            <h3>전체 리스트</h3>
+            {% component "Orders" %}
 
+        </div>
     </div>
+
+
+
 </div>
 
 
