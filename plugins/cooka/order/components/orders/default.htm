@@ -25,7 +25,7 @@
                 <span class="span주문제목">
                     {{ item.title }}
                     {% if item.name %}
-                    / 성함 : {{ item.name }}
+                    / 성함 : {{ item.name|hide_kname }}
                     {% endif %}
                     {% if item.phone %}
                     / 폰 : {{ item.phone|slice(-4) }}

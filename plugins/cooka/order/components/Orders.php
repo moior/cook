@@ -49,7 +49,6 @@ class Orders extends ComponentBase
             $orders = Order::orderBy("created_at", "desc")->paginate(20); //find( $user->id );
         }*/
         $orders = Order::orderBy("created_at", "desc")->paginate(10); //find( $user->id );
-
         $this->page['orders'] = $orders;
 
         foreach( $orders as $key => $order){
@@ -65,6 +64,8 @@ class Orders extends ComponentBase
         if( isset($cook_data_arr)){
             $this->page['cook_data'] = $cook_data_arr;
         }
+
+
 
     }
 

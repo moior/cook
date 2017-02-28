@@ -61,4 +61,25 @@ class Plugin extends PluginBase
             ]
         ];
     }
+
+    public function registerMarkupTags()
+    {
+        return [
+            'filters' => [
+                'hide_kname' => [$this, 'hide_kname']
+            ],
+        ];
+    }
+
+    public function hide_kname($str, $tail="*") //
+    {
+        $len=mb_strlen($str, 'UTF-8');
+        if($len==0) {
+            return '';
+        }else if($len>2){
+            return mb_substr($str,0,1, 'UTF-8').str_repeat($tail,$len-2).mb_substr($str,-1,1, 'UTF-8');
+        }else
+            return mb_substr($str,0,1, 'UTF-8').str_repeat($tail,$len-1);
+
+    }
 }

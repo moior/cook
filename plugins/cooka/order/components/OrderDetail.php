@@ -49,8 +49,15 @@ class OrderDetail extends ComponentBase
                 echo $key."----------@@ ";
             }
         }*/
-        $this->page['order'] = $order;
+        $tmpOrder = $order['attributes'];
 
+        foreach( $tmpOrder as $key => $order_){
+            if(empty($order_)){
+                $tmpOrder[$key] = "[빈값]";
+            }
+        }
+        $this->page['order'] = $tmpOrder;
+        /*$this->page['order'] = $order;*/
 
         if (isset($order->cook_data)) {
             $this->page['cook_data'] = json_decode($order->cook_data, true);
