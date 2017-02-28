@@ -369,7 +369,7 @@ class FeeCalculator
 
         $this->danka['OPP'] = array(
             '' => 0,
-            '개별OPP포장' => 65, /**/
+            '개별OPP포장' => 100, /**/
         );
         $this->danka['라운딩'] = array(
             '' => 0,

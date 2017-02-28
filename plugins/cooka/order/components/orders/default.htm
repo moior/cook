@@ -57,11 +57,14 @@
                 <span style="font-size:9pt">
                     [<b>관리자</b>:
                     <a href="javascript:void(0);" onclick="$(this).next('.div상세주문내용보기').toggle();">
-                        주문상세
+                        스펙
                     </a>
-                    <a href="/order/manage/{{ item.id }}" target="_blank">
-                        견적서작성
+                     /
+                    <a href="/order/manage/{{ item.id }}" target="">
+                        상세내용
                     </a>
+                     /
+                    <span>{{ item.phone|tel_html }}</span>
 
                     <div id="" class="div상세주문내용보기"
                          style="display:none;background-color:#efefef;padding:10px; font-size:0.8em;">

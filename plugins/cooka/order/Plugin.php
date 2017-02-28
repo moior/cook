@@ -66,9 +66,22 @@ class Plugin extends PluginBase
     {
         return [
             'filters' => [
-                'hide_kname' => [$this, 'hide_kname']
+                'hide_kname' => [$this, 'hide_kname'],
+                'tel_html' => [$this, 'tel_html']
             ],
         ];
+    }
+
+    public function tel_html($str) //
+    {
+        if( preg_match("/^[0-9- ]+$/D", $str)){
+            $str = preg_replace("/[^0-9]*/s", "", $str);
+            $len_hp = strlen($str);
+            if( $len_hp < 9 )
+                return preg_replace("/([0-9]+)([0-9]{4})/", "$1-$2", $str); //1661-5521
+            //else if($len_hp > 14) 국제전화
+            else return preg_replace("/(^02.{0}|^01.{1}|[0-9]{3})([0-9]+)([0-9]{4})/", "$1-$2-$3", $str);
+        }else return $str;
     }
 
     public function hide_kname($str, $tail="*") //
