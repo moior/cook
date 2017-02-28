@@ -35,7 +35,7 @@ $(document).ready(function(){
 
     $(".easy수정").click(function() {
         $("#div개별수정").show();
-        $("#input개별수정").val( $(this).text() );
+        $("#input개별수정").val( $(this).text()  );
         $("#input컬럼이름").val( $(this).data("colname") );
 
     });
@@ -45,7 +45,7 @@ function check개별수정폼(){
         $("#form개별수정").submit();
     }else {alert('수정할것을 선택하세요');}
 }
-
+function nl2br2(str){ return str.replace(/\n/g, "<br />"); }
 </script>
 
 <!--<form data-request="{{ __SELF__ }}::onOrderPaper">
@@ -55,14 +55,15 @@ function check개별수정폼(){
     <div id="div개별수정" style="display:none;">
     {{ form_ajax('OrderDetail::onUpdateColumnEasy',
     {
-        success:"$('#easy수정-' + $('#input컬럼이름').val() ).text( $('#input개별수정').val() ); $('#div개별수정').hide();",
+        success:"$('#easy수정-' + $('#input컬럼이름').val() ).html( nl2br2($('#input개별수정').val()) ); $('#div개별수정').hide();",
         id : "form개별수정"
     }
     ) }}
         <input type="hidden" name="order_id" value="{{ order.id }}" />
         <input type="hidden" name="column_name" id="input컬럼이름" />
-        <input type="text" name="column_value" value="" id="input개별수정" />
-        <button type="button" onclick="check개별수정폼()" class="btn btn-xs">수정</button>
+        <!--<input type="text" name="column_value" value="" id="input개별수정" />-->
+        <textarea name="column_value" id="input개별수정" class="form-control"></textarea>
+        <button type="button" onclick="check개별수정폼()" class="btn btn-xs pull-right">수정</button>
     {{ form_close() }}
     </div>
     {% if order %}
@@ -89,11 +90,13 @@ function check개별수정폼(){
             </div>
 
             <div style="border-bottom:1px dotted gray;">
-                <span class="easy수정" data-colname="spec" id="easy수정-spec">{{ order.spec }}</span></span>
+                <span class="easy수정" data-colname="spec" id="easy수정-spec">{{ order.spec }}</span>
             </div>
 
             <div style="border-bottom:1px dotted gray;"><b>메모</b>
-                <div class="well well-sm">{{ order.comment|nl2br }}</div>
+                <div class="well well-sm">
+                    <span class="easy수정" data-colname="comment" id="easy수정-comment">{{ order.comment|nl2br }}</span>
+                </div>
             </div>
             <div style="border-bottom:1px dotted gray;">
                 <b>선택한 샘플</b> :
