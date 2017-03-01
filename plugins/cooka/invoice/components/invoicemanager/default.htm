@@ -1,0 +1,127 @@
+<style>
+
+</style>
+<script>
+function invoceFormSubmit(){
+    /*가격 계산*/
+    //var datas = $("#form-currentnote").serializeArray(); //JSON.stringify(
+    var datas = JSON.stringify( $("#form-currentnote").serializeArray() );
+    /*$("#inputCookaData").val(datas); 여러 견적을 한꺼번에 보내므로, 하나의 견적상세는 필요치 않음....*/
+    $("#inputBill").val($("#div견적서html").html());
+    $("#inputFee").val( $("#input견적합계액").val() );
+    /*보내는 내용 전체를 저장함*/
+    $("#inputContent").val( $("#textareaContent1").val() + $("#area견적미리보기").html()+ $("#textareaContent2").val());
+
+
+}
+
+
+
+    $(document).ready(function() {
+    var 현재견적 = "";
+    $("#btn견적추가").click(function() {
+        현재견적 += "<table class='table'><tr>";
+        현재견적 += "<td>내용<td>수량<td>청구액<td>부가세포함";
+        현재견적 += "<tr>";
+        현재견적 +=     "<td>" + $("#div견적서html .span견적한줄").html();
+        현재견적 +=     "<td>" + $("#div견적서html .span견적수량").html();
+        현재견적 +=     "<td>" + number_format(Math.ceil($("#input견적합계액").val()));
+        현재견적 +=     "<td>" + number_format(Math.ceil( $("#input견적합계액").val() * 1.1 ));
+        현재견적 += "</tr></table>";
+
+        $("#area견적미리보기").html( 현재견적 );
+        $("#inputBill").val( 현재견적 );
+
+    });
+
+    $("#btn옵션추가").click(function() {
+        현재견적 += "<div style='font-weight:bold'>옵션</div>";
+        현재견적 += "<table class='table'><tr>";
+        현재견적 += "<td>내용<td>수량<td>청구액<td>부가세포함";
+        현재견적 += "<tr>";
+        현재견적 +=     "<td>" + $("#input옵션텍스트").val();
+        현재견적 +=     "<td>" + $("#input옵션수량").val();
+        현재견적 +=     "<td>" + number_format(Math.ceil($("#input옵션가격").val()));
+        현재견적 +=     "<td>" + number_format(Math.ceil($("#input옵션가격").val() * 1.1));
+        현재견적 += "</tr></table>";
+        $("#area견적미리보기").html( 현재견적 );
+        $("#inputBill").val( 현재견적 );
+
+    });
+
+    $(".btn견적서미리보기").click(function() {
+
+    });
+
+});
+</script>
+
+
+<div class="div견적매니저">
+    <h5>견적서 생성기</h5>
+
+    <div class="row well well-sm">
+        <div class="col-xs-4">
+            <button class="btn btn-xs" id="btn견적추가">견적추가</button>
+        </div>
+        <div class="col-xs-4">
+            <button class="btn btn-xs" id="btn옵션추가">옵션추가</button>
+            <input type="text" class="form-control" id="input옵션텍스트" placeholder="옵션이름" />
+            <input type="text" class="form-control" id="input옵션수량" placeholder="옵션수량"  />
+            <input type="text" class="form-control" id="input옵션가격" placeholder="옵션가격"  />
+        </div>
+        <div class="col-xs-4">
+            <button class="btn btn-xs" id="btn견적서미리보기">미리보기</button>
+        </div>
+
+    </div>
+
+
+
+
+
+    <div id="">
+        <!--position:fixed;right:5px;bottom:5px;border-radius:5px;-->
+        {{ form_ajax('Invoices::onSendInvoice',
+        {
+        success:"alert('발송 완료되었습니다.')",
+        redirect:"/order/manage/" ~ orderno,
+        }
+        ) }}
+        <input type="hidden" name="order_id" id="" value="{{ orderno }}"/>
+        <input type="hidden" name="cook_data" id="inputCookaData" />
+        <input type="hidden" name="bill" id="inputBill" />
+        <input type="hidden" name="content" id="inputContent" />
+        <input type="hidden" name="fee" id="inputFee" />
+
+        <input type="text" name="name" placeholder="성함" class="form-control" value="{{ order.name }}"/>
+        <input type="text" name="email" placeholder="이메일" class="form-control" value="{{ order.email }}"/>
+        <input type="text" name="phone" placeholder="전화번호" class="form-control" value="{{ order.phone }}" />
+
+        [자동 붙음]OO 님 안녕하세요.<br>
+        직접 만드는 나만의 노트, 노트요리사입니다.<br>
+        <textarea name="content1" id="textareaContent1" placeholder="기타사항" class="form-control" style="height:250px;">
+문의 하신 내용 견적서 보내드립니다.
+
+</textarea>
+
+        <div id="area견적미리보기"></div>
+
+        <textarea name="content2" id="textareaContent2" placeholder="기타사항" class="form-control" style="height:250px;">
+
+
+</textarea>
+
+
+        <br>꼼꼼하게 견적 확인해보시고 궁금하신 부분은 02-1661-5521로 연락주시면 됩니다.
+        감사합니다.
+        <div class="pull-right">
+            <button type="button" class="btn btn-xs" id="btn견적서미리보기">미리보기</button>
+            <button type="submit" onclick="invoceFormSubmit();" class="btn btn-primary btn-xs" style=""  data-attach-loading>
+                견적 발송
+            </button>
+        </div>
+        {{ form_close() }}
+
+    </div>
+</div>

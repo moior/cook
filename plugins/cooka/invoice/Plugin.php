@@ -24,6 +24,7 @@ class Plugin extends PluginBase
     {
         return [
             '\Cooka\Invoice\Components\Invoices' => 'Invoices',
+            '\Cooka\Invoice\Components\InvoiceManager' => 'InvoiceManager',
         ];
     }
     public function registerReportWidgets()

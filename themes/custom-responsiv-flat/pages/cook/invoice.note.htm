@@ -1,0 +1,289 @@
+title = "견적서"
+url = "/invoice/note/:invoice_id?"
+layout = "cooking"
+is_hidden = 0
+
+
+[Orders]
+[OrderDetail]
+id = {{ :invoice_id }}
+
+[Memos]
+attach_type = "Order"
+attach_id = {{ :invoice_id }}
+
+[Notecooker]
+
+[Invoices]
+order_id = {{ :invoice_id }}
+
+
+[session]
+==
+<?php
+/*use Symfony\Component\HttpFoundation\File\File as FileObj;*/
+
+use Renatio\DynamicPDF\Classes\PDF;
+
+function onInit()
+{
+    $this["invoice_id"] = $this->param('invoice_id'); //파라매터 받는법?
+}
+
+function onStart()
+{
+    return PDF::loadTemplate('renatio::invoice')->stream();
+    /*$file = new FileObj("assets/images/cook/paper/note/jebon/샘플-떡제본.jpg");
+    $temp["thumb"] = $file->getThumb(140, 160, ['mode'=>'crop']);*/
+}
+function onClickStep1(){}
+function onClickStep2(){}
+
+/*메인 데스크(partial)에서 세부사항 선택시, 이곳(page)에서 가격 계산 / 동시에 js로 이곳 input 에 저장*/
+function onCalcFee(){
+
+}
+
+?>
+==
+
+
+<script>
+
+    function setFormInputData(){
+        $(".select_part").each(function(){
+            $("#input-" + $(this).attr("name")).val(
+                $(this).find("option:selected").val()
+            );
+        });
+    }
+    function setAreaDisplay(){
+        var quantity = $("#select_amount option:selected").val();
+        if( quantity == "" || quantity == '소량') {
+            $(".div_파트선택영역").hide();
+            $("#div_삽지영역").hide();
+        }else{
+            $(".div_파트선택영역").show();
+            if( $("#checkbox_삽지있음").prop("checked") == true ){
+                $("#div_삽지영역").show();
+            }else $("#div_삽지영역").hide();
+        }
+        if( $("#select-제본 option:selected").val() == "스프링") {
+            $("#select-데코-라벨스틱").prop("disabled", false);
+        }else $("#select-데코-라벨스틱").prop("disabled", true);
+
+
+    }
+    function showDetailPayment(){
+        /*가격 계산*/
+        var datas = $("#form-currentnote").serializeArray(); //JSON.stringify(
+        //console.log("111111 "+datas);
+        $.request('onCalcFee', {
+            update: { 'cook/paper-calculator': '#div_brief' },
+            data: datas,
+        })
+    }
+
+    function invoceFormSubmit(){
+        /*가격 계산*/
+        //var datas = $("#form-currentnote").serializeArray(); //JSON.stringify(
+        var datas = JSON.stringify( $("#form-currentnote").serializeArray() );
+        $("#inputCookaData").val(datas);
+        $("#inputBill").val($("#div견적서html").html());
+        $("#inputFee").val( $("#input견적합계액").val() );
+
+    }
+
+    $(document).ready(function(){
+        setFormInputData();
+        setAreaDisplay();
+        showDetailPayment();
+
+
+        $(".select_part").change(function(){
+            setFormInputData();
+            setAreaDisplay();
+            showDetailPayment();
+        });
+
+        /* Orders 플러그인에 쓰이는 jquery */
+        $(".span주문제목").click(function(){
+            location.href="/order/manage/" + $(this).parents(".tr주문").data("id");
+        })
+
+        /* Orders 플러그인에 쓰이는 jquery 끝 */
+
+        /*따라다니는 메뉴*/
+        var isMobile = true;
+        if($(window).innerWidth() >= 760) {
+            //if (window.matchMedia("(min-width: 760px)").matches) { // matchMedia는 ex 10, 11만됨
+            isMobile = false;
+        }
+        if(isMobile == false){
+            /*var floatPosition1 = parseInt($("#area이미지").css('top'));// 250px 에서 숫자만
+             $(window).scroll(function() {
+             var newPosition = $(window).scrollTop() + floatPosition1 + "px"; // 현재 스크롤 위치를 가져온다.
+             $("#area이미지").css('top', newPosition);
+             });*/
+
+            var floatPosition2 = $("#area견적서").css('top'); //parseInt(.css('top'));// Exp에서 'auto'라고 나옴 / 250px 에서 숫자만
+            //var floatPosition2 = parseInt($("#area견적서").position().top); //parseInt(.css('top'));// Exp에서 'auto'라고 나옴 / 250px 에서 숫자만
+            if(floatPosition2 == 'auto') floatPosition2 = 0; //ex때문에
+            else floatPosition2 = parseInt(floatPosition2);
+            $(window).scroll(function() {
+                var newPosition = $(window).scrollTop() + floatPosition2 + "px"; // 현재 스크롤 위치를 가져온다.
+                $("#area견적서").css('top', newPosition);
+            });
+
+        }else{
+
+        }
+
+        /*Memo 플러그인 전용 JS*/
+        $(".btn메모삭제").click(function(){
+            if( confirm("메모를 삭제할까요? (지금은 안됨)") ){
+                //메모 삭제 로직
+            }
+        })
+
+    })
+</script>
+
+<style>
+
+    #cookdesk-center {border-left:0px solid gray;border-right:0px solid gray;min-height:100px;}
+    #area이미지 {padding:5px;}
+    #area노트조합기 {
+        padding:5px 10px 5px 10px;
+        border-left:0px solid gray;
+        margin-top:10px;
+    }
+
+    #area견적서 {padding:0px;border:1px solid gray;border-bottom:1px solid gray;}
+
+    #bodyWrap {
+        background-image:url('{{ "assets/images/cook/site/주문페이지/노트요리사_주문_BG.jpg"|theme }}');
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position:right top;
+        background-size:auto 100% ;
+    }
+
+
+</style>
+
+<div id="bodyWrap">
+    <div class="container">
+
+        <div id="area_top" class="row" style="font-size:11pt;padding:5px;border-top:2px solid #555;border-bottom:2px solid #555;">
+            <div class="col-sm-5">
+                주문관리 (견적발송)
+            </div>
+            <div class="col-sm-7 text-right">
+                <span style="margin:0px 25px;"></span>
+                <span style="">문의 1661-5521</span>
+            </div>
+        </div>
+        <div id="area_top_banner" class="row">
+
+        </div>
+
+
+        <div id="area전체" class="row">
+
+            <div class="col-sm-5" id="area이미지" style="">
+                <div id="area주문정보">
+
+                    {% component "OrderDetail" %}
+
+
+
+                    <h5>메모</h5>
+                    {% component "Memos" %}
+
+
+                    <h5>발송한 견적서</h5>
+                    {% component "Invoices" %}
+
+                </div>
+
+
+            </div>
+
+            <div class="col-sm-4" id="">
+
+                <div id="area노트조합기">
+                    {% component "Notecooker" %}
+                </div>
+
+
+                <h5>견적서 작성</h5>
+                {% component "Skeditor" %}
+
+                <div id="">
+                    <!--position:fixed;right:5px;bottom:5px;border-radius:5px;-->
+                    {{ form_ajax('Invoices::onSendInvoice',
+                    {
+                    success:"alert('발송 완료되었습니다.')",
+                    redirect:"/order/manage/" ~ invoice_id,
+                    }
+                    ) }}
+                    <input type="hidden" name="order_id" id="" value="{{ invoice_id }}"/>
+                    <input type="hidden" name="cook_data" id="inputCookaData" />
+                    <input type="hidden" name="bill" id="inputBill" />
+                    <input type="hidden" name="fee" id="inputFee" />
+
+                    <input type="text" name="name" placeholder="성함" class="form-control" value="{{ order.name }}"/>
+                    <input type="text" name="email" placeholder="이메일" class="form-control" value="{{ order.email }}"/>
+                    <input type="text" name="phone" placeholder="전화번호" class="form-control" value="{{ order.phone }}" />
+
+                    [자동 붙음]OO 님 안녕하세요.<br>
+                    직접 만드는 나만의 노트, 노트요리사입니다.<br>
+                    <textarea name="content" placeholder="기타사항" class="form-control" style="height:250px;">
+문의 하신 내용 견적서 보내드립니다.
+
+</textarea>
+                    <span style="font-size:0.7em;">(이 부분에 오른쪽 견적 테이블이 자동으로 붙음)</span>
+                    <br>꼼꼼하게 견적 확인해보시고 궁금하신 부분은 02-1661-5521로 연락주시면 됩니다.
+                    감사합니다.
+                    <button type="submit" onclick="invoceFormSubmit();" class="btn btn-primary btn-lg" style="display:block;margin:4px;"  data-attach-loading>
+                        견적 발송
+                        우리은행
+                    </button>
+                    {{ form_close() }}
+
+                </div>
+            </div>
+
+
+
+            <div class="col-sm-3" id="area견적서" style="margin-top:15px;background-color:#ffffff;">
+                <div style="padding-top:0px;text-align:center;">
+
+                </div>
+
+                <!--견적서부분-->
+                <div id="div_brief" style=""></div>
+
+
+            </div>
+
+        </div><!--row-->
+
+
+        <div class="col-sm-12" id="cookdesk-center">
+
+
+        </div>
+        <div id="area전체리스트" style="background-color: white;">
+            <h3>전체 리스트</h3>
+            {% component "Orders" %}
+
+        </div>
+    </div>
+
+
+
+</div>
+
+

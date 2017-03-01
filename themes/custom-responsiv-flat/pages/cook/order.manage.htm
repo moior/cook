@@ -17,12 +17,12 @@ attach_id = {{ :orderno }}
 [Invoices]
 order_id = {{ :orderno }}
 
+[InvoiceManager]
 
 [session]
 ==
 <?php
 /*use Symfony\Component\HttpFoundation\File\File as FileObj;*/
-
 
 function onInit()
 {
@@ -82,16 +82,6 @@ function onCalcFee(){
         })
     }
 
-    function invoceFormSubmit(){
-        /*가격 계산*/
-        //var datas = $("#form-currentnote").serializeArray(); //JSON.stringify(
-        var datas = JSON.stringify( $("#form-currentnote").serializeArray() );
-        $("#inputCookaData").val(datas);
-        $("#inputBill").val($("#div견적서html").html());
-        $("#inputFee").val( $("#input견적합계액").val() );
-
-    }
-
     $(document).ready(function(){
         setFormInputData();
         setAreaDisplay();
@@ -130,7 +120,7 @@ function onCalcFee(){
             else floatPosition2 = parseInt(floatPosition2);
             $(window).scroll(function() {
                 var newPosition = $(window).scrollTop() + floatPosition2 + "px"; // 현재 스크롤 위치를 가져온다.
-                $("#area견적서").css('top', newPosition);
+                //$("#area견적서").css('top', newPosition);
             });
 
         }else{
@@ -157,7 +147,7 @@ function onCalcFee(){
         margin-top:10px;
     }
 
-    #area견적서 {padding:0px;border:1px solid gray;border-bottom:1px solid gray;}
+    #area견적서 {padding:0px;}
 
     #bodyWrap {
         background-image:url('{{ "assets/images/cook/site/주문페이지/노트요리사_주문_BG.jpg"|theme }}');
@@ -215,51 +205,21 @@ function onCalcFee(){
                 </div>
 
 
-                <h5>견적서 작성</h5>
-                {% component "Skeditor" %}
-
-                <div id="">
-                    <!--position:fixed;right:5px;bottom:5px;border-radius:5px;-->
-                    {{ form_ajax('Invoices::onSendInvoice',
-                    {
-                    success:"alert('발송 완료되었습니다.')",
-                    redirect:"/order/manage/" ~ orderno,
-                    }
-                    ) }}
-                    <input type="hidden" name="order_id" id="" value="{{ orderno }}"/>
-                    <input type="hidden" name="cook_data" id="inputCookaData" />
-                    <input type="hidden" name="bill" id="inputBill" />
-                    <input type="hidden" name="fee" id="inputFee" />
-
-                    <input type="text" name="name" placeholder="성함" class="form-control" value="{{ order.name }}"/>
-                    <input type="text" name="email" placeholder="이메일" class="form-control" value="{{ order.email }}"/>
-                    <input type="text" name="phone" placeholder="전화번호" class="form-control" value="{{ order.phone }}" />
-
-                    <textarea name="content" placeholder="기타사항" class="form-control" style="height:250px;"></textarea>
-                    <button type="submit" onclick="invoceFormSubmit();" class="btn btn-primary btn-lg" style="display:block;margin:4px;"  data-attach-loading>
-                        견적 발송
-                    </button>
-                    {{ form_close() }}
-
-                </div>
             </div>
 
 
 
-            <div class="col-sm-3" id="area견적서" style="margin-top:15px;background-color:#ffffff;">
-                <div style="padding-top:0px;text-align:center;">
-
-                </div>
-
+            <div class="col-sm-3" id="area견적서" style="margin-top:15px;">
                 <!--견적서부분-->
-                <div id="div_brief" style=""></div>
-
+                <div id="div_brief" style="background-color:#ffffff;border:1px solid gray;border-bottom:1px solid gray;"></div>
 
             </div>
 
         </div><!--row-->
 
-
+        <div id="area가변견적">
+            {% component "InvoiceManager" %}
+        </div>
         <div class="col-sm-12" id="cookdesk-center">
 
 

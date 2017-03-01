@@ -10,17 +10,19 @@
     #div견적서html {
         background-color:white;padding:10px 0px;font-size:9pt;
     }
-    #number_payment {}
     .step-final-title {padding:2px 5px;font-size:1.1em;line-height:130%;word-break:break-all;}
     .step-final-content {text-align:left;overflow-x:hidden;}
     .step-final-content2 {border-bottom:1px dotted gray;}
     /*.bill-row {padding-left:5px;}*/
+    .row {
+        margin:0px;
+    }
     .bill-row [class*="col-"] {
         padding-left: 0 !important;
         padding-right: 0 !important;
     }
 
-    #div견적나열 {padding:2px 8px; }
+    #div견적서html .div견적타이틀 {padding:2px 8px; }
 
 </style>
 
@@ -28,20 +30,19 @@
 <input type="hidden" name="cook_data" id="" value="{{ total_data|json_encode }}" />
 <input type="hidden" name="fee_offer" value="{{ 합계금액 }}" id="input견적합계액"/>
 
+<!--여기 안에는 id값을 만들지 말고, class로 만든다음 div견적서html .클래스명 으로 쓰라-->
 <div id="div견적서html" class="">
-
     <div class="final-title"
          style="text-align:center;font-weight:bold;font-size:1.2em;border-bottom:1px solid #b4b4b4;">
         견 적 서
     </div>
 
     {% if total_data["수량"] %}
-    <div class="" id="div견적나열" style="border-bottom:1px solid #b4b4b4;">
+    <div class="div견적타이틀" style="border-bottom:1px solid #b4b4b4;">
         <div class="" style="word-break: break-all;">
+            <span class="span견적한줄">
                 <b>{{ total_data["크기"] }}</b>
                 <b>{{ total_data["제본"] }}</b>
-
-                <b>{{ total_data["수량"] }}권</b>
 
                 / <b>표지 :</b>
                     {{ total_data["표지-용지"] }}
@@ -72,12 +73,15 @@
                 {% if total_data["데코-OPP"] %}
                     /   {{ total_data["데코-OPP"] }}
                 {% endif %}
-
+            </span>
+            <span class="span견적수량" style="word-break: keep-all">
+                <b>{{ total_data["수량"] }}권</b>
+            </span>
         </div>
     </div>
     {% endif %}
 
-    <div class="bill-row">
+    <div class="bill-row row">
 
         <div class="col-xs-2" style="text-align:center;">
             <div class="step-final-title" style="font-weight:bold;">표지</div>
@@ -107,7 +111,7 @@
 
 
     {% if total_data["삽지-매수"] %}
-    <div class=" bill-row">
+    <div class=" bill-row row">
         <div class="col-xs-2" style="text-align:center;">
             <div class="step-final-title" style="font-weight:bold;">삽지</div>
         </div>
@@ -123,7 +127,7 @@
     {% endif %}
 
 
-    <div class=" bill-row">
+    <div class=" bill-row row">
         <div class="col-xs-2" style="text-align:center;">
             <div class="step-final-title" style="font-weight:bold;">내지</div>
         </div>
@@ -135,7 +139,7 @@
             </div>
         </div>
     </div>
-    <div class=" bill-row">
+    <div class=" bill-row row">
         <div class="col-xs-2" style="text-align:center;">
             <div class="step-final-title" style="font-weight:bold;">작업</div>
         </div>
@@ -161,13 +165,12 @@
      </div>
 
 
-    <div style="text-align:center;">
-        <p>
-            <span id="number_payment" style="color:tomato;font-size:1.5em;font-weight:bold;">
+    <div class="row" style="text-align:center;">
+        <div>
+            <span id="" style="color:tomato;font-size:1.5em;font-weight:bold;">
                 {{ 합계금액|number_format() }}</span>원
-        </p>
-        <div style="font-size:0.7em;margin-top:-20px;text-align:center;">VAT별도</div>
-
+        </div>
+        <div style="font-size:0.7em;margin-top:;text-align:center;">VAT별도</div>
     </div>
 <!--
     <p>

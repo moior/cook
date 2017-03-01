@@ -108,7 +108,7 @@ function nl2br2(str){ return str.replace(/\n/g, "<br />"); }
             <div style="border-bottom:1px dotted gray;">
                 자동계산된 금액 :
                 {% if order.fee_offer == 0 %}
-                    미확정
+                    0
                 {% else %}
                     {{ order.fee_offer|number_format }}
                 {% endif %}

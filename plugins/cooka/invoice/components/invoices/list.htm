@@ -1,9 +1,9 @@
 {% for invoice in invoices %}
-<li class="list-group-invoice">
+<div class="list-group-invoice well">
     <input type="hidden" name="invoices[]" value="{{ invoice }}" />
 
     {{ invoice.user_id.name }} <!--user테이블의 id값의 name 을 자동 읽게 하자.-->
-    {{ invoice.content }}
+    {{ invoice.content | raw }}
     {{ invoice.staff_id }}
     <small>{{ invoice.created_at }}</small>
     <a href="javascript:void(0);" onclick="$(this).next('.div각견적서상세').toggle();" class="btn btn-xs">
@@ -24,5 +24,5 @@
             aria-hidden="true"
             class=""
             onclick="$(this).closest('li').remove()">&times;</button>
-</li>
+</div>
 {% endfor %}

@@ -8,6 +8,8 @@ use Cooka\Order\Models\Order;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Mail;
 use RainLab\User\Facades\Auth;
+use Renatio\DynamicPDF\Classes\PDF;
+
 
 class OrderDetail extends ComponentBase
 {
@@ -93,6 +95,13 @@ class OrderDetail extends ComponentBase
             $order->$column_name = $post["column_value"];
             $order->save();
         }
+    }
+    public function showPdf()
+    {
+        $templateCode = 'Invoice::note'; // unique code of the template
+        $data = ['name' => 'Kenny']; // optional data used in template
+
+        return PDF::loadTemplate($templateCode, $data)->stream();
     }
 
 }
