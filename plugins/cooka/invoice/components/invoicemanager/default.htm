@@ -11,9 +11,13 @@ function invoceFormSubmit(){
     $("#inputFee").val( $("#input견적합계액").val() );
     /*보내는 내용 전체를 저장함*/
     var html = $("#textareaContent1").val() + $("#area견적미리보기").html()+ $("#textareaContent2").val();
-    var regex = /<br\s*[\/]?>/gi; /*br태그 지우기*/
+    var regex1 = /<br\s*[\/]?>/gi; /*br태그 지우기*/
+    var regex2 = /(?:\r\n|\r|\n)/g; /*\\n 지우기*/
 
-    $("#inputContent").val( html.replace(regex, "") );
+    html = html.replace(regex1, "");
+    html = html.replace(regex2, "");
+
+    $("#inputContent").val( html );
 
 
 }
