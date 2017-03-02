@@ -22,9 +22,10 @@ function invoceFormSubmit(){
 
     $(document).ready(function() {
     var 현재견적 = "";
-    var 견적번호 = 1;
+    var 견적번호 = 0;
     $("#btn견적추가").click(function() {
         /*css 직접 삽입되어야 메일에서 안깨짐*/
+        견적번호 = 견적번호 + 1;
         현재견적 += "<div><b>견적 #" + 견적번호 + "</b></div>";
         현재견적 += "<table style='width:100%;border:1px solid gray;'>";
         현재견적 += "<tr style='border-bottom:1px solid #eee;font-weight:bold;'>";
