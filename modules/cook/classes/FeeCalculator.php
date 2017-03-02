@@ -341,6 +341,18 @@ class FeeCalculator
             ),
         );
 
+        $this->danka_auto['싸바리'] = array( /*수량상관없이 기본  */
+            '0' => array(
+                '기본비용-일반' => "80000",
+            ),
+            '100' => array(
+                '기본비용-일반' => "110000",
+            ),
+            '1000' => array( /*1000권 이하는 무조건 30만원, 3천권하면 A6 250원 A5 280원*/
+                '기본비용-일반' => "330000", '초과비용-일반' => "500",
+            ),
+        );
+
 
         $this->danka_easy['일반날개'] = array(
             '기본비용' => "50000", /*수량상관없이 기본  */
@@ -563,7 +575,9 @@ class FeeCalculator
     function feeCoverHapji($real = "real", $paper_name = null, $size = null)
     {
         if( ! $this->quantity ) return 0;
-        if( $this->userSetting['제본'] != '스프링') return 0; // 스프링만 합지가 됨
+        if( $this->userSetting['제본'] != '스프링' && $this->userSetting['제본'] != '양장' ){
+            return 0; // 스프링만 합지가 됨, 양장은 합지가 기본
+        }
         if( $this->userSetting['표지-합지'] == '') return 0; // 합지없음
 
         $일차분류 = "합지"; //2합, 3합
@@ -587,10 +601,47 @@ class FeeCalculator
                     break;
                 }
             }
-            $판지비 = $비용_갭하단 + $권당증가비용 * ($this->quantity - $수량_갭하단 );
-            $판지비 = $판지비 + $this->danka["공장간배송"];
+            $합지비 = $비용_갭하단 + $권당증가비용 * ($this->quantity - $수량_갭하단 );
+            $합지비 = $합지비 + $this->danka["공장간배송"];
 
-            return $판지비;
+            return $합지비;
+        }
+    }
+
+    /*싸바리비*/
+    function feeCoverSsabari($real = "real", $paper_name = null, $size = null)
+    {
+        if( ! $this->quantity ) return 0;
+        if( $this->userSetting['제본'] != '스프링' && $this->userSetting['제본'] != '양장' ){
+            return 0; // 스프링만 싸바리가 됨, 양장은 싸바리가 기본
+        }
+        if( $this->userSetting['표지-싸바리'] == '') return 0; // 합지없음
+
+        $일차분류 = "싸바리"; //2합, 3합
+        $이차분류 = $this->userSetting['표지-싸바리']; //일반
+
+        if($real == "real"){
+            $수량갭 = array_keys($this->danka_auto[$일차분류]); /*0, 100, 1000권 간격*/
+            foreach($수량갭 as $key => $수량갭_){
+                /*갭 사이 간격 미리 배열로 저장*/
+                /*만약 150권 제작이면, 100권 + auto증가*/
+                $수량_갭하단 = $수량갭[$key];
+                $비용_갭하단 = $this->danka_auto[$일차분류][$수량갭_]["기본비용-".$이차분류];
+                if(  !isset($수량갭[$key+1])) { /*가장 큰구간이면 */
+                    $권당증가비용 = $this->danka_auto[$일차분류][$수량갭_]["초과비용-".$이차분류];
+                    break;
+                }else if( $수량갭[$key] <= $this->quantity && $this->quantity < $수량갭[$key+1]){
+                    /*만약 150개주문이면 [1000] 값 */ /*'기본비용-A6' => "35000", '초과비용-A6' => "auto",*/
+                    $권당증가비용 = ( $this->danka_auto[$일차분류][$수량갭[$key+1]]["기본비용-".$이차분류]
+                            - $비용_갭하단)
+                        / ($수량갭[$key+1] - $수량_갭하단 ); /*해당구간의 기울기*/
+                    break;
+                }
+            }
+            $싸바리비 = $비용_갭하단 + $권당증가비용 * ($this->quantity - $수량_갭하단 );
+            $싸바리비 = $싸바리비 + $this->danka["공장간배송"];
+
+            return $싸바리비;
         }
     }
 

@@ -63,7 +63,6 @@ function onCalcFee(){
 
 $(document).ready(function(){
 
-    setFormInputData(); /*컴포넌트에서도 부름. 2중 부르는듯.*/
     setAreaDisplay();
     showDetailPayment();
     setImageUrl();
@@ -71,12 +70,14 @@ $(document).ready(function(){
 
 
 
+    $("#select-제본").change(function() {
+        setImageUrl();
+    });
+
     $(".select_part").change(function(){
-        setFormInputData();
         setAreaDisplay();
         showDetailPayment();
     });
-
     /*따라다니는 메뉴*/
     var isMobile = true;
     if($(window).innerWidth() >= 760) {

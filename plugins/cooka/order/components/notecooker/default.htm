@@ -41,6 +41,29 @@ $(document).ready(function(){
     setFormInputData(); /*플러그인 함수*/
     setAreaDisplay(); /*플러그인 함수*/
 
+    $(".select_part").change(function() {
+        setFormInputData();
+    });
+
+    $("#select-제본").change(function() {
+        if( $(this).val() == "스프링" || $(this).val() == "양장" ) {
+            $("#div합지").show(); $("#div싸바리").show();
+        } else {
+            $("#div합지").hide(); $("#div싸바리").hide();
+        }
+        
+        if( $(this).val() == "양장" ) {
+            $("#select-표지-용지").val('스노우').prop('disabled', true);
+            $("#select-표지-평량").val('180g').prop('disabled', true);
+
+            $("#select-표지-합지 option[value=2합]").prop('selected', true);
+
+        } else{
+            $("#select-표지-용지").prop('disabled', false);
+            $("#select-표지-평량").prop('disabled', false);
+        }
+    });
+
     /*수량 변경시 가격 계산*/
     var previous;
     $("#select_amount").change(function() {
@@ -50,19 +73,6 @@ $(document).ready(function(){
             $('#modal소량주문').modal('show');
         }else $("#input-수량").val( note_part );
         showDetailPayment(); /*가격 계산 paper.note.htm */
-    });
-
-    $("#select-제본").change(function() {
-        setImageUrl();
-        if( $(this).val() == "스프링" ) $("#div합지").show();
-        else $("#div합지").hide();
-        if( $(this).val() == "양장" ) {
-            $("#select-표지-용지").val('스노우').prop('disabled', true);
-            $("#select-표지-평량").val('180g').prop('disabled', true);
-        } else{
-            $("#select-표지-용지").prop('disabled', false);
-            $("#select-표지-평량").prop('disabled', false);
-        }
     });
 
 });
@@ -81,6 +91,7 @@ $(document).ready(function(){
     <input type="hidden" name="표지-평량" id="input-표지-평량" value=""  /><!--합지 포함 평량-->
     <input type="hidden" name="표지-코팅" id="input-표지-코팅" value=""  />
     <input type="hidden" name="표지-합지" id="input-표지-합지" value=""  />
+    <input type="hidden" name="표지-싸바리" id="input-표지-싸바리" value=""  />
 
     <!--<input type="hidden" name="표지-박" id="input-표지-박" value=""  />--><!--1천회 기준 5만원-->
     <input type="hidden" name="표지-박개수" id="input-표지-박개수" value=""  /><!--1천회 기준 5만원-->
@@ -273,13 +284,24 @@ $(document).ready(function(){
                     </div>
                 </div>
                 <div class="row" id="div합지" style="display:none;">
-                    <div class="col-xs-3">
+                    <div class="col-xs-3" style="padding:0px;">
                         <div class="step_content_title">합지</div>
                     </div>
                     <div class="col-xs-9">
                         <select name="표지-합지" id="select-표지-합지"  class="select_part input-sm form-control">
-                            <option value="">합지없음</option>
                             <option value="2합">합지</option>
+                            <option value="">일반</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row" id="div싸바리" style="display:none;">
+                    <div class="col-xs-3" style="padding:0px;">
+                        <div class="step_content_title">양장</div>
+                    </div>
+                    <div class="col-xs-9">
+                        <select name="표지-싸바리" id="select-표지-싸바리"  class="select_part input-sm form-control">
+                            <option value="일반">싸바리</option>
+                            <option value="">없음</option>
                         </select>
                     </div>
                 </div>

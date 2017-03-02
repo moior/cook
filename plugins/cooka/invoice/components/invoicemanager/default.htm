@@ -20,9 +20,12 @@ function invoceFormSubmit(){
     $(document).ready(function() {
     var 현재견적 = "";
     $("#btn견적추가").click(function() {
-        현재견적 += "<table class='table'><tr>";
+        /*css 직접 삽입되어야 메일에서 안깨짐*/
+        현재견적 += "<table style='width:100%;border:1px solid gray;'>";
+        현재견적 += "<tr style='border-bottom:1px solid #eee;font-weight:bold;'>";
+
         현재견적 += "<td>내용<td>수량<td>청구액<td>부가세포함";
-        현재견적 += "<tr>";
+        현재견적 += "<tr style='border-bottom:1px solid #eee;'>";
         현재견적 +=     "<td>" + $("#div견적서html .span견적한줄").html();
         현재견적 +=     "<td>" + $("#div견적서html .span견적수량").html();
         현재견적 +=     "<td>" + number_format(Math.ceil($("#input견적합계액").val()));

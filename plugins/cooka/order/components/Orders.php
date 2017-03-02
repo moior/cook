@@ -106,7 +106,7 @@ class Orders extends ComponentBase
         $order->bill            = isset($form["bill"])?$form["bill"]:"";
         $order->fee_offer       = isset($form["fee_offer"])?$form["fee_offer"]:"0";
         //$order->fee_payment     = $form[""];
-        $order->status_show     = isset($form["status_show"])?$form["status_show"]:"입금확인중";
+        $order->status_show     = isset($form["status_show"])?$form["status_show"]:"접수확인중";
         $order->shipping_number = "";
         //$order->is_complete     = "";
 
