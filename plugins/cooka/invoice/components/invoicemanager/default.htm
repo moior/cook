@@ -13,7 +13,7 @@ function invoceFormSubmit(){
     var html = $("#textareaContent1").val() + $("#area견적미리보기").html()+ $("#textareaContent2").val();
     var regex = /<br\s*[\/]?>/gi; /*br태그 지우기*/
 
-    $("#inputContent").val( html.replace(regex, "\n") );
+    $("#inputContent").val( html.replace(regex, "") );
 
 
 }
@@ -31,10 +31,10 @@ function invoceFormSubmit(){
 
         현재견적 += "<td style='width:55%'>내용<td style='width:15%'>수량<td style='width:15%'>청구액<td style='width:15%'>부가세포함";
         현재견적 += "<tr style='border-bottom:1px solid #eee;'>";
-        현재견적 +=     "<td>" + $("#div견적서html .span견적한줄").html();
-        현재견적 +=     "<td>" + $("#div견적서html .span견적수량").html();
-        현재견적 +=     "<td>" + number_format(Math.ceil($("#input견적합계액").val())) + '원';
-        현재견적 +=     "<td>" + number_format(Math.ceil( $("#input견적합계액").val() * 1.1 )) + '원';
+        현재견적 +=     "<td style='padding:3px;'>" + $("#div견적서html .span견적한줄").html();
+        현재견적 +=     "<td style='padding:3px;'>" + $("#div견적서html .span견적수량").html();
+        현재견적 +=     "<td style='padding:3px;'>" + number_format(Math.ceil($("#input견적합계액").val())) + '원';
+        현재견적 +=     "<td style='padding:3px;'>" + number_format(Math.ceil( $("#input견적합계액").val() * 1.1 )) + '원';
         현재견적 += "</tr></table>";
 
         $("#area견적미리보기").html( 현재견적 );
