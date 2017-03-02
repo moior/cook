@@ -237,6 +237,7 @@ function onCalcFee(){
                     <input type="text" name="email" placeholder="이메일" class="form-control" value="{{ order.email }}"/>
                     <input type="text" name="phone" placeholder="전화번호" class="form-control" value="{{ order.phone }}" />
 
+                    <div class="well">
                     [자동 붙음]OO 님 안녕하세요.<br>
                     직접 만드는 나만의 노트, 노트요리사입니다.<br>
                     <textarea name="content" placeholder="기타사항" class="form-control" style="height:250px;">
@@ -246,6 +247,7 @@ function onCalcFee(){
                     <span style="font-size:0.7em;">(이 부분에 오른쪽 견적 테이블이 자동으로 붙음)</span>
                     <br>꼼꼼하게 견적 확인해보시고 궁금하신 부분은 02-1661-5521로 연락주시면 됩니다.
                     감사합니다.
+                    </div>
                     <button type="submit" onclick="invoceFormSubmit();" class="btn btn-primary btn-lg" style="display:block;margin:4px;"  data-attach-loading>
                         견적 발송
                         우리은행

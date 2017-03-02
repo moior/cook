@@ -111,24 +111,27 @@ function invoceFormSubmit(){
         <input type="text" name="email" placeholder="이메일" class="form-control" value="{{ order.email }}"/>
         <input type="text" name="phone" placeholder="전화번호" class="form-control" value="{{ order.phone }}" />
 
-        [자동 붙음]OO 님 안녕하세요.<br>
-        직접 만드는 나만의 노트, 노트요리사입니다.<br>
-        <textarea name="content1" id="textareaContent1" placeholder="기타사항" class="form-control" style="height:250px;">
+        <div class="well">
+            <div class="text-center">====== 메일 시작======</div>
+            OO 님 안녕하세요.<br>
+            직접 만드는 나만의 노트, 노트요리사입니다.<br>
+            <textarea name="content1" id="textareaContent1" placeholder="기타사항" class="form-control" style="height:200px;">
 문의 하신 내용 견적서 보내드립니다.
 
 </textarea>
 
-        <div id="area견적미리보기"></div>
+            <div id="area견적미리보기"></div>
 
-        <textarea name="content2" id="textareaContent2" placeholder="기타사항" class="form-control" style="height:250px;">
-
+            <textarea name="content2" id="textareaContent2" placeholder="기타사항" class="form-control" style="height:200px;">
 
 </textarea>
 
 
         <br>꼼꼼하게 견적 확인해보시고 궁금하신 부분은 02-1661-5521로 연락주시면 됩니다.
         감사합니다.
-        <div class="pull-right">
+        </div>
+
+        <div class="text-right">
             <button type="button" class="btn btn-xs" id="btn견적서미리보기">미리보기</button>
             <button type="submit" onclick="invoceFormSubmit();" class="btn btn-primary btn-xs" style=""  data-attach-loading>
                 견적 발송
