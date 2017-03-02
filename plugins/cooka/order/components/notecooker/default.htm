@@ -6,7 +6,7 @@
     .step_title {border-bottom:2px solid #308fc6;padding:4px;margin-bottom:10px;}
 
     .step_content {font-size:11pt;}
-    .step_content_title {text-align:center;padding:3px 0;font-weight:bold;color: #909090;font-size:14px;}
+    .step_content_title {text-align:center;padding:3px 0px;font-weight:bold;color: #909090;font-size:14px;}
     .step_content_row {margin-top:0px;margin-bottom:3px;}
     #area노트조합기_안쪽 .form-control {padding:0px 12px;height:28px;line-height: 28px;}
     #area노트조합기_안쪽 select.input-sm {height:28px; height:28px; }
@@ -199,7 +199,7 @@ $(document).ready(function(){
                 <div class="col-xs-9">
 
                     <div class="row">
-                        <div class="col-xs-6">
+                        <div class="col-xs-6" style="padding:0px;">
                             <select name="표지-용지" id="select-표지-용지"  class="select_part input-sm form-control">
                                 <option value="아트">아트  </option>
                                 <option value="스노우">스노우</option>
@@ -208,7 +208,7 @@ $(document).ready(function(){
                                 <option value="특수지">특수지</option>
                             </select>
                         </div>
-                        <div class="col-xs-6">
+                        <div class="col-xs-6" style="padding:0 0 0 3px;">
                             <select name="표지-평량" id="select-표지-평량"  class="select_part input-sm form-control">
                                 <option value="180g">180g</option>
                                 <option value="250g">250g</option>
@@ -238,12 +238,12 @@ $(document).ready(function(){
         <div class="row step_content_row">
             <div class="col-xs-3">
                 <div class="step_content_title">
-                    <div class="step_content_title">후가공</div>
+                    <div class="step_content_title">가공</div>
                 </div>
             </div>
             <div class="col-xs-9">
                 <div class="row">
-                    <div class="col-xs-3">
+                    <div class="col-xs-3"  style="padding:0px;">
                         <div class="step_content_title">박</div>
 
                     </div>
@@ -260,7 +260,7 @@ $(document).ready(function(){
 
                 </div>
                 <div class="row">
-                    <div class="col-xs-3">
+                    <div class="col-xs-3" style="padding:0px;">
                         <div class="step_content_title">코팅</div>
                     </div>
                     <div class="col-xs-9">
@@ -324,7 +324,7 @@ $(document).ready(function(){
             <div class="col-xs-9">
 
                 <div class="row">
-                    <div class="col-xs-6">
+                    <div class="col-xs-6" style="padding:0px;">
                         <select name="삽지-용지" id="select-삽지-용지"  class="select_part input-sm form-control">
                             <option value="아트">아트  </option>
                             <option value="스노우">스노우</option>
@@ -333,7 +333,7 @@ $(document).ready(function(){
                             <option value="특수지">특수지</option>
                         </select>
                     </div>
-                    <div class="col-xs-6">
+                    <div class="col-xs-6" style="padding:0 0 0 3px;">
                         <select name="삽지-평량" id="select-삽지-평량"  class="select_part input-sm form-control">
                             <option value="80g">80g</option>
                             <option value="100g">100g</option>
@@ -352,6 +352,7 @@ $(document).ready(function(){
             </div>
             <div class="col-xs-9">
                 <select name="삽지-인쇄" id="select-삽지-인쇄"  class="select_part input-sm form-control">
+                    <option value="무지">인쇄 없음</option>
 
                     <option value="단면 1도">한쪽면만 흑백인쇄 (단면 먹1도)</option>
                     <option value="양면 1도">앞뒤 흑백인쇄 (양면 먹1도) </option>
@@ -392,14 +393,14 @@ $(document).ready(function(){
             <div class="col-xs-9">
 
                 <div class="row">
-                    <div class="col-xs-6">
+                    <div class="col-xs-6" style="padding:0px;">
                         <select name="내지-용지" id="select-내지-용지"  class="select_part input-sm form-control">
                             <option value="미색모조">미색모조  </option>
                             <option value="백색모조">백색모조  </option>
                             <option value="특수지">특수지</option>
                         </select>
                     </div>
-                    <div class="col-xs-6">
+                    <div class="col-xs-6" style="padding:0 0 0 3px;">
                         <select name="내지-평량" id="select-내지-평량"  class="select_part input-sm form-control">
                             <option value="80g">80g</option>
                             <option value="100g">100g</option>

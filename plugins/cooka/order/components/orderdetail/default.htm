@@ -69,11 +69,11 @@ function nl2br2(str){ return str.replace(/\n/g, "<br />"); }
     {% if order %}
         <div class="" data-id="{{ order.id }}">
             {% if order.name %}
-            <h5><span class="easy수정" data-colname="name" id="easy수정-name">{{ order.name }}</span>님의 주문정보</h5>
+            <h5><span class="easy수정" data-colname="title" id="easy수정-title">{{ order.title }}</span></h5>
             {% endif %}
 
             <div><b>주문시각</b> : {{ order.created_at|slice(0, -3) }}</div>
-            <div><b>제목</b> : <span class="easy수정" data-colname="title" id="easy수정-title">{{ order.title }}</span></div>
+            <!--<div><b>제목</b> : <span class="easy수정" data-colname="title" id="easy수정-title">{{ order.title }}</span></div>-->
 
             <div>
                 <b>성함</b> : <span class="easy수정" data-colname="name" id="easy수정-name">{{ order.name }}</span>
