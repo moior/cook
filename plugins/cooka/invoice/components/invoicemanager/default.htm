@@ -10,7 +10,10 @@ function invoceFormSubmit(){
     $("#inputBill").val($("#div견적서html").html());
     $("#inputFee").val( $("#input견적합계액").val() );
     /*보내는 내용 전체를 저장함*/
-    $("#inputContent").val( $("#textareaContent1").val() + $("#area견적미리보기").html()+ $("#textareaContent2").val());
+    var html = $("#textareaContent1").val() + $("#area견적미리보기").html()+ $("#textareaContent2").val();
+    var regex = /<br\s*[\/]?>/gi; /*br태그 지우기*/
+
+    $("#inputContent").val( html.replace(regex, "\n") );
 
 
 }
