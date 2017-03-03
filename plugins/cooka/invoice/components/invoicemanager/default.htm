@@ -55,14 +55,13 @@ $(document).ready(function() {
 
     $("#btn옵션추가").click(function() {
 
-        현재견적 += "<div style='font-weight:bold'>옵션</div>";
-        현재견적 += "<table class='table'><tr>";
-        현재견적 += "<td>내용<td>수량<td>청구액<td>부가세포함";
-        현재견적 += "<tr>";
-        현재견적 +=     "<td>" + $("#input옵션텍스트").val();
-        현재견적 +=     "<td>" + $("#input옵션수량").val();
-        현재견적 +=     "<td>" + number_format(Math.ceil($("#input옵션가격").val()));
-        현재견적 +=     "<td>" + number_format(Math.ceil($("#input옵션가격").val() * 1.1));
+        현재견적 += "<table style='width:100%;border:1px solid gray;margin:10px 10px 20px 10px;'><tr>";
+        현재견적 += "<td style='padding:3px;'>옵션내용<td style='padding:3px;'>수량<td style='padding:3px;'>청구액<td style='padding:3px;'>부가세포함";
+        현재견적 += "<tr style='border-bottom:1px solid #eee;'>";
+        현재견적 +=     "<td style='padding:3px;'>" + $("#input옵션텍스트").val();
+        현재견적 +=     "<td style='padding:3px;'>" + $("#input옵션수량").val();
+        현재견적 +=     "<td style='padding:3px;'>" + number_format(Math.ceil($("#input옵션가격").val()));
+        현재견적 +=     "<td style='padding:3px;'>" + number_format(Math.ceil($("#input옵션가격").val() * 1.1));
         현재견적 += "</tr></table>";
         $("#area견적미리보기").html( 현재견적 );
         $("#inputBill").val( 현재견적 );
