@@ -187,7 +187,34 @@ function onCalcFee(){
             <div class="col-sm-5" id="area이미지" style="">
                 <div id="area주문정보">
                     <a class="btn btn-sm" id="btn퀵주문입력">새주문</a>
+                    <div style="display:none;">
 
+                        {{ form_ajax('Orders::onSaveOrder',{
+                        id: "form퀵견적",
+                        success :"alert('접수되었습니다.')",
+                        }) }}
+
+                        <input type="hidden" name="title" value="퀵 견적요청" />
+                        <input type="hidden" name="client_name" value="퀵고객" />
+                        <input type="text" name="client_tel" value="" placeholder="휴대폰"  class="form-control" id="input퀵연락처"/>
+                        <input type="text" name="client_email" value="" placeholder="이메일"  class="form-control"/>
+                        <!--<input type="text" class="form-control" value="" name="sample_id"
+                               placeholder="가장 비슷한 샘플">-->
+
+                        <textarea name="client_comment" placeholder="기타 요청사항" class="form-control"
+                                  style="height:170px;">
+제품용도 : (영어학원홍보용 등)&nbsp;
+
+제작수량 :&nbsp;
+
+</textarea>
+                        <button type="button" onclick="return beforeFormSubmit();" class="pull-right btn btn btn-primary" data-attach-loading>
+                                <span class="fa fa-pencil"> 견적요청
+                        </button>
+
+                        {{ form_close() }}
+
+                    </div>
                     {% component "OrderDetail" %}
 
 
@@ -240,7 +267,7 @@ function onCalcFee(){
 
                     </script>
 
-                    <button class="btn btn-sm" class="btn견적추가">견적추가</button>
+                    <button class="btn btn-sm btn견적추가">견적추가</button>
                 </div>
             </div>
 
