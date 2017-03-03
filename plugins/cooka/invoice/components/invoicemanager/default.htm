@@ -18,12 +18,12 @@ function send고객께견적서(){
     $("#inputBill").val($("#div견적서html").html());
     $("#inputFee").val( $("#input견적합계액").val() );
     /*보내는 내용 전체를 저장함*/
-    var html = $("#textareaContent1").val() + $("#area견적미리보기").html()+ $("#textareaContent2").val();
     var regex1 = /<br\s*[\/]?>/gi; /*br태그 지우기*/
     var regex2 = /(?:\r\n|\r|\n)/g; /*\\n 지우기*/
-
-    html = html.replace(regex1, "");
-    html = html.replace(regex2, "");
+    var html테이블부분 = $("#area견적미리보기").html();
+    html테이블부분 = html테이블부분.replace(regex1, "");
+    html테이블부분 = html테이블부분.replace(regex2, "");
+    var html = $("#textareaContent1").val() + html테이블부분 + $("#textareaContent2").val();
 
     $("#inputContent").val( html );
 
@@ -33,19 +33,20 @@ function send고객께견적서(){
 $(document).ready(function() {
     var 현재견적 = "";
     var 견적번호 = 0;
+    var html_table = "<table style='width:100%;border:1px solid gray;margin:10px 10px 20px 10px;'>";
+    var html_tr = "<tr style=''>";
+    var html_td = "<td style='padding:3px;margin-bottom:1px;border-bottom:1px solid #d0d0d0;border-right:1px solid #a2a2a2;'>";
     $(".btn견적추가").click(function() {
         /*css 직접 삽입되어야 메일에서 안깨짐*/
         견적번호 = 견적번호 + 1;
         현재견적 += "<div><b>견적 #" + 견적번호 + "</b></div>";
-        현재견적 += "<table style='width:100%;border:1px solid gray;margin:10px 10px 20px 10px;'>";
-        현재견적 += "<tr style='border-bottom:1px solid #d0d0d0;font-weight:bold;'>";
-
+        현재견적 += html_table + html_tr;
         현재견적 += "<td style='width:55%;padding:3px;'>내용<td style='width:15%;padding:3px;'>수량<td style='width:15%;padding:3px;'>청구액<td style='width:15%;padding:3px;'>부가세포함";
-        현재견적 += "<tr style='border-bottom:1px solid #eee;'>";
-        현재견적 +=     "<td style='padding:3px;'>" + $("#div견적서html .span견적한줄").html();
-        현재견적 +=     "<td style='padding:3px;'>" + $("#div견적서html .span견적수량").html();
-        현재견적 +=     "<td style='padding:3px;'>" + number_format(Math.ceil($("#input견적합계액").val())) + '원';
-        현재견적 +=     "<td style='padding:3px;'>" + number_format(Math.ceil( $("#input견적합계액").val() * 1.1 )) + '원';
+        현재견적 += html_tr;
+        현재견적 +=     html_td + $("#div견적서html .span견적한줄").html();
+        현재견적 +=     html_td + $("#div견적서html .span견적수량").html();
+        현재견적 +=     html_td + number_format(Math.ceil($("#input견적합계액").val())) + '원';
+        현재견적 +=     html_td + number_format(Math.ceil( $("#input견적합계액").val() * 1.1 )) + '원';
         현재견적 += "</tr></table>";
 
         $("#area견적미리보기").html( 현재견적 );
@@ -55,13 +56,13 @@ $(document).ready(function() {
 
     $("#btn옵션추가").click(function() {
 
-        현재견적 += "<table style='width:100%;border:1px solid gray;margin:10px 10px 20px 10px;'><tr>";
+        현재견적 += html_table + html_tr;
         현재견적 += "<td style='padding:3px;'>옵션내용<td style='padding:3px;'>수량<td style='padding:3px;'>청구액<td style='padding:3px;'>부가세포함";
-        현재견적 += "<tr style='border-bottom:1px solid #eee;'>";
-        현재견적 +=     "<td style='padding:3px;'>" + $("#input옵션텍스트").val();
-        현재견적 +=     "<td style='padding:3px;'>" + $("#input옵션수량").val();
-        현재견적 +=     "<td style='padding:3px;'>" + number_format(Math.ceil($("#input옵션가격").val()));
-        현재견적 +=     "<td style='padding:3px;'>" + number_format(Math.ceil($("#input옵션가격").val() * 1.1));
+        현재견적 += html_tr;
+        현재견적 +=     html_td + $("#input옵션텍스트").val();
+        현재견적 +=     html_td + $("#input옵션수량").val();
+        현재견적 +=     html_td + number_format(Math.ceil($("#input옵션가격").val()));
+        현재견적 +=     html_td + number_format(Math.ceil($("#input옵션가격").val() * 1.1));
         현재견적 += "</tr></table>";
         $("#area견적미리보기").html( 현재견적 );
         $("#inputBill").val( 현재견적 );

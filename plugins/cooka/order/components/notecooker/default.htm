@@ -72,7 +72,9 @@ $(document).ready(function(){
             //$(this).find("option[value="+previous+"]").prop("selected", true);
             $('#modal소량주문').modal('show');
         }else $("#input-수량").val( note_part );
-        showDetailPayment(); /*가격 계산 paper.note.htm */
+
+        /*$(".select_part").change할때도 부르지만, 좀더 확실히? */
+        showDetailPayment(); /*가격 계산 paper.note.htm에 */
     });
 
 });

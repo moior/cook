@@ -82,6 +82,14 @@ function onCalcFee(){
         })
     }
 
+    function form전화견적체크() { /*폼 넘기기 전 실행*/
+        if(  !$("#input퀵연락처").val() ) {
+            alert('연락처를 적어 주세요');
+            $("#input퀵연락처").focus();
+        } else {
+            $("#form전화견적").submit();
+        }
+    }
 
     $(document).ready(function(){
         setFormInputData();
@@ -186,16 +194,16 @@ function onCalcFee(){
 
             <div class="col-sm-5" id="area이미지" style="">
                 <div id="area주문정보">
-                    <a class="btn btn-sm" id="btn퀵주문입력">새주문</a>
-                    <div style="display:none;">
+                    <a class="btn btn-sm" id="btn퀵주문입력" onclick="$(this).next().toggle();">새상담</a>
+                    <div style="display:none;" class="row">
 
-                        {{ form_ajax('Orders::onSaveOrder',{
-                        id: "form퀵견적",
-                        success :"alert('접수되었습니다.')",
+                        {{ form_ajax('Orders::onSaveOrderAdmin',{
+                        id: "form전화견적",
+                        success :"alert('저장되었습니다. 새로고침하세요..')",
                         }) }}
 
-                        <input type="hidden" name="title" value="퀵 견적요청" />
-                        <input type="hidden" name="client_name" value="퀵고객" />
+                        <input type="text" name="title" value="전화 상담요청" />
+                        <input type="text" name="client_name" value="고객" />
                         <input type="text" name="client_tel" value="" placeholder="휴대폰"  class="form-control" id="input퀵연락처"/>
                         <input type="text" name="client_email" value="" placeholder="이메일"  class="form-control"/>
                         <!--<input type="text" class="form-control" value="" name="sample_id"
@@ -203,13 +211,20 @@ function onCalcFee(){
 
                         <textarea name="client_comment" placeholder="기타 요청사항" class="form-control"
                                   style="height:170px;">
-제품용도 : (영어학원홍보용 등)&nbsp;
-
-제작수량 :&nbsp;
+제품용도 : &nbsp;
+제작수량 : &nbsp;
 
 </textarea>
-                        <button type="button" onclick="return beforeFormSubmit();" class="pull-right btn btn btn-primary" data-attach-loading>
-                                <span class="fa fa-pencil"> 견적요청
+                        <div>
+                            <label><input type="checkbox" name="send_email" />메일보냄</label>
+                        </div>
+                        <div>
+                            <label><input type="checkbox" name="send_sms" />문자보냄</label>
+                            <input type="text" name="send_sms_text" value="[직접 만드는 나만의 노트, 노트요리사.com] 상담이 접수되었습니다 감사합니다." />
+
+                        </div>
+                        <button type="button" onclick="return form전화견적체크();" class="pull-right btn btn btn-primary" data-attach-loading>
+                             <span class="fa fa-pencil"></span> 저장
                         </button>
 
                         {{ form_close() }}

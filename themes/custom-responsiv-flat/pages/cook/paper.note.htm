@@ -75,6 +75,7 @@ $(document).ready(function(){
     });
 
     $(".select_part").change(function(){
+        setFormInputData(); /*이걸 매번 하는게 안전함..*/
         setAreaDisplay();
         showDetailPayment();
     });
