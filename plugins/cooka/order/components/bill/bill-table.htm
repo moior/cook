@@ -51,6 +51,7 @@
                     {{ total_data["표지-인쇄"] }}
                     {{ total_data["표지-박"] }}
                     {{ total_data["표지-코팅"] }}
+                    {{ total_data["표지_직접1_항목"] }}
                 {% if total_data["삽지-매수"] %}
                     / <b>삽지 :</b>
                         {{ total_data["삽지-용지"] }}
@@ -107,6 +108,10 @@
 
                 {% if 표지_날개비 %}
                     <div>책날개 : {{ 표지_날개비|number_format() }} 원</div>
+                {% endif %}
+
+                {% if 표지_직접1_비용 %}
+                <div>{{ 표지_직접1_항목 }} : {{ 표지_직접1_비용|number_format() }} 원</div>
                 {% endif %}
             </div>
         </div>

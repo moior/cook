@@ -111,6 +111,11 @@ class Bill extends ComponentBase
 
         $this->page["표지_날개비"] = $fee->feeCoverWing("real");
 
+        if(isset($data['표지_직접1_항목']))
+            $this->page["표지_직접1_항목"] = $data['표지_직접1_항목'];
+        if(isset($data['표지_직접1_비용']))
+            $this->page["표지_직접1_비용"] = $data['표지_직접1_비용'];
+
         $this->page["삽지_종이값"] = $fee->feeIntroPaper("real");
         $this->page["삽지_인쇄비"] = $fee->feeIntroPrint("real");
         $this->page["삽지_판비"]   = $fee->feeIntroPan("real");
@@ -125,10 +130,8 @@ class Bill extends ComponentBase
         $this->page["포장비"] = $fee->feeOPP("real");
         $this->page["라벨작업비"] = $fee->feeLarvelStick("real");
 
-        $this->page["디자인_표지"] = "111";
-        $this->page["디자인_삽지"] = "2";
-        $this->page["디자인_내지"] = "3";
-        $this->page["디자인비"] = $fee->feeDesign("real");;
+        $this->page["디자인비"] = $fee->feeDesign("real");
+        $this->page["노임비"] = $fee->feeWorking("real");
 
         $this->page['필요R수_표지'] = round($fee->numNeededR("표지"), 2);
         $this->page['필요R수_삽지'] = round($fee->numNeededR("삽지"), 2);
@@ -145,6 +148,7 @@ class Bill extends ComponentBase
         $final = $this->page["표지_종이값"] +    $this->page["표지_인쇄비"] +    $this->page["표지_판비"] +
             $this->page["표지_코팅비"] +    $this->page["표지_박비"] +    $this->page["표지_합지비"] +
             $this->page["표지_싸바리비"] + $this->page["표지_날개비"] +
+            intval($this->page["표지_직접1_비용"]) +
 
             $this->page["삽지_종이값"] +    $this->page["삽지_인쇄비"] +    $this->page["삽지_판비"] +
             $this->page["내지_종이값"] +    $this->page["내지_인쇄비"] +    $this->page["내지_판비"] +

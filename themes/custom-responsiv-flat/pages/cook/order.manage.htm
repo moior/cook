@@ -82,6 +82,7 @@ function onCalcFee(){
         })
     }
 
+
     $(document).ready(function(){
         setFormInputData();
         setAreaDisplay();
@@ -91,6 +92,10 @@ function onCalcFee(){
         $(".select_part").change(function(){
             setFormInputData();
             setAreaDisplay();
+            showDetailPayment();
+        });
+
+        $("#btn견적서로드").click(function(){
             showDetailPayment();
         });
 
@@ -181,6 +186,7 @@ function onCalcFee(){
 
             <div class="col-sm-5" id="area이미지" style="">
                 <div id="area주문정보">
+                    <a class="btn btn-sm" id="btn퀵주문입력">새주문</a>
 
                     {% component "OrderDetail" %}
 
@@ -213,6 +219,29 @@ function onCalcFee(){
                 <!--견적서부분-->
                 <div id="div_brief" style="background-color:#ffffff;border:1px solid gray;border-bottom:1px solid gray;"></div>
 
+                <div class="text-align">
+
+                    <div class="row" id="div표지직접입력박스">
+                        <div class="col-xs-6" style="padding:0px;">
+                            <input type="text" name="표지_직접1_항목" id="input-표지_직접1_항목" value="" placeholder="표지 항목추가" class="form-control" />
+                        </div>
+                        <div class="col-xs-5" style="padding:0px;">
+                            <input type="text" name="표지_직접1_비용" id="input-표지_직접1_비용" value="" placeholder="추가비용" class="form-control"  />
+                        </div>
+                        <div class="col-xs-1" style="padding:0px;">
+                            <button type="button" id="btn견적서로드">+</button>
+                        </div>
+                    </div>
+                    <script>
+                        $(document).ready(function() {
+                            $("#div표지직접입력박스").appendTo("#form-currentnote");
+                        });
+
+
+                    </script>
+
+                    <button class="btn btn-sm" class="btn견적추가">견적추가</button>
+                </div>
             </div>
 
         </div><!--row-->

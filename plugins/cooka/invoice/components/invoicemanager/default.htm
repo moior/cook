@@ -2,7 +2,15 @@
 
 </style>
 <script>
-function invoceFormSubmit(){
+
+/* 견적서를 요리사께 보내고 DB에 저장. 컨펌받으면 고객께 발송 */
+function send요리사께견적서() {
+    alert("아직안됨. 견적서를 요리사께 보내고 DB에 저장. 컨펌받으면 고객께 발송")
+    //요리사께 이메일 보내고, 문자에는 클릭시 바로 창뜨는 bit.ly링크 보내기
+    //OK 버튼 클릭시 ㄱㄱㄱ
+    //$("#form견적서발송").submit();
+}
+function send고객께견적서(){
     /*가격 계산*/
     //var datas = $("#form-currentnote").serializeArray(); //JSON.stringify(
     var datas = JSON.stringify( $("#form-currentnote").serializeArray() );
@@ -19,15 +27,13 @@ function invoceFormSubmit(){
 
     $("#inputContent").val( html );
 
-
+    $("#form견적서발송").submit();
 }
-
-
 
     $(document).ready(function() {
     var 현재견적 = "";
     var 견적번호 = 0;
-    $("#btn견적추가").click(function() {
+    $(".btn견적추가").click(function() {
         /*css 직접 삽입되어야 메일에서 안깨짐*/
         견적번호 = 견적번호 + 1;
         현재견적 += "<div><b>견적 #" + 견적번호 + "</b></div>";
@@ -44,7 +50,7 @@ function invoceFormSubmit(){
 
         $("#area견적미리보기").html( 현재견적 );
         $("#inputBill").val( 현재견적 );
-
+        $("body").append("<div class=''>추가되었습니다</div>");
     });
 
     $("#btn옵션추가").click(function() {
@@ -75,7 +81,7 @@ function invoceFormSubmit(){
 
     <div class="row well well-sm">
         <div class="col-xs-4">
-            <button class="btn btn-xs" id="btn견적추가">견적추가</button>
+            <button class="btn btn-default" class="btn견적추가">견적추가</button>
         </div>
         <div class="col-xs-4">
             <button class="btn btn-xs" id="btn옵션추가">옵션추가</button>
@@ -99,6 +105,7 @@ function invoceFormSubmit(){
         {
         success:"alert('발송 완료되었습니다.')",
         redirect:"/order/manage/" ~ orderno,
+        id:"form견적서발송"
         }
         ) }}
         <input type="hidden" name="order_id" id="" value="{{ orderno }}"/>
@@ -107,10 +114,39 @@ function invoceFormSubmit(){
         <input type="hidden" name="content" id="inputContent" />
         <input type="hidden" name="fee" id="inputFee" />
 
-        <input type="text" name="name" placeholder="성함" class="form-control" value="{{ order.name }}"/>
-        <input type="text" name="email" placeholder="이메일" class="form-control" value="{{ order.email }}"/>
-        <input type="text" name="phone" placeholder="전화번호" class="form-control" value="{{ order.phone }}" />
-
+        <div class="row">
+            <div class="col-xs-6">
+                <input type="text" name="name" placeholder="성함" class="form-control" value="{{ order.name }}"/>
+            </div>
+            <div class="col-xs-6">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-6">
+                <input type="text" name="email" placeholder="이메일" class="form-control" value="{{ order.email }}" id="input견적받을이메일" />
+            </div>
+            <div class="col-xs-6">
+                <button onclick="$('#input견적받을이메일').val( $('#input견적받을이메일').val() + ',sangemi@daum.net')" type="button"  class="btn btn-sm btn-default">
+                    add Kenny
+                </button>
+                <button onclick="$('#input견적받을이메일').val( $('#input견적받을이메일').val() + ',mira7725@daum.net')" type="button"  class="btn btn-sm btn-default">
+                    add 미라
+                </button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-6">
+                <input type="text" name="phone" placeholder="전화번호" class="form-control" value="{{ order.phone }}"  id="input견적받을전화" />
+            </div>
+            <div class="col-xs-6">
+                <button onclick="$('#input견적받을전화').val( $('#input견적받을전화').val() + ',01047750852')" type="button"  class="btn btn-sm btn-default">
+                    add Kenny
+                </button>
+                <button onclick="$('#input견적받을전화').val( $('#input견적받을전화').val() + ',010')" type="button" class="btn btn-sm btn-default">
+                    add 미라
+                </button>
+            </div>
+        </div>
         <div class="well">
             <div class="text-center">====== 메일 시작======</div>
             OO 님 안녕하세요.<br>
@@ -120,8 +156,14 @@ function invoceFormSubmit(){
 
 </textarea>
 
-            <div id="area견적미리보기"></div>
+            <div id="area견적미리보기" style="margin:15px 0;"></div>
 
+            <!--<div>
+                담당 요리사 재량할인 :
+                <input type="text" name="discount-amount" value="" placeholder="" />원
+                /
+                <input type="text" name="discount-percent" value="" placeholder="" />%
+            </div>-->
             <textarea name="content2" id="textareaContent2" placeholder="기타사항" class="form-control" style="height:200px;">
 
 </textarea>
@@ -133,8 +175,12 @@ function invoceFormSubmit(){
 
         <div class="text-right">
             <button type="button" class="btn btn-xs" id="btn견적서미리보기">미리보기</button>
-            <button type="submit" onclick="invoceFormSubmit();" class="btn btn-primary btn-xs" style=""  data-attach-loading>
-                견적 발송
+            <button type="button" onclick="send요리사께견적서();" class="btn btn-primary btn-xs" style=""  data-attach-loading>
+                1. 요리사께 견적확인
+            </button>
+
+            <button type="button" onclick="send고객께견적서();" class="btn btn-primary btn-xs" style=""  data-attach-loading>
+                2. 고객께 견적발송
             </button>
         </div>
         {{ form_close() }}
