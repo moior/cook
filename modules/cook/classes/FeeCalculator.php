@@ -353,17 +353,21 @@ class FeeCalculator
             ),
         );
 
-        $this->danka_auto['삽지-삽입'] = array( /* 삽지를 4, 8, 12 페이지에 삽입시 */
+        $this->danka_auto['삽지배치'] = array( /* 삽지를 4, 8, 12 페이지에 삽입시 */
             '0' => array(
-                '기본비용-4배수삽입' => "40000",
+                '기본비용-첫장' => "0",
+                '기본비용-배수삽입' => "40000",
             ),
             '100' => array(
-                '기본비용-4배수삽입' => "50000",
+                '기본비용-첫장' => "0",
+                '기본비용-배수삽입' => "50000",
             ),
-            '1000' => array( /*1000권 이하는 무조건 30만원, 3천권하면 A6 250원 A5 280원*/
-                '기본비용-4배수삽입' => "150000", '초과비용-2합' => "150",
+            '1000' => array( /**/
+                '기본비용-첫장' => "0", '초과비용-첫장' => "0",
+                '기본비용-배수삽입' => "150000", '초과비용-배수삽입' => "150",
             ),
         );
+
         $this->danka_easy['일반날개'] = array(
             '기본비용' => "50000", /*수량상관없이 기본  */
             '기본수량' => "1000",
@@ -528,14 +532,14 @@ class FeeCalculator
         }
         return $용지비 ;
     }
-    /*표지-인쇄 / 표지는 1권에 2장*/
+    /*삽지-인쇄 */
     function feeIntroPrint($real = "real", $paper_name = null, $size = null) {   /*  */
         if($real == "real") {
             $인쇄비 = ceil($this->numNeededR("삽지")) * $this->danka["표지인쇄"][$this->userSetting["삽지-인쇄"]];
         }
         return $인쇄비;
     }
-    /*표지-판비 // 국-2절 or 46-2절 */
+    /*삽지-판비 // 국-2절 or 46-2절 */
     function feeIntroPan($real = "real", $size = "국-2절"){
         if( ! $this->quantity ) return 0;
         if($real == "real"){
@@ -546,7 +550,38 @@ class FeeCalculator
         }
         return $판비;
     }
+    // 오류있을때 이걸로 확인 // print_r($this->userSetting);
+    /*삽지-배치 */
+    function feeIntroPosition($real = "real"){
+        if( ! $this->quantity ) return 0;
+        $일차분류 = "삽지배치"; //
 
+        $이차분류 = $this->userSetting['삽지-배치']; //
+
+        if($real == "real"){
+            $수량갭 = array_keys($this->danka_auto[$일차분류]); /*0, 100, 1000권 간격*/
+            foreach($수량갭 as $key => $수량갭_){
+                /*갭 사이 간격 미리 배열로 저장*/
+                /*만약 150권 제작이면, 100권 + auto증가*/
+                $수량_갭하단 = $수량갭[$key];
+                $비용_갭하단 = $this->danka_auto[$일차분류][$수량갭_]["기본비용-".$이차분류];
+                if(  !isset($수량갭[$key+1])) { /*가장 큰구간이면 */
+                    $권당증가비용 = $this->danka_auto[$일차분류][$수량갭_]["초과비용-".$이차분류];
+                    break;
+                }else if( $수량갭[$key] <= $this->quantity && $this->quantity < $수량갭[$key+1]){
+                    /*만약 150개주문이면 [1000] 값 */ /*'기본비용-A6' => "35000", '초과비용-A6' => "auto",*/
+                    $권당증가비용 = ( $this->danka_auto[$일차분류][$수량갭[$key+1]]["기본비용-".$이차분류]
+                            - $비용_갭하단)
+                        / ($수량갭[$key+1] - $수량_갭하단 ); /*해당구간의 기울기*/
+                    break;
+                }
+            }
+            $배치비 = $비용_갭하단 + $권당증가비용 * ($this->quantity - $수량_갭하단 );
+            //$배치비 = $배치비 + $this->danka["공장간배송"];
+
+            return $배치비;
+        }
+    }
 
     /* 내지 ==========================================*/
     /*표지 비용 = 용지비 + 인쇄비 + 판비

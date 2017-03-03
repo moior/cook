@@ -29,7 +29,10 @@ function setAreaDisplay(){
         $(".div_파트선택영역").show();
         if( $("#checkbox_삽지있음").prop("checked") == true ){
             $("#div_삽지영역").show();
-        }else $("#div_삽지영역").hide();
+        }else {
+            $("#select-삽지-매수 option:first").prop("selected", true); $("#div_삽지영역").hide();
+            setFormInputData();
+        }
     }
     if( $("#select-제본 option:selected").val() == "스프링") {
         $("#select-데코-라벨스틱").prop("disabled", false);
@@ -104,6 +107,7 @@ $(document).ready(function(){
     <input type="hidden" name="삽지-인쇄" id="input-삽지-인쇄" value=""  />
     <input type="hidden" name="삽지-평량" id="input-삽지-평량" value=""  />
     <input type="hidden" name="삽지-매수" id="input-삽지-매수" value=""  />
+    <input type="hidden" name="삽지-배치" id="input-삽지-배치" value=""  />
 
     <input type="hidden" name="내지-용지" id="input-내지-용지" value=""  />
     <input type="hidden" name="내지-인쇄" id="input-내지-인쇄" value=""  />
@@ -324,7 +328,7 @@ $(document).ready(function(){
 
     <div class="step_title" style="">
         삽지
-        <input type="checkbox" name="삽지있음" id="checkbox_삽지있음" onclick="javascript:setAreaDisplay()" />
+        <input type="checkbox" name="삽지있음" id="checkbox_삽지있음" onclick="javascript:setAreaDisplay();showDetailPayment();" />
 
     </div>
     <div class="step_content div_파트선택영역" id="div_삽지영역" style="">
@@ -383,6 +387,20 @@ $(document).ready(function(){
                     <option value="양면 1도">앞뒤 흑백인쇄 (양면 먹1도) </option>
                     <option value="단면 4도">한쪽면만 컬러인쇄 (단면 4도)</option>
                     <option value="양면 4도">앞뒤 컬러인쇄 (양면 4도) </option>
+                </select>
+            </div>
+        </div>
+
+
+        <div class="row step_content_row">
+
+            <div class="col-xs-3">
+                <div class="step_content_title">삽입</div>
+            </div>
+            <div class="col-xs-9">
+                <select name="삽지-배치" id="select-삽지-배치"  class="select_part input-sm form-control">
+                    <option value="첫장">맨 앞</option>
+                    <option value="배수삽입">특정위치에 삽입</option>
                 </select>
             </div>
         </div>

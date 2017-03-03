@@ -58,6 +58,7 @@
                         {{ total_data["삽지-평량"] }}
                         {{ total_data["삽지-인쇄"] }}
                         {{ total_data["삽지-매수"] }}장
+                        {{ total_data["삽지-배치"] }}
                 {% endif %}
                 / <b>내지 :</b>
                     {{ total_data["내지-용지"] }}
@@ -129,6 +130,8 @@
                 <div>종이값 : {{ 삽지_종이값|number_format() }} 원</div>
                 <div>인쇄비 : {{ 삽지_인쇄비|number_format() }} 원</div>
                 <div>판비 : {{ 삽지_판비|number_format() }} 원</div>
+                <div>작업 : {{ 삽지_배치비|number_format() }} 원</div>
+
             </div>
         </div>
     </div>

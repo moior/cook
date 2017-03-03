@@ -119,6 +119,7 @@ class Bill extends ComponentBase
         $this->page["삽지_종이값"] = $fee->feeIntroPaper("real");
         $this->page["삽지_인쇄비"] = $fee->feeIntroPrint("real");
         $this->page["삽지_판비"]   = $fee->feeIntroPan("real");
+        $this->page["삽지_배치비"]   = $fee->feeIntroPosition("real");
 
         $this->page["내지_종이값"] = $fee->feeInnerPaper("real");
         $this->page["내지_인쇄비"] = $fee->feeInnerPrint("real");
@@ -151,6 +152,8 @@ class Bill extends ComponentBase
             intval($this->page["표지_직접1_비용"]) +
 
             $this->page["삽지_종이값"] +    $this->page["삽지_인쇄비"] +    $this->page["삽지_판비"] +
+            $this->page["삽지_배치비"] +
+
             $this->page["내지_종이값"] +    $this->page["내지_인쇄비"] +    $this->page["내지_판비"] +
 
             $this->page["제본비"] +    $this->page["라운딩비"] +    $this->page["포장비"] +   $this->page["라벨작업비"] +
