@@ -1,5 +1,5 @@
 title = "주문 내역"
-url = "/order/list"
+url = "/order/list/:search?"
 layout = "cooking"
 is_hidden = 0
 
@@ -8,6 +8,7 @@ redirect = "home"
 paramCode = "code"
 
 [Orders]
+search = "{{ :search }}"
 
 [session]
 
@@ -90,7 +91,11 @@ $(document).ready(function(){
                             디자인팀 : 02-2038-2438
 
                         </p>
-
+                        {% if admin %}
+                            <!--검색-->
+                            <input type="text" name="search" class="form-control" id="input검색어" placeholder="검색어"/>
+                            <button type="button" onclick="location.href='/order/list/' + $('#input검색어').val();" class="btn btn-default">검색</button>
+                        {% endif %}
 
                     </div>
                 </div>

@@ -48,13 +48,25 @@ class Orders extends ComponentBase
         }else{
             $orders = Order::orderBy("created_at", "desc")->paginate(20); //find( $user->id );
         }*/
-        $orders = Order::orderBy("created_at", "desc")->paginate(10); //find( $user->id );
+        $search_text = $this->property('search');
+
+        $orders = Order::orderBy("created_at", "desc"); //find( $user->id );
+        if($search_text){
+            $orders = $orders->where("name", "like", "%". $search_text."%");
+            $orders = $orders->orWhere("phone", "like", "%". $search_text."%");
+            $orders = $orders->orWhere("email", "like", "%". $search_text."%");
+            $orders = $orders->orWhere("addr", "like", "%". $search_text."%");
+            $orders = $orders->orWhere("cook_data", "like", "%". $search_text."%");
+            $orders = $orders->orWhere("status_show", "like", "%". $search_text."%");
+        }
+        $orders = $orders->paginate(10);
+
         $this->page['orders'] = $orders;
 
+        $upload_file_arr = array();
         foreach( $orders as $key => $order){
             if($order->upload_file)
                 $upload_file_arr[] = $order->upload_file->getPath();
-            else  $upload_file_arr[] = '';
         }
         $this->page['upload_file_arr'] = $upload_file_arr;
         /*print_r( $upload_file_arr);*/

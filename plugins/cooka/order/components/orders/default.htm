@@ -2,14 +2,13 @@
 <style>
     .table td, .table th {}
 
-
-    .class접수확인중   {border-left:3px solid red; color:gray;}
-    .class상담중       {border-left:3px solid royalblue; color:gray;text-decoration: dashed;}
-    .class입금대기중   {border-left:1px solid green; color:gray;text-decoration: dashed;}
-    .class제작중       {border-right:3px solid yellow; color:gray;text-decoration: dashed;}
-    .class납품완료     {border-right:1px solid skyblue; color:#c6c6c6;text-decoration: dashed;}
-    .class상담완료     {border-right:1px solid gray; color: #c6c6c6;text-decoration: dashed;}
-    .class상담완료   td {/*text-decoration: line-through;*/}
+    .class상태_접수확인중   {border-left:3px solid red; color:gray;}
+    .class상태_상담중       {border-left:3px solid royalblue; color:gray;text-decoration: dashed;}
+    .class상태_입금대기중   {border-left:1px solid green; color:gray;text-decoration: dashed;}
+    .class상태_제작중       {border-right:3px solid gold; color:gray;text-decoration: dashed;}
+    .class상태_납품완료     {border-right:1px solid skyblue; color:#c6c6c6;text-decoration: dashed;}
+    .class상태_상담완료     {border-right:1px solid gray; color: #c6c6c6;text-decoration: dashed;}
+    .class상태_상담완료   td {/*text-decoration: line-through;*/}
 
 </style>
 <!--<form data-request="{{ __SELF__ }}::onOrderPaper">
@@ -27,7 +26,7 @@
         {{ orders.spec }}
         {% for key, item in orders %}
 
-        {% set statusClass = " class" ~ item.status_show %}
+        {% set statusClass = " class상태_" ~ item.status_show %}
         <tr class="tr주문 {{ statusClass }}" data-id="{{ item.id }}">
             <td>
                 <small>{{ item.created_at|slice(5,5) }}</small>
