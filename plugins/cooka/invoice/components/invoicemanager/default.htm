@@ -5,12 +5,15 @@
 
 /* 견적서를 요리사께 보내고 DB에 저장. 컨펌받으면 고객께 발송 */
 function send요리사께견적서() {
-    alert("아직안됨. 견적서를 요리사께 보내고 DB에 저장. 컨펌받으면 고객께 발송")
+    if( !$("#area견적미리보기").html() ) {alert("견적추가해주세요"); return false;}
+
+    alert("아직안됨. 견적서를 요리사께 보내고 DB에 저장. 컨펌받으면 고객께 발송");
     //요리사께 이메일 보내고, 문자에는 클릭시 바로 창뜨는 bit.ly링크 보내기
     //OK 버튼 클릭시 ㄱㄱㄱ
     //$("#form견적서발송").submit();
 }
 function send고객께견적서(){
+    if( !$("#area견적미리보기").html() ) {alert("견적추가해주세요"); return false;}
     /*가격 계산*/
     //var datas = $("#form-currentnote").serializeArray(); //JSON.stringify(
     var datas = JSON.stringify( $("#form-currentnote").serializeArray() );
@@ -105,10 +108,9 @@ $(document).ready(function() {
         {{ form_ajax('Invoices::onSendInvoice',
         {
         success:"alert('발송 완료되었습니다.')",
-        redirect:"/order/manage/" ~ orderno,
         id:"form견적서발송"
         }
-        ) }}
+        ) }} <!--redirect:"/order/manage/" ~ orderno,-->
         <input type="hidden" name="order_id" id="" value="{{ orderno }}"/>
         <input type="hidden" name="cook_data" id="inputCookaData" />
         <input type="hidden" name="bill" id="inputBill" />

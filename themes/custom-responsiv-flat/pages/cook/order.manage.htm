@@ -84,11 +84,11 @@ function onCalcFee(){
 
     function form전화견적체크() { /*폼 넘기기 전 실행*/
         if(  !$("#input전화상담고객명").val() ) {
-            alert('고객명을 적어 주세요');
-            $("#input전화상담고객명").focus();
-        } else {
-            $("#form전화견적").submit();
+            $("#input전화상담고객명").val( $("#input퀵연락처").val().substr(-4) );
+            //alert('고객명을 적어 주세요');
+            //$("#input전화상담고객명").focus();
         }
+        $("#form전화견적").submit();
     }
 
     $(document).ready(function(){
@@ -203,7 +203,7 @@ function onCalcFee(){
                         }) }}
 
                         <input type="text" name="title" value="전화 상담요청" />
-                        <input type="text" name="client_name" value="고객" id="input전화상담고객명" />
+                        <input type="text" name="client_name" value="" id="input전화상담고객명" placeholder="고객명 (모르면 빈값)" />
                         <input type="text" name="client_tel" value="" placeholder="휴대폰"  class="form-control" id="input퀵연락처"/>
                         <input type="text" name="client_email" value="" placeholder="이메일"  class="form-control"/>
                         <!--<input type="text" class="form-control" value="" name="sample_id"
