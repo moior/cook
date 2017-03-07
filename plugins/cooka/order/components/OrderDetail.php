@@ -83,6 +83,11 @@ class OrderDetail extends ComponentBase
         $order->status_show = post('status_show');
         $order->save();
     }
+    public function onDeleteOrder(){
+        $orderId = post('order_id');
+        $order = Order::find($orderId);
+        $order->delete();
+    }
 
     /*텍스트 클릭시 입력창이 뜨고 바로수정 가능케*/
     public function onUpdateColumnEasy(){

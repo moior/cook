@@ -94,7 +94,9 @@ $(document).ready(function(){
                         {% if admin %}
                             <!--검색-->
                             <input type="text" name="search" class="form-control" id="input검색어" placeholder="검색어"/>
-                            <button type="button" onclick="location.href='/order/list/' + $('#input검색어').val();" class="btn btn-default">검색</button>
+                            <div class="text-right">
+                            <button type="button" onclick="location.href='/order/list/' + $('#input검색어').val();" class="btn btn-default btn-sm">검색</button>
+                            </div>
                         {% endif %}
 
                     </div>

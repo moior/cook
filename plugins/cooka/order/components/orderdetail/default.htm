@@ -39,6 +39,22 @@ $(document).ready(function(){
         $("#input컬럼이름").val( $(this).data("colname") );
 
     });
+    $("#btn상담삭제").click(function(){
+        if( confirm('정말 삭제하겠어요??') ) {
+            var datas = {
+                'order_id' : {{ order.id }},
+            }
+            $.request("onDeleteOrder", {
+                data: datas,
+                success: function(){
+                    alert('삭제되었습니다');
+                    location.href='/order/list';
+                }
+            })
+        }
+
+    });
+
 })
 function check개별수정폼(){
     if($("#input컬럼이름").val()){
@@ -172,6 +188,9 @@ function nl2br2(str){ return str.replace(/\n/g, "<br />"); }
         </div>
 
         {% endif %}
+        <div class="text-right">
+            <button class="btn btn-xs btn-default" id="btn상담삭제">Del</button>
+        </div>
 
     {% else %}
         <h5>리스트에서 클릭해주세요</h5>
