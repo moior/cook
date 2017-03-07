@@ -1,6 +1,16 @@
 
 <style>
     .table td, .table th {}
+
+
+    .class접수확인중   {border-left:3px solid red; color:gray;}
+    .class상담중       {border-left:3px solid green; color:gray;text-decoration: dashed;}
+    .class입금대기중   {border-left:3px solid green; color:gray;text-decoration: dashed;}
+    .class제작중       {border-left:3px solid yellow; color:gray;text-decoration: dashed;}
+    .class납품완료     {border-left:3px solid gray; color:gray;text-decoration: dashed;}
+    .class상담완료     {border-left:0px solid gray; color:gray;text-decoration: dashed;}
+    .class상담완료   td {/*text-decoration: line-through;*/}
+
 </style>
 <!--<form data-request="{{ __SELF__ }}::onOrderPaper">
 여기서는 __self__하면되네
@@ -16,7 +26,9 @@
         </tr>
         {{ orders.spec }}
         {% for key, item in orders %}
-        <tr class="tr주문" data-id="{{ item.id }}">
+
+        {% set statusClass = " class" ~ item.status_show %}
+        <tr class="tr주문 {{ statusClass }}" data-id="{{ item.id }}">
             <td>
                 <small>{{ item.created_at|slice(5,5) }}</small>
             </td>
@@ -111,7 +123,10 @@
             </td>
 
             <td>
-                <small>{{ item.status_show?:"확인중"  }}</small>
+                <small>
+                    {{ item.status_show?:"확인중"  }}
+
+                </small>
 
             </td>
         </tr>
