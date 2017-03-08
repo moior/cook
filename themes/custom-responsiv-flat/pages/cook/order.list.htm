@@ -57,11 +57,12 @@ $(document).ready(function(){
     <br>
     <div class="row">
 
-    <form
-        data-request="Orders::onSaveOrder"
-        data-request-success="alert('접수 완료되었습니다. 확인 후 연락드리겠습니다. :-)')"
-        data-request-redirect="/my">
-        <!--data-request-update="'{{ __SELF__ }}::list': '#result'"-->
+        <form
+            data-request="Orders::onSaveOrder"
+            data-request-success="alert('접수 완료되었습니다. 확인 후 연락드리겠습니다. :-)')"
+            data-request-redirect="/my">
+            <!--data-request-update="'{{ __SELF__ }}::list': '#result'"-->
+        </form>
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h3 class="panel-title">주문 내역</h3>
@@ -111,7 +112,6 @@ $(document).ready(function(){
             </ul>
 
         </div>
-    </form>
     </div>
 
 </div>
