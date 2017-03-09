@@ -121,6 +121,7 @@ function nl2br2(str){ return str.replace(/\n/g, "<br />"); }
                 </a>
             </div>
 
+
             <div style="border-bottom:1px dotted gray;">
                 자동계산된 금액 :
                 {% if order.fee_offer == 0 %}
@@ -154,9 +155,10 @@ function nl2br2(str){ return str.replace(/\n/g, "<br />"); }
         </div>
         <br/>
         <!--첨부파일이 있으면 -->
-        {% if upload_file_arr[key] %}
-        <a href="{{upload_file_arr[key]}}" target="_blank">파일</a>
+        {% if upload_file %}
+        <a href="{{upload_file}}" target="_blank">첨부한파일</a>
         {% endif %}
+
         {% if order.bill %}
 
         <a href="javascript:void(0);" onclick="$(this).next('.div상세견적서보기').toggle();">
