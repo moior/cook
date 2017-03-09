@@ -59,12 +59,14 @@
                         {{ total_data["삽지-인쇄"] }}
                         {{ total_data["삽지-매수"] }}장
                         {{ total_data["삽지-배치"] }}
+                        {{ total_data["삽지_직접1_항목"] }}
                 {% endif %}
                 / <b>내지 :</b>
                     {{ total_data["내지-용지"] }}
                     {{ total_data["내지-평량"] }}
                     {{ total_data["내지-인쇄"] }}
                     {{ total_data["내지-매수"] }}장
+                    {{ total_data["내지_직접1_항목"] }}
                 /   {{ total_data["디자인"] }}
                 {% if total_data["데코-라벨스틱"] %}
                     /   {{ total_data["데코-라벨스틱"] }}
@@ -75,6 +77,8 @@
                 {% if total_data["데코-OPP"] %}
                     /   {{ total_data["데코-OPP"] }}
                 {% endif %}
+                {{ total_data["작업_직접1_항목"] }}
+                {{ total_data["작업_직접2_항목"] }}
             </span>
             <span class="span견적수량" style="word-break: keep-all">
                 <b>{{ total_data["수량"] }}권</b>
@@ -131,7 +135,9 @@
                 <div>인쇄비 : {{ 삽지_인쇄비|number_format() }} 원</div>
                 <div>판비 : {{ 삽지_판비|number_format() }} 원</div>
                 <div>작업 : {{ 삽지_배치비|number_format() }} 원</div>
-
+                {% if 삽지_직접1_비용 %}
+                <div>{{ 삽지_직접1_항목 }} : {{ 삽지_직접1_비용|number_format() }} 원</div>
+                {% endif %}
             </div>
         </div>
     </div>
@@ -147,6 +153,9 @@
                 <div>종이값 : {{ 내지_종이값|number_format() }} 원</div>
                 <div>인쇄비 : {{ 내지_인쇄비|number_format() }} 원</div>
                 <div>판비 : {{ 내지_판비|number_format() }} 원</div>
+                {% if 내지_직접1_비용 %}
+                <div>{{ 내지_직접1_항목 }} : {{ 내지_직접1_비용|number_format() }} 원</div>
+                {% endif %}
             </div>
         </div>
     </div>
@@ -165,6 +174,13 @@
                 {% endif %}
                 {% if 포장비 %}
                 <div>포장비 : {{ 포장비|number_format() }} 원</div>
+                {% endif %}
+
+                {% if 작업_직접1_비용 %}
+                <div>{{ 작업_직접1_항목 }} : {{ 작업_직접1_비용|number_format() }} 원</div>
+                {% endif %}
+                {% if 작업_직접2_비용 %}
+                <div>{{ 작업_직접2_항목 }} : {{ 작업_직접2_비용|number_format() }} 원</div>
                 {% endif %}
 
                 <div>디자인 : {{ 디자인비|number_format() }} 원</div>

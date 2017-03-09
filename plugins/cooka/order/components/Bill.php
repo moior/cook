@@ -111,11 +111,6 @@ class Bill extends ComponentBase
 
         $this->page["표지_날개비"] = $fee->feeCoverWing("real");
 
-        if(isset($data['표지_직접1_항목']))
-            $this->page["표지_직접1_항목"] = $data['표지_직접1_항목'];
-        if(isset($data['표지_직접1_비용']))
-            $this->page["표지_직접1_비용"] = $data['표지_직접1_비용'];
-
         $this->page["삽지_종이값"] = $fee->feeIntroPaper("real");
         $this->page["삽지_인쇄비"] = $fee->feeIntroPrint("real");
         $this->page["삽지_판비"]   = $fee->feeIntroPan("real");
@@ -139,6 +134,26 @@ class Bill extends ComponentBase
         $this->page['필요R수_내지'] = round($fee->numNeededR("내지"), 2);
         $this->page['내지한장가격'] = round($fee->feePaper1page(), 1);
 
+        if(isset($data['표지_직접1_항목']))
+            $this->page["표지_직접1_항목"] = $data['표지_직접1_항목'];
+        if(isset($data['표지_직접1_비용']))
+            $this->page["표지_직접1_비용"] = $data['표지_직접1_비용'];
+        if(isset($data['삽지_직접1_항목']))
+            $this->page["삽지_직접1_항목"] = $data['삽지_직접1_항목'];
+        if(isset($data['삽지_직접1_비용']))
+            $this->page["삽지_직접1_비용"] = $data['삽지_직접1_비용'];
+        if(isset($data['내지_직접1_항목']))
+            $this->page["내지_직접1_항목"] = $data['내지_직접1_항목'];
+        if(isset($data['내지_직접1_비용']))
+            $this->page["내지_직접1_비용"] = $data['내지_직접1_비용'];
+        if(isset($data['작업_직접1_항목']))
+            $this->page["작업_직접1_항목"] = $data['작업_직접1_항목'];
+        if(isset($data['작업_직접1_비용']))
+            $this->page["작업_직접1_비용"] = $data['작업_직접1_비용'];
+        if(isset($data['작업_직접2_항목']))
+            $this->page["작업_직접2_항목"] = $data['작업_직접2_항목'];
+        if(isset($data['작업_직접2_비용']))
+            $this->page["작업_직접2_비용"] = $data['작업_직접2_비용'];
 
         //$this->page['제본비1권'] = ceil($fee->feeJebon1book());
 
