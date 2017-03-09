@@ -94,8 +94,19 @@ $(document).ready(function(){
                         </p>
                         {% if admin %}
                             <!--검색-->
+                            <script>
+                                $(function(){
+                                    $("#input검색어").keyup(function(){
+                                        $(".tr주문").hide();
+                                        var txt = $('#input검색어').val();
+                                        $(".tr주문:contains('"+txt+"')").show();
+
+                                    })
+                                })
+                            </script>
                             <input type="text" name="search" class="form-control" id="input검색어" placeholder="검색어"/>
                             <div class="text-right">
+                                <small>글씨쓰면 현재페이지에서만 검색, 버튼누르면 전체검색</small>
                             <button type="button" onclick="location.href='/order/list/' + $('#input검색어').val();" class="btn btn-default btn-sm">검색</button>
                             </div>
                         {% endif %}

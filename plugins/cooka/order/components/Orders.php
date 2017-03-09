@@ -77,7 +77,12 @@ class Orders extends ComponentBase
             $this->page['cook_data'] = $cook_data_arr;
         }
 
-
+        $admin = BackendAuth::getUser();
+        if ($admin) { // && $admin->hasAccess('cooka.sample.create')
+            $this->page['admin'] = true;
+        } else {
+            $this->page['admin'] = false;
+        }
 
     }
 
@@ -164,6 +169,7 @@ class Orders extends ComponentBase
             Mail::send($mail_view, $data, function($message) use ($order) {
                 $message->to($order->email, $order->name);
             });
+            /* 어드민한테 보내기 따로빼자.. 제목에 이름, 전번 붙음 */
         }
     }
     private function sendSMSAfterOrder($order, $sms_text = "[노트요리사] 상담이 접수되었습니다. 노트요리사.com")
