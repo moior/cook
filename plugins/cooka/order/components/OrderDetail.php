@@ -61,7 +61,7 @@ class OrderDetail extends ComponentBase
         $this->page['order'] = $tmpOrder;
         /*$this->page['order'] = $order;*/
 
-        if($order->upload_file){
+        if($order->upload_file) {
             $this->page['upload_file'] = $order->upload_file->getPath();
         }
 
