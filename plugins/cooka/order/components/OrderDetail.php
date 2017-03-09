@@ -61,7 +61,9 @@ class OrderDetail extends ComponentBase
         $this->page['order'] = $tmpOrder;
         /*$this->page['order'] = $order;*/
 
-        $this->page['upload_file'] = $order->upload_file->getPath();
+        if($order->upload_file){
+            $this->page['upload_file'] = $order->upload_file->getPath();
+        }
 
         if (isset($order->cook_data)) {
             $this->page['cook_data'] = json_decode($order->cook_data, true);
