@@ -212,6 +212,7 @@ class FeeCalculator
         $this->danka['용지-46절'] = array( /*대유기획 홈피. korea-a.com = http://appleto.n4.cc/etc/paper1.htm*/
             '' => 0,
             ' ' => 0,
+            '모조 80g' => 42800, /*표지에서 그냥 모조지 선택시*/
             '모조 180g' => 54500, /*표지에서 그냥 모조지 선택시*/
             '모조 250g' => 71500,
             '모조 300g' => 88400,
