@@ -19,17 +19,19 @@
 
     <table id="talbe-order-list" class="table table-sm">
         <tr>
-            <th>날짜</th>
+            <th style="text-align:center;">No</th>
             <th>내용</th>
-            <th>상태</th>
+            <th style="text-align:center;">상태</th>
         </tr>
         {{ orders.spec }}
         {% for key, item in orders %}
 
         {% set statusClass = " class상태_" ~ item.status_show %}
         <tr class="tr주문 {{ statusClass }}" data-id="{{ item.id }}">
-            <td>
+            <td style="text-align:center;">
+                <div style="color:gray;">{{ item.id }}</div>
                 <small>{{ item.created_at|slice(5,5) }}</small>
+
             </td>
             <td >
                 <span class="span주문제목">
@@ -121,7 +123,7 @@
 
             </td>
 
-            <td>
+            <td style="text-align:center;">
                 <small>
                     {{ item.status_show?:"확인중"  }}
 
