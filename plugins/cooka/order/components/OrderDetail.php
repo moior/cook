@@ -64,7 +64,16 @@ class OrderDetail extends ComponentBase
         if($order->upload_file) {
             $this->page['upload_file'] = $order->upload_file->getPath();
         }
-
+        foreach($order->upload_files as $image){
+            $image_arr[] = $image->getPath();
+            $thumb_arr[] = $image->getThumb(100, 100, ['mode' => 'crop']);
+        }
+        if(isset($image_arr)){
+            $this->page['image_arr'] = $image_arr;
+        }
+        if(isset($thumb_arr)) {
+            $this->page['thumb_arr'] = $thumb_arr;
+        }
         if (isset($order->cook_data)) {
             $this->page['cook_data'] = json_decode($order->cook_data, true);
         } else $this->page['cook_data'] = null;
@@ -112,5 +121,23 @@ class OrderDetail extends ComponentBase
 
         return PDF::loadTemplate($templateCode, $data)->stream();
     }
-
+    /* 문의페이지에서 파일첨부 버튼 클릭시 */
+    public function onAddAttachment()
+    {
+        // if owner
+        $form = post();
+        $sample = Order::find( $form["order_id"] );
+        if($sample){
+            if(Input::hasFile('upload_files')){
+                foreach(Input::file('upload_files') as $file){
+                    if($file) {
+                        $sample->upload_files()->create(['data' => $file]);
+                    }
+                }
+            }
+            $sample->save();
+        }else{
+            //
+        }
+    }
 }

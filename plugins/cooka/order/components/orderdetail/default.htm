@@ -155,10 +155,16 @@ function nl2br2(str){ return str.replace(/\n/g, "<br />"); }
         </div>
         <br/>
         <!--첨부파일이 있으면 -->
-        {% if upload_file %}
-        <a href="{{upload_file}}" target="_blank">첨부한파일</a>
-        {% endif %}
 
+        <div>
+            {% if upload_file %}
+            <a href="{{upload_file}}" target="_blank">첨부한파일</a> /
+            {% endif %}
+
+            {% for key, _image_arr in image_arr %}
+            <a href="{{ _image_arr }}" target="_blank">첨부파일{{key}}</a> /
+            {% endfor %}
+        </div>
         {% if order.bill %}
 
         <a href="javascript:void(0);" onclick="$(this).next('.div상세견적서보기').toggle();">
@@ -199,3 +205,21 @@ function nl2br2(str){ return str.replace(/\n/g, "<br />"); }
     {% endif %}
 
 </div>
+
+<!--파일 첨부하기..-->
+
+
+<div class=" " style="margin-top:20px;">
+    <h5 class=""> 첨부파일 추가</h5>
+    <!--file 저장은 ajax로 안되고 enctype=multipart 넣어줘야!! 맨날 삽질2시간-->
+    {{ form_open({ request: 'OrderDetail::onAddAttachment', files : true, url : "/order/manage/"~order.id }) }}
+    <input type="hidden" name="order_id" value="{{ order.id }}" />
+    <div class="col-xs-6"><input type="file" name="upload_files[]" class="form-control" placeholder=".." /></div>
+    <div class="col-xs-6"><input type="file" name="upload_files[]" class="form-control" placeholder=".." /></div>
+    <div class="text-right">
+        <button type="submit" onclick="" class="btn btn-xs btn-default" data-attach-loading>첨부파일 추가</button>
+    </div>
+    {{ form_close() }}
+
+</div>
+

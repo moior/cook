@@ -59,7 +59,7 @@ class Orders extends ComponentBase
             $orders = $orders->orWhere("cook_data", "like", "%". $search_text."%");
             $orders = $orders->orWhere("status_show", "like", "%". $search_text."%");
         }
-        $orders = $orders->paginate(10);
+        $orders = $orders->paginate(15);
 
         $this->page['orders'] = $orders;
 
@@ -183,6 +183,9 @@ class Orders extends ComponentBase
             ]);
         }
     }
+
+
+
 }
 //$items = post('items', []); // 원래있는것. 배열처리방법.
 /*if (!count($items)) {

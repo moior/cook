@@ -35,6 +35,7 @@ class Order extends Model
         'upload_file' => ['System\Models\File']
     ];
     public $attachMany = [
+        'upload_files' => ['System\Models\File', 'order' => 'sort_order', 'delete' => 'true' ]
     ];
 
 }
