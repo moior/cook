@@ -1,5 +1,6 @@
 <?php namespace Kenny\Memo\Components;
 
+use Backend\Facades\BackendAuth;
 use Cms\Classes\ComponentBase;
 use ApplicationException;
 use RainLab\User\Facades\Auth;
@@ -41,7 +42,8 @@ class Memos extends ComponentBase
             $this->page['attach_id'] = $this->property('attach_id');
         }
         $this->page['memos'] = Memo::where( 'attach_type',  $this->property('attach_type'))
-                        ->where( 'attach_id',  $this->property('attach_id'))->get();
+                        ->where( 'attach_id',  $this->property('attach_id'))
+                        ->orderBy('id', 'desc')->get();
 
     }
     public function onNewMemo()
@@ -49,13 +51,14 @@ class Memos extends ComponentBase
 
         $form = post();
         $user = Auth::getUser(); //$user["email"]. $user->name; //
+        $admin = BackendAuth::getUser();
 
         if( $form["attach_type"] && $form["attach_id"]){
             $memo = new Memo;
-            if( isset($user->id)){
-                $memo->user_id     = $user->id;
-            }else{
-                $memo->user_id     = "0";
+            if( isset($admin)){
+                $memo->admin_id     = $admin->id; //first_name . ' ' .$admin->last_name;
+                $memo->name         = $admin->first_name . ' ' .$admin->last_name;
+
             }
             $memo->attach_type    = isset($form["attach_type"])?$form["attach_type"]:"";
             $memo->attach_id      = isset($form["attach_id"])?$form["attach_id"]:"";

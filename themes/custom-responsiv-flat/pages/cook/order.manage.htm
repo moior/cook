@@ -92,6 +92,13 @@ function onCalcFee(){
     }
 
     $(document).ready(function(){
+        /*메뉴클릭부분*/
+        $(".btn상담메뉴").click(function() {
+            $(".div메뉴").hide();
+            $("#div메뉴_" + $(this).data('name')).show();
+        });
+
+        /*견적서 부분 시작*/
         setFormInputData();
         setAreaDisplay();
         showDetailPayment();
@@ -121,10 +128,10 @@ function onCalcFee(){
             isMobile = false;
         }
         if(isMobile == false){
-            /*var floatPosition1 = parseInt($("#area이미지").css('top'));// 250px 에서 숫자만
+            /*var floatPosition1 = parseInt($("#area왼쪽영역").css('top'));// 250px 에서 숫자만
              $(window).scroll(function() {
              var newPosition = $(window).scrollTop() + floatPosition1 + "px"; // 현재 스크롤 위치를 가져온다.
-             $("#area이미지").css('top', newPosition);
+             $("#area왼쪽영역").css('top', newPosition);
              });*/
 
             var floatPosition2 = $("#area견적서").css('top'); //parseInt(.css('top'));// Exp에서 'auto'라고 나옴 / 250px 에서 숫자만
@@ -151,9 +158,11 @@ function onCalcFee(){
 </script>
 
 <style>
-
+    h5 {font-family:'맑은 고딕';}
     #cookdesk-center {border-left:0px solid gray;border-right:0px solid gray;min-height:100px;}
-    #area이미지 {padding:5px;}
+    #area왼쪽영역 {padding:5px;}
+    #area오른쪽영역 {padding:5px;}
+    #area오른쪽영역-1 {padding:5px;}
     #area노트조합기 {
         padding:5px 10px 5px 10px;
         border-left:0px solid gray;
@@ -178,153 +187,188 @@ function onCalcFee(){
 
         <div id="area_top" class="row" style="font-size:11pt;padding:5px;border-top:2px solid #555;border-bottom:2px solid #555;">
             <div class="col-sm-5">
-                주문관리 (견적발송)
+                상담/견적관리
             </div>
             <div class="col-sm-7 text-right">
                 <span style="margin:0px 25px;"></span>
-                <span style="">문의 1661-5521</span>
+                <span style="">
+                    <a class="btn btn-sm btn-default" id="btn퀵주문입력" onclick="$('#div새상담').toggle();">
+                        새상담+
+                    </a>
+                </span>
             </div>
         </div>
         <div id="area_top_banner" class="row">
 
-        </div>
+            <div style="display:none;background-color:gold;padding:5px;" class="row" id="div새상담">
 
+                {{ form_ajax('Orders::onSaveOrderAdmin',{
+                id: "form전화견적",
+                success :"alert('저장되었습니다. 새로고침하세요..')",
+                }) }}
+
+                <input type="text" name="title" value="전화 상담요청" />
+                <input type="text" name="client_name" value="" id="input전화상담고객명" placeholder="고객명 (모르면 빈값)" />
+                <input type="text" name="client_tel" value="" placeholder="휴대폰"  class="form-control" id="input퀵연락처"/>
+                <input type="text" name="client_email" value="" placeholder="이메일"  class="form-control"/>
+                <!--<input type="text" class="form-control" value="" name="sample_id"
+                       placeholder="가장 비슷한 샘플">-->
+
+                <textarea name="client_comment" placeholder="기타 요청사항" class="form-control"
+                          style="height:170px;">
+    제품용도 : &nbsp;
+    제작수량 : &nbsp;
+
+    </textarea>
+                <div>
+                    <label><input type="checkbox" name="send_email" />의뢰인께 접수완료 메일보냄</label>
+                </div>
+                <div>
+                    <label><input type="checkbox" name="send_sms" />의뢰인께 접수완료 문자보냄</label>
+                    <br>
+                    <input type="text" name="send_sms_text" value="[직접 만드는 나만의 노트, 노트요리사.com] 상담이 접수되었습니다 감사합니다." class="form-control" />
+
+                </div>
+                <small>파일은 새상담을 생성 후 따로 첨부해 주세요.</small>
+                <button type="button" onclick="return form전화견적체크();" class="pull-right btn btn btn-primary" data-attach-loading>
+                    <span class="fa fa-pencil"></span> 저장
+                </button>
+
+                {{ form_close() }}
+
+            </div>
+        </div>
 
         <div id="area전체" class="row">
 
-            <div class="col-sm-5" id="area이미지" style="">
+            <div class="col-sm-4" id="area왼쪽영역" style="">
                 <div id="area주문정보">
-                    <a class="btn btn-sm" id="btn퀵주문입력" onclick="$(this).next().toggle();">새상담</a>
-                    <div style="display:none;" class="row">
 
-                        {{ form_ajax('Orders::onSaveOrderAdmin',{
-                        id: "form전화견적",
-                        success :"alert('저장되었습니다. 새로고침하세요..')",
-                        }) }}
-
-                        <input type="text" name="title" value="전화 상담요청" />
-                        <input type="text" name="client_name" value="" id="input전화상담고객명" placeholder="고객명 (모르면 빈값)" />
-                        <input type="text" name="client_tel" value="" placeholder="휴대폰"  class="form-control" id="input퀵연락처"/>
-                        <input type="text" name="client_email" value="" placeholder="이메일"  class="form-control"/>
-                        <!--<input type="text" class="form-control" value="" name="sample_id"
-                               placeholder="가장 비슷한 샘플">-->
-
-                        <textarea name="client_comment" placeholder="기타 요청사항" class="form-control"
-                                  style="height:170px;">
-제품용도 : &nbsp;
-제작수량 : &nbsp;
-
-</textarea>
-                        <div>
-                            <label><input type="checkbox" name="send_email" />메일보냄</label>
-                        </div>
-                        <div>
-                            <label><input type="checkbox" name="send_sms" />문자보냄</label>
-                            <input type="text" name="send_sms_text" value="[직접 만드는 나만의 노트, 노트요리사.com] 상담이 접수되었습니다 감사합니다." />
-
-                        </div>
-                        <button type="button" onclick="return form전화견적체크();" class="pull-right btn btn btn-primary" data-attach-loading>
-                             <span class="fa fa-pencil"></span> 저장
-                        </button>
-
-                        {{ form_close() }}
-
-                    </div>
                     {% component "OrderDetail" %}
 
 
+                </div>
 
-                    <h5>메모</h5>
+            </div>
+            <div class="col-sm-8" id="area오른쪽영역">
+                <div class="row">
+                    <div class="col-sm-12" id="area오른쪽영역-1">
+
+                        <button type="button" class="btn btn-sm btn-default btn상담메뉴" data-name="메모작성">메모작성</button>
+                        <button type="button" class="btn btn-sm btn-default btn상담메뉴" data-name="견적작성">견적작성</button>
+                        <button type="button" class="btn btn-sm btn-default btn상담메뉴" data-name="발송견적">발송견적확인</button>
+                        <button type="button" class="btn btn-sm btn-default btn상담메뉴" data-name="파일첨부">파일첨부</button>
+
+                    </div>
+
+                </div>
+                <div id="div메뉴_메모작성" class="div메뉴" style="display:block;">
+
+                    <h5>메모 <small>내부 관리용</small></h5>
                     {% component "Memos" %}
 
-
+                </div>
+                <div id="div메뉴_발송견적" class="div메뉴" style="display:none;">
                     <h5>발송한 견적서</h5>
                     {% component "Invoices" %}
-
                 </div>
+                <div id="div메뉴_파일첨부" class="div메뉴" style="display:none;">
 
-
-            </div>
-
-            <div class="col-sm-4" id="">
-
-                <div id="area노트조합기">
-                    {% component "Notecooker" %}
+                    <!--파일 첨부하기..-->
+                    <div class=" " style="margin-top:20px;">
+                        <h5 class=""> 첨부파일 추가</h5>
+                        <!--file 저장은 ajax로 안되고 enctype=multipart 넣어줘야!! 맨날 삽질2시간-->
+                        {{ form_open({ request: 'OrderDetail::onAddAttachment', files : true, url : "/order/manage/"~order.id }) }}
+                        <input type="hidden" name="order_id" value="{{ order.id }}" />
+                        <div class="col-xs-6"><input type="file" name="upload_files[]" class="form-control" placeholder=".." /></div>
+                        <div class="col-xs-6"><input type="file" name="upload_files[]" class="form-control" placeholder=".." /></div>
+                        <div class="text-right">
+                            <button type="submit" onclick="" class="btn btn-xs btn-default" data-attach-loading>첨부파일 추가</button>
+                        </div>
+                        {{ form_close() }}
+                    </div>
                 </div>
+                <div id="div메뉴_견적작성" class="div메뉴" style="display:none;">
+                    <div class="col-sm-7" id="area오른쪽영역-1">
 
-
-            </div>
-
-
-
-            <div class="col-sm-3" id="area견적서" style="margin-top:15px;">
-                <!--견적서부분-->
-                <div id="div_brief" style="background-color:#ffffff;border:1px solid gray;border-bottom:1px solid gray;"></div>
-
-                <div class="text-align">
-
-                    <!--이부분은 notecooker 컴포는트의 form 안으로 자동이동됨-->
-                    <div id="div표지직접입력박스">
-                        <div class="row">
-                            <div class="col-xs-7" style="padding:0px;">
-                                <input type="text" name="표지_직접1_항목" id="input-표지_직접1_항목" value="" placeholder="표지 항목추가" class="form-control" />
-                            </div>
-                            <div class="col-xs-5" style="padding:0px;">
-                                <input type="text" name="표지_직접1_비용" id="input-표지_직접1_비용" value="" placeholder="추가비용" class="form-control"  />
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-xs-7" style="padding:0px;">
-                                <input type="text" name="삽지_직접1_항목" id="input-삽지_직접1_항목" value="" placeholder="삽지 항목추가" class="form-control" />
-                            </div>
-                            <div class="col-xs-5" style="padding:0px;">
-                                <input type="text" name="삽지_직접1_비용" id="input-삽지_직접1_비용" value="" placeholder="추가비용" class="form-control"  />
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-xs-7" style="padding:0px;">
-                                <input type="text" name="내지_직접1_항목" id="input-내지_직접1_항목" value="" placeholder="내지 항목추가" class="form-control" />
-                            </div>
-                            <div class="col-xs-5" style="padding:0px;">
-                                <input type="text" name="내지_직접1_비용" id="input-내지_직접1_비용" value="" placeholder="추가비용" class="form-control"  />
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-xs-7" style="padding:0px;">
-                                <input type="text" name="작업_직접1_항목" id="input-작업_직접1_항목" value="" placeholder="작업 항목추가 1" class="form-control" />
-                            </div>
-                            <div class="col-xs-5" style="padding:0px;">
-                                <input type="text" name="작업_직접1_비용" id="input-작업_직접1_비용" value="" placeholder="추가비용" class="form-control"  />
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-xs-7" style="padding:0px;">
-                                <input type="text" name="작업_직접2_항목" id="input-작업_직접2_항목" value="" placeholder="작업 항목추가 2" class="form-control" />
-                            </div>
-                            <div class="col-xs-5" style="padding:0px;">
-                                <input type="text" name="작업_직접2_비용" id="input-작업_직접2_비용" value="" placeholder="추가비용" class="form-control"  />
-                            </div>
+                        <div id="area노트조합기">
+                            {% component "Notecooker" %}
                         </div>
 
-                        <div class="col-xs-12" style="padding:0px;">
-                            <button type="button" id="btn견적서로드" class="btn btn-xs btn-default">추가비용 일괄적용</button>
+                    </div>
+
+                    <div class="col-sm-5" id="area견적서" style="margin-top:15px;">
+                        <!--견적서부분-->
+                        <div id="div_brief" style="background-color:#ffffff;border:1px solid gray;border-bottom:1px solid gray;"></div>
+
+                        <div class="text-align">
+
+                            <!--이부분은 notecooker 컴포는트의 form 안으로 자동이동됨-->
+                            <div id="div표지직접입력박스">
+                                <div class="row">
+                                    <div class="col-xs-7" style="padding:0px;">
+                                        <input type="text" name="표지_직접1_항목" id="input-표지_직접1_항목" value="" placeholder="표지 항목추가" class="form-control" />
+                                    </div>
+                                    <div class="col-xs-5" style="padding:0px;">
+                                        <input type="text" name="표지_직접1_비용" id="input-표지_직접1_비용" value="" placeholder="추가비용" class="form-control"  />
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-7" style="padding:0px;">
+                                        <input type="text" name="삽지_직접1_항목" id="input-삽지_직접1_항목" value="" placeholder="삽지 항목추가" class="form-control" />
+                                    </div>
+                                    <div class="col-xs-5" style="padding:0px;">
+                                        <input type="text" name="삽지_직접1_비용" id="input-삽지_직접1_비용" value="" placeholder="추가비용" class="form-control"  />
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-7" style="padding:0px;">
+                                        <input type="text" name="내지_직접1_항목" id="input-내지_직접1_항목" value="" placeholder="내지 항목추가" class="form-control" />
+                                    </div>
+                                    <div class="col-xs-5" style="padding:0px;">
+                                        <input type="text" name="내지_직접1_비용" id="input-내지_직접1_비용" value="" placeholder="추가비용" class="form-control"  />
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-7" style="padding:0px;">
+                                        <input type="text" name="작업_직접1_항목" id="input-작업_직접1_항목" value="" placeholder="작업 항목추가 1" class="form-control" />
+                                    </div>
+                                    <div class="col-xs-5" style="padding:0px;">
+                                        <input type="text" name="작업_직접1_비용" id="input-작업_직접1_비용" value="" placeholder="추가비용" class="form-control"  />
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-7" style="padding:0px;">
+                                        <input type="text" name="작업_직접2_항목" id="input-작업_직접2_항목" value="" placeholder="작업 항목추가 2" class="form-control" />
+                                    </div>
+                                    <div class="col-xs-5" style="padding:0px;">
+                                        <input type="text" name="작업_직접2_비용" id="input-작업_직접2_비용" value="" placeholder="추가비용" class="form-control"  />
+                                    </div>
+                                </div>
+
+                                <div class="col-xs-12" style="padding:0px;">
+                                    <button type="button" id="btn견적서로드" class="btn btn-xs btn-default">추가비용 일괄적용</button>
+                                </div>
+                            </div>
+                            <script>
+                                $(document).ready(function() {
+                                    $("#div표지직접입력박스").appendTo("#form-currentnote");
+                                });
+                            </script>
+
+                            <button class="btn btn-sm btn견적추가">견적추가</button>
                         </div>
                     </div>
-                    <script>
-                        $(document).ready(function() {
-                            $("#div표지직접입력박스").appendTo("#form-currentnote");
-                        });
-                    </script>
-
-                    <button class="btn btn-sm btn견적추가">견적추가</button>
+                    <div id="area가변견적" class="col-sm-12">
+                        {% component "InvoiceManager" %}
+                    </div>
                 </div>
+
             </div>
 
         </div><!--row-->
 
-        <div id="area가변견적">
-            {% component "InvoiceManager" %}
-        </div>
+
         <div class="col-sm-12" id="cookdesk-center">
 
 
