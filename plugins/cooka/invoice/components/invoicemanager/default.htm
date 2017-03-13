@@ -35,33 +35,48 @@ function send고객께견적서(){
 
 $(document).ready(function() {
     var 현재견적 = "";
-    var 견적번호 = 0;
-    var html_table = "<table style='width:100%;border:1px solid gray;margin:10px 10px 20px 10px;'>";
-    var html_tr = "<tr style=''>";
-    var html_td = "<td style='padding:3px;margin-bottom:1px;border-bottom:1px solid #d0d0d0;border-right:1px solid #a2a2a2;'>";
+    var 견적번호 = 0, 옵션번호 = 0;
+    var html_table = '';
+    html_table = "<table style='width:100%;border:1px solid gray;margin:10px 10px 20px 10px;border-collapse: separate;border-spacing: 2px;'>";    var html_tr1 = "<tr style='text-align:center;'>";
+    var html_tr2 = "<tr style=''>";
+    var html_td = "<td style='padding:3px;background-color:#e9e9e9;'>";
     $(".btn견적추가").click(function() {
         /*css 직접 삽입되어야 메일에서 안깨짐*/
         견적번호 = 견적번호 + 1;
-        현재견적 += "<div><b>견적 #" + 견적번호 + "</b></div>";
-        현재견적 += html_table + html_tr;
-        현재견적 += "<td style='width:55%;padding:3px;'>내용<td style='width:15%;padding:3px;'>수량<td style='width:15%;padding:3px;'>청구액<td style='width:15%;padding:3px;'>부가세포함";
-        현재견적 += html_tr;
+
+        현재견적 += "<div id='box견적"+ 견적번호+"'>";
+        현재견적 += "<b>견적 #" + 견적번호 + "</b>";
+        현재견적 += "<span class='btn견적라인삭제 btn btn-xs btn-default pull-right' data-what='box견적"+ 견적번호+"'>DEL</span>";
+        현재견적 += html_table + html_tr1;
+        현재견적 += "<td style='width:55%;padding:3px;background-color:#6b8794;color:white;'>내용" +
+                    "<td style='width:15%;padding:3px;background-color:#6b8794;color:white;'>수량" +
+                    "<td style='width:15%;padding:3px;background-color:#6b8794;color:white;'>청구액" +
+                    "<td style='width:15%;padding:3px;background-color:#6b8794;color:white;'>부가세포함";
+        현재견적 += html_tr2;
         현재견적 +=     html_td + $("#div견적서html .span견적한줄").html();
         현재견적 +=     html_td + $("#div견적서html .span견적수량").html();
         현재견적 +=     html_td + number_format(Math.ceil($("#input견적합계액").val())) + '원';
         현재견적 +=     html_td + number_format(Math.ceil( $("#input견적합계액").val() * 1.1 )) + '원';
         현재견적 += "</tr></table>";
+        현재견적 += "</div>";
 
         $("#area견적미리보기").html( 현재견적 );
         $("#inputBill").val( 현재견적 );
-        $("body").append("<div class=''>추가되었습니다</div>");
+        alert('견적 추가되었습니다');
+        //$("body").append("<div class=''>추가되었습니다</div>");
     });
 
     $("#btn옵션추가").click(function() {
+        옵션번호 = 옵션번호 + 1;
+        현재견적 += "<div id='box옵션"+ 옵션번호+"'>";
 
-        현재견적 += html_table + html_tr;
-        현재견적 += "<td style='padding:3px;'>옵션내용<td style='padding:3px;'>수량<td style='padding:3px;'>청구액<td style='padding:3px;'>부가세포함";
-        현재견적 += html_tr;
+        현재견적 += "<span class='btn견적라인삭제 btn btn-xs btn-default pull-right' data-what='box옵션"+ 옵션번호+"'>DEL</span>";
+        현재견적 += html_table + html_tr1;
+        현재견적 += "<td style='width:55%;padding:3px;background-color:#6b8794;color:white;'>옵션내용" +
+                    "<td style='width:15%;padding:3px;background-color:#6b8794;color:white;'>수량" +
+                    "<td style='width:15%;padding:3px;background-color:#6b8794;color:white;'>청구액" +
+                    "<td style='width:15%;padding:3px;background-color:#6b8794;color:white;'>부가세포함";
+        현재견적 += html_tr2;
         현재견적 +=     html_td + $("#input옵션텍스트").val();
         현재견적 +=     html_td + $("#input옵션수량").val();
         현재견적 +=     html_td + number_format(Math.ceil($("#input옵션가격").val()));
@@ -69,9 +84,15 @@ $(document).ready(function() {
         현재견적 += "</tr></table>";
         $("#area견적미리보기").html( 현재견적 );
         $("#inputBill").val( 현재견적 );
+        alert('견적-옵션 추가되었습니다');
 
     });
 
+    $("#area견적미리보기").on("click", ".btn견적라인삭제", function(){
+         alert($(this).data('what'));
+         $("#" + $(this).data('what') ).remove();
+         현재견적 = $("#area견적미리보기").html();
+    });
     $(".btn견적서미리보기").click(function() {
 
     });
@@ -93,7 +114,7 @@ $(document).ready(function() {
             </small>
         </div>
         <div class="col-xs-4">
-            <div>배송비 등은 옵션으로 추가해주세요.</div>
+            <div>배송비 등은 옵션추가 가능</div>
             <input type="text" class="form-control" id="input옵션텍스트" placeholder="옵션이름" />
             <input type="text" class="form-control" id="input옵션수량" placeholder="옵션수량"  />
             <input type="text" class="form-control" id="input옵션가격" placeholder="옵션가격"  />

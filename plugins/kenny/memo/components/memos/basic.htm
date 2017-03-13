@@ -1,12 +1,13 @@
 <style>
     .li메모 {border-bottom:1px dashed #aeaeae;}
+    .memo-extra정보 {color: #b8b8b8;}
 </style>
 {% for memo in memos %}
 <li class="li메모">
     <input type="hidden" name="memos[]" value="{{ memo }}" />
 
     {{ memo.user_id.name }} <!--user테이블의 id값의 name 을 자동 읽게 하자.-->
-    {{ memo.content }}
+    {{ memo.content|nl2br }}
 
 
     <button type="button"
@@ -14,8 +15,8 @@
             aria-hidden="true"
             class=""
             onclick="$(this).closest('li').remove()">&times;</button>
-    <small class="pull-right">{{ memo.created_at|date("y년n월j일 a g시i분") }} &nbsp;</small><!--slice(2, 14)-->
-    <small class="pull-right">{{ memo.name }} &nbsp;</small>
+    <small class="memo-extra정보 pull-right">{{ memo.created_at|date("y년n월j일 a g시i분") }} &nbsp;</small><!--slice(2, 14)-->
+    <small class="memo-extra정보 pull-right">{{ memo.name }} &nbsp;</small>
 
 </li>
 {% endfor %}
