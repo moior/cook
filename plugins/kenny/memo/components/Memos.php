@@ -43,7 +43,7 @@ class Memos extends ComponentBase
         }
         $this->page['memos'] = Memo::where( 'attach_type',  $this->property('attach_type'))
                         ->where( 'attach_id',  $this->property('attach_id'))
-                        ->orderBy('id', 'desc')->get();
+                        ->orderBy('id', 'asc')->get();
 
     }
     public function onNewMemo()

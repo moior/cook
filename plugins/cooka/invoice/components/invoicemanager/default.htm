@@ -81,20 +81,26 @@ $(document).ready(function() {
 
 
 <div class="div견적매니저">
-    <h5>견적서 생성기</h5>
+    <h5>견적서 생성기 <small></small></h5>
+    
 
     <div class="row well well-sm">
         <div class="col-xs-4">
-            <button class="btn btn-default btn견적추가">견적추가</button>
+            <small style="font-size:11px;">
+                <div>여러개 견적을 한번에 이메일/문자 보내는 툴입니다</div>
+                <div>[견적추가]버튼을 누르면 이메일 본문에 순서대로 견적이 추가됩니다.</div>
+
+            </small>
         </div>
         <div class="col-xs-4">
-            <button class="btn btn-xs" id="btn옵션추가">옵션추가</button>
+            <div>배송비 등은 옵션으로 추가해주세요.</div>
             <input type="text" class="form-control" id="input옵션텍스트" placeholder="옵션이름" />
             <input type="text" class="form-control" id="input옵션수량" placeholder="옵션수량"  />
             <input type="text" class="form-control" id="input옵션가격" placeholder="옵션가격"  />
+            <button class="btn btn-xs" id="btn옵션추가">옵션추가</button>
         </div>
         <div class="col-xs-4">
-            <button class="btn btn-xs" id="btn견적서미리보기">미리보기</button>
+            <!--<button class="btn btn-xs" id="btn견적서미리보기">미리보기</button>-->
         </div>
 
     </div>
@@ -117,6 +123,7 @@ $(document).ready(function() {
         <input type="hidden" name="content" id="inputContent" />
         <input type="hidden" name="fee" id="inputFee" />
 
+        <b>고객 정보</b>
         <div class="row">
             <div class="col-xs-6">
                 <input type="text" name="name" placeholder="성함" class="form-control" value="{{ order.name }}"/>

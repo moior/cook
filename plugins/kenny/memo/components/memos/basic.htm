@@ -1,5 +1,5 @@
 <style>
-    .li메모 {}
+    .li메모 {border-bottom:1px dashed #aeaeae;}
 </style>
 {% for memo in memos %}
 <li class="li메모">
@@ -14,7 +14,7 @@
             aria-hidden="true"
             class=""
             onclick="$(this).closest('li').remove()">&times;</button>
-    <small class="pull-right">{{ memo.created_at|slice(2, 14) }} &nbsp;</small>
+    <small class="pull-right">{{ memo.created_at|date("y년n월j일 a g시i분") }} &nbsp;</small><!--slice(2, 14)-->
     <small class="pull-right">{{ memo.name }} &nbsp;</small>
 
 </li>
