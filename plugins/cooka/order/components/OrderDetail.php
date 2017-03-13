@@ -61,6 +61,12 @@ class OrderDetail extends ComponentBase
         $this->page['order'] = $tmpOrder;
         /*$this->page['order'] = $order;*/
 
+        if($tmpOrder['name'] == "[빈값]") {
+            $this->page['client_name'] = substr($order->phone, -4);
+        }else{
+            $this->page['client_name'] = $order->name;
+        }
+
         if($order->upload_file) {
             $this->page['upload_file'] = $order->upload_file->getPath();
         }

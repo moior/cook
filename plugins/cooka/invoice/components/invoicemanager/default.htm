@@ -82,6 +82,8 @@ $(document).ready(function() {
         현재견적 +=     html_td + number_format(Math.ceil($("#input옵션가격").val()));
         현재견적 +=     html_td + number_format(Math.ceil($("#input옵션가격").val() * 1.1));
         현재견적 += "</tr></table>";
+        현재견적 += "</div>";
+
         $("#area견적미리보기").html( 현재견적 );
         $("#inputBill").val( 현재견적 );
         alert('견적-옵션 추가되었습니다');
@@ -89,7 +91,6 @@ $(document).ready(function() {
     });
 
     $("#area견적미리보기").on("click", ".btn견적라인삭제", function(){
-         alert($(this).data('what'));
          $("#" + $(this).data('what') ).remove();
          현재견적 = $("#area견적미리보기").html();
     });
@@ -147,7 +148,7 @@ $(document).ready(function() {
         <b>고객 정보</b>
         <div class="row">
             <div class="col-xs-6">
-                <input type="text" name="name" placeholder="성함" class="form-control" value="{{ order.name }}"/>
+                <input type="text" name="name" placeholder="성함" class="form-control" value="{{ client_name }}"/> <!--order.name-->
             </div>
             <div class="col-xs-6">
             </div>
