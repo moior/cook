@@ -49,7 +49,6 @@ class Memos extends ComponentBase
     }
     public function onNewMemo()
     {
-
         $form = post();
         $user = Auth::getUser(); //$user["email"]. $user->name; //
         $admin = BackendAuth::getUser();
@@ -62,10 +61,16 @@ class Memos extends ComponentBase
                     if (isset($admin) && $memo->admin_id == $admin->id) {
                         $memo->content = isset($form["content"]) ? $form["content"] : "";
                         $memo->level = isset($form["level"]) ? $form["level"] : "";
+                        $memo->save();
+                        Session::flash("action_result", "수정되었습니다.");
+                    }else{
+                        Session::flash("action_result", "메모 작성자만 수정 가능합니다.");
                     }
-                    $memo->save();
-                    Session::flash("action_result", "저장됨");
+                }else{
+                    Session::flash("action_result", "연결모델 수정 오류 13");
                 }
+            }else{
+                Session::flash("action_result", "연결모델 수정 오류 12");
             }
         }else{
             /*insert*/
@@ -74,7 +79,6 @@ class Memos extends ComponentBase
                 if( isset($admin)){
                     $memo->admin_id     = $admin->id; //first_name . ' ' .$admin->last_name;
                     $memo->name         = $admin->first_name . ' ' .$admin->last_name;
-
                 }
                 $memo->attach_type    = isset($form["attach_type"])?$form["attach_type"]:"";
                 $memo->attach_id      = isset($form["attach_id"])?$form["attach_id"]:"";
@@ -82,7 +86,9 @@ class Memos extends ComponentBase
                 $memo->level        = isset($form["level"])?$form["level"]:"";
 
                 $memo->save();
-                Session::flash("action_result", "저장됨");
+                Session::flash("action_result", "새 메모가 저장되었습니다.");
+            }else{
+                Session::flash("action_result", "연결모델 입력 오류 23");
             }
         }
     }

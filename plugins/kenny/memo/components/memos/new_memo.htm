@@ -1,6 +1,9 @@
 
 
 <div style="height:10px;"></div>
+{% if session('action_result') %}
+    <div class="alert alert-info">{{ session('action_result') }}</div>
+{% endif %}
 
 {{ form_open({ request: 'Memos::onNewMemo' }) }}
     <!--모델명..-->

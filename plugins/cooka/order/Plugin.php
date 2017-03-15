@@ -5,6 +5,7 @@
  */
 
 use Backend;
+use Illuminate\Support\Facades\Session;
 use System\Classes\PluginBase;
 
 class Plugin extends PluginBase
@@ -62,16 +63,35 @@ class Plugin extends PluginBase
         ];
     }
 
+    /* sk modi skhekper / twig extension 추가하기 ========================================= */
+
     public function registerMarkupTags()
     {
         return [
             'filters' => [
                 'hide_kname' => [$this, 'hide_kname'],
-                'tel_html' => [$this, 'tel_html']
+                'tel_html' => [$this, 'tel_html'],
+                'day_han' => [$this, 'day_han'],
+                //'plural' => 'str_plural',
             ],
+            'functions' => [
+                // A static method call, i.e Form::open()
+                //'form_open' => ['October\Rain\Html\Form', 'open'],
+
+                'helloWorld' => function() { return 'Hello World!'; },
+                'session' => function( $val ){
+                    return Session::get($val);
+                }
+            ]
         ];
     }
 
+    public function day_han( $str ) //
+    {
+        $daily = array('일','월','화','수','목','금','토');
+        $date_number = date( "w", strtotime($str) ); //0 ~ 6 숫자 반환
+        return $daily[ $date_number ];
+    }
     public function tel_html($str) //
     {
         if( preg_match("/^[0-9- ]+$/D", $str)){

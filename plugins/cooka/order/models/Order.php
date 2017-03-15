@@ -26,7 +26,8 @@ class Order extends Model
      */
     public $hasOne = [];
     public $hasMany = [
-        'memo' => ['Kenny\Memo\Models\Memo', 'key' => 'attach_id']
+        'memos' => ['Kenny\Memo\Models\Memo', 'key' => 'attach_id'],
+        'invoices' => ['Cooka\Invoice\Models', 'key' => 'order_id']
     ];
     public $belongsTo = [];
     public $belongsToMany = [];

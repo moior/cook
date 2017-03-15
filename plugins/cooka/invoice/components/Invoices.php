@@ -42,6 +42,7 @@ class Invoices extends ComponentBase
             //$this->page['order_id'] = $this->property('order_id');
         }else{
             $this->page['invoices'] = Invoice::paginate(10);
+//            $this->page['invoices'] = array();
         }
 
     }

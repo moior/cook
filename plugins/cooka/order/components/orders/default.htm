@@ -124,10 +124,10 @@
 
             <!--요리사 전할말:관리자만 보이도록-->
             {% if admin %}
-            <td class="memo레벨_{{ item.memo[0].level }}">
-                {{ item.memo[0].content|slice(0,6) ~ ".."  }}
+            <td class="memo레벨_{{ item.memos[0].level }}">
+                {{ item.memos[0].content|slice(0,6) ~ ".."  }}
                 <br>
-                <small>{{ item.memo[0].name  }}</small>
+                <small>{{ item.memos[0].name  }}</small>
 
             </td>
             {% endif %}

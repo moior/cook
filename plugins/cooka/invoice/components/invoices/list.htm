@@ -1,28 +1,38 @@
 {% for invoice in invoices %}
-<div class="list-group-invoice well">
+<div class="list-group-invoice">
     <input type="hidden" name="invoices[]" value="{{ invoice }}" />
+    <div class="panel panel-default">
+        <div class="panel-heading" onclick="$(this).next().toggle();">
+            {{ invoice.created_at|date("n월j일 ") }}
+            <b>{{ invoice.created_at|day_han }}</b>요일
 
-    {{ invoice.user_id.name }} <!--user테이블의 id값의 name 을 자동 읽게 하자.-->
-    {{ invoice.content | raw }}
-    {{ invoice.staff_id }}
-    <small>{{ invoice.created_at }}</small>
-    <a href="javascript:void(0);" onclick="$(this).next('.div각견적서상세').toggle();" class="btn btn-xs">
-        보기
-    </a>
+            <small>{{ invoice.created_at|date("a g시i분") }} 발송</small>
 
-    <div style="display:none;" class="div각견적서상세">
-        <div style="background-color:white;border:1px solid gray;">
-            {{ invoice.bill | raw }}
+            <button type="button"
+                    class="close pull-right btn견적삭제"
+                    aria-hidden="true"
+                    class=""
+                    onclick="$(this).closest('li').remove()">&times;</button>
         </div>
-        <div style="">
-            {{ invoice.cook_data }}
+        <div class="panel-body" style="display:none;">
+            {{ invoice.content | raw }}
+            {{ invoice.user_id.name }} <!--user테이블의 id값의 name 을 자동 읽게 하자.-->
+            {{ invoice.staff_id }}
+
+            <a href="javascript:void(0);" onclick="$(this).next('.div각견적서상세').toggle();" class="btn btn-xs">
+                보기
+            </a>
+            <div style="display:none;" class="div각견적서상세">
+                <div style="background-color:white;border:1px solid gray;">
+                    {{ invoice.bill | raw }}
+                </div>
+                <div style="">
+                    {{ invoice.cook_data }}
+                </div>
+            </div>
         </div>
     </div>
 
-    <button type="button"
-            class="close pull-right btn메모삭제"
-            aria-hidden="true"
-            class=""
-            onclick="$(this).closest('li').remove()">&times;</button>
+
 </div>
 {% endfor %}
