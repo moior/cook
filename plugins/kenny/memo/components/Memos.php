@@ -3,6 +3,7 @@
 use Backend\Facades\BackendAuth;
 use Cms\Classes\ComponentBase;
 use ApplicationException;
+use Illuminate\Support\Facades\Session;
 use RainLab\User\Facades\Auth;
 use Kenny\Memo\Models\Memo;
 
@@ -53,20 +54,37 @@ class Memos extends ComponentBase
         $user = Auth::getUser(); //$user["email"]. $user->name; //
         $admin = BackendAuth::getUser();
 
-        if( $form["attach_type"] && $form["attach_id"]){
-            $memo = new Memo;
-            if( isset($admin)){
-                $memo->admin_id     = $admin->id; //first_name . ' ' .$admin->last_name;
-                $memo->name         = $admin->first_name . ' ' .$admin->last_name;
-
+        if($form["memo_id"]){
+            $memo = Memo::find( $form["memo_id"] );
+            if($memo) {
+                /*update*/
+                if ($form["attach_type"] && $form["attach_id"]) {
+                    if (isset($admin) && $memo->admin_id == $admin->id) {
+                        $memo->content = isset($form["content"]) ? $form["content"] : "";
+                        $memo->level = isset($form["level"]) ? $form["level"] : "";
+                    }
+                    $memo->save();
+                    Session::flash("action_result", "저장됨");
+                }
             }
-            $memo->attach_type    = isset($form["attach_type"])?$form["attach_type"]:"";
-            $memo->attach_id      = isset($form["attach_id"])?$form["attach_id"]:"";
-            $memo->content        = isset($form["content"])?$form["content"]:"";
-            $memo->level        = isset($form["level"])?$form["level"]:"";
+        }else{
+            /*insert*/
+            if( $form["attach_type"] && $form["attach_id"]){
+                $memo = new Memo;
+                if( isset($admin)){
+                    $memo->admin_id     = $admin->id; //first_name . ' ' .$admin->last_name;
+                    $memo->name         = $admin->first_name . ' ' .$admin->last_name;
 
-            $memo->save();
+                }
+                $memo->attach_type    = isset($form["attach_type"])?$form["attach_type"]:"";
+                $memo->attach_id      = isset($form["attach_id"])?$form["attach_id"]:"";
+                $memo->content        = isset($form["content"])?$form["content"]:"";
+                $memo->level        = isset($form["level"])?$form["level"]:"";
+
+                $memo->save();
+                Session::flash("action_result", "저장됨");
+            }
         }
     }
-
 }
+

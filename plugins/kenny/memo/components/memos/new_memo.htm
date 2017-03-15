@@ -1,8 +1,11 @@
 
 
 <div style="height:10px;"></div>
+
 {{ form_open({ request: 'Memos::onNewMemo' }) }}
     <!--모델명..-->
+    <input type="hidden" name="memo_id" id="input메모id" value="" /><!--신규는 빈값, 수정은 값있음-->
+
     <input type="hidden" name="attach_type" value="{{ attach_type }}" />
     <input type="hidden" name="attach_id" value="{{ attach_id }}"  />
 
@@ -17,6 +20,7 @@
                 <div class="col-xs-6 " style="padding:5px 5px 0px 0px;">
                     <select name="level" class="form-control">
                         <option value="일반">일반</option>
+                        <option value="전달">전달</option>
                         <option value="긴급">긴급</option>
                         <option value="참고">참고</option>
                     </select>

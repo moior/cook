@@ -1,13 +1,27 @@
 <style>
     .li메모 {border-bottom:1px dashed #aeaeae;}
     .memo-extra정보 {color: #b8b8b8;}
+
+    .memo레벨_일반 {background-color: ;}
+    .memo레벨_전달 {background-color: gold;}
+    .memo레벨_긴급 {background-color: tomato;}
 </style>
+<script>
+$(function(){
+
+    $(".li메모").click(function(){
+        $("#input메모id").val( $(this).data("memo_id") );
+        $("#textarea메모").val( $(this).find(".li메모_내용").text() );
+    })
+})
+
+</script>
 {% for memo in memos %}
-<li class="li메모">
+<li class="li메모 memo레벨_{{ memo.level }}" data-memo_id="{{ memo.id }}">
     <input type="hidden" name="memos[]" value="{{ memo }}" />
 
-    {{ memo.user_id.name }} <!--user테이블의 id값의 name 을 자동 읽게 하자.-->
-    {{ memo.content|nl2br }}
+
+    <span class="li메모_내용">{{ memo.content|nl2br }}</span>
 
 
     <button type="button"
