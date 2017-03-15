@@ -13,7 +13,19 @@
                       class="form-control"></textarea>
         </div>
         <div id="any메모_버튼" class="col-xs-12">
-            <button type="submit" class="form-control">입력</button>
+            <div class="row" >
+                <div class="col-xs-6 " style="padding:5px 5px 0px 0px;">
+                    <select name="level" class="form-control">
+                        <option value="일반">일반</option>
+                        <option value="긴급">긴급</option>
+                        <option value="참고">참고</option>
+                    </select>
+                </div>
+                <div class="col-xs-6 " style="padding:5px 0px;text-align:right;">
+                    <button type="submit" class="form-control">입력</button>
+                </div>
+            </div>
+
         </div>
     </div>
 {{ form_close() }}

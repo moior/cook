@@ -39,5 +39,8 @@ class Order extends Model
     public $attachMany = [
         'upload_files' => ['System\Models\File', 'order' => 'sort_order', 'delete' => 'true' ]
     ];
-
+    public function latestMemo()
+    {
+        return $this->hasOne('Memo')->latest();
+    }
 }

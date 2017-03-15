@@ -50,7 +50,11 @@ class Orders extends ComponentBase
         }*/
         $search_text = $this->property('search');
 
-        $orders = Order::orderBy("created_at", "desc"); //find( $user->id );
+        /*굳~. 관계모델 중 최근것을 부름! */
+        $orders = Order::with(['memo' => function ($q) {
+            $q->latest(); // sorting related table, so we can use first on the collection
+        }])->orderBy("created_at", "desc"); //find( $user->id );
+//        $orders = $orders->with('memo');
         if($search_text){
             $orders = $orders->where("name", "like", "%". $search_text."%");
             $orders = $orders->orWhere("phone", "like", "%". $search_text."%");

@@ -10,6 +10,8 @@
     .class상태_상담완료     {border-right:1px solid gray; color: #c6c6c6;text-decoration: dashed;}
     .class상태_상담완료   td {/*text-decoration: line-through;*/}
 
+    .memo레벨_일반 {background-color: gold;}
+    .memo레벨_긴급 {background-color: tomato;}
 </style>
 <!--<form data-request="{{ __SELF__ }}::onOrderPaper">
 여기서는 __self__하면되네
@@ -121,7 +123,7 @@
 
             <!--요리사 전할말:관리자만 보이도록-->
             {% if admin %}
-            <td>
+            <td class="memo레벨_{{ item.memo[last].level }}">
                 {{ item.memo[0].content|slice(0,6) ~ ".."  }}
                 <br>
                 <small>{{ item.memo[0].name  }}</small>

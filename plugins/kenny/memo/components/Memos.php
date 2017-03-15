@@ -63,6 +63,7 @@ class Memos extends ComponentBase
             $memo->attach_type    = isset($form["attach_type"])?$form["attach_type"]:"";
             $memo->attach_id      = isset($form["attach_id"])?$form["attach_id"]:"";
             $memo->content        = isset($form["content"])?$form["content"]:"";
+            $memo->level        = isset($form["level"])?$form["level"]:"";
 
             $memo->save();
         }
