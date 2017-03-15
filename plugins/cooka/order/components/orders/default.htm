@@ -6,7 +6,7 @@
     .class상태_상담중       {border-left:3px solid royalblue; color:gray;text-decoration: dashed;}
     .class상태_입금대기중   {border-left:1px solid green; color:gray;text-decoration: dashed;}
     .class상태_제작중       {border-right:3px solid gold; color:gray;text-decoration: dashed;}
-    .class상태_납품완료     {border-right:1px solid skyblue; color:#c6c6c6;text-decoration: dashed;}
+    .class상태_납품완료     {border-right:3px solid skyblue; color:#c6c6c6;text-decoration: dashed;}
     .class상태_상담완료     {border-right:1px solid gray; color: #c6c6c6;text-decoration: dashed;}
     .class상태_상담완료   td {/*text-decoration: line-through;*/}
 
@@ -21,6 +21,12 @@
         <tr>
             <th style="text-align:center;">No</th>
             <th>내용</th>
+            <!--요리사 전할말:관리자만 보이도록-->
+            {% if admin %}
+            <th style="color:royalblue">
+                내부요청
+            </th>
+            {% endif %}
             <th style="text-align:center;">상태</th>
         </tr>
         {{ orders.spec }}
@@ -113,15 +119,16 @@
             </td>
 
 
-            <!--관리자만 보이도록-->
-            <!--<td>
-                {% for key, spec in
-                [loop.index0] %}
-                    {{ key }} : {{ spec }}<br/>
-                {% endfor %}-->
-                <!--{{ loop.index0 }}?? 이게 뭐야. 이거 없애니 에러나네-->
+            <!--요리사 전할말:관리자만 보이도록-->
+            {% if admin %}
+            <td>
+                {{ item.memo[0].content  }}
+                <br>
+                <small>{{ item.memo[0].name  }}</small>
 
             </td>
+            {% endif %}
+
 
             <td style="text-align:center;">
                 <small>

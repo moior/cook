@@ -25,7 +25,9 @@ class Order extends Model
      * @var array Relations , 'public' => false
      */
     public $hasOne = [];
-    public $hasMany = [];
+    public $hasMany = [
+        'memo' => ['Kenny\Memo\Models\Memo', 'key' => 'attach_id']
+    ];
     public $belongsTo = [];
     public $belongsToMany = [];
     public $morphTo = [];
