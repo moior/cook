@@ -27,7 +27,8 @@ class Invoice extends Model
     public $hasOne = [];
     public $hasMany = [];
     public $belongsTo = [
-        'staff' => ['Backend\Models\User', 'key' => 'staff_id']
+        'staff' => ['Backend\Models\User', 'key' => 'staff_id'],
+        'order' => ['Cooka\Order\Models\Order', 'key' => 'order_id'],
     ];
     public $belongsToMany = [];
     public $morphTo = [];

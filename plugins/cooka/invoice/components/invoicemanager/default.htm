@@ -27,6 +27,7 @@ function send고객께견적서(){
     var regex1 = /<br\s*[\/]?>/gi; /*br태그 지우기*/
     var regex2 = /(?:\r\n|\r|\n)/g; /*\\n 지우기*/
     var html테이블부분 = $("#area견적미리보기").html();
+
     html테이블부분 = html테이블부분.replace(regex1, "");
     html테이블부분 = html테이블부분.replace(regex2, "");
     var html = $("#textareaContent1").val() + html테이블부분 + $("#textareaContent2").val();
