@@ -8,16 +8,22 @@
 
             <small>{{ invoice.created_at|date("a g시i분") }} 발송</small>
 
-            <button type="button"
+            <!--<button type="button"
                     class="close pull-right btn견적삭제"
                     aria-hidden="true"
                     class=""
-                    onclick="$(this).closest('li').remove()">&times;</button>
+                    onclick="$(this).closest('li').remove()">&times;</button>-->
+
+            <div class="pull-right">
+                {{ invoice.staff.first_name }}
+                {{ invoice.staff.last_name }}
+            </div>
+
         </div>
         <div class="panel-body" style="display:none;">
             {{ invoice.content | raw }}
             {{ invoice.user_id.name }} <!--user테이블의 id값의 name 을 자동 읽게 하자.-->
-            {{ invoice.staff_id }}
+
 
             <a href="javascript:void(0);" onclick="$(this).next('.div각견적서상세').toggle();" class="btn btn-xs">
                 보기
