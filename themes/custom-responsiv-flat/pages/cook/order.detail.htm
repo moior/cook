@@ -77,10 +77,13 @@ function onCalcFee(){
     h5:before {content:"▒ "}
     h5 small {color:gray;}
     #cookdesk-center {border-left:0px solid gray;border-right:0px solid gray;min-height:100px;}
-    #area왼쪽영역 {padding-left:0px;}
+    /*#area왼쪽영역 {padding-left:0px;}
     #area오른쪽영역 {padding-right:0px;}
-    #area오른쪽영역-1 {padding:5px;}
-
+    #area오른쪽영역-1 {padding:5px;}*/
+    #area왼쪽영역 {    }
+    #area주문정보 {border:1px solid #aaaaaa;margin-top:5px;}
+    #area오른쪽영역 {}
+    #area오른쪽영역-1 { text-align:center; margin-top:5px;}
     #bodyWrap {
         background-image:url('{{ "assets/images/cook/site/주문페이지/노트요리사_주문_BG.jpg"|theme }}');
         background-repeat: no-repeat;
@@ -199,7 +202,7 @@ function onCalcFee(){
                     </div>
                 </div>
                 <div id="div메뉴_내지선택" class="div메뉴" style="display:none;">
-                    <div class="col-sm-7" id="area오른쪽영역-1">
+                    <div class="col-sm-7" id="">
 
                         <div id="area내지선택기">
                             {% component "NoteInnerCooker" %}

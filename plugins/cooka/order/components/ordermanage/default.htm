@@ -71,7 +71,7 @@
 </form>-->
 <div id="div주문상세">
     <div id="div개별수정" style="display:none;">
-        {{ form_ajax('OrderDetail::onUpdateColumnEasy',
+        {{ form_ajax('OrderManage::onUpdateColumnEasy',
         {
         success:"$('#easy수정-' + $('#input컬럼이름').val() ).html( nl2br2($('#input개별수정').val()) ); $('#div개별수정').hide();",
         id : "form개별수정"
