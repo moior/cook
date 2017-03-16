@@ -68,7 +68,9 @@ class OrderDetail extends ComponentBase
         }
 
         if($order->upload_file) {
-            $this->page['upload_file'] = $order->upload_file->getPath();
+            /*삭제해야*/ $this->page['upload_file'] = $order->upload_file->getPath();
+            $this->page['upload_file_origin'] = $order->upload_file->getPath();
+            $this->page['upload_file_thumb'] = $order->upload_file->getThumb(100, 100, ['mode' => 'auto']); /*	auto, exact, portrait, landscape, crop. Default: auto*/
         }
         foreach($order->upload_files as $image){
             $image_arr[] = $image->getPath();

@@ -40,17 +40,19 @@ $(document).ready(function(){
 
     });
     $("#btn상담삭제").click(function(){
-        if( confirm('정말 삭제하겠어요??') ) {
-            var datas = {
-                'order_id' : {{ order.id }},
-            }
-            $.request("onDeleteOrder", {
-                data: datas,
-                success: function(){
-                    alert('삭제되었습니다');
-                    location.href='/order/list';
+        if( confirm('주문이 삭제됩니다. 중복주문일 경우 이용해주세요.') ) {
+            if( confirm('한번더 확인. 정말 삭제합니까?') ) {
+                var datas = {
+                    'order_id' : {{ order.id }},
                 }
-            })
+                $.request("onDeleteOrder", {
+                    data: datas,
+                    success: function(){
+                        alert('삭제되었습니다');
+                        location.href='/order/list';
+                    }
+                })
+            }
         }
 
     });

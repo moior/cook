@@ -37,13 +37,15 @@ class Invoices extends ComponentBase
     {
 
         if ($this->property('order_id')) {
-            $this->page['invoices'] = Invoice::where( 'order_id',  $this->property('order_id'))
+            $invoicess = Invoice::where( 'order_id',  $this->property('order_id'))
                 ->orderBy("id", "desc")->get();
             //$this->page['order_id'] = $this->property('order_id');
         }else{
-            $this->page['invoices'] = Invoice::paginate(10);
+            $invoicess = Invoice::paginate(10);
 //            $this->page['invoices'] = array();
         }
+        $this->page['invoices'] = $invoicess;
+        $this->page['invoice개수'] = $invoicess->count();
 
     }
 

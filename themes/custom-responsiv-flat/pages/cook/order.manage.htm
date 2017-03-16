@@ -158,7 +158,9 @@ function onCalcFee(){
 </script>
 
 <style>
-    h5 {font-family:'맑은 고딕';}
+    h5 {font-family:'맑은 고딕';} /*border-top:2px solid #acaab0;padding-top:3px;*/
+    h5:before {content:"▒ "}
+    h5 small {color:gray;}
     #cookdesk-center {border-left:0px solid gray;border-right:0px solid gray;min-height:100px;}
     #area왼쪽영역 {padding-left:0px;}
     #area오른쪽영역 {padding-right:0px;}
@@ -256,8 +258,14 @@ function onCalcFee(){
 
                         <button type="button" class="btn btn-sm btn-info btn상담메뉴" data-name="메모작성">메모작성</button>
                         <button type="button" class="btn btn-sm btn-info btn상담메뉴" data-name="견적작성">견적작성</button>
-                        <button type="button" class="btn btn-sm btn-info btn상담메뉴" data-name="발송견적">발송견적확인</button>
-                        <button type="button" class="btn btn-sm btn-info btn상담메뉴" data-name="파일첨부">파일첨부</button>
+                        <button type="button" class="btn btn-sm btn-info btn상담메뉴" data-name="발송견적">
+                            발송한 견적
+                            <span class="badge" style="padding:1px 4px;" id="badge발송견적개수">{{ invoice개수 }}</span>
+
+                        </button>
+                        <button type="button" class="btn btn-sm btn-info btn상담메뉴" data-name="파일첨부">
+                            파일첨부
+                        </button>
 
                     </div>
 
@@ -275,8 +283,32 @@ function onCalcFee(){
                 <div id="div메뉴_파일첨부" class="div메뉴" style="display:none;">
 
                     <!--파일 첨부하기..-->
-                    <div class=" " style="margin-top:20px;">
-                        <h5 class=""> 첨부파일 추가</h5>
+                    <div class=" " style="margin-top:20px;padding:10px;background-color:white;opacity:0.85;">
+
+                        <h5>고객이 첨부한 파일</h5>
+                        {% if upload_file %}
+                        <a href="{{upload_file_origin}}" target="_blank">
+                            <img src="{{upload_file_thumb}}" style="" />
+                        </a>
+                        {% endif %}
+
+                        <h5 style="margin-top:35px;">요리사가 첨부한 파일 </h5>
+                        <div style="padding-left:10px;">
+                            <small>Tip:고객은 [주문확인]메뉴에서 자기것을 클릭시 볼 수 있습니다.<small>
+                                    <br>
+                            {% for key, _image_arr in image_arr %}
+                            <div class="pull-left" style="margin-right:5px;">
+                                <a href="{{ _image_arr }}" target="_blank">
+                                    {{key}}.<br>
+                                    <img src="{{thumb_arr[key]}}" style="" />
+                                </a>
+                            </div>
+                            {% endfor %}
+
+                            <div style="clear:both"></div>
+                        </div>
+
+                        <h5 style="margin-top:35px;clear:both;" class=""> 첨부파일 추가</h5>
                         <!--file 저장은 ajax로 안되고 enctype=multipart 넣어줘야!! 맨날 삽질2시간-->
                         {{ form_open({ request: 'OrderDetail::onAddAttachment', files : true, url : "/order/manage/"~order.id }) }}
                         <input type="hidden" name="order_id" value="{{ order.id }}" />
