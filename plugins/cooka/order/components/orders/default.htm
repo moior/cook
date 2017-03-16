@@ -30,7 +30,7 @@ $(function(){
 여기서는 __self__하면되네
 </form>-->
 <div class="div-order">
-    <p></p>
+    <p class="text-right">※ 제목을 클릭하면 진행상황을 볼 수 있습니다.</p>
 
     <table id="talbe-order-list" class="table table-sm">
         <tr>
@@ -51,7 +51,7 @@ $(function(){
         <tr class="tr주문 {{ statusClass }}" data-id="{{ item.id }}">
             <td style="text-align:center;">
                 <div style="color:gray;">{{ item.id }}</div>
-                <small>{{ item.created_at|slice(5,5) }}</small>
+                <small style="white-space: nowrap;">{{ item.created_at|date("n월j일") }}</small>
 
             </td>
             <td >
