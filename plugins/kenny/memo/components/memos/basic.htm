@@ -17,7 +17,7 @@ $(function(){
 
 </script>
 
-
+<ol style="margin-left:20px;padding:5px;">
 {% for memo in memos %}
 <li class="li메모 memo레벨_{{ memo.level }}" data-memo_id="{{ memo.id }}">
     <input type="hidden" name="memos[]" value="{# memo #}" />
@@ -34,3 +34,4 @@ $(function(){
 
 </li>
 {% endfor %}
+</ol>

@@ -79,11 +79,12 @@ function onCalcFee(){
     #cookdesk-center {border-left:0px solid gray;border-right:0px solid gray;min-height:100px;}
     /*#area왼쪽영역 {padding-left:0px;}
     #area오른쪽영역 {padding-right:0px;}
-    #area오른쪽영역-1 {padding:5px;}*/
-    #area왼쪽영역 {    }
+    #area메뉴부분 {padding:5px;}*/
+    #area왼쪽영역 {  margin-bottom:20px;  }
     #area주문정보 {border:1px solid #aaaaaa;margin-top:5px;}
     #area오른쪽영역 {}
-    #area오른쪽영역-1 { text-align:center; margin-top:5px;}
+    #area메뉴부분 { text-align:center; margin-top:5px; border-bottom:1px solid #b4b4b4;padding-bottom:4px;}
+    #div메뉴_메모작성 {margin:5px;}
     #bodyWrap {
         background-image:url('{{ "assets/images/cook/site/주문페이지/노트요리사_주문_BG.jpg"|theme }}');
         background-repeat: no-repeat;
@@ -121,7 +122,7 @@ function onCalcFee(){
             </div>
             <div class="col-sm-8" id="area오른쪽영역">
                 <div class="row">
-                    <div class="col-sm-12" id="area오른쪽영역-1">
+                    <div class="col-sm-12" id="area메뉴부분">
 
                         <button type="button" class="btn btn-sm btn-info btn상담메뉴" data-name="메모작성">메모 주고받기</button>
                         <button type="button" class="btn btn-sm btn-info btn상담메뉴" data-name="파일첨부">

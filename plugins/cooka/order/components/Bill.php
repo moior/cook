@@ -164,8 +164,11 @@ class Bill extends ComponentBase
         $final = $this->page["표지_종이값"] +    $this->page["표지_인쇄비"] +    $this->page["표지_판비"] +
             $this->page["표지_코팅비"] +    $this->page["표지_박비"] +    $this->page["표지_합지비"] +
             $this->page["표지_싸바리비"] + $this->page["표지_날개비"] +
-            intval($this->page["표지_직접1_비용"]) +
-
+            intval($this->page['표지_직접1_비용'] ) +
+            intval($this->page['삽지_직접1_비용'] ) +
+            intval($this->page['내지_직접1_비용'] ) +
+            intval($this->page['작업_직접1_비용'] ) +
+            intval($this->page['작업_직접2_비용'] ) +
             $this->page["삽지_종이값"] +    $this->page["삽지_인쇄비"] +    $this->page["삽지_판비"] +
             $this->page["삽지_배치비"] +
 

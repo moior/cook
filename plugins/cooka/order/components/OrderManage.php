@@ -13,6 +13,8 @@ use Renatio\DynamicPDF\Classes\PDF;
 
 class OrderManage extends ComponentBase
 {
+    private $user;
+    private $admin;
 
     public function componentDetails()
     {
@@ -41,6 +43,16 @@ class OrderManage extends ComponentBase
     // loaded and the component is attached to it.*/
     public function onRun()
     {
+        $this->user = Auth::getUser();
+        $this->admin = BackendAuth::getUser();
+        if(!$this->admin){
+            $this->page['admin'] = false;
+            $order = null;
+            return; /*어드민 로그인이 아니라면 절대 보이지 않음.*/
+        }else{
+            $this->page['admin'] = true;
+        }
+
         $orderId = $this->property('id');
         $order = Order::find($orderId);
         /*$imsiOrder = $order;
@@ -90,15 +102,7 @@ class OrderManage extends ComponentBase
             $this->page['cook_data'] = json_decode($order->cook_data, true);
         } else $this->page['cook_data'] = null;
 
-        /*일반 로그인*/
-        $user = Auth::getUser(); //$user["email"]. $user->name; //
-        /*관리자 로그인*/
-        $admin = BackendAuth::getUser();
-        if ($admin) { // && $admin->hasAccess('cooka.sample.create')
-            $this->page['admin'] = true;
-        } else {
-            $this->page['admin'] = false;
-        }
+
     }
 
     public function onUpdateStatus(){
