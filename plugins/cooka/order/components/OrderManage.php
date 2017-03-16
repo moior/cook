@@ -11,13 +11,13 @@ use RainLab\User\Facades\Auth;
 use Renatio\DynamicPDF\Classes\PDF;
 
 
-class OrderDetail extends ComponentBase
+class OrderManage extends ComponentBase
 {
 
     public function componentDetails()
     {
         return [
-            'name' => 'Order Detail',
+            'name' => 'Notecooker',
             'description' => ''
         ];
     }

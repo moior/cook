@@ -46,7 +46,6 @@ class Invoices extends ComponentBase
         }
         $this->page['invoices'] = $invoicess;
         $this->page['invoice개수'] = $invoicess->count();
-
     }
 
     public function onShowAllList()

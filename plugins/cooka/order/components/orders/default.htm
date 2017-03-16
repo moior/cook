@@ -2,6 +2,11 @@
 <style>
     .table td, .table th {}
 
+    .span주문제목 {cursor:pointer;}
+    .span주문제목:hover {font-weight:bold;}
+    .span주문상태 {cursor:pointer;}
+    .span주문상태:hover {font-weight:bold;}
+
     .class상태_접수확인중   {border-left:3px solid red; color:gray;}
     .class상태_상담중       {border-left:3px solid royalblue; color:gray;text-decoration: dashed;}
     .class상태_입금대기중   {border-left:1px solid green; color:gray;text-decoration: dashed;}
@@ -14,6 +19,13 @@
     .memo레벨_전달 {background-color: gold;}
     .memo레벨_긴급 {background-color: tomato;}
 </style>
+<script>
+$(function(){
+    $(".span주문제목, .span주문상태").click(function(){
+        location.href="/order/detail/" + $(this).parents(".tr주문").data("id");
+    })
+})
+</script>
 <!--<form data-request="{{ __SELF__ }}::onOrderPaper">
 여기서는 __self__하면되네
 </form>-->
@@ -77,10 +89,7 @@
                 {% if admin %}
                 <span style="font-size:9pt">
                     [<b>관리자</b>:
-                    <a href="javascript:void(0);" onclick="$(this).next('.div상세주문내용보기').toggle();">
-                        스펙
-                    </a>
-                     /
+
                     <a href="/order/manage/{{ item.id }}" target="">
                         상세내용
                     </a>
@@ -112,9 +121,6 @@
 
                     </div>
 
-
-                    / 주문금액 :
-                    {{ item.fee_offer|number_format }}
                     ]
                 </span>
                 {% endif %}
@@ -135,8 +141,9 @@
 
             <td style="text-align:center;">
                 <small>
+                    <span class="span주문상태">
                     {{ item.status_show?:"확인중"  }}
-
+                    </span>
                 </small>
 
             </td>

@@ -1,11 +1,11 @@
-title = "주문관리"
+title = "주문관리(adm)"
 url = "/order/manage/:orderno?"
 layout = "cooking"
 is_hidden = 0
 
 
 [Orders]
-[OrderDetail]
+[OrderManage]
 id = {{ :orderno }}
 
 [Memos]
@@ -175,10 +175,9 @@ function onCalcFee(){
 
     #bodyWrap {
         background-image:url('{{ "assets/images/cook/site/주문페이지/노트요리사_주문_BG.jpg"|theme }}');
-        background-size: contain;
         background-repeat: no-repeat;
         background-position:right top;
-        background-size:auto 100% ;
+        background-size:100% auto;
     }
 
 
@@ -246,7 +245,7 @@ function onCalcFee(){
             <div class="col-sm-4" id="area왼쪽영역" style="">
                 <div id="area주문정보">
 
-                    {% component "OrderDetail" %}
+                    {% component "OrderManage" %}
 
 
                 </div>
@@ -260,11 +259,12 @@ function onCalcFee(){
                         <button type="button" class="btn btn-sm btn-info btn상담메뉴" data-name="견적작성">견적작성</button>
                         <button type="button" class="btn btn-sm btn-info btn상담메뉴" data-name="발송견적">
                             발송한 견적
-                            <span class="badge" style="padding:1px 4px;" id="badge발송견적개수">{{ invoice개수 }}</span>
+                            <span class="badge" style="padding:1px 4px;">{{ invoice개수 }}</span>
 
                         </button>
                         <button type="button" class="btn btn-sm btn-info btn상담메뉴" data-name="파일첨부">
                             파일첨부
+                            <span class="badge" style="padding:1px 4px;">{{ file개수 }}</span>
                         </button>
 
                     </div>
@@ -310,7 +310,7 @@ function onCalcFee(){
 
                         <h5 style="margin-top:35px;clear:both;" class=""> 첨부파일 추가</h5>
                         <!--file 저장은 ajax로 안되고 enctype=multipart 넣어줘야!! 맨날 삽질2시간-->
-                        {{ form_open({ request: 'OrderDetail::onAddAttachment', files : true, url : "/order/manage/"~order.id }) }}
+                        {{ form_open({ request: 'OrderManage::onAddAttachment', files : true, url : "/order/manage/"~order.id }) }}
                         <input type="hidden" name="order_id" value="{{ order.id }}" />
                         <div class="col-xs-6"><input type="file" name="upload_files[]" class="form-control" placeholder=".." /></div>
                         <div class="col-xs-6"><input type="file" name="upload_files[]" class="form-control" placeholder=".." /></div>
@@ -415,5 +415,6 @@ function onCalcFee(){
 
 
 </div>
+{% component "Memos" %}
 
 

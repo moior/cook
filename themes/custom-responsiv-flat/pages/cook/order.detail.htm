@@ -1,0 +1,234 @@
+title = "주문상세"
+url = "/order/detail/:orderno?"
+layout = "cooking"
+is_hidden = 0
+
+
+[Orders]
+[OrderDetail]
+id = {{ :orderno }}
+
+[Memos]
+attach_type = "Order"
+attach_id = {{ :orderno }}
+
+[Notecooker]
+
+[Invoices]
+order_id = {{ :orderno }}
+
+[session]
+==
+<?php
+/*use Symfony\Component\HttpFoundation\File\File as FileObj;*/
+
+function onInit()
+{
+    $this["orderno"] = $this->param('orderno'); //파라매터 받는법?
+}
+
+function onStart()
+{
+    /*$file = new FileObj("assets/images/cook/paper/note/jebon/샘플-떡제본.jpg");
+    $temp["thumb"] = $file->getThumb(140, 160, ['mode'=>'crop']);*/
+}
+function onClickStep1(){}
+function onClickStep2(){}
+
+/*메인 데스크(partial)에서 세부사항 선택시, 이곳(page)에서 가격 계산 / 동시에 js로 이곳 input 에 저장*/
+function onCalcFee(){
+
+}
+
+?>
+==
+
+
+<script>
+
+    function form전화견적체크() { /*폼 넘기기 전 실행*/
+        if(  !$("#input전화상담고객명").val() ) {
+            $("#input전화상담고객명").val( $("#input퀵연락처").val().substr(-4) );
+            //alert('고객명을 적어 주세요');
+            //$("#input전화상담고객명").focus();
+        }
+        $("#form전화견적").submit();
+    }
+
+    $(document).ready(function(){
+        /*메뉴클릭부분*/
+        $(".btn상담메뉴").click(function() {
+            $(".div메뉴").hide();
+            $("#div메뉴_" + $(this).data('name')).show();
+        });
+
+        /*Memo 플러그인 전용 JS*/
+        $(".btn메모삭제").click(function(){
+            if( confirm("메모를 삭제할까요? (지금은 안됨)") ){
+                //메모 삭제 로직
+            }
+        })
+
+    })
+</script>
+
+<style>
+    h5 {font-family:'맑은 고딕';} /*border-top:2px solid #acaab0;padding-top:3px;*/
+    h5:before {content:"▒ "}
+    h5 small {color:gray;}
+    #cookdesk-center {border-left:0px solid gray;border-right:0px solid gray;min-height:100px;}
+    #area왼쪽영역 {padding-left:0px;}
+    #area오른쪽영역 {padding-right:0px;}
+    #area오른쪽영역-1 {padding:5px;}
+
+    #bodyWrap {
+        background-image:url('{{ "assets/images/cook/site/주문페이지/노트요리사_주문_BG.jpg"|theme }}');
+        background-repeat: no-repeat;
+        background-position:right top;
+        background-size:100% auto;
+    }
+
+
+</style>
+
+<div id="bodyWrap">
+    <div class="container">
+
+        <div id="area_top" class="row" style="font-size:11pt;padding:5px;border-top:2px solid #555;border-bottom:2px solid #555;">
+            <div class="col-sm-5">
+                주문 상세보기
+            </div>
+            <div class="col-sm-7 text-right">
+                <span style="margin:0px 25px;"></span>
+                <span style="">
+                </span>
+            </div>
+        </div>
+
+        <div id="area전체" class="row">
+
+            <div class="col-sm-4" id="area왼쪽영역" style="">
+                <div id="area주문정보">
+
+                    {% component "OrderDetail" %}
+
+
+                </div>
+
+            </div>
+            <div class="col-sm-8" id="area오른쪽영역">
+                <div class="row">
+                    <div class="col-sm-12" id="area오른쪽영역-1">
+
+                        <button type="button" class="btn btn-sm btn-info btn상담메뉴" data-name="메모작성">메모 주고받기</button>
+                        <button type="button" class="btn btn-sm btn-info btn상담메뉴" data-name="파일첨부">
+                            파일 주고받기
+                            <span class="badge" style="padding:1px 4px;">{{ file개수 }}</span>
+                        </button>
+                        <button type="button" class="btn btn-sm btn-info btn상담메뉴" data-name="발송견적">
+                            견적서
+                            <span class="badge" style="padding:1px 4px;">{{ invoice개수 }}</span>
+                        </button>
+
+
+                        <!--<button type="button" class="btn btn-sm btn-info btn상담메뉴" data-name="내지선택">내지선택</button>-->
+<!--
+
+
+
+
+
+                                내지선택 기능!!
+
+
+
+
+
+-->
+                    </div>
+
+                </div>
+                <div id="div메뉴_메모작성" class="div메뉴" style="display:block;">
+
+                    <h5>메모 <small>요청사항을 남겨주세요.</small></h5>
+                    {% component "Memos" %}
+
+                </div>
+                <div id="div메뉴_발송견적" class="div메뉴" style="display:none;">
+                    <h5>견적서</h5>
+                    {% component "Invoices" %}
+                </div>
+                <div id="div메뉴_파일첨부" class="div메뉴" style="display:none;">
+
+                    <!--파일 첨부하기..-->
+                    <div class=" " style="margin-top:20px;padding:10px;background-color:white;opacity:0.85;">
+
+                        <h5>내가 올린 파일</h5>
+                        {% if upload_file %}
+                        <a href="{{upload_file_origin}}" target="_blank">
+                            <img src="{{upload_file_thumb}}" style="" />
+                        </a>
+                        {% endif %}
+
+                        <h5 style="margin-top:35px;">요리사가 올린 파일 </h5>
+                        <div style="padding-left:10px;">
+
+                            <br>
+                            {% for key, _image_arr in image_arr %}
+                            <div class="pull-left" style="margin-right:5px;">
+                                <a href="{{ _image_arr }}" target="_blank">
+                                    {{key}}.<br>
+                                    <img src="{{thumb_arr[key]}}" style="" />
+                                </a>
+                            </div>
+                            {% endfor %}
+
+                            <div style="clear:both"></div>
+                        </div>
+
+                        <h5 style="margin-top:35px;clear:both;" class=""> 첨부파일 추가</h5>
+                        <!--file 저장은 ajax로 안되고 enctype=multipart 넣어줘야!! 맨날 삽질2시간-->
+                        {{ form_open({ request: 'OrderDetail::onAddAttachment', files : true, url : "/order/detail/"~order.id }) }}
+                        <input type="hidden" name="order_id" value="{{ order.id }}" />
+                        <div class="col-xs-6"><input type="file" name="upload_files[]" class="form-control" placeholder=".." /></div>
+                        <div class="col-xs-6"><input type="file" name="upload_files[]" class="form-control" placeholder=".." /></div>
+                        <div class="text-right">
+                            <button type="submit" onclick="" class="btn btn-xs btn-default" data-attach-loading>첨부파일 추가</button>
+                        </div>
+                        {{ form_close() }}
+                    </div>
+                </div>
+                <div id="div메뉴_내지선택" class="div메뉴" style="display:none;">
+                    <div class="col-sm-7" id="area오른쪽영역-1">
+
+                        <div id="area내지선택기">
+                            {% component "NoteInnerCooker" %}
+                        </div>
+
+                    </div>
+
+                    <div class="col-sm-5" id="" style="margin-top:15px;">
+
+                        <div class="text-align">
+
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div><!--row-->
+
+
+        <div class="col-sm-12" id="cookdesk-center">
+
+
+        </div>
+    </div>
+
+
+
+</div>
+
+
