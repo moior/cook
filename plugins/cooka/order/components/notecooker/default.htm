@@ -23,6 +23,7 @@
 
 <script>
 function setFormInputData(){
+    /*select js로 변경후에는 불러주어야 안전...*/
     $(".select_part").each(function(){
         $("#input-" + $(this).attr("name")).val(
             $(this).find("option:selected").val()
@@ -32,7 +33,7 @@ function setFormInputData(){
 function setAreaDisplay(){
 //    var quantity = $("#select_amount option:selected").val();
     var quantity = $("#select_amount").val();
-    if( quantity == "" || quantity == '소량') {
+    if( quantity == "" ) {
         $(".div_파트선택영역").hide();
         $("#div_삽지영역").hide();
     }else{
@@ -55,13 +56,15 @@ $(document).ready(function(){
     setAreaDisplay(); /*플러그인 함수*/
 
     $(".select_part").change(function() {
-        setFormInputData();
+        setFormInputData(); // 이게 나중에 작동될수도 있음. 그래서 다른곳에서도 중복부름.. 예를들어 제본 변경시.
     });
 
     $("#select-제본").change(function() {
         if( $(this).val() == "스프링" || $(this).val() == "양장" ) {
             $("#div합지").show(); $("#div싸바리").show();
         } else {
+            $("#select-표지-합지 option[value=일반]").prop('selected', true);
+            $("#select-표지-싸바리 option[value=일반]").prop('selected', true);
             $("#div합지").hide(); $("#div싸바리").hide();
         }
 
@@ -77,20 +80,11 @@ $(document).ready(function(){
             $("#select-표지-용지").prop('disabled', false);
             $("#select-표지-평량").prop('disabled', false);
         }
+        showDetailPayment();
     });
 
     /*수량 변경시 가격 계산*/
-    var previous;
-    $("#select_amount_select").change(function() {
-        var note_part = $(this).find("option:selected").val();
-        if(note_part == "소량"){
-            //$(this).find("option[value="+previous+"]").prop("selected", true);
-            $('#modal소량주문').modal('show');
-        }else $("#input-수량").val( note_part );
-
-        /*$(".select_part").change할때도 부르지만, 좀더 확실히? */
-        showDetailPayment(); /*가격 계산 paper.note.htm에 */
-    });
+    //var previous;
     $("#select_amount").focus( function() {
         $("#div수량선택부분").show();
     });
@@ -101,12 +95,14 @@ $(document).ready(function(){
         var note_part = $(this).val();
         $("#input-수량").val( note_part );
         setFormInputData(); /*$(".select_part").change할때도 부르지만, 좀더 확실히? */
+        setAreaDisplay();
         showDetailPayment(); /*가격 계산 paper.note.htm에 */
     });
     $("#div수량선택부분 li").click(function(){
         $("#select_amount").val( $(this).data("value") );
         $("#input-수량").val( $(this).data("value") );
         setFormInputData();
+        setAreaDisplay();
         showDetailPayment(); /*가격 계산 paper.note.htm에 */
     })
 
@@ -168,31 +164,7 @@ $(document).ready(function(){
                         {% endfor %}
                     </ul>
                 </div>
-                <!--<select name="수량" id="select_amount_select" class=" select_part input-sm form-control" >
-                    <option value="" style="color:tomato;">수량을 선택해주세요</option>
-                    <option value="100">100권</option>
-                    <option value="200">200권</option>
-                    <option value="300">300권</option>
-                    <option value="400">400권</option>
-                    <option value="500">500권</option>
-                    <option value="600">600권</option>
-                    <option value="700">700권</option>
-                    <option value="800">800권</option>
-                    <option value="900">900권</option>
-                    <option value="1000">1000권</option>
-                    <option value="1100">1100권</option>
-                    <option value="1200">1200권</option>
 
-                    {% for i in 3..10 %}
-                    <option value="{{ i * 500 }}">{{ i * 500}}권</option>
-                    {% endfor %}
-                    {% for i in 6..15 %}
-                    <option value="{{ i * 1000 }}">{{ i * 1000}}권</option>
-                    {% endfor %}
-                    {% for i in 4..10 %}
-                    <option value="{{ i * 5000 }}">{{ i * 5000}}권</option>
-                    {% endfor %}
-                </select>-->
             </div>
         </div>
 
@@ -269,6 +241,7 @@ $(document).ready(function(){
                 </div>
                 <div class="col-xs-9">
                     <select name="표지-인쇄" id="select-표지-인쇄"  class="select_part input-sm form-control">
+                        <option value="무지">인쇄 없음</option>
                         <option value="단면 1도">바깥면만 흑백인쇄 (단면1도)</option>
                         <option value="양면 1도">앞뒤 흑백인쇄 (양면1도)</option>
                         <option value="단면 4도" selected>바깥면만 컬러인쇄 (단면4도)</option>
@@ -332,6 +305,7 @@ $(document).ready(function(){
                     <div class="col-xs-9">
                         <select name="표지-싸바리" id="select-표지-싸바리"  class="select_part input-sm form-control">
                             <option value="">없음</option>
+                            <option value="일반">싸바리</option>
                         </select>
                     </div>
                 </div>
