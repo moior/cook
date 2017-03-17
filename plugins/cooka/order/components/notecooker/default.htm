@@ -10,6 +10,15 @@
     .step_content_row {margin-top:0px;margin-bottom:3px;}
     #area노트조합기_안쪽 .form-control {padding:0px 12px;height:28px;line-height: 28px;}
     #area노트조합기_안쪽 select.input-sm {height:28px; height:28px; }
+
+    #div수량선택부분 {
+        overflow-y:scroll;height:300px;
+        z-index:9999;display:none;position:absolute;background-color:white;border:1px solid gray;width:87%;
+    }
+    #div수량선택부분 ul {margin:0px;padding:0px;list-style: none;cursor:pointer;}
+    #div수량선택부분 li {margin:0px;padding:0px;text-align:center;float:left;width:50%;font-size:13px;}
+    #div수량선택부분 li:hover {font-weight:bold;}
+    /*#div수량선택부분:after {content:"";clear:both;display:block;}*/
 </style>
 
 <script>
@@ -21,7 +30,8 @@ function setFormInputData(){
     });
 }
 function setAreaDisplay(){
-    var quantity = $("#select_amount option:selected").val();
+//    var quantity = $("#select_amount option:selected").val();
+    var quantity = $("#select_amount").val();
     if( quantity == "" || quantity == '소량') {
         $(".div_파트선택영역").hide();
         $("#div_삽지영역").hide();
@@ -71,7 +81,7 @@ $(document).ready(function(){
 
     /*수량 변경시 가격 계산*/
     var previous;
-    $("#select_amount").change(function() {
+    $("#select_amount_select").change(function() {
         var note_part = $(this).find("option:selected").val();
         if(note_part == "소량"){
             //$(this).find("option[value="+previous+"]").prop("selected", true);
@@ -81,6 +91,24 @@ $(document).ready(function(){
         /*$(".select_part").change할때도 부르지만, 좀더 확실히? */
         showDetailPayment(); /*가격 계산 paper.note.htm에 */
     });
+    $("#select_amount").focus( function() {
+        $("#div수량선택부분").show();
+    });
+    $("#select_amount").blur( function() {
+        $("#div수량선택부분").fadeOut(); /*밑에 click이벤트 때문에 hide안됨*/
+    });
+    $("#select_amount").keyup( function() {
+        var note_part = $(this).val();
+        $("#input-수량").val( note_part );
+        setFormInputData(); /*$(".select_part").change할때도 부르지만, 좀더 확실히? */
+        showDetailPayment(); /*가격 계산 paper.note.htm에 */
+    });
+    $("#div수량선택부분 li").click(function(){
+        $("#select_amount").val( $(this).data("value") );
+        $("#input-수량").val( $(this).data("value") );
+        setFormInputData();
+        showDetailPayment(); /*가격 계산 paper.note.htm에 */
+    })
 
 });
 </script>
@@ -103,7 +131,44 @@ $(document).ready(function(){
                 <div class="step_content_title">수량</div>
             </div>
             <div class="col-xs-9">
-                <select name="수량" id="select_amount" class=" select_part input-sm form-control" >
+                <input type="text"  id="select_amount" class="input-sm form-control" />
+                <div id="div수량선택부분" style="">
+                    <div style="text-align:center;color:gray;font-size:10px;border-bottom:#efefef;background-color:#ededed;">
+                        수량을 숫자로 적어주세요.
+                    </div>
+                    <ul>
+                        <li data-value="1">1권    </li>
+                        <li data-value="5">5권    </li>
+                        <li data-value="10">10권    </li>
+                        <li data-value="20">20권    </li>
+                        <li data-value="30">30권    </li>
+                        <li data-value="50">50권    </li>
+
+                        <li data-value="100">100권    </li>
+                        <li data-value="200">200권    </li>
+                        <li data-value="300">300권    </li>
+                        <li data-value="400">400권    </li>
+                        <li data-value="500">500권    </li>
+                        <li data-value="600">600권    </li>
+                        <li data-value="700">700권    </li>
+                        <li data-value="800">800권    </li>
+                        <li data-value="900">900권    </li>
+                        <li data-value="1000">1000권  </li>
+                        <li data-value="1100">1100권  </li>
+                        <li data-value="1200">1200권  </li>
+
+                        {% for i in 3..10 %}
+                        <li data-value="{{ i * 500 }}">{{ i * 500}}권</li>
+                        {% endfor %}
+                        {% for i in 6..15 %}
+                        <li data-value="{{ i * 1000 }}">{{ i * 1000}}권</li>
+                        {% endfor %}
+                        {% for i in 4..10 %}
+                        <li data-value="{{ i * 5000 }}">{{ i * 5000}}권</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <!--<select name="수량" id="select_amount_select" class=" select_part input-sm form-control" >
                     <option value="" style="color:tomato;">수량을 선택해주세요</option>
                     <option value="100">100권</option>
                     <option value="200">200권</option>
@@ -127,7 +192,7 @@ $(document).ready(function(){
                     {% for i in 4..10 %}
                     <option value="{{ i * 5000 }}">{{ i * 5000}}권</option>
                     {% endfor %}
-                </select>
+                </select>-->
             </div>
         </div>
 
