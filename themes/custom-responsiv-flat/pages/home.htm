@@ -184,9 +184,20 @@ function onInit(){
 
                     <div class="col-xs-7" id="div퀵견적">
 
+
+                        <!-- 전환페이지 설정 2017. 로그분석 새관리자 -->
+                        <script type="text/javascript" src="//wcs.naver.net/wcslog.js"></script>
+                        <script type="text/javascript">
+                            function successOrder(){
+                                var _nasa={};
+                                _nasa["cnv"] = wcs.cnv("1","10"); // 전환유형, 전환가치 설정해야함. 설치매뉴얼 참고
+                            }
+                        </script>
+
+
                         {{ form_ajax('Orders::onSaveOrder',{
                         id: "form퀵견적",
-                        success :"alert('접수되었습니다. 속히 연락드리겠습니다. :-)')",
+                        success :"alert('접수되었습니다. 속히 연락드리겠습니다. :-)');successOrder();",
                         redirect:"/",
                         }) }}
 

@@ -53,13 +53,18 @@ $(document).ready(function(){
     div, p {font-size:10pt;}
 </style>
 
+
+
+
+
+
 <div class="container">
     <br>
     <div class="row">
 
         <form
             data-request="Orders::onSaveOrder"
-            data-request-success="alert('접수 완료되었습니다. 확인 후 연락드리겠습니다. :-)')"
+            data-request-success="alert('접수 완료되었습니다. 확인 후 연락드리겠습니다. :-)');"
             data-request-redirect="/my">
             <!--data-request-update="'{{ __SELF__ }}::list': '#result'"-->
         </form>

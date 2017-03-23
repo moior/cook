@@ -161,12 +161,20 @@ $(document).ready(function(){
         </div>
 
 
+        <!-- 전환페이지 설정 2017. 로그분석 새관리자 -->
+        <script type="text/javascript" src="//wcs.naver.net/wcslog.js"></script>
+        <script type="text/javascript">
+            function successOrder(){
+                var _nasa={};
+                _nasa["cnv"] = wcs.cnv("1","10"); // 전환유형, 전환가치 설정해야함. 설치매뉴얼 참고
+            }
+        </script>
 
 
         <!--견적요청서-->
         <div class=" " style="margin-top:20px;">
         <!--file 저장은 ajax로 안되고 enctype=multipart 넣어줘야!! 맨날 삽질2시간-->
-        {{ form_open({ request: 'Orders::onSaveOrder', files : true, url : '/order/list' }) }}
+        {{ form_open({ request: 'Orders::onSaveOrder', files : true, url : '/order/list', onSubmit : 'successOrder();' }) }}
 
             <!--data-request="Orders::onSaveOrder"
             data-request-success="$('#msg_ajax').show().text('접수 완료되었습니다. 확인 후 연락드리겠습니다. :-)')"
