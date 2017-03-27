@@ -1,0 +1,40 @@
+/*** Table CSS #01 (Form) ***/
+table.tb1 {
+	width: 100%; margin: 0; padding: 0;
+	border-top: 2px solid #e5e5e5;
+	border-bottom: 1px solid #d9d9d9;
+	border-collapse: collapse;
+}
+table.tb1 th{
+	width: 120px; padding: 8px 0 4px 20px;
+	border-right: 1px solid #ebebeb;
+	border-bottom: 1px solid #ebebeb;
+	font-weight:bold; font-size:10pt; letter-spacing: -1px; text-align: left;
+	color: #444444;
+}
+table.tb1 td{
+	padding: 6px 2px 6px 15px;
+	border-bottom: 1px solid #ebebeb;
+}
+
+/*** Table CSS #02 (List) ***/
+table.tb2 {
+	width: 100%; margin: 0; padding: 0;
+	border-top: 2px solid #e5e5e5;
+	border-bottom: 1px solid #d9d9d9;
+	border-collapse: collapse;
+}
+table.tb2 th{
+	padding: 7px 0 3px 0; text-align:center;
+	border-bottom: 1px solid #ebebeb;
+	color: #ffffff; background: #444444;
+	font-size:10pt;
+	letter-spacing: -1px;
+}
+table.tb2 td{
+	padding: 6px 5px;
+	border-bottom: 1px solid #ebebeb;
+}
+table.tb2 .c1 {padding-left:10px}
+table.tb2 .p0 {padding:0;}
+table.tb2 .b0 {border-right:0;}

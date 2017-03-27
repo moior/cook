@@ -98,10 +98,12 @@
 
         <div>
             <b>성함</b> : <span class="easy수정" data-colname="name" id="easy수정-name">{{ order.name }}</span>
-            (
-            <span><b>폰</b> : <span class="easy수정" data-colname="phone" id="easy수정-phone">{{ order.phone }}</span>
-                    <a href="tel:{{ order.phone }}">Call</a>
-                )
+
+            <b>폰</b> : <span class="easy수정" data-colname="phone" id="easy수정-phone">{{ order.phone }}</span>
+            <small>(
+            <a href="tel:{{ order.phone }}">전화</a>
+            <a href="javascript:window.open('/sms', '', 'width=600,height=600')" target="_blank">문자</a>
+            )</small>
         </div>
 
         <div><b>메일</b> : <span class="easy수정" data-colname="email" id="easy수정-email">{{ order.email }}</span>

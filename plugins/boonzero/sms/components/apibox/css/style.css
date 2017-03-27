@@ -1,0 +1,86 @@
+@font-face {
+   font-family: 'Nanum Gothic';
+   font-style: normal;
+   font-weight: 400;
+   src: url(//fonts.gstatic.com/ea/nanumgothic/v5/NanumGothic-Regular.eot);
+   src: url(//fonts.gstatic.com/ea/nanumgothic/v5/NanumGothic-Regular.eot?#iefix) format('embedded-opentype'),
+        url(//fonts.gstatic.com/ea/nanumgothic/v5/NanumGothic-Regular.woff2) format('woff2'),
+        url(//fonts.gstatic.com/ea/nanumgothic/v5/NanumGothic-Regular.woff) format('woff'),
+        url(//fonts.gstatic.com/ea/nanumgothic/v5/NanumGothic-Regular.ttf) format('truetype');
+ }
+ @font-face {
+   font-family: 'Nanum Gothic';
+   font-style: normal;
+   font-weight: 700;
+   src: url(//fonts.gstatic.com/ea/nanumgothic/v5/NanumGothic-Bold.eot);
+   src: url(//fonts.gstatic.com/ea/nanumgothic/v5/NanumGothic-Bold.eot?#iefix) format('embedded-opentype'),
+        url(//fonts.gstatic.com/ea/nanumgothic/v5/NanumGothic-Bold.woff2) format('woff2'),
+        url(//fonts.gstatic.com/ea/nanumgothic/v5/NanumGothic-Bold.woff) format('woff'),
+        url(//fonts.gstatic.com/ea/nanumgothic/v5/NanumGothic-Bold.ttf) format('truetype');
+ }
+
+/*** Basic CSS ***/
+body {margin: 0; padding: 0;}
+body,p,pre,form,span,div,table,ul,ol,li,td,dl,dt,input,textarea {font-family:'나눔고딕',NanumGothic; font-size:10pt; color:#666; word-wrap:break-word; word-break:break-all;}
+
+img		{border: 0;}
+.hand	{cursor: pointer;}
+.hidden	{display: none;}
+.bold	{font-weight:bold}
+.absmiddle {vertical-align: middle}
+ul {list-style:none; margin:0; padding:0;}
+dd {margin:0; padding:0;}
+
+/*** link ***/
+a		{text-decoration: none; color: #000000;}
+a:hover {text-decoration: none; color: #007FC8;}
+a.white	{text-decoration: none; color: #ffffff;}
+a.white:hover {text-decoration: none; color: #ffffff;}
+
+/*** font ***/
+.eng	{font-family: Nanum Gothic,tahoma; font-size: 8pt; letter-spacing: 0;}
+.stxt	{font-family: Nanum Gothic,돋움; font-size: 8pt; letter-spacing: -1px;}
+.desc	{font-family: Nanum Gothic,돋움; font-size: 8pt; letter-spacing: -1px; padding-top:5px;}
+
+/*** form ***/
+form	{display: inline;}
+input[type=text],input[type=password],input[type=file],textarea {
+	border:solid 1px #b7b7b7;
+	border-right-color:#e1e1e1;
+	border-bottom-color:#e1e1e1;
+	background:#f7f7f7; color:#333;
+	position:relative; margin:1px;;
+	padding:5px;
+	}
+
+/*** width ***/
+.w50	{width: 50px;}
+.w80	{width: 80px;}
+.w100	{width: 100px;}
+.w200	{width: 200px;}
+.w300	{width: 300px;}
+.w400	{width: 400px;}
+.w500	{width: 500px;}
+
+/*** color ***/
+.gray	{color: gray;}
+.red	{color: #FF0000;}
+.blue	{color: #006594;}
+.green	{color: #008000;}
+.white	{color: #ffffff;}
+.sky	{color: #7dd0fa;}
+
+/*** align ***/
+.left	{float: left;}
+.right	{float: right;}
+.clear	{clear: both;}
+.c1		{
+	text-align: left;
+	padding-left: 10px;
+}
+.ibox {zoom:1}
+.ibox:after {content:""; display:block; clear:both;}
+
+/*** position ***/
+.page	{text-align: center; padding: 15px;}
+.btn	{text-align: right; margin: 10px 0;}

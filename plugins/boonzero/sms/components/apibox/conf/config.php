@@ -1,0 +1,3 @@
+<?php
+$apibox_cfg = unserialize(base64_decode('YTozOntzOjM6InVpZCI7czo3OiJzYW5nZW1pIjtzOjc6ImFwaV9rZXkiO3M6MzI6IjU5ZDk0YzcxOGIyNjE3ZjYwZTIxNWJjMTVhN2M4ZjA4IjtzOjc6ImNoYXJzZXQiO3M6NToiVVRGLTgiO30='));
+?>
