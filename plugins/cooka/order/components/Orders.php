@@ -49,6 +49,7 @@ class Orders extends ComponentBase
             $orders = Order::orderBy("created_at", "desc")->paginate(20); //find( $user->id );
         }*/
         $search_text = $this->property('search');
+        $search_status = input('status_show');
 
         /*굳~. 관계모델 중 최근것을 부름! */
         $orders = Order::with(['memos' => function ($q) {
@@ -62,6 +63,9 @@ class Orders extends ComponentBase
             $orders = $orders->orWhere("addr", "like", "%". $search_text."%");
             $orders = $orders->orWhere("cook_data", "like", "%". $search_text."%");
             $orders = $orders->orWhere("status_show", "like", "%". $search_text."%");
+        }
+        if($search_status){
+            $orders = $orders->where("status_show", "like", "%". $search_status."%");
         }
         $orders = $orders->paginate(15);
 
@@ -105,8 +109,8 @@ class Orders extends ComponentBase
 
         /*우리 요리사들에게 문자*/
         $ret = \Kenny\Sms\Components\SmsController::send([
-            'text'=>'노트요리사::주문접수됨! '. $order->name. '/' . $order->phone. '/'
-                .$order->title. '/'. number_format($order->fee_offer),
+            'text'=>'노트요리사::주문접수! '. $order->name. '/' . $order->phone. '/'
+                .$order->title. '/'. number_format($order->fee_offer) .'원',
             'from' => '02-1661-5521',
             'to' => '010-4775-0852, 010-4618-7725',
         ]); /*김상겸, 장미라에게 문자*/

@@ -31,7 +31,25 @@ $(function(){
 </form>-->
 <div class="div-order">
     <p class="text-right">※ 제목을 클릭하면 진행상황을 볼 수 있습니다.</p>
+    {% if admin %}
+    <div class="bg-info" style="margin-bottom:5px;padding:5px;">
+        <span style="color:royalblue">검색:</span>
+        <a href="/order/list" class="btn btn-xs btn-default">
+            모두
+        </a>
+        <a href="/order/list?status_show=견적%20접수" class="btn btn-xs btn-default">
+            견적 접수
+        </a>
+        <a href="/order/list?status_show=접수확인중" class="btn btn-xs btn-default">
+            접수확인중
+        </a>
+        <a href="/order/list?status_show=입금확인중" class="btn btn-xs btn-default">
+            입금확인중
+        </a>
 
+
+    </div>
+    {% endif %}
     <table id="talbe-order-list" class="table table-sm">
         <tr>
             <th style="text-align:center;">No</th>
