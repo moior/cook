@@ -1,0 +1,89 @@
+
+<style>
+</style>
+<script>
+$(document).ready(function() {
+
+    /* 클릭되면 색갈바뀌도록............... */
+    $(".btn전화번호").click(function(){
+        if($("#input수신번호").val() ){
+            $("#input수신번호").val( $("#input수신번호").val() + ", " + $(this).data("hp"));
+        }else{
+            $("#input수신번호").val( $(this).data("hp"));
+        }
+    });
+    $(".btn전번추가").click(function(){
+        $("#div전번추가영역").toggle();
+    });
+    $(".btn전번삭제").click(function(){
+        if(confirm('삭제기능은 아직..')){
+
+        }
+    });
+
+});
+</script>
+
+<!--<form data-request="{{ __SELF__ }}::onOrderPaper">
+여기서는 __self__하면되네
+</form>-->
+<div id="divSMS전화번호">
+    {% for key, sms_phone in sms_phones %}
+    {{ sms_phone.category }}
+    <button type="button" class="btn btn-default btn전화번호 btn-sm" data-hp="{{ sms_phone.phone }}">
+        {{ sms_phone.name }}
+    </button>
+    {% endfor %}
+
+    <button type="button" class="btn btn-default btn전화번호 btn-sm" data-hp="010-4775-0852">
+        김상겸
+    </button>
+    <button type="button" class="btn btn-default btn전화번호 btn-sm" data-hp="010-4618-7725">
+        장미라
+    </button>
+    <button type="button" class="btn btn-default btn전번추가 btn-sm" data-hp="">
+        +
+    </button>
+    <button type="button" class="btn btn-link btn전번삭제 btn-sm" data-hp="">
+        x
+    </button>
+    <div id="div전번추가영역" style="padding:10px;display:none;">
+        <h4>번호 추가</h4>
+        {{ form_ajax('SmsPhone::onAddSmsPhone',{
+            id: "form전번추가",
+            success :"alert('추가됨. 새로고침하세요..')",
+        }) }}
+
+        <div class="form-group">
+            <label for="" class=""> 분류</label>
+            <input name="category" type="text" class="form-control" id="" placeholder="">
+        </div>
+        <div class="form-group">
+            <label for="" class=""> 이름</label>
+            <input name="name" type="text" class="form-control" id="" placeholder="">
+        </div>
+        <div class="form-group">
+            <label for="" class=""> 휴대폰번호</label>
+            <input name="phone" type="text" class="form-control" id="" placeholder="010-">
+        </div>
+        <div class="form-group">
+            <label for="" class=""> 설명</label>
+            <input name="comment" type="text" class="form-control" id="" placeholder="간략설명">
+        </div>
+        <!--<div class="form-group">
+            <label for="" class=""> 레벨</label>
+            <input name="level" type="text" class="form-control" id="">
+        </div>-->
+        <div class="form-group">
+            <label for="" class=""> 순서</label>
+            <input name="ord" type="text" class="form-control" id="" placeholder="숫자만">
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-block">입력</button>
+
+        {{ form_close() }}
+
+    </div>
+</div>
+
+

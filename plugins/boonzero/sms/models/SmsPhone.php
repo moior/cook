@@ -1,15 +1,15 @@
-<?php namespace Cooka\Order\Models;
+<?php namespace Boonzero\Sms\Models;
 
 use Model;
 
 /**
  * Order Model
  */
-class Order extends Model
+class SmsPhone extends Model
 {
-    public $table = 'cooka_orders';
+    public $table = 'boon_sms_phone';
 
-    protected $jsonable = ['cook_data'];
+    //protected $jsonable = ['cook_data'];
 
     /**
      * @var array Guarded fields
@@ -27,7 +27,6 @@ class Order extends Model
     public $hasOne = [];
     public $hasMany = [
         'memos' => ['Kenny\Memo\Models\Memo', 'key' => 'attach_id'],
-        'invoices' => ['Cooka\Invoice\Models', 'key' => 'order_id']
     ];
     public $belongsTo = [];
     public $belongsToMany = [];

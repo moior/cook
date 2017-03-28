@@ -23,7 +23,10 @@ class Plugin extends PluginBase
     public function registerComponents()
     {
         return [
-            '\Boonzero\Sms\Components\Sms' => 'Sms',
+            '\Boonzero\Sms\Components\SmsControl' => 'Sms',
+            '\Boonzero\Sms\Components\SmsPhoneControl' => 'SmsPhone',
+            '\Boonzero\Sms\Components\SmsHistoryControl' => 'SmsHistory',
+            '\Boonzero\Sms\Components\SmsContentControl' => 'SmsContent',
         ];
     }
     public function registerReportWidgets()

@@ -786,7 +786,7 @@ $cfg['LoginCookieRecall'] = true;
  *
  * @global integer $cfg['LoginCookieValidity']
  */
-$cfg['LoginCookieValidity'] = 1440;
+$cfg['LoginCookieValidity'] = 1440000;
 
 /**
  * how long login cookie should be stored (in seconds)

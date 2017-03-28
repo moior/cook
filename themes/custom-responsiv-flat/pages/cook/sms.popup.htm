@@ -4,7 +4,8 @@ layout = "popup"
 is_hidden = 0
 
 [Sms]
-
+[SmsPhone]
+[SmsContent]
 ==
 <?php
 /*use Symfony\Component\HttpFoundation\File\File as FileObj;*/
@@ -13,66 +14,8 @@ function onStart()
 {
 }
 
-/*메인 데스크(partial)에서 세부사항 선택시, 이곳(page)에서 가격 계산 / 동시에 js로 이곳 input 에 저장*/
-function onCalcFee(){
-
-}
-
 ?>
 ==
-
-
-<script>
-
-</script>
-
-<style>
-</style>
-
-<div id="bodyWrap">
-    <div class="container">
-        <h1>문자발송</h1>
-        <form class="form-horizontal">
-            <div class="form-group">
-                <label for="phone" class="col-xs-2 control-label">전화번호</label>
-                <div class="col-xs-10">
-                    <input type="phone" class="form-control" id="phone" placeholder="전화번호"
-                        value="{{input('phone')}}">
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="name" class="col-xs-2 control-label">성함</label>
-                <div class="col-xs-10">
-                    <input type="name" class="form-control" id="name" placeholder="성함"
-                           value="{{input('name')}}">
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="content" class="col-xs-2 control-label">내용</label>
-                <div class="col-xs-10">
-                    <textarea type="content" class="form-control" id="content" placeholder="문자내용"
-                        style="width:160px;height:200px;">
-안녕하세요
-</textarea>
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="col-xs-offset-2 col-xs-10">
-                    <div class="checkbox">
-                        <label>
-                            <input type="checkbox"> Remember me
-                        </label>
-                    </div>
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="col-xs-offset-2 col-xs-10">
-                    <button type="submit" class="btn btn-default">문자 발송</button>
-                </div>
-            </div>
-        </form>
-    </div>
-</div>
 
 
 
@@ -81,217 +24,175 @@ function onCalcFee(){
     #smsbox_sk input {margin-bottom:10px;}
 
     #smsbox_sk {
-        position:fixed; z-index:99; width:630px;; padding:15px;
-        top:30%; right:5%; height:500px; background-color:#d7e3f0;
-        box-shadow:3px 3px 6px #555; filter:progid:DXImageTransform.Microsoft.Shadow(color=#555555,direction=135,strength=2);
-        border-radius:5px;
+
     }
+    #smsbox_sk:after {display:block;content:"";clear:both;}
 
     .textarea문자내용 {height:100px;width:185px;margin-bottom:5px;}
     .sms_title {color:#59636e; font-weight:bold}
-    #sms_content {width:180pxdow heig; height:150px; border:1px solid #98b2cc;}
+    #sms_content {width:180px; height:150px; border:1px solid #98b2cc;}
     #btnSendSMS {background-color:#567696; color:#ffffff; border:1px outset #567696; padding:3px; border-radius:5px;}
 </style>
 
 
-<?php
-/* consult.detail.php
-	vb에서는 이것 안씀
-class="showSMSBox" 된것을 누르면, 해당 text가 전화번호로 입력되어 나옴.
-* 문자는 지정해놓은 문자열 자동 노출
-btn_smsbox 를 클릭시 해당 text() 자동저장
-*/
+<script>
+function toggle_smsbox() {
+    if ($("#smsbox_sk").css("display") == "none") {
+        $("#smsbox_sk").animate({
+            right: ['toggle', 'linear'],
+            opacity: ['toggle', 'linear']
+        }, 200, 'linear', function () {
+        });
+    } else {
+        $("#smsbox_sk").hide();
+    }
+}
+$(document).ready(function(){
 
-?>
+    /*sms보내기_상세페이지*/
+    $(document).on('click', '.btn_smsbox', function(){
+        //$("#input수신번호").val( $(this).parents("#txt_consult_info").find(".txt_client_hp").text() );
+        var btn_txt = onlyNumber($(this).text());
+        if($.isNumeric(btn_txt))
+            $("#input수신번호").val( btn_txt );
+        else
+            $("#input수신번호").val( $(this).data("tel") );
 
+        toggle_smsbox();
+    });
 
-<div id="smsbox_sk" style="display:none">
-    <div style="float:left;width:66.666%;;">
-        예제
-        <?php
-        /*$sql = "select * from sms_text where member_srl = '$member_srl' ";
-        $smstext_arr = select($sql);
-        foreach($smstext_arr as $smstext){
+    $("#sms_content").keyup(function(){
+        var str = $(this).val();
+        var len = 0, i, j;
 
+        for(i=0, j=str.length; i<j; i++, len++)
+        {
+            if((str.charCodeAt(i)<0)||(str.charCodeAt(i)>127))len = len+1;
         }
-        if(!$smstext_arr[0]){}*/
-        $selected_smstext = "서울 강남구 테헤란로 207 아가방빌딩 7층, 법무법인 예율입니다. (2호선 역삼역 8번출구 200m)\n";
+
+        $("#txt_len_sms").text(len);
+        if( len  <=  80 ){
+            $("#txt_문자타입").text("단문"); $("#input제목").hide(); $("#문자타입").val("SMS");
+        }else{
+            $("#txt_문자타입").text("장문"); $("#input제목").show(); $("#문자타입").val("LMS");
+        }
+    });
+
+    $("#btnSMSClose").click(function(){
+        $("#smsbox_sk").animate({
+            right:['toggle','linear'],
+            opacity:['toggle','linear']
+        },200,'linear',function(){});
+    });
+
+    $("#btnSendSMS").click(function(){
+        /*$(this).attr("disabled", true);*/
+        var str = "&from="+$("input[name=sms_number_from]").val()+"&to="+$("input[name=sms_number_to]").val()+"&text="+$("#sms_content").val()+""
+                +"&to_user_id="+$("#to_user_id").val()+"";
+        console.log(str);
+        /*$.post("/lawfirm/consult.ajax.lawfirm.php", str, function(data){*/
+        /*$.post("/sms/send", str, function(data){
+         $("#btnSendSMS").attr("disabled",false);
+         console.log('COOL SMS 로그');
+         console.log(data);
+         alert(data + '건 발송성공');
+         });*/
+    });
+    /*sms보내기_상세페이지*/
+
+    /*sms보내기_MMS 계약서 보내기*/
+    $("#btnSendMMS").click(function(){
+        $(this).attr("disabled", true);
+
+        $("#formSMS발송").submit();
+    });
+
+    $(".textarea문자내용").click(function(){
+        $(this).select();
+    });
+
+});
+</script>
 
 
+<div class="container-fluid">
+    <h1>문자발송</h1>
 
+
+    <div id="smsbox_sk" >
+        <div style="float:left;width:100%;margin-right:-210px;">
+            <h4 style="background-color:#dadada;padding:5px;">자주쓰는 문구</h4>
+            <div id="">
+                {% component "SmsContent" %}
+            </div>
+
+
+            <h4 style="background-color:#dadada;padding:5px;margin-top:30px;">
+                자주쓰는 번호
+            </h4>
+            <div id="">
+                {% component "SmsPhone" %}
+            </div>
+        </div>
+        <div style="float:right;width:210px;">
+            <div class="sms_saved_text">
+                <?
+        /*foreach($smstext_arr as $smstext){
+
+        }*/
         ?>
-        <div>
-            <?php
-            //$fake_consult_id = ($consult_id *3 ) + 1004;
-
-            ?>
-            <textarea name="textarea내용" class="textarea문자내용">[예율]코웨이소송안내. 소송비용 입금부탁드립니다. 신한 100-029-697933 예율 http://wave.boonzero.com</textarea>
-            <textarea name="textarea내용" class="textarea문자내용">[예율]코웨이소송안내. 소송비용 입금부탁드립니다. 감사합니다.http://wave.boonzero.com</textarea>
-
-
-            <textarea name="textarea내용" class="textarea문자내용">[예율]
-부재중 법률상담 확인연락 드렸으나 현재 통화가 어려우신듯 보입니다. 필요하신 경우 다시 연락주시면 상세한 답변 드리겠습니다. 감사합니다.
-* 증거를 미리 올려주시면 더 빠른 상담을 하실 수 있습니다.
-                <?=$_SERVER['HTTP_HOST']?>/v/easyHelp? $fake_consult_id
-</textarea>
-            <textarea name="textarea내용" class="textarea문자내용">법무법인 예율, 모이어 상담소 입니다.
-        < ? = substr($consult['reg_date'],0,10) ? >자 법률상담 진행여부 문의차 연락드렸습니다.
-통화가 어려우신듯 하니 필요하신 경우 먼저 연락주시면 상세한 답변 드리겠습니다. 02-2135-5251, http://sangdam.moior.com
-* 더이상 관리를 받지 않고 싶으신 경우 사건종료체크 부탁합니다.
-사건종료요청 : < ? =$_SERVER['HTTP_HOST'] ? >/v/easyHelp?< ? =$fake_consult_id ? >
-</textarea>
-            <textarea name="textarea내용" class="textarea문자내용">[변호사님 상담배정]
-    < ? =$consult['cl_name'] ? >
- www.moior.com/lawfirm/consult.detail.php?co_id= </textarea>
-
-            <textarea name="textarea내용" class="textarea문자내용">[찾아오시는길] 법무법인 예율입니다.
-서울 강남구 테헤란로 207 아가방빌딩 7층(2호선 역삼역8번출구 나와서 200m쯤 직진하시면 '아가방'건물이 보입니다.)</textarea>
-            <textarea name="textarea내용" class="textarea문자내용">[입금계좌안내]
-신한 100-028-594840 예율
-입금확인 후 연락드리겠습니다. 감사합니다.
-</textarea>
-
-        </div>
-        <small><a>예제 수정</a></small>
-        <div id="staff_hplist">
-            <button type="button" class="btn btn-default btn스탭전번 btn-sm" data-hp="010-4775-0852">
-                김상겸
-            </button>
-            <button type="button" class="btn btn-default btn스탭전번 btn-sm" data-hp="010-2383-9648">
-                정지혜
-            </button>
-            <button type="button" class="btn btn-default btn스탭전번 btn-sm" data-hp="010-8025-3422">
-                곽지영
-            </button>
-            <button type="button" class="btn btn-default btn스탭전번 btn-sm" data-hp="010-4519-4854">
-                신정재
-            </button>
-            <button type="button" class="btn btn-default btn스탭전번 btn-sm" data-hp="010-4618-7725">
-                장미라
-            </button>
-
-
-        </div>
-    </div>
-    <div style="float:left;width:33.333%">
-        <span class="sms_title">내용</span>
-        <div class="sms_saved_text">
-            <?
-            /*foreach($smstext_arr as $smstext){
-
-            }*/
-            ?>
-        </div>
-
-        <form name="formSMS발송" id="formSMS발송" action="/sms" method="post"  enctype='multipart/form-data' target="winNewSMS">
-            {{--<form name="formSMS발송" id="formSMS발송" action="/lawfirm/consult.ajax.lawfirm.php" method="post"  enctype='multipart/form-data' target="winNewSMS">--}}
-            <input type="hidden" name="action" value="sendSMS" />
-            <input type="hidden" name="to_user_id" id="to_user_id" value="" />
-
-            <input type="hidden" name="consult_id" value="" />
-
-            <textarea name="sms_content" id="sms_content" class="form-control" >[예율] </textarea>
-            <div style="font-size:0.9em; text-align:right;"><span id="txt_len_sms"></span>byte&nbsp;<span id="txt_smstype"></span>
-                <input type=hidden name="smstype" id="smstype" value="SMS" />
-            </div>
-            <span class="sms_title">받는이</span>
-            <input type=text name="sms_number_to" id="sms_recive_num" style="width:180px; height:25px;" class="form-control" />
-
-            <span class="sms_title">보내는이</span>
-            <input type=text name="sms_number_from" id="sms_sender_noum" style="width:180px; height:25px;" class="form-control"
-                   value="02-2135-5251" />
-            <div style="text-align:center"><input type=button id="btnSendSMS" value="전송" style="width:150px;"></div>
-
-            <div style="background-color:#efefef;padding:5px;">
-                <input type=file name="upload_file" id="" style="" class="form-control" />
-                <div style="text-align:center"><input type=button id="btnSendMMS" value="파일도 전송" style="width:100px;"></div>
             </div>
 
-            <div style="text-align:right; cursor:pointer; margin-top:10px; font-weight:bold; " id="btnSMSClose">닫기</div>
-            <a href="/lawfirm/sms.setting.php" style="color:#aaa;font-size:9px;" target="_blank">SETTING</a>
-        </form>
+            <script type="text/javascript">
+                function successSend(data){
+                    if(data) alert('전송성공');
+                    else  alert('전송오류');
+                } /*, onSubmit : 'successSend(data);'*/
+            </script>
+
+            <div style="padding:14px;background-color:#efefef;">
+            <!--file 저장은 ajax로 안되고 enctype=multipart 넣어줘야!! 맨날 삽질2시간-->
+            {{ form_open({ request: 'Sms::onSendSms', files : true }) }} <!--, url : ''-->
+
+            <!--<form name="formSMS발송" id="formSMS발송" action="Sms::onSendSms" method="post"  enctype='multipart/form-data' target="winNewSMS">-->
+                <input type="hidden" name="to_user_id" id="to_user_id" value="" />
+
+                <input type="hidden" name="consult_id" value="" />
+
+                <!--LMS, MMS일 경우-->
+                <input type=text name="제목" id="input제목" placeholder="제목 (장문 문자)"
+                       value="{{input('title')}}" style="width:180px; height:25px;display:none;" class="form-control" />
+
+                <span class="sms_title">내용</span>
+                <textarea name="발신내용" id="sms_content" class="form-control" >[예율] </textarea>
+                <div style="font-size:0.9em; text-align:right;"><span id="txt_len_sms"></span>byte&nbsp;<span id="txt_문자타입"></span>
+                    <input type=hidden name="문자타입" id="문자타입" value="SMS" />
+                </div>
+                <span class="sms_title">받는이</span>
+                <input type=text name="수신번호" id="input수신번호"
+                       value="{{input('phone')}}" style="width:180px; height:25px;" class="form-control" />
+
+                <span class="sms_title">보내는이</span>
+                <input type=text name="발신번호" id="sms_sender_noum" style="width:180px; height:25px;" class="form-control"
+                       value="02-2135-5251" />
+                <div style="text-align:center"><input type=submit id="btnSendSMS" value="전송" style="width:150px;"></div>
+
+                <div style="background-color:#efefef;padding:5px;">
+                    <input type=file name="upload_file" id="" style="" class="form-control" />
+                    <div style="text-align:center"><input type=button id="btnSendMMS" value="파일도 전송" style="width:100px;"></div>
+                </div>
+
+                <div style="text-align:right; cursor:pointer; margin-top:10px; font-weight:bold; " id="btnSMSClose">닫기</div>
+                <a href="/lawfirm/sms.setting.php" style="color:#aaa;font-size:9px;" target="_blank">SETTING</a>
+            {{ form_close() }}
+            </div>
+        </div>
+
     </div>
+
+
 
 </div>
 
-<script>
-    function toggle_smsbox(){
-        if($("#smsbox_sk").css("display")=="none"){
-            $("#smsbox_sk").animate({
-                right:['toggle', 'linear'],
-                opacity:['toggle', 'linear']
-            },200,'linear',function(){});
-        }else{
-            $("#smsbox_sk").hide();
-        }
-    }
-    $(document).ready(function(){
-
-        /*sms보내기_상세페이지*/
-        $(document).on('click', '.btn_smsbox', function(){
-            //$("#sms_recive_num").val( $(this).parents("#txt_consult_info").find(".txt_client_hp").text() );
-            var btn_txt = onlyNumber($(this).text());
-            if($.isNumeric(btn_txt))
-                $("#sms_recive_num").val( btn_txt );
-            else
-                $("#sms_recive_num").val( $(this).data("tel") );
-
-            toggle_smsbox();
-        });
-
-        $("#sms_content").keyup(function(){
-            var str = $(this).val();
-            var len = 0, i, j;
-
-            for(i=0, j=str.length; i<j; i++, len++)
-            {
-                if((str.charCodeAt(i)<0)||(str.charCodeAt(i)>127))len = len+1;
-            }
-
-            $("#txt_len_sms").text(len);
-            if(len<=80){$("#txt_smstype").text("단문"); $("smstype").val("SMS");}else{
-                $("#txt_smstype").text("장문"); $("smstype").val("LMS");
-            }
-        });
-
-        $("#btnSMSClose").click(function(){
-            $("#smsbox_sk").animate({
-                right:['toggle','linear'],
-                opacity:['toggle','linear']
-            },200,'linear',function(){});
-        });
-
-        $("#btnSendSMS").click(function(){
-            /*$(this).attr("disabled", true);*/
-
-            var str = "&from="+$("input[name=sms_number_from]").val()+"&to="+$("input[name=sms_number_to]").val()+"&text="+$("#sms_content").val()+""
-                    +"&to_user_id="+$("#to_user_id").val()+"";
-            console.log(str);
-            /*$.post("/lawfirm/consult.ajax.lawfirm.php", str, function(data){*/
-            $.post("/sms/send", str, function(data){
-                $("#btnSendSMS").attr("disabled",false);
-                console.log('COOL SMS 로그');
-                console.log(data);
-                alert(data + '건 발송성공');
-            });
-
-        });
-        /*sms보내기_상세페이지*/
-
-        /*sms보내기_MMS 계약서 보내기*/
-        $("#btnSendMMS").click(function(){
-            $(this).attr("disabled", true);
-
-            $("#formSMS발송").submit();
-        });
-
-        $(".textarea문자내용").click(function(){
-            $(this).select();
-        });
-        $(".btn스탭전번").click(function(){
-            $("#sms_recive_num").val($(this).data("hp"));
-        });
 
 
-    });
-</script>

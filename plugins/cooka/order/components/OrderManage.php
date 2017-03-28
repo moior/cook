@@ -53,7 +53,9 @@ class OrderManage extends ComponentBase
             $this->page['admin'] = true;
         }
 
-        error_reporting(0);
+        // 실서버에서 : Creating default object from empty value에러
+        $level = error_reporting(0); //$order->name = "[빈값]"; 때문
+        // error_reporting($level); // xe 소스 보니 리포팅 해제부분에 이걸 넣는듯한데 왜?
         $orderId = $this->property('id');
         $order = Order::find($orderId);
 
