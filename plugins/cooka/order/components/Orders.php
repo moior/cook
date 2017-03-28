@@ -106,7 +106,7 @@ class Orders extends ComponentBase
         /*우리 요리사들에게 문자*/
         $ret = \Kenny\Sms\Components\SmsController::send([
             'text'=>'노트요리사::주문접수됨! '. $order->name. '/' . $order->phone. '/'
-                .$order->title. '/'. $order->fee_offer,
+                .$order->title. '/'. number_format($order->fee_offer),
             'from' => '02-1661-5521',
             'to' => '010-4775-0852, 010-4618-7725',
         ]); /*김상겸, 장미라에게 문자*/
