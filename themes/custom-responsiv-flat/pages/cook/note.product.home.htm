@@ -257,8 +257,18 @@ $(document).ready(function(){
             3. 기성 제품은 완전주문제작보다 <b>약 30% 저렴</b>합니다.<br>
             <br>
             ※  기성제품은 전화로 주문 문의바랍니다. /
-            <a href="tel:1661-5521">1661-5521</a><br>
-            
+            <script type="text/javascript">
+                function successTel(){
+                    if(typeof(wcs) != "undefined") {
+                        var _nasa={};
+                        _nasa["cnv"] = wcs.cnv("5","10"); // 전환유형 /* 1:구매완료 2:회원가입 3:장바구니 4:신청예약 5:기타 */ 전환가치 설정해야함. 설치매뉴얼 참고
+                        wcs_do(_nasa);
+                    }
+                    window.location.href='tel:1661-5521';
+                }
+            </script>
+            <a href="javascript:successTel()">1661-5521</a><br>
+
             
         </div>
         <div id="area주문서_안쪽">

@@ -110,7 +110,17 @@ function onInit(){
                             {% component 'FaqLast' %}
 
                             <div class="text-right" style="margin-top:20px;margin-right:20px;font-size:11pt;">
-                                <a href="tel:1661-5521">문의 : 1661-5521</a>
+                                <script type="text/javascript">
+                                    function successTel(){
+                                        if(typeof(wcs) != "undefined") {
+                                            var _nasa={};
+                                            _nasa["cnv"] = wcs.cnv("5","10"); // 전환유형 /* 1:구매완료 2:회원가입 3:장바구니 4:신청예약 5:기타 */ 전환가치 설정해야함. 설치매뉴얼 참고
+                                            wcs_do(_nasa);
+                                        }
+                                        window.location.href='tel:1661-5521';
+                                    }
+                                </script>
+                                <a href="javascript:successTel()">문의 : 1661-5521</a>
                             </div>
                         </div>
 
