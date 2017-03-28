@@ -55,29 +55,28 @@ class OrderManage extends ComponentBase
 
         $orderId = $this->property('id');
         $order = Order::find($orderId);
-        /*$imsiOrder = $order;
-        print_r($order);
-        foreach($order->attribute as $key => $order__){
-            if( !$order__ ){
-                $order->attribute->$key = "[값없음]";
-                echo $key."----------@@ ";
-            }
-        }*/
-        $tmpOrder = $order['attributes'];
-
+        /*$tmpOrder = $order['attributes'];
         foreach( $tmpOrder as $key => $order_){
             if(empty($order_)){
                 $tmpOrder[$key] = "[빈값]";
             }
-        }
-        $this->page['order'] = $tmpOrder;
-        /*$this->page['order'] = $order;*/
+        }*/
 
-        if($tmpOrder['name'] == "[빈값]") {
-            $this->page['client_name'] = substr($order->phone, -4);
-        }else{
-            $this->page['client_name'] = $order->name;
+        if( empty($order->name) ) {
+            if( $order->phone )
+                $order->name = substr($order->phone, -4);
+            else $order->name = "[빈값]";
         }
+        if( empty($order->title)) { $order->title = "[빈값]"; }
+        if( empty($order->phone)) { $order->phone = "[빈값]"; }
+        if( empty($order->addr)) { $order->addr = "[빈값]"; }
+        if( empty($order->email)) { $order->email = "[빈값]"; }
+        if( empty($order->comment)) { $order->comment = "[빈값]"; }
+
+        $this->page['client_name'] = $order->name;
+
+        $this->page['order'] = $order; // $tmpOrder; //bill 에서 값읽을떄 오류
+
         $this->page['file개수'] = 0;
 
         if($order->upload_file) {

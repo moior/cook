@@ -95,6 +95,7 @@ class Orders extends ComponentBase
     {
 
         $form = post();
+
         $order = $this->saveOrder($form);
 
         $this->sendMailAfterOrder($order, "cooka.order::mail.ordered");
