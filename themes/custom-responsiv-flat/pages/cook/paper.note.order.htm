@@ -66,16 +66,17 @@ $(document).ready(function(){
     <br>
     <script>
         function afterSaveOrder(data){
-            console.log(data);
+            //console.log(data);
             alert('접수 완료되었습니다. 확인 후 연락드리겠습니다. :-)');
         }
     </script>
     {{ form_ajax('Orders::onSaveOrder',
         {
             success:"afterSaveOrder(data)",
+            redirect:"/order/list",
         }
     ) }}<!--
-            redirect:"/order/list",-->
+            -->
     <!--<form
         data-request="Orders::onSaveOrder"
         data-request-before-update="settingPostData"

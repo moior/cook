@@ -55,12 +55,6 @@ class OrderManage extends ComponentBase
 
         $orderId = $this->property('id');
         $order = Order::find($orderId);
-        /*$tmpOrder = $order['attributes'];
-        foreach( $tmpOrder as $key => $order_){
-            if(empty($order_)){
-                $tmpOrder[$key] = "[빈값]";
-            }
-        }*/
 
         if( empty($order->name) ) {
             if( $order->phone )
