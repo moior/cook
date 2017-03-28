@@ -57,7 +57,7 @@ class OrderManage extends ComponentBase
         $order = Order::find($orderId);
 
         if( empty($order->name) ) {
-            if( $order->phone )
+            if( !empty($order->phone) )
                 $order->name = substr($order->phone, -4);
             else $order->name = "[빈값]";
         }
