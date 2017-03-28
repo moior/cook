@@ -73,6 +73,7 @@ class Plugin extends PluginBase
                 'hide_kname' => [$this, 'hide_kname'],
                 'tel_html' => [$this, 'tel_html'],
                 'day_han' => [$this, 'day_han'],
+                'strips' => [$this, 'strips'],
                 //'plural' => 'str_plural',
             ],
             'functions' => [
@@ -114,6 +115,10 @@ class Plugin extends PluginBase
             return mb_substr($str,0,1, 'UTF-8').str_repeat($tail,$len-2).mb_substr($str,-1,1, 'UTF-8');
         }else
             return mb_substr($str,0,1, 'UTF-8').str_repeat($tail,$len-1);
+    }
 
+    public function strips($str, $tail="*") //
+    {
+        return stripslashes($str );
     }
 }

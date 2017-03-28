@@ -57,6 +57,9 @@
 
         });
 
+        $("#btn문자").click(function(){
+            window.open('/sms?phone=' + $(this).data('phone'), '', 'width=600,height=750')
+        });
     })
     function check개별수정폼(){
         if($("#input컬럼이름").val()){
@@ -64,6 +67,8 @@
         }else {alert('수정할것을 선택하세요');}
     }
     function nl2br2(str){ return str.replace(/\n/g, "<br />"); }
+
+
 </script>
 
 <!--<form data-request="{{ __SELF__ }}::onOrderPaper">
@@ -102,7 +107,8 @@
             <b>폰</b> : <span class="easy수정" data-colname="phone" id="easy수정-phone">{{ order.phone }}</span>
             <small>(
             <a href="tel:{{ order.phone }}">전화</a>
-            <a href="javascript:window.open('/sms', '', 'width=600,height=600')" target="_blank">문자</a>
+            <a href="javascript:void(0)" id="btn문자"
+               target="_blank" data-phone="{{ order.phone }}">문자</a>
             )</small>
         </div>
 
@@ -172,17 +178,17 @@
         <a href="{{ _image_arr }}" target="_blank">첨부파일{{key}}</a> /
         {% endfor %}
     </div>
-    {% if order.bill %}
 
+
+    {% if order.bill %}
     <a href="javascript:void(0);" onclick="$(this).next('.div상세견적서보기').toggle();">
-        견적서
+        고객이 작성한 견적서
     </a>
     <div id="" class="div상세견적서보기" style="display:none;background-color:#efefef;">
         <!--DB에 저장되어 있는 정보-->
-        <small>{{ order.bill|raw  }}</small>
+        <small>{{ order.bill|strips|raw  }}</small>
     </div>
     {% endif %}
-
 
 
     {% if cook_data %}
