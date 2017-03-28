@@ -189,8 +189,12 @@ function onInit(){
                         <!--<script type="text/javascript" src="//wcs.naver.net/wcslog.js"></script>-->
                         <script type="text/javascript">
                             function successOrder(){
-                                var _nasa={};
-                                _nasa["cnv"] = wcs.cnv("5","10"); // 전환유형, 전환가치 설정해야함. 설치매뉴얼 참고
+                                if(typeof(wcs) != "undefined") {
+                                    var _nasa={};
+                                    _nasa["cnv"] = wcs.cnv("5","10"); // 전환유형, 전환가치 설정해야함. 설치매뉴얼 참고
+                                    wcs_do(_nasa);
+                                }
+
                             }
                         </script>
 
