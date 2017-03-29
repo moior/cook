@@ -111,7 +111,7 @@ class Orders extends ComponentBase
         $ret = \Kenny\Sms\Components\SmsController::send([
             'text'=>'노트요리사::주문접수! '. $order->name. '/' . $order->phone. '/'
                 .$order->title. '/'. number_format($order->fee_offer) .'원',
-            'from' => '02-1661-5521',
+            'from' => '1661-5521',
             'to' => '010-4775-0852, 010-4618-7725',
         ]); /*김상겸, 장미라에게 문자*/
 
@@ -187,7 +187,7 @@ class Orders extends ComponentBase
             $ret = \Kenny\Sms\Components\SmsController::send([
                 /*======================80자======================================================?? */
                 'text' => $sms_text,
-                'from' => '02-1661-5521',
+                'from' => '1661-5521',
                 'to' => $order->phone
             ]);
         }

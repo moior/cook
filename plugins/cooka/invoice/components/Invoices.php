@@ -108,7 +108,7 @@ class Invoices extends ComponentBase
                 $ret = \Kenny\Sms\Components\SmsController::send([
                             //======================80자======================================================??
                     'text'=>'노트요리사::견적서가 이메일로 발송되었습니다. - 직접 만드는 나만의 노트, 노트요리사.com',
-                    'from' => '02-1661-5521',
+                    'from' => '1661-5521',
                     'to' => $phone
                 ]);
             }

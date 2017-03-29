@@ -34,7 +34,7 @@ class SmsController extends ComponentBase {
     public function getForm($data = null)
     {
         echo "<form action='/sms/send'>
-			<input type='text' name='from' value='02-2135-5251' />
+			<input type='text' name='from' value='1661-5521' />
 			<input type='text' name='to' value='010-4775-0852' />
 			<input type='text' name='text' value='테스트...' />
 			<input type='text' name='type' value='SMS' />
@@ -63,7 +63,7 @@ class SmsController extends ComponentBase {
         /*if( empty($data['to']) && empty(Auth::user()->userInfo->phone)) return 0; //'받는사람 없음.';*/
         $default = [
             'text'=>'샘플 문자입니다. SK',
-            'from'=>'02-1661-5521',
+            'from'=>'1661-5521',
             'to'=> '010-4775-0852', /*Auth::user()->userInfo->phone*/
         ];
         if(!isset($data['from'])) $data['from'] = $default['from'];
@@ -82,7 +82,7 @@ class SmsController extends ComponentBase {
 
         $default = [
             'text'=>'빈 메세지입니다.',
-            'from'=>'02-2135-5251',
+            'from'=>'1661-5521',
             'to'=> '01047750852', /*Auth::user()->userInfo->phone*/
         ];
         if(!isset($data['from'])) $data['from'] = $default['from'];
