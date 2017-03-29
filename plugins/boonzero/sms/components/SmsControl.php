@@ -57,7 +57,6 @@ class SmsControl extends ComponentBase
         if(empty($this->user)) {
             dd('로그인해야합니다.');
         }
-
     }
     public function onSendSms()
     {
@@ -80,6 +79,7 @@ class SmsControl extends ComponentBase
         $LMS = false; $MMS = false;
         $수신번호들 = explode(",", $data['수신번호']);
         $수신번호들 = array_filter(array_map('trim',$수신번호들)); //화이트스페이스 제거 후에 빈것 제거
+
         foreach($수신번호들 as $수신번호){
             $tmp = array();
             if($data['제목']) $tmp[subject] = $data['제목']; //LMS, MMS 의 경우 필수

@@ -66,6 +66,12 @@ $(document).ready(function(){
 
         toggle_smsbox();
     });
+    $("#input발신번호").focusin(function(){
+        $(this).after("<small class='imsi_text' style='color:tomato;'>대표번호(1661)은 02가 붙으면 안됩니다.</small>")
+    });
+    $("#input발신번호").focusout(function(){
+        $(".imsi_text").remove();
+    });
 
     $("#sms_content").keyup(function(){
         var str = $(this).val();
@@ -149,16 +155,17 @@ $(document).ready(function(){
                            value="{{input('title')}}" style="width:180px; height:25px;display:none;" class="form-control" />
 
                     <span class="sms_title">내용</span>
-                    <textarea name="발신내용" id="sms_content" class="form-control" >[예율] </textarea>
+                    <textarea name="발신내용" id="sms_content" class="form-control" >[노트요리사] </textarea>
                     <div style="font-size:0.9em; text-align:right;"><span id="txt_len_sms"></span>byte&nbsp;<span id="txt_문자타입"></span>
                         <input type=hidden name="문자타입" id="문자타입" value="SMS" />
                     </div>
+
                     <span class="sms_title">받는이</span>
                     <input type=text name="수신번호" id="input수신번호"
                            value="{{input('phone')}}" style="width:180px; height:25px;" class="form-control" />
 
                     <span class="sms_title">보내는이</span>
-                    <input type=text name="발신번호" id="sms_sender_noum" style="width:180px; height:25px;" class="form-control"
+                    <input type=text name="발신번호" id="input발신번호" style="width:180px; height:25px;" class="form-control"
                            value="02-2135-5251" />
                     <div style="text-align:center"><input type=submit id="btnSendSMS" value="전송" style="width:150px;"></div>
 
