@@ -185,7 +185,7 @@
     </a>
     <div id="" class="div상세견적서보기" style="display:none;background-color:#efefef;">
         <!--DB에 저장되어 있는 정보-->
-        <small>{{ order.bill|raw  }}</small>
+        <small>{{ order.bill|json_decode  }}</small>
     </div>
     {% endif %}
 
