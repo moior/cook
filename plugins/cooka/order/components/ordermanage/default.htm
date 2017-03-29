@@ -58,7 +58,7 @@
         });
 
         $("#btn문자").click(function(){
-            window.open('/sms?phone=' + $(this).data('phone'), '', 'width=600,height=750')
+            window.open('/sms?phone=' + $(this).data('phone'), '', 'width=690,height=750')
         });
     })
     function check개별수정폼(){
@@ -186,6 +186,17 @@
     <div id="" class="div상세견적서보기" style="display:none;background-color:#efefef;">
         <!--DB에 저장되어 있는 정보-->
         <small>{{ order.bill|json_decode  }}</small>
+
+        <!--
+
+orders/default 파일에서도.
+json_decode >> raw 로 바꾸라!!!!!!!!!!!!
+새주문 들어오면.
+
+
+
+-->
+
     </div>
     {% endif %}
 

@@ -27,6 +27,8 @@ class Plugin extends PluginBase
             '\Boonzero\Sms\Components\SmsPhoneControl' => 'SmsPhone',
             '\Boonzero\Sms\Components\SmsHistoryControl' => 'SmsHistory',
             '\Boonzero\Sms\Components\SmsContentControl' => 'SmsContent',
+            '\Boonzero\Sms\Components\SmsSampleControl' => 'SmsSample',
+
         ];
     }
     public function registerReportWidgets()
