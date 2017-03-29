@@ -6,6 +6,7 @@ is_hidden = 0
 [Sms]
 [SmsPhone]
 [SmsContent]
+[SmsHistory]
 ==
 <?php
 /*use Symfony\Component\HttpFoundation\File\File as FileObj;*/
@@ -16,7 +17,11 @@ function onStart()
 
 ?>
 ==
-
+<!--사용법
+$(".btn문자").click(function(){
+    window.open('/sms?phone=' + $(this).text(), '', 'width=600,height=750')
+});
+-->
 
 
 <style>
@@ -119,77 +124,80 @@ $(document).ready(function(){
     <h1>문자발송</h1>
 
 
-    <div id="smsbox_sk" >
-        <div style="float:left;width:100%;margin-right:-210px;">
-            <h4 style="background-color:#dadada;padding:5px;">자주쓰는 문구</h4>
-            <div id="">
-                {% component "SmsContent" %}
-            </div>
+    <div id="smsbox_sk" class="row">
+        <div class="col-xs-4 col-sm-3">
+
+            <div style="width:210px;">
+                <script type="text/javascript">
+                    function successSend(data){
+                        if(data) alert('전송성공');
+                        else  alert('전송오류');
+                    } /*, onSubmit : 'successSend(data);'*/
+                </script>
+
+                <div style="padding:14px;background-color:#efefef;">
+                <!--file 저장은 ajax로 안되고 enctype=multipart 넣어줘야!! 맨날 삽질2시간-->
+                {{ form_open({ request: 'Sms::onSendSms', files : true }) }} <!--, url : ''-->
+
+                <!--<form name="formSMS발송" id="formSMS발송" action="Sms::onSendSms" method="post"  enctype='multipart/form-data' target="winNewSMS">-->
+                    <input type="hidden" name="to_user_id" id="to_user_id" value="" />
+                    <input type="hidden" name="consult_id" value="" />
+
+                    <!--LMS, MMS일 경우-->
+                    <input type=text name="제목" id="input제목" placeholder="제목 (장문 문자)"
+                           value="{{input('title')}}" style="width:180px; height:25px;display:none;" class="form-control" />
+
+                    <span class="sms_title">내용</span>
+                    <textarea name="발신내용" id="sms_content" class="form-control" >[예율] </textarea>
+                    <div style="font-size:0.9em; text-align:right;"><span id="txt_len_sms"></span>byte&nbsp;<span id="txt_문자타입"></span>
+                        <input type=hidden name="문자타입" id="문자타입" value="SMS" />
+                    </div>
+                    <span class="sms_title">받는이</span>
+                    <input type=text name="수신번호" id="input수신번호"
+                           value="{{input('phone')}}" style="width:180px; height:25px;" class="form-control" />
+
+                    <span class="sms_title">보내는이</span>
+                    <input type=text name="발신번호" id="sms_sender_noum" style="width:180px; height:25px;" class="form-control"
+                           value="02-2135-5251" />
+                    <div style="text-align:center"><input type=submit id="btnSendSMS" value="전송" style="width:150px;"></div>
+
+    <!--
+                    <div style="background-color:#efefef;padding:5px;">
+                        <input type=file name="upload_file" id="" style="" class="form-control" />
+                        <div style="text-align:center"><input type=button id="btnSendMMS" value="파일도 전송" style="width:100px;"></div>
+                        <small>jpg, jpeg 파일만 전송됩니다.</small>
+                    </div>
+
+    파일은 아직.
+    -->
 
 
-            <h4 style="background-color:#dadada;padding:5px;margin-top:30px;">
-                자주쓰는 번호
-            </h4>
-            <div id="">
-                {% component "SmsPhone" %}
+                {{ form_close() }}
+                </div>
             </div>
         </div>
-        <div style="float:right;width:210px;">
-            <div class="sms_saved_text">
-                <?
-        /*foreach($smstext_arr as $smstext){
+        <div class="col-xs-8 col-sm-9">
 
-        }*/
-        ?>
-            </div>
-
-            <script type="text/javascript">
-                function successSend(data){
-                    if(data) alert('전송성공');
-                    else  alert('전송오류');
-                } /*, onSubmit : 'successSend(data);'*/
-            </script>
-
-            <div style="padding:14px;background-color:#efefef;">
-            <!--file 저장은 ajax로 안되고 enctype=multipart 넣어줘야!! 맨날 삽질2시간-->
-            {{ form_open({ request: 'Sms::onSendSms', files : true }) }} <!--, url : ''-->
-
-            <!--<form name="formSMS발송" id="formSMS발송" action="Sms::onSendSms" method="post"  enctype='multipart/form-data' target="winNewSMS">-->
-                <input type="hidden" name="to_user_id" id="to_user_id" value="" />
-
-                <input type="hidden" name="consult_id" value="" />
-
-                <!--LMS, MMS일 경우-->
-                <input type=text name="제목" id="input제목" placeholder="제목 (장문 문자)"
-                       value="{{input('title')}}" style="width:180px; height:25px;display:none;" class="form-control" />
-
-                <span class="sms_title">내용</span>
-                <textarea name="발신내용" id="sms_content" class="form-control" >[예율] </textarea>
-                <div style="font-size:0.9em; text-align:right;"><span id="txt_len_sms"></span>byte&nbsp;<span id="txt_문자타입"></span>
-                    <input type=hidden name="문자타입" id="문자타입" value="SMS" />
-                </div>
-                <span class="sms_title">받는이</span>
-                <input type=text name="수신번호" id="input수신번호"
-                       value="{{input('phone')}}" style="width:180px; height:25px;" class="form-control" />
-
-                <span class="sms_title">보내는이</span>
-                <input type=text name="발신번호" id="sms_sender_noum" style="width:180px; height:25px;" class="form-control"
-                       value="02-2135-5251" />
-                <div style="text-align:center"><input type=submit id="btnSendSMS" value="전송" style="width:150px;"></div>
-
-                <div style="background-color:#efefef;padding:5px;">
-                    <input type=file name="upload_file" id="" style="" class="form-control" />
-                    <div style="text-align:center"><input type=button id="btnSendMMS" value="파일도 전송" style="width:100px;"></div>
+            <div style="width:100%;">
+                <h4 style="background-color:#dadada;padding:5px;">자주쓰는 문구</h4>
+                <div id="div자주쓰는문구">
+                    {% component "SmsContent" %}
                 </div>
 
-                <div style="text-align:right; cursor:pointer; margin-top:10px; font-weight:bold; " id="btnSMSClose">닫기</div>
-                <a href="/lawfirm/sms.setting.php" style="color:#aaa;font-size:9px;" target="_blank">SETTING</a>
-            {{ form_close() }}
+
+                <h4 style="background-color:#dadada;padding:5px;margin-top:30px;">
+                    자주쓰는 번호
+                </h4>
+                <div id="div자주쓰는번호">
+                    {% component "SmsPhone" %}
+                </div>
             </div>
         </div>
-
     </div>
 
+    <!--<a href="/lawfirm/sms.setting.php" style="color:#aaa;font-size:9px;" target="_blank">
+    SETTING
+    </a>-->
 
 
 </div>

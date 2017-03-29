@@ -23,7 +23,10 @@
 $(function(){
     $(".span주문제목, .span주문상태").click(function(){
         location.href="/order/detail/" + $(this).parents(".tr주문").data("id");
-    })
+    });
+    $(".btn문자").click(function(){
+        window.open('/sms?phone=' + $(this).text(), '', 'width=650,height=750')
+    });
 })
 </script>
 <!--<form data-request="{{ __SELF__ }}::onOrderPaper">
@@ -112,7 +115,8 @@ $(function(){
                         상세내용
                     </a>
                      /
-                    <span>{{ item.phone|tel_html }}</span>
+
+                    <a href="javascript:void(0)" class="btn문자">{{ item.phone|tel_html }}</a>
 
                     <div id="" class="div상세주문내용보기"
                          style="display:none;background-color:#efefef;padding:10px; font-size:0.8em;">

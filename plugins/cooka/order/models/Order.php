@@ -9,7 +9,7 @@ class Order extends Model
 {
     public $table = 'cooka_orders';
 
-    protected $jsonable = ['cook_data'];
+    protected $jsonable = ['cook_data', 'bill'];
 
     /**
      * @var array Guarded fields

@@ -3,7 +3,7 @@
 use Cms\Classes\ComponentBase;
 use ApplicationException;
 
-class History extends ComponentBase
+class SmsHistoryControl extends ComponentBase
 {
 
     public function componentDetails()
@@ -75,7 +75,6 @@ class History extends ComponentBase
     public function onDelSmsHistory()
     {
         $form = post();
-        $sms = SmsHistory::find( $form["id"] );
-        $sms->delete();
+        SmsHistory::destroy( $form["id"] );
     }
 }

@@ -2,25 +2,94 @@
 <style>
 </style>
 <script>
-    $(document).ready(function() {
-
+$(document).ready(function() {
+    /* 클릭되면 색갈바뀌도록............... */
+    $(".btn전화번호").click(function(){
+        if($("#input수신번호").val() ){
+            $("#input수신번호").val( $("#input수신번호").val() + ", " + $(this).data("hp"));
+        }else{
+            $("#input수신번호").val( $(this).data("hp"));
+        }
     });
+
+    $(".btn문구추가").click(function(){
+        $("#div문구추가영역").toggle();
+    });
+
+    /*삭제로직*/
+    $(".textarea문자내용").focus(function(){
+        $("#input문구삭제id").val( $(this).data("id") );
+    });
+    $(".btn문구삭제").click(function(){
+        if(confirm('삭제할까요?')){
+            if($("#input문구삭제id").val()){
+                $("#form문구삭제").submit();
+            }else alert('삭제할 문구를 골라주세요');
+        }
+    });
+});
+
 </script>
 
-<div>
+<div id=" ">
 
     {% for key, sms_content in sms_contents %}
-    <textarea name="textarea내용" class="textarea문자내용"
-    >{{sms_content}}</textarea>
+    <textarea name="textarea내용" class="textarea문자내용" data-id="{{sms_content.id}}"
+    >{{sms_content.content}}</textarea>
     {% endfor %}
 
     <textarea name="textarea내용" class="textarea문자내용">[노트요리사.com] 입금계좌 안내드립니다.
 우리 1002-848-662537 (주)모이어</textarea>
     <textarea name="textarea내용" class="textarea문자내용">[노트요리사.com]
 전화를 안받으셔서 문자 남깁니다.
-
 </textarea>
 
-</div>
+    <div>
+        {{ form_ajax('SmsContent::onDelSmsContent', {
+            id : "form문구삭제",
+            success:"location.reload()",
+        } ) }}
+        <input type="hidden" name="id" id="input문구삭제id" value="" />
+        <button type="button" class="btn btn-link btn문구삭제 btn-xs"  data-attach-loading style="float:right;">
+            Del
+        </button>
+        {{ form_close() }}
 
-<small><a>문구 추가+</a></small>
+        <button type="button" class="btn btn-default btn문구추가 btn-xs" style="float:right;">
+            추가
+        </button>
+    </div>
+    <div id="div문구추가영역" style="padding:10px;display:none;margin:5px auto;width:80%;">
+        <h4>문구 추가</h4>
+        {{ form_ajax('SmsContent::onAddSmsContent',{
+        id: "form문구추가",
+        success :"location.reload()",
+        }) }}
+
+        <div class="form-group">
+            <label for="" class=""> *제목</label>
+            <input name="title" type="text" class="form-control" id="" placeholder="">
+        </div>
+        <div class="form-group">
+            <label for="" class=""> *내용</label>
+            <textarea name="content" class="form-control" id="" placeholder="문구 입력"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="" class=""> 분류</label>
+            <input name="category" type="text" class="form-control" id="" placeholder="나중 카테고리별로 묶어서 관리가 가능합니다.">
+        </div>
+        <!--<div class="form-group">
+            <label for="" class=""> 레벨</label>
+            <input name="level" type="text" class="form-control" id="">
+        </div>-->
+        <div class="form-group">
+            <label for="" class=""> 순서</label>
+            <input name="ord" type="text" class="form-control" id="" placeholder="숫자만. 작을수록 먼저나옵니다.">
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-block">입력</button>
+
+        {{ form_close() }}
+
+    </div>
+</div>

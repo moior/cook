@@ -12,12 +12,22 @@ $(document).ready(function() {
             $("#input수신번호").val( $(this).data("hp"));
         }
     });
+
     $(".btn전번추가").click(function(){
         $("#div전번추가영역").toggle();
     });
-    $(".btn전번삭제").click(function(){
-        if(confirm('삭제기능은 아직..')){
 
+    /*삭제로직*/
+    var 삭제할사람 = '';
+    $(".btn전화번호").click(function(){
+        $("#input전번삭제id").val( $(this).data("id") );
+        삭제할사람 = $.trim($(this).text());
+    });
+    $(".btn전번삭제").click(function(){
+        if(confirm("[ " + 삭제할사람 + ' ] : 삭제할까요?')){
+            if($("#input전번삭제id").val()){
+                $("#form전번삭제").submit();
+            }else alert('삭제할 전번을 하나만 골라주세요');
         }
     });
 
@@ -27,10 +37,11 @@ $(document).ready(function() {
 <!--<form data-request="{{ __SELF__ }}::onOrderPaper">
 여기서는 __self__하면되네
 </form>-->
-<div id="divSMS전화번호">
+<div id=" ">
     {% for key, sms_phone in sms_phones %}
     {{ sms_phone.category }}
-    <button type="button" class="btn btn-default btn전화번호 btn-sm" data-hp="{{ sms_phone.phone }}">
+    <button type="button" class="btn btn-default btn전화번호 btn-sm" data-hp="{{ sms_phone.phone }}"
+            data-id="{{ sms_phone.id }}">
         {{ sms_phone.name }}
     </button>
     {% endfor %}
@@ -41,13 +52,24 @@ $(document).ready(function() {
     <button type="button" class="btn btn-default btn전화번호 btn-sm" data-hp="010-4618-7725">
         장미라
     </button>
-    <button type="button" class="btn btn-default btn전번추가 btn-sm" data-hp="">
-        +
+
+    {{ form_ajax('SmsPhone::onDelSmsPhone', {
+    id : "form전번삭제",
+    success:"location.reload()",
+    } ) }}
+    <input type="hidden" name="id" id="input전번삭제id" value="" />
+    <button type="button" class="btn btn-link btn전번삭제 btn-xs"  data-attach-loading style="float:right;">
+        Del
     </button>
-    <button type="button" class="btn btn-link btn전번삭제 btn-sm" data-hp="">
-        x
+    {{ form_close() }}
+    <button type="button" class="btn btn-default btn전번추가 btn-xs" style="float:right;">
+        추가
     </button>
-    <div id="div전번추가영역" style="padding:10px;display:none;">
+    {% if admin %}
+        <!--이거 안됨.. $this['admin']해줘야..-->
+    {% endif %}
+
+    <div id="div전번추가영역" style="padding:10px;display:none;margin:5px auto;width:80%;"">
         <h4>번호 추가</h4>
         {{ form_ajax('SmsPhone::onAddSmsPhone',{
             id: "form전번추가",
@@ -55,20 +77,20 @@ $(document).ready(function() {
         }) }}
 
         <div class="form-group">
-            <label for="" class=""> 분류</label>
-            <input name="category" type="text" class="form-control" id="" placeholder="">
-        </div>
-        <div class="form-group">
-            <label for="" class=""> 이름</label>
+            <label for="" class=""> *이름</label>
             <input name="name" type="text" class="form-control" id="" placeholder="">
         </div>
         <div class="form-group">
-            <label for="" class=""> 휴대폰번호</label>
+            <label for="" class=""> *휴대폰번호</label>
             <input name="phone" type="text" class="form-control" id="" placeholder="010-">
         </div>
         <div class="form-group">
             <label for="" class=""> 설명</label>
             <input name="comment" type="text" class="form-control" id="" placeholder="간략설명">
+        </div>
+        <div class="form-group">
+            <label for="" class=""> 분류</label>
+            <input name="category" type="text" class="form-control" id="" placeholder="나중 카테고리별로 묶어서 관리가 가능합니다.">
         </div>
         <!--<div class="form-group">
             <label for="" class=""> 레벨</label>
