@@ -9,7 +9,8 @@ class Order extends Model
 {
     public $table = 'cooka_orders';
 
-    protected $jsonable = ['cook_data', 'bill'];
+    /*bill 은 json 형식이 현재 아닌데......... 삭제하면 기존것을이 안되고. 난감함ㅋ*/
+    protected $jsonable = ['cook_data'];
 
     /**
      * @var array Guarded fields

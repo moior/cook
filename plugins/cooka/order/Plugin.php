@@ -74,6 +74,8 @@ class Plugin extends PluginBase
                 'tel_html' => [$this, 'tel_html'],
                 'day_han' => [$this, 'day_han'],
                 'strips' => [$this, 'strips'],
+                'json_decode' => [$this, 'json_decode'],
+
                 //'plural' => 'str_plural',
             ],
             'functions' => [
@@ -88,6 +90,10 @@ class Plugin extends PluginBase
         ];
     }
 
+    public function json_decode( $str ) //
+    {
+        return json_decode($str);
+    }
     public function day_han( $str ) //
     {
         $daily = array('일','월','화','수','목','금','토');

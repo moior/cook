@@ -101,7 +101,16 @@ $(function(){
                     <div id="" class="div상세견적서보기"
                          style="display:none;background-color:#efefef;">
                         <!--DB에 저장되어 있는 정보-->
-                        <small>{{ item.bill|raw  }}</small>
+                        <small>{{ item.bill|json_decode  }}</small>
+
+                        <!--
+
+
+                        json_decode >> raw 로 바꾸라!!!!!!!!!!!!
+                        새주문 들어오면.
+
+
+                        -->
                     </div>
                 {% endif %}
 
