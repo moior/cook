@@ -39,7 +39,7 @@ function onInit(){
     }
     #divHotQna {
         background-color: rgba(0,0,0, 0.05);padding:5px 10px;margin-bottom:20px;
-        font-size:0.8em;color:gray;margin-top:15px;
+        font-size:0.8em;color:gray;margin-top:0px;
 
     }
     #divHotQna a {color:#666666;}
@@ -59,6 +59,44 @@ function onInit(){
     $(document).ready(function(){
     });
 </script>
+
+<div id="fb-root"></div>
+<script>/*페이스북 api*/
+window.fbAsyncInit = function() {
+    FB.init({
+        appId      : '1305374412888654',
+        xfbml      : true,
+        version    : 'v2.8'
+    });
+    FB.AppEvents.logPageView();
+};
+(function(d, s, id){
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) {return;}
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/ko_KR/sdk.js";
+    js.src = "//connect.facebook.net/ko_KR/sdk.js#xfbml=1&version=v2.8&appId=1305374412888654";
+    fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+</script>
+<!--<script>
+    // Only works after `FB.init` is called
+    function myFacebookLogin() {
+        FB.login(function(){}, {scope: 'publish_actions'});
+        FB.login(function(){
+            // Note: The call will only work if you accept the permission request
+            FB.api('/me/feed', 'post', {message: 'Hello, world!'});
+        }, {scope: 'publish_actions'});
+    }
+</script>
+<button onclick="myFacebookLogin()">Login with Facebook</button>-->
+<!-- 좋아요 버튼
+<div class="fb-like"
+    data-share="true"
+    data-width="450"
+    data-show-faces="true">
+</div>-->
+
 
 <section class="home-title-sk">
     <div class="container">
@@ -82,6 +120,32 @@ function onInit(){
         <div class="row">
             <div class="col-sm-6" style="padding:0 30px;">
 
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6" style="padding:20px 20px 0 20px;">
+
+                <!------------FACEBOOK ----------------->
+                <div class="facebook" style="max-width:500px;min-height:270px;border:0px solid red;">
+
+                    <style>
+                        .fb-page,.fb-page span,.fb-page span iframe[style] {
+                            width: 100% !important;
+                        }
+                    </style>
+
+
+                        {% set fb_height = 495 %}<!--모바일에서는 270-->
+
+                    <div class="fb-page" data-href="https://www.facebook.com/노트요리사-1427117817350261/" data-tabs="timeline"
+                         data-height="{{fb_height}}" data-width="500" data-small-header="true"
+                         data-hide-cover="false" data-show-facepile="false">
+                        <blockquote cite="https://www.facebook.com/노트요리사-1427117817350261/" class="fb-xfbml-parse-ignore">
+                            <a href="https://www.facebook.com/노트요리사-1427117817350261/">노트요리사 facebook</a>
+                        </blockquote>
+                    </div>
+
+                </div>
                 <!--<label class="btn btn-primary active " style="margin-bottom:10px;">
                     <input type="checkbox" class="btn_" autocomplete="off" checked disabled> 노트
                 </label>
@@ -111,67 +175,8 @@ function onInit(){
                         <input type="checkbox" autocomplete="off" disabled> 금속
                     </label>
                 </div>-->
-                <div class="row" style="margin-top:20px;">
-                    <div class="col-xs-12">
-                        <div class="row">
-                            <div class="col-xs-6">
-                                <a href="/sample/paper/note" class="btn btn-block btn-info">
-                                    <span class="fa fa-database"> 샘플 보기</span>
-                                </a>
-                            </div>
-                            <div class="col-xs-6">
-                                <a href="/cook/paper/note" class="btn btn-block btn-info">
-                                    <span class="fa fa-cutlery"> 맞춤 제작</span>
-                                </a>
-                            </div>
-                        </div>
+                <!------------FACEBOOK ----------------->
 
-                        <div id="divHotQna" style="">
-                            <h6><a href="/faq/cate/1">Recent Q&A</a></h6>
-
-                            {% component 'FaqLast' %}
-
-                            <div class="text-right" style="margin-top:20px;margin-right:20px;font-size:11pt;">
-                                <script type="text/javascript">
-                                    function successTel(){
-                                        if(typeof(wcs) != "undefined") {
-                                            var _nasa={};
-                                            _nasa["cnv"] = wcs.cnv("5","10"); // 전환유형 /* 1:구매완료 2:회원가입 3:장바구니 4:신청예약 5:기타 */ 전환가치 설정해야함. 설치매뉴얼 참고
-                                            wcs_do(_nasa);
-                                        }
-                                        window.location.href='tel:1661-5521';
-                                    }
-                                </script>
-                                <a href="javascript:successTel()">1661-5521</a>
-                                /
-                                <a href="mailto:help@moior.com">help@moior.com</a>
-                            </div>
-                        </div>
-
-                    </div>
-    
-                </div>
-
-                <!--<div class="signup-form">
-                    <form>
-                        <div class="form-group">
-                            <input class="form-control" type="text" placeholder="Your E-mail">
-                        </div>
-                        <div class="form-group">
-                            <div>
-                                <input type="password" class="form-control" placeholder="Password">
-                            </div>
-                            <div>
-                                <input type="password" class="form-control" placeholder="Confirmation">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <button type="submit" class="btn btn-block btn-info">Sign Up</button>
-                        </div>
-                    </form>
-                </div>-->
-                <div class="additional-links">
-                </div>
             </div>
             <div class="col-sm-6" style="padding:20px 35px;">
 
@@ -237,9 +242,104 @@ function onInit(){
                     </div>
                 </div>
 
+                <div class="row " style="margin-top:10px;">
+
+                    <div id="divHotQna" style="">
+                        <h6><a href="/faq/cate/1">Recent Q&A</a></h6>
+
+                        {% component 'FaqLast' %}
+
+                        <div class="text-right" style="margin-top:20px;margin-right:20px;font-size:11pt;">
+                            <script type="text/javascript">
+                                function successTel(){
+                                    if(typeof(wcs) != "undefined") {
+                                        var _nasa={};
+                                        _nasa["cnv"] = wcs.cnv("5","10"); // 전환유형 /* 1:구매완료 2:회원가입 3:장바구니 4:신청예약 5:기타 */ 전환가치 설정해야함. 설치매뉴얼 참고
+                                        wcs_do(_nasa);
+                                    }
+                                    window.location.href='tel:1661-5521';
+                                }
+                            </script>
+                            <a href="javascript:successTel()">1661-5521</a>
+                            /
+                            <a href="mailto:help@moior.com">help@moior.com</a>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+
+
+        <div class="">
+
+            <div class="row" style="margin-top:20px;">
+                <div class="col-xs-6">
+                    <div class="">
+
+                        <style>
+                            #div안내버튼들 {}
+                            .btn안내버튼 {background-color:#4CAF50;border-radius:3px;
+                                margin-bottom:10px;line-height: 150%;text-align: center;padding:10px;min-height:100px;
+                            }
+                            .btn안내버튼:hover {background-color: #dfdfdf;}
+                        </style>
+                        <div id="div안내버튼들" class="row hide">
+                            <div class="col-xs-6">
+                                <div class="btn안내버튼">
+                                    <a href="tel:1661-5521">시간이 없거나 다 알아서 해주기를 원하시면,
+                                        <br>
+                                        전화!</a>
+                                </div>
+                            </div>
+                            <div class="col-xs-6">
+                                <div class="btn안내버튼">
+                                    <a href="/cook/paper/note">표지종류, 내지타입을 고르실 수 있는 분은,
+                                        <br>
+                                        주문페이지!</a>
+                                </div>
+                            </div>
+                            <div class="col-xs-6">
+                                <div class="btn안내버튼">
+                                    <a href="/sample/paper/note">다른 제품을 보고 그와 비슷하게 만드실분은,
+                                        <br>
+                                        샘플페이지!</a>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="col-xs-6">
 
 
 
+                </div>
+
+            </div>
+
+            <!--<div class="signup-form">
+                <form>
+                    <div class="form-group">
+                        <input class="form-control" type="text" placeholder="Your E-mail">
+                    </div>
+                    <div class="form-group">
+                        <div>
+                            <input type="password" class="form-control" placeholder="Password">
+                        </div>
+                        <div>
+                            <input type="password" class="form-control" placeholder="Confirmation">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-block btn-info">Sign Up</button>
+                    </div>
+                </form>
+            </div>-->
+            <div class="additional-links">
             </div>
         </div>
 
