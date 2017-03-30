@@ -66,12 +66,6 @@ $(document).ready(function(){
 
         toggle_smsbox();
     });
-    $("#input발신번호").focusin(function(){
-        $(this).after("<small class='imsi_text' style='color:tomato;'>대표번호(1661)은 02가 붙으면 안됩니다.</small>")
-    });
-    $("#input발신번호").focusout(function(){
-        $(".imsi_text").remove();
-    });
 
     $("#sms_content").keyup(function(){
         var str = $(this).val();
@@ -134,7 +128,7 @@ $(document).ready(function(){
     <div id="smsbox_sk" class="row">
         <div class="col-xs-4 col-sm-3">
 
-            <div style="width:210px;">
+            <div style="width:210px;" id="div폰테두리">
                 <script type="text/javascript">
                     function successSend(data){
                         if(data) alert('전송성공');
@@ -246,7 +240,17 @@ $(document).ready(function(){
     </a>-->
 
 
-
+    <div style="font-size:10px;color:gray;">
+        주의사항! 문자가 안갈경우 확인해주세요.
+        <br>
+        <br>
+        <ul>
+            <li><b>발신번호가 대표번호(1661)일 경우</b>, 앞에 02가 있으면 안됩니다.</li>
+            <li><b>발신번호가 쓰지않던 새로운 번호일 경우</b>, 문자가 안갈 수 있습니다. > 발신번호를 등록해줘야하니 연락주세요.</li>
+            <li>90byte 이상은 LMS로 전송되며(50원) 제목이 필요합니다. 빈칸으로 두면 [제목없음]이라고 전송됨.</li>
+            <li>첨부파일은 jpg, jpeg만 가능합니다.</li>
+        </ul>
+    </div>
 
 </div>
 
