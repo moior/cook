@@ -80,16 +80,17 @@ class SmsControl extends ComponentBase
         $수신번호들 = explode(",", $data['수신번호']);
         $수신번호들 = array_filter(array_map('trim',$수신번호들)); //화이트스페이스 제거 후에 빈것 제거
 
+        $smsdata = array();
         foreach($수신번호들 as $수신번호){
             $tmp = array();
             if($data['제목']) $tmp[subject] = $data['제목']; //LMS, MMS 의 경우 필수
             $tmp[from] = $data['발신번호'];
             $tmp[to] = $수신번호;
             $tmp[message] = $data['발신내용'];
-            $data[] = $tmp;
+            $smsdata[] = $tmp;
         }
         include_once $_SERVER["DOCUMENT_ROOT"]."/plugins/boonzero/sms/components/apibox/library.php";
-        $return = $apibox->sms_multi($data); //붉은글씨 오류아님! $apibox->sms($data);
+        $return = $apibox->sms_multi($smsdata); //붉은글씨 오류아님! $apibox->sms($data);
         error_reporting($level);
         return $return;
     }
