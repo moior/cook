@@ -124,6 +124,9 @@ $(document).ready(function(){
 <div class="container-fluid">
     <h1>문자발송</h1>
 
+    {% if session('alert') %}
+    <div class="alert alert-info">{{ session('alert') }}</div>
+    {% endif %}
 
     <div id="smsbox_sk" class="row">
         <div class="col-xs-4 col-sm-3">
