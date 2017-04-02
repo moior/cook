@@ -5,7 +5,7 @@ use Model;
 /**
  * Order Model
  */
-class History extends Model
+class SmsHistory extends Model
 {
     public $table = 'boon_sms_history';
 

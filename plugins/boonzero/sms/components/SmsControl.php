@@ -1,9 +1,10 @@
 <?php namespace Boonzero\Sms\Components;
 
-use Backend\Facades\BackendAuth;
 use Cms\Classes\ComponentBase;
 use ApplicationException;
 use Illuminate\Support\Facades\Session;
+use Kenny\Sms\Model\SmsHistory;
+use Backend\Facades\BackendAuth;
 use RainLab\User\Facades\Auth;
 use Kenny\Memo\Models\Memo;
 
@@ -57,6 +58,12 @@ class SmsControl extends ComponentBase
         if(empty($this->user)) {
             dd('로그인해야합니다.');
         }
+
+        if( input('phone') == "[빈값]" ){
+            $this->page['input_phone'] = '';
+        }else{
+            $this->page['input_phone'] = input('phone');
+        }
     }
     public function onSendSms()
     {
@@ -69,7 +76,10 @@ class SmsControl extends ComponentBase
         if( !$sms['문자타입'] )  {$type = "SMS"; $data['제목'] = null; }
         else { $type = $sms['문자타입']; $data['제목'] = "노트요리사"; }
 
-        $ret = $this->sendSms($sms);
+        $ret = '';//$this->sendSms($sms);
+
+        // SmsHistoryControl::onAddSmsHistory($sms); static이 아니므로 인스턴스 생성 후.
+        (new SmsHistoryControl)->onAddSmsHistory($sms); /*전송내역 저장*/
 
         if($ret) Session::flash("alert", ['type'=>'success', 'message'=>"발송성공"]);
         else Session::flash("alert", ['type'=>'fail', 'message'=>"발송실패..."]);
