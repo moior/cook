@@ -76,7 +76,7 @@ class SmsControl extends ComponentBase
         if( !$sms['문자타입'] )  {$type = "SMS"; $data['제목'] = null; }
         else { $type = $sms['문자타입']; $data['제목'] = "노트요리사"; }
 
-        $ret = '';//$this->sendSms($sms);
+        $ret = $this->sendSms($sms); //'';//
 
         // SmsHistoryControl::onAddSmsHistory($sms); static이 아니므로 인스턴스 생성 후.
         (new SmsHistoryControl)->onAddSmsHistory($sms); /*전송내역 저장*/
