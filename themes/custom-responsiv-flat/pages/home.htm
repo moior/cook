@@ -120,51 +120,54 @@ window.fbAsyncInit = function() {
 
                     <style>
                         #div안내버튼들 {}
-                        .btn안내버튼 {background-color:#4CAF50;border-radius:6px;
-                            margin-bottom:10px;line-height: 130%;text-align: center;padding:10px;
-                            min-height:140px;
-                            color:white;
-                            font-family:'맑은 고딕';opacity:0.9;
+                        .btn안내버튼 {background-color: #b2abb0;border-radius:6px;
+                            margin-bottom:10px;line-height: 130%;
+                            opacity:0.9;
                         }
                         .btn안내버튼:hover {background-color: #dfdfdf;}
-                        .btn안내버튼 a { color: #797979; font-size:13px;}
+                        .btn안내버튼 a { display:block;text-align:left;color: #797979; font-size:13px;}
+                        .btn안내버튼 img { border-radius:6px;}
 
                     </style>
                     <div id="div안내버튼들" class="row ">
-                        <div class="col-xs-6">
-                            <div class="btn안내버튼" style="background-image:url({{ "assets/images/cook/site/메인/메인_고객유형_타이틀.png"|theme }});
-                            padding-top:60px;font-weight:bold;text-align:center;">
-                            단1권도<br>제작가능
+                        <div class="col-xs-6" style="padding-right:2px;">
+                            <div class="btn안내버튼" style="">
+                                <img src="{{ "assets/images/cook/site/메인/메인_고객유형_타이틀.png?sds=afa"|theme }}" style="width:100%;" />
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-xs-6">
-                        <div class="btn안내버튼" style="background-image:url({{ "assets/images/cook/site/메인/메인_고객유형_전화.png"|theme }});
-                            padding-top:20px;padding-left:10px;text-align:left;">
-                            <a href="tel:1661-5521">시간이 없거나 <br>다 맡기실분은,
-                                <br><br>
-                                <b style="font-size:17px;color:#444444;">전화!</b>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="col-xs-6">
-                        <div class="btn안내버튼" style="background-image:url({{ "assets/images/cook/site/메인/메인_고객유형_고수.png?ss"|theme }});
-                            padding-top:20px;padding-left:10px;text-align:left;">
-                            <a href="/cook/paper/note">종이제품 제작을 <br>잘 아시는분은,
-                                <br><br>
-                                <b style="font-size:17px;color:#444444;">주문페이지!</b>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="col-xs-6">
-                        <div class="btn안내버튼" style="background-image:url({{ "assets/images/cook/site/메인/메인_고객유형_샘플.png"|theme }});
-                            padding-top:20px;padding-left:10px;text-align:left;">
-                            <a href="/sample/paper/note">
-                                다른 제품 참고해서<br> 비슷하게 만드실 분은,
-                                <br><br>
-                                <b style="font-size:17px;color:#444444;">샘플페이지!</b></a>
-                        </div>
-                    </div>
+                        <div class="col-xs-6" style="padding-left:2px;">
+                            <div class="btn안내버튼" style="">
+                                <a href="tel:1661-5521">
+                                    <img src="{{ "assets/images/cook/site/메인/메인_고객유형_전화.png?sds=afa"|theme }}" style="width:100%;" />
 
+                                    <!--시간이 없거나 <br>다 맡기실분은,
+                                    <br><br>
+                                    <b style="font-size:17px;color:#444444;">전화!</b>-->
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-xs-6" style="padding-right:2px;">
+                            <div class="btn안내버튼" style="">
+                                <a href="/cook/paper/note">
+                                    <img src="{{ "assets/images/cook/site/메인/메인_고객유형_고수.png?sds=aa"|theme }}" style="width:100%;" />
+                                    <!--종이제품 제작을 <br>잘 아시는분은,
+                                    <br><br>
+                                    <b style="font-size:17px;color:#444444;">주문페이지!</b>-->
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-xs-6" style="padding-left:2px;">
+                            <div class="btn안내버튼" style="">
+                                <a href="/sample/paper/note">
+                                    <img src="{{ "assets/images/cook/site/메인/메인_고객유형_샘플.png?sds=dasa"|theme }}" style="width:100%;" />
+                                    <!--다른 제품 참고해서<br> 비슷하게 만드실 분은,
+                                    <br><br>
+                                    <b style="font-size:17px;color:#444444;">샘플페이지!</b>-->
+                                </a>
+                            </div>
+                        </div>
+
+                    </div>
                 </div>
             </div>
         </div>
