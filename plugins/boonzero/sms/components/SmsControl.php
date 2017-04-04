@@ -77,11 +77,11 @@ class SmsControl extends ComponentBase
         if( !$sms['문자타입'] )  {$type = "SMS"; $data['제목'] = null; }
         else { $type = $sms['문자타입']; $data['제목'] = "노트요리사"; }
 
-        $ret = ''; //test시
-        //$ret = $this->sendSms($sms);
+        //$ret = ''; //test시
+        $ret = $this->sendSms($sms);
 
         // SmsHistoryControl::onAddSmsHistory($sms); static이 아니므로 인스턴스 생성 후.
-        (new SmsHistoryControl)->onAddSmsHistory($sms); /*전송내역 저장*/
+        (new SmsHistoryControl)->onAddSmsHistory($sms, $ret); /*전송내역 저장*/
 
         if($ret) Session::flash("alert", ['type'=>'success', 'message'=>"발송성공"]);
         else Session::flash("alert", ['type'=>'fail', 'message'=>"발송실패..."]);

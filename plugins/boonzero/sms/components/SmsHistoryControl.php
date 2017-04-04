@@ -58,7 +58,7 @@ class SmsHistoryControl extends ComponentBase
             ->orderBy("id")->get();
         return $sms;
     }
-    public function onAddSmsHistory($data)
+    public function onAddSmsHistory($data, $ret = null)
     {
         $this->user = Auth::getUser();
         $this->admin = BackendAuth::getUser();
@@ -74,6 +74,7 @@ class SmsHistoryControl extends ComponentBase
         $form['title'] = $form['제목'] ;
         $form['message'] = $form['발신내용'] ;
         $form['sms_type'] = $form['문자타입'];
+        $form["result"] = ($ret)?"성공":"실패";
 
         $sms->receiver_id = 0; // 회원끼리 주고받을때..?
         $sms->attach_model =    isset($form["attach_model"])?$form["attach_model"]:"";
