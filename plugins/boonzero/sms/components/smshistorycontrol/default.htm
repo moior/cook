@@ -3,6 +3,8 @@
 .eachSMS발송이력 {float:left;width:200px; background-color:#efefef;padding:5px;margin:2px;
     font-size:10px;color: #454545;
 }
+.div발송이력_성공 { }
+.div발송이력_실패 { background-color: #f47e72;}
 </style>
 <script>
 $(document).ready(function() {
@@ -12,14 +14,19 @@ $(document).ready(function() {
 <div id=" ">
 
     {% for key, sms_history in sms_historys %}
-        <div class="eachSMS발송이력">
+        <div class="eachSMS발송이력 div발송이력_{{sms_history.result}}">
             <div>받은분 : {{sms_history.phone_to}}</div>
             <div>{{sms_history.title}}</div>
             <textarea name="textarea내용" class="textarea문자내용" data-id="{{sms_history.id}}"
-            >{{sms_history.message}}</textarea>
+                style=" ">{{sms_history.message}}</textarea>
             <div>발신번호 : {{sms_history.phone_from}}</div>
             <div>결과 : {{sms_history.result}}</div>
-            <div>{{sms_history.created_at|date("n월j일 H:i")}}</div>
+            <div>
+                {{sms_history.created_at|date("n월j일 H:i")}}
+                <b>{{ invoice.created_at|day_han }}</b>요일
+            </div>
+
+
         </div>
     {% endfor %}
 

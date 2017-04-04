@@ -198,16 +198,7 @@ $(document).ready(function(){
                 </div>
             </div>
         </div>
-        <div class="col-xs-12">
-            <h4 style="background-color:#dadada;padding:5px;margin-top:30px;">
-                팀 <small>팀원 연락처, 추천 문구</small>
-            </h4>
-            {% component "SmsSample" %}
-            <!--SmsSample, Team, TeamMember 를 다 만들어야 해서 잠시 보류
 
-            -->
-
-        </div>
 
     </div>
 
@@ -216,7 +207,7 @@ $(document).ready(function(){
     </a>-->
 
 
-    <div style="font-size:10px;color:gray;">
+    <div style="font-size:10px;color:gray;margin-top:10px;border-top:1px solid gray;padding:10px;">
         주의사항! 문자가 안갈경우 확인해주세요.
         <br>
         <br>
@@ -236,6 +227,17 @@ $(document).ready(function(){
                 이력 <small></small>
             </h4>
             {% component "SmsHistory" %}
+
+        </div>
+
+        <div class="col-xs-12">
+            <h4 style="background-color:#dadada;padding:5px;margin-top:30px;">
+                팀 <small>팀원 연락처, 추천 문구</small>
+            </h4>
+            {% component "SmsSample" %}
+            <!--SmsSample, Team, TeamMember 를 다 만들어야 해서 잠시 보류
+
+            -->
 
         </div>
     </div>

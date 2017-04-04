@@ -65,7 +65,7 @@ $(document).ready(function() {
 </textarea>
     </div>
 
-    <div>
+    <div style="display:none;">
         {{ form_ajax('SmsContent::onDelSmsContent', {
             id : "form문구삭제",
             success:"location.reload()",
@@ -80,10 +80,10 @@ $(document).ready(function() {
             추가
         </button>
     </div>
-    <div id="div문구추가영역" style="padding:10px;display:none;margin:5px auto;width:80%;">
-        <h4>문구 추가</h4>
+    <div id="div팀문구추가영역" style="padding:10px;display:none;margin:5px auto;width:80%;">
+        <h4>팀문구 추가 (관리자만)</h4>
         {{ form_ajax('SmsContent::onAddSmsContent',{
-        id: "form문구추가",
+        id: "form팀문구추가",
         success :"location.reload()",
         }) }}
 
