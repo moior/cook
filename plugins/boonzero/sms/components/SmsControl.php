@@ -58,7 +58,6 @@ class SmsControl extends ComponentBase
         if(empty($this->user)) {
             dd('로그인해야합니다.');
         }
-        else Session::flash("alert", ['type'=>'fail', 'message'=>"발송실패..."]);
 
         if( input('phone') == "[빈값]" ){
             $this->page['input_phone'] = '';
