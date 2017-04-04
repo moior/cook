@@ -125,7 +125,7 @@ $(document).ready(function(){
     <h1>문자발송</h1>
 
     {% if session('alert') %}
-    <div class="alert alert-info">{{ session('alert') }}</div>
+    <div class="alert alert-info">{{ session('alert.message') }}</div>
     {% endif %}
 
     <div id="smsbox_sk" class="row">
