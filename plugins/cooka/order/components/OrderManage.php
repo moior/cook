@@ -80,14 +80,20 @@ class OrderManage extends ComponentBase
             /*삭제해야*/ $this->page['upload_file'] = $order->upload_file->getPath();
             $this->page['upload_file_origin'] = $order->upload_file->getPath();
             $this->page['upload_file_thumb'] = $order->upload_file->getThumb(100, 100, ['mode' => 'auto']); /*	auto, exact, portrait, landscape, crop. Default: auto*/
-            $this->page['file개수'] += $order->upload_file->count();
+            $this->page['file이름'] = $order->upload_file->getFilename();
+            $this->page['file타입'] = $order->upload_file->getContentType();
+            $this->page['file개수'] += 1;
         }
         foreach($order->upload_files as $image){
             $image_arr[] = $image->getPath();
+            $files_name[] = $image->getFilename();
+            $files_type[] = $image->getContentType();
             $thumb_arr[] = $image->getThumb(100, 100, ['mode' => 'crop']);
         }
         if(isset($image_arr)){
             $this->page['image_arr'] = $image_arr;
+            $this->page['files이름'] = $files_name;
+            $this->page['files타입'] = $files_type;
             $this->page['file개수'] += $order->upload_files->count();
 
         }

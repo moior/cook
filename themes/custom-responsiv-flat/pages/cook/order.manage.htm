@@ -273,7 +273,6 @@ function onCalcFee(){
                             파일첨부
                             <span class="badge" style="padding:1px 4px;">{{ file개수 }}</span>
                         </button>
-
                     </div>
 
                 </div>
@@ -295,19 +294,27 @@ function onCalcFee(){
                         <h5>고객이 첨부한 파일</h5>
                         {% if upload_file %}
                         <a href="{{upload_file_origin}}" target="_blank">
-                            <img src="{{upload_file_thumb}}" style="" />
+                            {% if file타입 == 'image/jpeg' or  file타입 == 'image/png' %}
+                                <img src="{{upload_file_thumb}}" style="" />
+                            {% else %}
+                                {{ file이름 }}
+                            {% endif %}
                         </a>
                         {% endif %}
 
                         <h5 style="margin-top:35px;">요리사가 첨부한 파일 </h5>
                         <div style="padding-left:10px;">
-                            <small>Tip:고객은 [주문확인]메뉴에서 자기것을 클릭시 볼 수 있습니다.<small>
+                            <small>Tip:고객은 [주문확인]리스트에서 자기것을 클릭하면 이 파일을 볼 수 있습니다.<small>
                                     <br>
                             {% for key, _image_arr in image_arr %}
                             <div class="pull-left" style="margin-right:5px;">
                                 <a href="{{ _image_arr }}" target="_blank">
                                     {{key}}.<br>
-                                    <img src="{{thumb_arr[key]}}" style="" />
+                                    {% if files타입[key] == 'image/jpeg' or  files타입[key] == 'image/png' %}
+                                        <img src="{{thumb_arr[key]}}" style="" />
+                                    {% else %}
+                                        {{ files이름[key] }}
+                                    {% endif %}
                                 </a>
                             </div>
                             {% endfor %}
