@@ -1,29 +1,23 @@
-title = "주문관리(adm)"
-url = "/order/manage/:orderno"
+title = "세팅-부품비"
+url = "/setting/part/:team_id"
 layout = "cooking"
 is_hidden = 0
 
-
-[Orders]
-[OrderManage]
-id = {{ :orderno }}
+[PartControl]
+team_id = {{ :team_id }}
 
 [Memos]
-attach_type = "Order"
-attach_id = {{ :orderno }}
+attach_type = "PartControl"
+attach_id = {{ :team_id }}
 
 [Notecooker]
-
-[Invoices]
-order_id = {{ :orderno }}
-
-[InvoiceManager]
 
 
 [session]
 ==
 <?php
 /*use Symfony\Component\HttpFoundation\File\File as FileObj;*/
+use Cooka\Part\Models\Part;
 
 function onInit()
 {
@@ -38,8 +32,6 @@ function onStart()
         exit;
     }
 
-    /*$file = new FileObj("assets/images/cook/paper/note/jebon/샘플-떡제본.jpg");
-    $temp["thumb"] = $file->getThumb(140, 160, ['mode'=>'crop']);*/
 }
 function onClickStep1(){}
 function onClickStep2(){}
@@ -48,7 +40,6 @@ function onClickStep2(){}
 function onCalcFee(){
 
 }
-
 ?>
 ==
 
@@ -58,7 +49,7 @@ function onCalcFee(){
     function setFormInputData(){
         $(".select_part").each(function(){
             $("#input-" + $(this).attr("name")).val(
-                $(this).find("option:selected").val()
+                    $(this).find("option:selected").val()
             );
         });
     }
@@ -97,6 +88,7 @@ function onCalcFee(){
             $(".div메뉴").hide();
             $("#div메뉴_" + $(this).data('name')).show();
         });
+
 
         /*견적서 부분 시작*/
         setFormInputData();
@@ -147,6 +139,7 @@ function onCalcFee(){
 
         }
 
+
         /*Memo 플러그인 전용 JS*/
         $(".btn메모삭제").click(function(){
             if( confirm("메모를 삭제할까요? (지금은 안됨)") ){
@@ -188,7 +181,7 @@ function onCalcFee(){
 
         <div id="area_top" class="row" style="font-size:11pt;padding:5px;border-top:2px solid #555;border-bottom:2px solid #555;">
             <div class="col-sm-5">
-                상담/견적관리
+                부품가격 세팅
             </div>
             <div class="col-sm-7 text-right">
 
@@ -198,92 +191,32 @@ function onCalcFee(){
 
         <div id="area전체" class="row">
 
-            <div class="col-sm-4" id="area왼쪽영역" style="">
-                <div id="area주문정보">
+            <div class="col-sm-5" id="area왼쪽영역" style="">
+                <div id="area부품리스트">
 
-                    {% component "OrderManage" %}
+                    {% component "PartControl" %}
 
 
                 </div>
 
             </div>
-            <div class="col-sm-8" id="area오른쪽영역">
+            <div class="col-sm-7" id="area오른쪽영역">
                 <div class="row">
                     <div class="col-sm-12" id="area오른쪽영역-메뉴">
 
-                        <button type="button" class="btn btn-sm btn-info btn상담메뉴" data-name="메모작성">메모작성</button>
-                        <button type="button" class="btn btn-sm btn-info btn상담메뉴" data-name="견적작성">견적작성</button>
-                        <button type="button" class="btn btn-sm btn-info btn상담메뉴" data-name="발송견적">
-                            발송한 견적
-                            <span class="badge" style="padding:1px 4px;">{{ invoice개수 }}</span>
+                        <button type="button" class="btn btn-sm btn-info btn상담메뉴" data-name="메모작성">참고 메모</button>
+                        <button type="button" class="btn btn-sm btn-info btn상담메뉴" data-name="견적작성">견적 테스트</button>
 
-                        </button>
-                        <button type="button" class="btn btn-sm btn-info btn상담메뉴" data-name="파일첨부">
-                            파일첨부
-                            <span class="badge" style="padding:1px 4px;">{{ file개수 }}</span>
-                        </button>
                     </div>
 
                 </div>
-                <div id="div메뉴_메모작성" class="div메뉴" style="display:block;">
+                <div id="div메뉴_메모작성" class="div메뉴" style="display:none;">
 
-                    <h5>메모 <small>내부 관리용</small></h5>
+                    <h5>메모 <small>가격 변경시 팀원이 참고하도록 메모를 남겨주세요.</small></h5>
                     {% component "Memos" %}
 
                 </div>
-                <div id="div메뉴_발송견적" class="div메뉴" style="display:none;">
-                    <h5>발송한 견적서</h5>
-                    {% component "Invoices" %}
-                </div>
-                <div id="div메뉴_파일첨부" class="div메뉴" style="display:none;">
-
-                    <!--파일 첨부하기..-->
-                    <div class=" " style="margin-top:20px;padding:10px;background-color:white;opacity:0.85;">
-
-                        <h5>고객이 첨부한 파일</h5>
-                        {% if upload_file %}
-                        <a href="{{upload_file_origin}}" target="_blank">
-                            {% if file타입 == 'image/jpeg' or  file타입 == 'image/png' %}
-                                <img src="{{upload_file_thumb}}" style="" />
-                            {% else %}
-                                {{ file이름 }}
-                            {% endif %}
-                        </a>
-                        {% endif %}
-
-                        <h5 style="margin-top:35px;">요리사가 첨부한 파일 </h5>
-                        <div style="padding-left:10px;">
-                            <small>Tip:고객은 [주문확인]리스트에서 자기것을 클릭하면 이 파일을 볼 수 있습니다.<small>
-                                    <br>
-                            {% for key, _image_arr in image_arr %}
-                            <div class="pull-left" style="margin-right:5px;">
-                                <a href="{{ _image_arr }}" target="_blank">
-                                    {{key}}.<br>
-                                    {% if files타입[key] == 'image/jpeg' or  files타입[key] == 'image/png' %}
-                                        <img src="{{thumb_arr[key]}}" style="" />
-                                    {% else %}
-                                        {{ files이름[key] }}
-                                    {% endif %}
-                                </a>
-                            </div>
-                            {% endfor %}
-
-                            <div style="clear:both"></div>
-                        </div>
-
-                        <h5 style="margin-top:35px;clear:both;" class=""> 첨부파일 추가</h5>
-                        <!--file 저장은 ajax로 안되고 enctype=multipart 넣어줘야!! 맨날 삽질2시간-->
-                        {{ form_open({ request: 'OrderManage::onAddAttachment', files : true, url : "/order/manage/"~order.id }) }}
-                        <input type="hidden" name="order_id" value="{{ order.id }}" />
-                        <div class="col-xs-6"><input type="file" name="upload_files[]" class="form-control" placeholder=".." /></div>
-                        <div class="col-xs-6"><input type="file" name="upload_files[]" class="form-control" placeholder=".." /></div>
-                        <div class="text-right">
-                            <button type="submit" onclick="" class="btn btn-xs btn-default" data-attach-loading>첨부파일 추가</button>
-                        </div>
-                        {{ form_close() }}
-                    </div>
-                </div>
-                <div id="div메뉴_견적작성" class="div메뉴" style="display:none;">
+                <div id="div메뉴_견적작성" class="div메뉴" style="display:block;">
                     <div class="col-sm-7" id="area오른쪽영역-1">
 
                         <div id="area노트조합기">
@@ -369,8 +302,7 @@ function onCalcFee(){
 
         </div>
         <div id="area전체리스트" style="background-color: white;">
-            <h3>전체 리스트</h3>
-            {% component "Orders" %}
+            <h3>부품 리스트</h3>
 
         </div>
     </div>
@@ -378,6 +310,7 @@ function onCalcFee(){
 
 
 </div>
-{% component "Memos" %}
+{% component "PartList" %}
+
 
 

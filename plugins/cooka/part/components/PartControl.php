@@ -4,19 +4,23 @@ use Backend\Facades\BackendAuth;
 use Cms\Classes\ComponentBase;
 use ApplicationException;
 use Cook\Classes\FeeCalculator;
+use Cooka\Part\Models\Part;
 use Cooka\Sample\Models\Sample;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Request;
 use System\Models\File;
 use RainLab\User\Facades\Auth;
 
 class PartControl extends ComponentBase
 {
+    private $user;
+    private $admin;
 
     public function componentDetails()
     {
         return [
-            'name'        => 'Order list',
+            'name'        => 'Part control list',
             'description' => ''
         ];
     }
@@ -35,44 +39,75 @@ class PartControl extends ComponentBase
         ];
     }
 
-
-
-    public function onCreateSample()
+    public function onRun()
     {
-        $sample = new Sample;
-        $form = post();
-        $sample->cate        = isset($form['cate'])?$form['cate']:"";
-        $sample->title        = isset($form['title'])?$form['title']:"";
-        $sample->menu        = isset($form['menu'])?$form['menu']:"";
-        $sample->spec        = isset($form['spec'])?$form['spec']:"";
-        $sample->comment        = isset($form['comment'])?$form['comment']:"";
-        $sample->cook_data        = isset($form['cook_data'])?$form['cook_data']:"";
-        $sample->bill        = isset($form['bill'])?$form['bill']:"";
-        $sample->status_show        = isset($form['status_show'])?$form['status_show']:"";
-        $sample->ord        = isset($form['ord'])?$form['ord']:"100";
-        $sample->is_hidden        = isset($form['is_hidden'])?$form['is_hidden']:0;
 
-        $sample->save();
-
-        //attatchMany 복수일경우, save다음에!! (또는 Deferred binding해야. , $form['_session_key'])
-        if(Input::hasFile('sample_images')){
-            foreach(Input::file('sample_images') as $file){
-                if($file) {
-                    $sample->sample_images()->create(['data' => $file]);
-                }
-            }
+        $this->user = Auth::getUser();
+        $this->admin = BackendAuth::getUser();
+        if(!$this->admin){
+            $this->page['admin'] = false;
+            $order = null;
+            return; /*어드민 로그인이 아니라면 절대 보이지 않음.*/
+        }else{
+            $this->page['admin'] = true;
         }
 
+        // 실서버에서 : Creating default object from empty value에러
+        $level = error_reporting(0); //$order->name = "[빈값]"; 때문
+        // error_reporting($level); // xe 소스 보니 리포팅 해제부분에 이걸 넣는듯한데 왜?
 
+        $team_id = $this->property('team_id');
+        if(Request::input('title')){
+            $parts = Part::where('team_id', $team_id)->orderBy('ord')->orderBy('name');
+            $parts = $parts->where('title', Request::input('title'));
+            $parts = $parts->get();
+        } else {
+            $parts = null;
+        }
 
+        $this->page['parts'] = $parts; // $tmpOrder; //bill 에서 값읽을떄 오류
 
     }
-    public function onDeleteSample()
+
+    public function onAddPart()
+    {
+        $part = new Part();
+        $form = post();
+
+        $part->team_id        = isset($form['team_id'])?$form['team_id']:"";
+        $part->cate        = isset($form['cate'])?$form['cate']:"";
+        $part->title        = isset($form['title'])?$form['title']:"";
+        $part->name        = isset($form['name'])?$form['name']:"";
+        $part->value        = isset($form['value'])?str_replace(',', '', $form['value']):"";
+        $part->comment        = isset($form['comment'])?$form['comment']:"";
+        $part->ord        = !empty($form['ord'])?$form['ord']:"0";
+
+        $part->save();
+    }
+
+    public function onEditPart()
+    {
+        $form = post();
+        $part = Part::find( $form["part_id"] );
+        if($part){
+            //if(isset($form['cate']))        $part->cate       = $form['cate'];
+            if(isset($form['title']))       $part->title      = $form['title'];
+            if(isset($form['name']))        $part->name      = $form['name'];
+            if(isset($form['value']))        $part->value       = str_replace(',', '', $form['value']);
+            if(isset($form['comment']))     $part->comment    = $form['comment'];
+            if(isset($form['ord']))         $part->ord        = $form['ord'];
+
+            $part->save();
+        }else{
+            //
+        }
+    }
+    public function onDelPart()
     {
         // if owner
         $form = post();
 
-        Sample::destroy($form['id']);
+        Part::destroy($form['part_id']);
     }
 
     public function onAddAttachment()
@@ -139,35 +174,6 @@ class PartControl extends ComponentBase
     }
 
 
-    public function onEditSample()
-    {
-        $form = post();
-
-        $sample = Sample::find( $form["sample_id"] );
-        if($sample){
-            if(isset($form['cate']))        $sample->cate       = $form['cate'];
-            if(isset($form['title']))       $sample->title      = $form['title'];
-            if(isset($form['menu']))        $sample->menu      = $form['menu'];
-            if(isset($form['spec']))        $sample->spec       = $form['spec'];
-            if(isset($form['comment']))     $sample->comment    = $form['comment'];
-            if(isset($form['cook_data']))   $sample->cook_data  = $form['cook_data'];
-            if(isset($form['bill']))        $sample->bill       = $form['bill'];
-            if(isset($form['status_show'])) $sample->status_show= $form['status_show'];
-            if(isset($form['ord']))         $sample->ord        = $form['ord'];
-            if(isset($form['is_hidden']))   $sample->is_hidden  = $form['is_hidden'];
-
-            if(Input::hasFile('sample_images')){
-                foreach(Input::file('sample_images') as $file){
-                    if($file) {
-                        $sample->sample_images()->create(['data' => $file]);
-                    }
-                }
-            }
-            $sample->save();
-        }else{
-            //
-        }
-    }
 
 
 }

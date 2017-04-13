@@ -90,6 +90,7 @@ $(function(){
                     배송주소 : {{ item.addr|slice(0,6) }}<br/>
                 {% endif %}
                 <!--첨부파일이 있으면 -->
+
                 {% if upload_file_arr[key] %}
                 <a href="{{upload_file_arr[key]}}" target="_blank">파일</a>
                 {% endif %}

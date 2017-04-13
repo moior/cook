@@ -30,7 +30,9 @@ class Part extends Model
      */
     public $hasOne = [];
     public $hasMany = [];
-    public $belongsTo = [];
+    public $belongsTo = [
+        /*'team' => ['']*/
+    ];
     public $belongsToMany = [];
     public $morphTo = [];
     public $morphOne = [];

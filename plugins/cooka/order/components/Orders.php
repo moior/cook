@@ -75,6 +75,7 @@ class Orders extends ComponentBase
         foreach( $orders as $key => $order){
             if($order->upload_file)
                 $upload_file_arr[] = $order->upload_file->getPath();
+            else $upload_file_arr[] = null;
         }
         $this->page['upload_file_arr'] = $upload_file_arr;
         /*print_r( $upload_file_arr);*/

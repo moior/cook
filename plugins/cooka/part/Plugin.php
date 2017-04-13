@@ -24,6 +24,7 @@ class Plugin extends PluginBase
     {
         return [
             '\Cooka\Part\Components\PartControl' => 'PartControl',
+            '\Cooka\Part\Components\PartPrice' => 'PartPrice',
         ];
     }
     /*'\Cooka\Sample\Components\SampleControl' => 'SampleControl',
