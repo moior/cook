@@ -57,11 +57,14 @@ class PartControl extends ComponentBase
         // error_reporting($level); // xe 소스 보니 리포팅 해제부분에 이걸 넣는듯한데 왜?
 
         $team_id = $this->property('team_id');
-        if(Request::input('title')){
+        if(Request::input('key0') ){
             $parts = Part::where('team_id', $team_id)->orderBy('ord')->orderBy('name');
-            $parts = $parts->where('title', Request::input('title'));
+            $parts = $parts->where('key0', Request::input('key0'));
+            if( Request::input('key1')) {
+                $parts = $parts->where('key1', Request::input('key1'));
+            }
             $parts = $parts->get();
-        } else {
+        }else{
             $parts = null;
         }
 
@@ -76,8 +79,13 @@ class PartControl extends ComponentBase
 
         $part->team_id        = isset($form['team_id'])?$form['team_id']:"";
         $part->cate        = isset($form['cate'])?$form['cate']:"";
-        $part->title        = isset($form['title'])?$form['title']:"";
-        $part->name        = isset($form['name'])?$form['name']:"";
+        //$part->title        = isset($form['title'])?$form['title']:"";
+        //$part->name        = isset($form['name'])?$form['name']:"";
+        $part->key0          = isset($form['key0'])?$form['key0']:"";
+        $part->key1          = isset($form['key1'])?$form['key1']:"";
+        $part->key2          = isset($form['key2'])?$form['key2']:"";
+        $part->key3          = isset($form['key3'])?$form['key3']:"";
+        $part->qtnum          = isset($form['qtnum'])?$form['qtnum']:"";
         $part->value        = isset($form['value'])?str_replace(',', '', $form['value']):"";
         $part->comment        = isset($form['comment'])?$form['comment']:"";
         $part->ord        = !empty($form['ord'])?$form['ord']:"0";
@@ -91,8 +99,13 @@ class PartControl extends ComponentBase
         $part = Part::find( $form["part_id"] );
         if($part){
             //if(isset($form['cate']))        $part->cate       = $form['cate'];
-            if(isset($form['title']))       $part->title      = $form['title'];
-            if(isset($form['name']))        $part->name      = $form['name'];
+            //if(isset($form['title']))       $part->title      = $form['title'];
+            //if(isset($form['name']))        $part->name      = $form['name'];
+            if(isset($form['key0']))         $part->key0        = $form['key0'];
+            if(isset($form['key1']))         $part->key1        = $form['key1'];
+            if(isset($form['key2']))         $part->key2        = $form['key2'];
+            if(isset($form['key3']))         $part->key3        = $form['key3'];
+            if(isset($form['qtnum']))         $part->qtnum        = $form['qtnum'];
             if(isset($form['value']))        $part->value       = str_replace(',', '', $form['value']);
             if(isset($form['comment']))     $part->comment    = $form['comment'];
             if(isset($form['ord']))         $part->ord        = $form['ord'];

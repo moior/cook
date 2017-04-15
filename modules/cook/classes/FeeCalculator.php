@@ -39,8 +39,8 @@ class FeeCalculator
     public $fee, $userSetting;
     public $danka, $quantity;
     public $parts;
-
-    /*DB있는것 먼저*/
+    public $danka_db = array();
+    /*부품정보. DB있는것 먼저*/
     private function part($name, $default = null){
         if($this->parts->get($name))
             return $this->parts->get($name)->value;
@@ -48,13 +48,16 @@ class FeeCalculator
     }
     function __construct(){
         /*부품정보 로드*/
-
         // $teamid = $this->property('teamid'); team_users 테이블에서 불러서 하자. 17.4.12.
         $teamid = 1; // 승우문화사
         $this->parts = Part::where('team_id', $teamid)->where('cate', '종이/노트')
-            ->orderBy('ord')->get()
-            ->keyBy('name'); //<!--엄청나닷. name 이 키가됨-->
+            ->get(); //->orderBy('qtnum',  SORT_REGULAR, true )
+            //->keyBy('name'); //<!--엄청나닷. name 이 키가됨. 근데 같은name은 뭉개지니 유일해야..-->
+        $danka_db_ = $this->parts->toArray();
+        $this->danka_db = $this->DB값재정렬($danka_db_); // 완벽. 이정보 쓰자 17.4.15.
         /*부품정보 로드 끝*/
+
+        //dd($this->danka_db['작업비']);
 
         $this->userSetting = array();
 
@@ -445,14 +448,38 @@ class FeeCalculator
         $this->danka_v2['노임'] = array( /*일차분류/ 이차분류는 입력받음. 최신버전 */
             '일반' => array(
                 '0' => "8000",
-                '100' => "110000",
-                '1000' => "200000",
+                '100' => "1100000",
+                '1000' => "2000000",
                 '초과수량' => "100"
             ),
         );
         /*   접지   에폭시
         */
     }
+
+
+    /*총 제본비*/
+    function feeJebon($real = "real", $paper_name = null, $size = null)
+    {
+        if( ! $this->quantity ) return 0;
+        $제본종류 = $this->userSetting['제본'];
+
+        $일차분류 = $제본종류;
+        $이차분류 = $this->userSetting['크기'];
+        $제본비 =  $this->가격자동계산기(['제본', $일차분류, $이차분류]);
+
+        /*내지수량에 따른 차등... 위 가격은 내지 100장일때였음*/
+        if($제본종류 == '무선')       $내지따른가중치 = 0.4;
+        elseif($제본종류 == '스프링') $내지따른가중치 = 0.2;
+        elseif($제본종류 == '양장')   $내지따른가중치 = 0.1;
+        else $내지따른가중치 = 0;
+        /*100장 기준으로 가중치... */
+        $제본비 = $제본비 - $제본비 * (100-$this->userSetting['내지-매수'])/100 * $내지따른가중치;
+
+        return $제본비;
+
+    }
+
     /*표지 비용 = 용지비 + 인쇄비 + 판비
     판비    도당 1판이 필요. 먹1도면 1개 필요. 양면이면 판이 2개이므로 2개
             4도가 풀컬러. 앞뒤가 다르고 풀컬러이면 8만원*/
@@ -488,9 +515,8 @@ class FeeCalculator
         return $인쇄비;*/
         if( !$this->quantity ) return 0;
         if($this->quantity < $this->디지털출력개수 ){ /*디지털출력*/
-            $일차분류 = "표지인쇄";
             $이차분류 = $this->userSetting['표지-인쇄'];
-            return $this->가격자동계산기($일차분류, $이차분류);
+            return $this->가격자동계산기(['인쇄', "오프셋", "표지", $이차분류]);
         }else{ /*인쇄기*/
             $인쇄비 = ceil($this->numNeededR("표지")) * $this->danka["표지인쇄"][$this->userSetting["표지-인쇄"]];
             return $인쇄비;
@@ -535,14 +561,11 @@ class FeeCalculator
         if( $this->userSetting["표지-코팅"] ){
             $기본비 = $this->danka_easy[$this->userSetting["표지-코팅"]]["기본비용"];
             $기본수량 = $this->danka_easy[$this->userSetting["표지-코팅"]]["기본수량"];
-            if($real == "real"){
-                if( $this->quantity <= $기본수량 ){
-                    $코팅비 = $기본비;
-                }else{ // 기본 1천권 넘으면 / 초과 권당
-                    $코팅비 = $기본비
-                        + ($this->quantity - $기본수량 ) * $this->danka_easy[$this->userSetting["표지-코팅"]]["1000"];
-                }
-            }else{
+            if( $this->quantity <= $기본수량 ){
+                $코팅비 = $기본비;
+            }else{ // 기본 1천권 넘으면 / 초과 권당
+                $코팅비 = $기본비
+                    + ($this->quantity - $기본수량 ) * $this->danka_easy[$this->userSetting["표지-코팅"]]["1000"];
             }
             $코팅비 = $코팅비 + $this->danka["공장간배송"];
 
@@ -596,10 +619,9 @@ class FeeCalculator
         /*$인쇄비 = ceil($this->numNeededR("삽지")) * $this->danka["표지인쇄"][$this->userSetting["삽지-인쇄"]];
         return $인쇄비;*/
         if( !$this->quantity ) return 0;
-        $일차분류 = "표지인쇄";
         $이차분류 = $this->userSetting['삽지-인쇄'];
         $numPaper = $this->userSetting['삽지-매수'];
-        return $this->가격자동계산기($일차분류, $이차분류);
+        return $this->가격자동계산기(['인쇄', "오프셋", "표지", $이차분류]);
     }
     /*삽지-판비 // 국-2절 or 46-2절 */
     function feeIntroPan($real = "real", $size = "국-2절"){
@@ -674,14 +696,18 @@ class FeeCalculator
     function feeInnerPrint($real = "real", $paper_name = null, $size = null) {   /*  */
         /**/
         if( !$this->quantity ) return 0;
+
+        $이차분류 = $this->userSetting['내지-인쇄'];
         if($this->quantity < $this->디지털출력개수 ){ /*디지털출력*/
-            $일차분류 = "내지인쇄-디지털";
-            $이차분류 = $this->userSetting['내지-인쇄'];
             $numPaper = $this->userSetting['내지-매수'];
-            return $this->가격자동계산기($일차분류, $이차분류) * $numPaper; // numNeedR 계산말고내맘대로..
+            return $this->가격자동계산기(['인쇄', "디지털", "내지", $이차분류]) * $numPaper; // numNeedR 계산말고내맘대로..
         }else{ /*인쇄기*/
-            $인쇄비 = ceil($this->numNeededR("내지")) * $this->danka["내지인쇄"][$this->userSetting["내지-인쇄"]];
+            /*필요 R수 세야함*/
+            $인쇄비 = ceil($this->numNeededR("내지"))
+                * $this->danka["내지인쇄"][$this->userSetting["내지-인쇄"]];
             return $인쇄비;
+
+            return $this->가격자동계산기(['인쇄', "오프셋", "내지", $이차분류]) * $numPaper; // numNeedR 계산말고내맘대로..
         }
     }
     /*내지-판비 // 국-2절 or 46-2절 */
@@ -704,9 +730,9 @@ class FeeCalculator
         }
         if( $this->userSetting['표지-합지'] == '') return 0; // 합지없음
 
-        $일차분류 = "합지";
+        $일차분류 = "일반";
         $이차분류 = $this->userSetting['표지-합지']; //2합, 3합
-        return  $this->가격자동계산기($일차분류, $이차분류);
+        return  $this->가격자동계산기(['합지', $일차분류, $이차분류]);
         //$합지비 = $합지비 + $this->danka["공장간배송"];
     }
 
@@ -719,33 +745,13 @@ class FeeCalculator
         }
         if( $this->userSetting['표지-싸바리'] == '') return 0; // 합지없음
 
-        $일차분류 = "싸바리";
-        $이차분류 = $this->userSetting['표지-싸바리']; //일반
-        return  $this->가격자동계산기($일차분류, $이차분류);
+        $일차분류 = "일반";
+        //$이차분류 = $this->userSetting['표지-싸바리']; //일반
+        return  $this->가격자동계산기(['싸바리', $일차분류]);
         //$this->danka["공장간배송"];
         $일차분류 = "싸바리"; //2합, 3합
     }
 
-    /*총 제본비*/
-    function feeJebon($real = "real", $paper_name = null, $size = null)
-    {
-        if( ! $this->quantity ) return 0;
-        $제본종류 = $this->userSetting['제본'];
-
-        $일차분류 = $제본종류;
-        $이차분류 = $this->userSetting['크기'];
-        $제본비 =  $this->가격자동계산기($일차분류, $이차분류);
-
-        /*내지수량에 따른 차등... 위 가격은 내지 100장일때였음*/
-        if($제본종류 == '무선')       $내지따른가중치 = 0.4;
-        elseif($제본종류 == '스프링') $내지따른가중치 = 0.2;
-        elseif($제본종류 == '양장')   $내지따른가중치 = 0.1;
-        else $내지따른가중치 = 0;
-        $제본비 = $제본비 - $제본비 * (100-$this->userSetting['내지-매수'])/100 * $내지따른가중치;
-
-        return $제본비;
-
-    }
 
     /*라벨스틱비*/
     function feeLarvelStick($real = "real", $size = '8mm')
@@ -787,21 +793,55 @@ class FeeCalculator
         if( ! $this->quantity ) return 0;
         $일차분류 = "노임";
         $이차분류 = "일반"; //$this->userSetting['표지-싸바리'];
-        return $this->가격자동계산기($일차분류, $이차분류);
+        return $this->가격자동계산기(['작업비', $일차분류, $이차분류]);
     }
 
-    /*danka_v2 배열정보 이용한 계산기*/
-    function 가격자동계산기($일차분류, $이차분류){
-        $단가총정보 = $this->danka_v2[$일차분류][$이차분류]; /*
-                '0' => "0",
+    function DB값재정렬($dankas)
+    {
+        $danka_db = array();
+        foreach($dankas as $key => $row){
+            if(!empty($row['key3']))       $danka_db[$row['key0']][$row['key1']][$row['key2']][$row['key3']][$row['qtnum']] = $row['value'];
+            else if(!empty($row['key2']))  $danka_db[$row['key0']][$row['key1']][$row['key2']]              [$row['qtnum']] = $row['value'];
+            else if(!empty($row['key1']))  $danka_db[$row['key0']][$row['key1']]                            [$row['qtnum']] = $row['value'];
+            else                            $danka_db[$row['key0']]                                          [$row['qtnum']] = $row['value'];
+        }
+        return $danka_db;
+        //dd($this->danka_db);
+        /*"제본" => array:4 [▼
+            "스프링" => array:5 [▼
+              "A4" => array:4 [▼
+                0 => "0"
+                100 => "265000"
+                1000 => "450000"
+                "초과수량" => "350"
+              ]
+              "B5" => array:4 [..*/
+    }
+    /*danka_db 배열정보 이용한 계산기*/
+    function 가격자동계산기($키 = array())
+    {
+        if(!isset($키[1]))       $단가총정보 = $this->danka_db[$키[0]];
+        else if(!isset($키[2])) $단가총정보 = $this->danka_db[$키[0]][$키[1]];
+        else if(!isset($키[3])) $단가총정보 = $this->danka_db[$키[0]][$키[1]][$키[2]];
+        else                     $단가총정보 = $this->danka_db[$키[0]][$키[1]][$키[2]][$키[3]];
+        //$단가총정보 = $this->danka_v2[$일차분류][$이차분류];
+            /*  '0' => "0",
                 '100' => "40000",
                 '1000' => "400000",
                 '초과수량' => "100" */
+        ksort($단가총정보); //초과수량.이 가운데 있을수도.
+        if( isset($단가총정보['초과수량'])){ // 빼서 마지막에 넣기
+            $tmp초과수량 = $단가총정보['초과수량'];
+            unset($단가총정보['초과수량']);
+            $단가총정보['초과수량'] = $tmp초과수량;
+        }
+
         $수량배열값 = array_keys($단가총정보); /*
                 0 => 0,
                 1 => 100,
                 2 => 1000,
                 3 => 초과수량 */
+
         foreach($수량배열값 as $key => $수량){
             $가격 = $단가총정보[$수량]; // 40000
             $수량_갭하단 = $수량; //100

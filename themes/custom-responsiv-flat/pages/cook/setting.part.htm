@@ -22,6 +22,7 @@ use Cooka\Part\Models\Part;
 function onInit()
 {
     $this["orderno"] = $this->param('orderno'); //파라매터 받는법?
+
 }
 
 function onStart()
@@ -31,6 +32,19 @@ function onStart()
         echo "관리자만 접속 가능합니다.";
         exit;
     }
+    /*test.. $teamid = 1; // 승우문화사
+    $parts = Cooka\Part\Models\Part::where('team_id', $teamid)->where('cate', '종이/노트')
+    ->orderBy('ord')->get()
+    ->keyBy('name'); //<!--엄청나닷. name 이 키가됨-->
+    $danka_db_ = $parts->toArray();
+    $danka_db = array();
+    foreach($danka_db_ as $key => $row){
+        if(!empty($row['key3']))
+        $danka_db[$row['key0']][$row['key1']][$row['key2']][$row['key3']][$row['qtnum']] = $row['value'];
+        else if(!empty($row['key2']))
+        $danka_db[$row['key0']][$row['key1']][$row['key2']][$row['qtnum']] = $row['value'];
+    }
+    dd($danka_db);*/
 
 }
 function onClickStep1(){}
@@ -77,6 +91,7 @@ function onCalcFee(){
         $.request('onCalcFee', {
             update: { 'cook/paper-calculator': '#div_brief' },
             data: datas,
+            error:function(exception){ console.log(exception);alert('자동계산기로 불가능한 옵션입니다. 별도문의 바랍니다. - sk');}
         })
     }
 
