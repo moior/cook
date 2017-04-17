@@ -166,6 +166,8 @@ class Orders extends ComponentBase
         $order->status_show     = isset($form["status_show"])?$form["status_show"]:"접수확인중";
         $order->shipping_number = "";
 
+        date_default_timezone_set('Asia/Seoul'); //서버 Default timezone = UTC이네..
+
         $order->save();
         return $order;
     }
