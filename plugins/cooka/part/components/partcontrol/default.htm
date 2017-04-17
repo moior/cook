@@ -47,7 +47,7 @@ $(document).ready(function(){
         $("#table부품정보수정 input").val("");
         //$("#table부품정보수정 input[name=title]").val( $(this).find(".td제목").text()  );
         //$("#table부품정보수정 input[name=name]").val( $(this).find(".td이름").text()  );
-        $("#table부품정보수정 input[name=key0]").val( $(this).find(".td키0").text()  );
+        $("#table부품정보수정 input[name=key0]").val( $("#td키0").text()  );
         $("#table부품정보수정 input[name=key1]").val( $(this).find(".td키1").text()  );
         $("#table부품정보수정 input[name=key2]").val( $(this).find(".td키2").text()  );
         $("#table부품정보수정 input[name=key3]").val( $(this).find(".td키3").text()  );
@@ -136,7 +136,6 @@ $(document).ready(function(){
     <style>
         .td제목 {width:5%;}
         .td이름 {width:10%;}
-        .td키0 {width:10%;}
         .td키1 {width:15%;}
         .td키2 {width:15%;}
         .td키3 {width:10%;}
@@ -144,13 +143,17 @@ $(document).ready(function(){
         .td가격 {width:15%;}
         .td가격 input {text-align:right;}
     </style>
+
+    <div style="padding:5px;font-weight:bold;font-size:15px;">
+        <span id="td키0">대분류 : {{ request.key0 }} </span>
+    </div>
+
     <table id="" class="table table-condensed  ">
     <tr>
         <td>
             <table style="width:100%;">
                 <th class="td제목">분류</th>
 
-                <th class="td키0" style="">대분류</th>
                 <th class="td키1" style="">1분류</th>
                 <th class="td키2" style="">2분류</th>
                 <th class="td키3" style="">3분류</th>
@@ -170,7 +173,6 @@ $(document).ready(function(){
             <tr class="tr부품">
                 <td class="td제목"><small style="color:#bcbcbc;">{{ part.ord }}</small>
                     <!--<span class="td제목">{{ part.title }}</span>--></td>
-                <td class="td키0">{{ part.key0 }}</td>
                 <td class="td키1">{{ part.key1 }}</td>
                 <td class="td키2">{{ part.key2 }}</td>
                 <td class="td키3">{{ part.key3 }}</td>
@@ -203,27 +205,27 @@ $(document).ready(function(){
                 <td ><b>정보수정</b></td>
                 <td colspan="2" class="text-right">
                     <a class="btn btn-default btn-xs" onclick="$('#table부품정보수정').hide();">닫기</a>
-                    <button type="submit" class="btn btn-primary btn-xs" id="btn부품수정">저장</button>
+                    <button type="submit" class="btn btn-primary btn-xs" id="btn부품수정">수정</button>
                 </td>
             </tr>
             <tr class="">
                 <!--<td><input type="text" name="title" value="" class="form-control input-sm" placeholder="분류" /></td>-->
-                <td><input type="text" name="name" value="" class="form-control input-sm" placeholder="이름" /></td>
+                <!--<td><input type="text" name="name" value="" class="form-control input-sm" placeholder="이름" /></td>-->
             <tr class="" style="">
-                <td><input type="text" name="key0" value="" class="form-control input-sm" placeholder="큰분류" /></td>
-                <td><input type="text" name="key1" value="" class="form-control input-sm" placeholder="1차분류" /></td>
-                <td><input type="text" name="key2" value="" class="form-control input-sm" placeholder="2차분류" /></td>
+                <td>*대분류 <input type="text" name="key0" value="" class="form-control input-sm" placeholder="큰분류" /></td>
+                <td>*1차분류 <input type="text" name="key1" value="" class="form-control input-sm" placeholder="1차분류" /></td>
+                <td>*2차분류 <input type="text" name="key2" value="" class="form-control input-sm" placeholder="2차분류" /></td>
             </tr>
             <tr>
-                <td><input type="text" name="key3" value="" class="form-control input-sm" placeholder="3차분류" /></td>
-                <td><input type="text" name="qtnum" value="" class="form-control input-sm" placeholder="단위수량" /></td>
+                <td>3차분류 <input type="text" name="key3" value="" class="form-control input-sm" placeholder="3차분류" /></td>
+                <td>*단위수량 <input type="text" name="qtnum" value="" class="form-control input-sm" placeholder="단위수량" /></td>
 
-                <td><input type="text" name="value" value="" class="form-control input-sm" placeholder="가격" /></td>
+                <td>*가격 <input type="text" name="value" value="" class="form-control input-sm" placeholder="가격" /></td>
 
             </tr>
             <tr>
-                <td><input type="text" name="ord" value="" class="form-control input-sm" placeholder="순서"/></td>
-                <td colspan="2"><input type="text" name="comment" value="{{ part.comment }}" class="form-control input-sm" /></td>
+                <td>정렬순서 <input type="text" name="ord" value="" class="form-control input-sm" placeholder="순서"/></td>
+                <td colspan="2">설명 <input type="text" name="comment" value="{{ part.comment }}" class="form-control input-sm" /></td>
             </tr>
         </table>
         {{ form_close() }}

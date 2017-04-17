@@ -58,17 +58,18 @@ class PartControl extends ComponentBase
 
         $team_id = $this->property('team_id');
         if(Request::input('key0') ){
-            $parts = Part::where('team_id', $team_id)->orderBy('ord')->orderBy('name');
+            $parts = Part::where('team_id', $team_id);
             $parts = $parts->where('key0', Request::input('key0'));
             if( Request::input('key1')) {
                 $parts = $parts->where('key1', Request::input('key1'));
             }
-            $parts = $parts->get();
+            $parts = $parts->orderBy('key0')->orderBy('key1')->orderBy('key2')->orderBy('key3')->orderBy('ord')->get();
         }else{
             $parts = null;
         }
 
         $this->page['parts'] = $parts; // $tmpOrder; //bill 에서 값읽을떄 오류
+        $this->page['request'] = Request::input();
 
     }
 
