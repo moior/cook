@@ -114,6 +114,8 @@ class Memos extends ComponentBase
             $memo->content = isset($form["content"]) ? $form["content"] : "";
             $memo->level = isset($form["level"]) ? $form["level"] : "";
 
+            date_default_timezone_set('Asia/Seoul'); //시간설정오류시. 서버 Default timezone = UTC이네..
+
             $memo->save();
             Session::flash("action_result", "새 메모가 저장되었습니다.");
         } else {
@@ -130,6 +132,9 @@ class Memos extends ComponentBase
                 if ($this->admin && $memo->admin_id == $this->admin->id) {
                     $memo->content = isset($form["content"]) ? $form["content"] : "";
                     $memo->level = isset($form["level"]) ? $form["level"] : "";
+
+                    date_default_timezone_set('Asia/Seoul'); //시간설정오류시. 서버 Default timezone = UTC이네..
+
                     $memo->save();
                     Session::flash("action_result", "수정되었습니다.");
                 }else{
